@@ -7,33 +7,36 @@
   var filterPrice = document.querySelectorAll('input[type="number"]');
   var paginateLinks = document.querySelectorAll(".paginate_link[data-url]");
   var { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService();
-  if (infinityPoint) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          let callback2 = function(searchParams) {
-            searchParams.set("section_id", sectionId);
-          };
-          var callback = callback2;
-          const target = entry.target;
-          const url = target.dataset.url;
-          const sectionId = target.dataset.sectionId;
-          const _url = createUrl(callback2, url.split("?")[1]);
-          loading(target);
-          getApi(_url).then((data) => {
-            const infinityPoint2 = data.getElementPointInfinity();
-            appendProduct(data.getElementProduct());
-            updatePointInfinity(infinityPoint2);
-            if (!infinityPoint2.dataset.url) {
-              observer.disconnect();
-            }
-          }).finally(() => {
-            hiddenLoading(target);
-          });
-        }
+  infinityFuc(infinityPoint);
+  function infinityFuc(infinityPoint2) {
+    if (infinityPoint2) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            let callback2 = function(searchParams) {
+              searchParams.set("section_id", sectionId);
+            };
+            var callback = callback2;
+            const target = entry.target;
+            const url = target.dataset.url;
+            const sectionId = target.dataset.sectionId;
+            const _url = createUrl(callback2, url.split("?")[1]);
+            loading(target);
+            getApi(_url).then((data) => {
+              const infinityPoint3 = data.getElementPointInfinity();
+              appendProduct(data.getElementProduct());
+              updatePointInfinity(infinityPoint3);
+              if (!infinityPoint3.dataset.url) {
+                observer.disconnect();
+              }
+            }).finally(() => {
+              hiddenLoading(target);
+            });
+          }
+        });
       });
-    });
-    observer.observe(infinityPoint);
+      observer.observe(infinityPoint2);
+    }
   }
   if (sortBy) {
     sortBy.addEventListener("change", (event) => {
@@ -42,10 +45,13 @@
       function callback(searchParams) {
         searchParams.set("sort_by", value);
       }
-      const url = createUrl(callback, window.location.href.split("?")[1]);
+      let url = createUrl(callback, window.location.href.split("?")[1]);
       history.pushState(null, null, url);
+      url += url.includes("?") ? "&" : "?";
+      url += `section_id=${sectionId}`;
       getApi(url).then((data) => {
         setProduct(data.getElementProduct());
+        updatePointInfinity(data.getElementPointInfinity());
       });
     });
   }
@@ -70,43 +76,10 @@
       function getResponse(res) {
         return res.json().then((data2) => data2.sections[sectionId]);
       }
-      function callback(searchParams) {
-        searchParams.set("items_per_page", value);
-      }
-      const _url = createUrl(callback, window.location.href.split("?")[1]);
-      history.pushState(null, null, _url);
       getApi(url, options, getResponse).then((data2) => {
         setProduct(data2.getElementProduct());
         updatePointInfinity(data2.getElementPointInfinity());
         updatePaginate(data2.getPaginate());
-      });
-    });
-  }
-  if (filterForms) {
-    filterForms.forEach((input) => {
-      input.addEventListener("change", (event) => {
-        const value = event.target.value;
-        const name = event.target.name;
-        function callback(checkedValues) {
-          if (event.target.checked) {
-            if (!checkedValues[name]) {
-              checkedValues[name] = [];
-            }
-            checkedValues[name].push(value);
-          } else {
-            if (checkedValues[name]) {
-              checkedValues[name] = checkedValues[name].filter((val) => val !== value);
-            }
-          }
-        }
-        const url = createUrlFilter(callback, window.location.search);
-        history.pushState(null, null, url);
-        getApi(url).then((data) => {
-          setProduct(data.getElementProduct());
-          updateCount(data.getProductCount());
-          updatePointInfinity(data.getElementPointInfinity());
-          updatePaginate(data.getPaginate());
-        });
       });
     });
   }
@@ -187,7 +160,9 @@
     }
     function updatePointInfinity2(element) {
       if (infinityPoint2) {
-        infinityPoint2.setAttribute("data-url", element.dataset.url);
+        infinityPoint2.parentNode.replaceChild(element, infinityPoint2);
+        infinityPoint2 = document.querySelector("#infinity_point");
+        infinityFuc(document.querySelector("#infinity_point"));
       }
     }
     function updatePaginate2(element) {

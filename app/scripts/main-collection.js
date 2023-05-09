@@ -8,37 +8,40 @@ const paginateLinks = document.querySelectorAll('.paginate_link[data-url]')
 const { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService()
 
 
-if (infinityPoint) {
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = entry.target
-                const url = target.dataset.url
-                const sectionId = target.dataset.sectionId
+infinityFuc(infinityPoint)
+
+function infinityFuc(infinityPoint) {
+    if (infinityPoint) {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target
+                    const url = target.dataset.url
+                    const sectionId = target.dataset.sectionId
 
 
-                function callback(searchParams) {
-                    searchParams.set('section_id', sectionId)
+                    function callback(searchParams) {
+                        searchParams.set('section_id', sectionId)
+                    }
+                    const _url = createUrl(callback, url.split('?')[1])
+
+                    loading(target);
+                    getApi(_url)
+                        .then((data) => {
+                            const infinityPoint = data.getElementPointInfinity()
+                            appendProduct(data.getElementProduct())
+                            updatePointInfinity(infinityPoint)
+                            if (!infinityPoint.dataset.url) {
+                                observer.disconnect()
+                            }
+                        }).finally(() => {
+                            hiddenLoading(target);
+                        })
                 }
-                const _url = createUrl(callback, url.split('?')[1])
-
-                loading(target);
-                getApi(_url)
-                    .then((data) => {
-                        const infinityPoint = data.getElementPointInfinity()
-                        appendProduct(data.getElementProduct())
-                        updatePointInfinity(infinityPoint)
-
-                        if (!infinityPoint.dataset.url) {
-                            observer.disconnect()
-                        }
-                    }).finally(() => {
-                        hiddenLoading(target);
-                    })
-            }
+            })
         })
-    })
-    observer.observe(infinityPoint)
+        observer.observe(infinityPoint)
+    }
 }
 
 if (sortBy) {
@@ -48,12 +51,16 @@ if (sortBy) {
 
         function callback(searchParams) {
             searchParams.set('sort_by', value)
-            // searchParams.set('section_id', sectionId)
         }
-        const url = createUrl(callback, window.location.href.split('?')[1])
+        let url = createUrl(callback, window.location.href.split('?')[1])
         history.pushState(null, null, url);
+
+        url += url.includes('?') ? '&' : '?';
+        url += `section_id=${sectionId}`;
+
         getApi(url).then((data) => {
             setProduct(data.getElementProduct())
+            updatePointInfinity(data.getElementPointInfinity())
         })
     })
 }
@@ -80,54 +87,49 @@ if (show) {
         function getResponse(res) {
             return res.json()
                 .then(data => data.sections[sectionId])
-
         }
-        function callback(searchParams) {
-            searchParams.set('items_per_page', value)
-        }
-        const _url = createUrl(callback, window.location.href.split('?')[1])
-        history.pushState(null, null, _url)
 
         getApi(url, options, getResponse).then((data) => {
             setProduct(data.getElementProduct())
             updatePointInfinity(data.getElementPointInfinity())
             updatePaginate(data.getPaginate())
+
         })
     })
 }
 
 
-if (filterForms) {
+// if (filterForms) {
 
-    filterForms.forEach(input => {
-        input.addEventListener('change', event => {
-            const value = event.target.value;
-            const name = event.target.name;
-            function callback(checkedValues) {
-                if (event.target.checked) {
-                    if (!checkedValues[name]) {
-                        checkedValues[name] = [];
-                    }
-                    checkedValues[name].push(value);
-                } else {
-                    if (checkedValues[name]) {
-                        checkedValues[name] = checkedValues[name].filter(val => val !== value);
-                    }
-                }
+//     filterForms.forEach(input => {
+//         input.addEventListener('change', event => {
+//             const value = event.target.value;
+//             const name = event.target.name;
+//             function callback(checkedValues) {
+//                 if (event.target.checked) {
+//                     if (!checkedValues[name]) {
+//                         checkedValues[name] = [];
+//                     }
+//                     checkedValues[name].push(value);
+//                 } else {
+//                     if (checkedValues[name]) {
+//                         checkedValues[name] = checkedValues[name].filter(val => val !== value);
+//                     }
+//                 }
 
-            }
+//             }
 
-            const url = createUrlFilter(callback, window.location.search)
-            history.pushState(null, null, url);
-            getApi(url).then((data) => {
-                setProduct(data.getElementProduct())
-                updateCount(data.getProductCount())
-                updatePointInfinity(data.getElementPointInfinity())
-                updatePaginate(data.getPaginate())
-            })
-        })
-    })
-}
+//             const url = createUrlFilter(callback, window.location.search)
+//             history.pushState(null, null, url);
+//             getApi(url).then((data) => {
+//                 setProduct(data.getElementProduct())
+//                 updateCount(data.getProductCount())
+//                 updatePointInfinity(data.getElementPointInfinity())
+//                 updatePaginate(data.getPaginate())
+//             })
+//         })
+//     })
+// }
 
 // if (filterPrice) {
 //     const params = {}
@@ -161,6 +163,7 @@ if (filterForms) {
 //         )
 //     })
 // }
+
 paginateFuc(paginateLinks)
 
 function paginateFuc(paginateLinks) {
@@ -254,7 +257,9 @@ function collectionService() {
 
     function updatePointInfinity(element) {
         if (infinityPoint) {
-            infinityPoint.setAttribute('data-url', element.dataset.url)
+            infinityPoint.parentNode.replaceChild(element, infinityPoint)
+            infinityPoint = document.querySelector('#infinity_point');
+            infinityFuc(document.querySelector('#infinity_point'));
         }
     }
 
