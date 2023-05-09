@@ -134,3 +134,76 @@ appendChild = (data, type) => {
 // function
 
 // qrey > addEventListener={}
+
+
+
+
+//
+
+
+
+
+// if (filterForms) {
+
+//     filterForms.forEach(input => {
+//         input.addEventListener('change', event => {
+//             const value = event.target.value;
+//             const name = event.target.name;
+//             function callback(checkedValues) {
+//                 if (event.target.checked) {
+//                     if (!checkedValues[name]) {
+//                         checkedValues[name] = [];
+//                     }
+//                     checkedValues[name].push(value);
+//                 } else {
+//                     if (checkedValues[name]) {
+//                         checkedValues[name] = checkedValues[name].filter(val => val !== value);
+//                     }
+//                 }
+
+//             }
+
+//             const url = createUrlFilter(callback, window.location.search)
+//             history.pushState(null, null, url);
+//             getApi(url).then((data) => {
+//                 setProduct(data.getElementProduct())
+//                 updateCount(data.getProductCount())
+//                 updatePointInfinity(data.getElementPointInfinity())
+//                 updatePaginate(data.getPaginate())
+//             })
+//         })
+//     })
+// }
+
+// if (filterPrice) {
+//     const params = {}
+//     filterPrice.forEach(input => {
+//         input.addEventListener('change', event => {
+//             const value = event.target.value;
+//             const name = event.target.name;
+//             params[name] = value;
+//             if (Object.keys(params).length === 2) {
+//                 function callback(checkedValues) {
+//                     for (const key in params) {
+
+//                         if (!checkedValues[key]) {
+//                             checkedValues[key] = [];
+//                         }
+//                         checkedValues[key].push(params[key]);
+//                     }
+
+//                 }
+//                 const url = createUrlFilter(callback, window.location.search)
+//                 history.pushState(null, null, url);
+//                 getApi(url).then((data) => {
+//                     setProduct(data.getElementProduct())
+//                     updateCount(data.getProductCount())
+//                     updatePointInfinity(data.getElementPointInfinity())
+//                     updatePaginate(data.getPaginate())
+//                 })
+//             }
+//         }
+
+//         )
+//     })
+// }
