@@ -17,30 +17,43 @@
     justify-content: space-between;
 
     &-filter-btn {
+        background-color: transparent;
+        border-radius: 7px;
+        padding: 0 16px;
+        border: 1px solid #000;
+        --button-color: black;
+        overflow: hidden;
+        cursor: pointer;
         display: flex;
-        gap: 8px;
-        align-items: center;
         justify-content: center;
-        background: white;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        padding: 8px 16px;
-        font-size: 20px;
-        min-width: 150px;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 500;
+        gap: 4px
+    }
+
+    .collection__toolbar-filter-btn[aria-expanded="true"] .hamburger {
+        rotate: 0.125turn;
+    }
+
+    .collection__toolbar-filter-btn .line {
+        transition: 1s;
+        stroke-dasharray: 60 31 60 300;
+    }
+
+    .collection__toolbar-filter-btn[aria-expanded="true"] .line {
+        stroke-dasharray: 60 105 60 300;
+        stroke-dashoffset: -90;
     }
 
     &-filter-icon {
-        div {
-            display: flex;
-            align-items: center;
+        --button-color: #000;
 
-            svg {
-                width: 20px;
-                height: 20px;
-            }
+        .hamburger {
+            transition: translate 1s, rotate 1s;
+            width: 40px;
+            height: 40px;
         }
-
-
     }
 
     &-sort {
@@ -66,7 +79,7 @@
 }
 
 .collection__hr {
-    margin-top: 50px;
+    margin-top: 20px;
     height: 1px;
     background-color: #ccc;
 }

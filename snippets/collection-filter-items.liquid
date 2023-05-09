@@ -31,7 +31,6 @@
                           {% if filter_value.count == 0 and filter_value.active == false -%}
                             disabled
                           {%- endif %}
-                          {% comment %} onchange="this.form.submit()" {% endcomment %}
                         >
                         {{- filter_value.label -}}
                       </label>

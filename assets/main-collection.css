@@ -13,26 +13,43 @@
 }
 
 .collection__toolbar-filter-btn {
+  background-color: transparent;
+  border-radius: 7px;
+  padding: 0 16px;
+  border: 1px solid #000;
+  --button-color:#000;
+  overflow: hidden;
+  cursor: pointer;
   display: flex;
-  gap: 8px;
-  align-items: center;
   justify-content: center;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-size: 20px;
-  min-width: 150px;
-}
-
-.collection__toolbar-filter-icon div {
-  display: flex;
   align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  gap: 4px;
 }
 
-.collection__toolbar-filter-icon div svg {
-  width: 20px;
-  height: 20px;
+.collection__toolbar .collection__toolbar-filter-btn[aria-expanded=true] .hamburger {
+  rotate: 45deg;
+}
+
+.collection__toolbar .collection__toolbar-filter-btn .line {
+  transition: 1s;
+  stroke-dasharray: 60 31 60 300;
+}
+
+.collection__toolbar .collection__toolbar-filter-btn[aria-expanded=true] .line {
+  stroke-dasharray: 60 105 60 300;
+  stroke-dashoffset: -90;
+}
+
+.collection__toolbar-filter-icon {
+  --button-color:#000;
+}
+
+.collection__toolbar-filter-icon .hamburger {
+  transition: translate 1s,rotate 1s;
+  width: 40px;
+  height: 40px;
 }
 
 .collection__toolbar-sort {
@@ -57,7 +74,7 @@
 }
 
 .collection__hr {
-  margin-top: 50px;
+  margin-top: 20px;
   height: 1px;
   background-color: #ccc;
 }

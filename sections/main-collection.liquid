@@ -58,8 +58,8 @@
 
   <div class="collection__toolbar">
     {% if true %}
-      <button class="collection__toolbar-filter-btn">
-        <span class="collection__toolbar-filter-icon">{% render 'icon-close' %}</span>
+      <button class="collection__toolbar-filter-btn" aria-controls="primary-mavigation" aria-expanded="false">
+        <div class="collection__toolbar-filter-icon">{% render 'icon-filter' %}</div>
         Filter
       </button>
     {% endif %}
