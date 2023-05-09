@@ -1,0 +1,40 @@
+.section-container {
+  margin-top: 0px;
+  &__heading {
+  }
+
+  &__item {
+    &__image {
+      img {
+      }
+    }
+
+    &__content {
+      &__text {
+        h2 {
+        }
+
+        p {
+        }
+      }
+
+      &__buttons {
+        @mixin a {
+        }
+        .button {
+          &--first {
+            a {
+              @include a;
+            }
+          }
+
+          &--second {
+            a {
+              @include a;
+            }
+          }
+        }
+      }
+    }
+  }
+}

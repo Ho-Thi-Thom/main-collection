@@ -1,0 +1,15 @@
+<link
+  rel="stylesheet"
+  href="{{ 'collection-content.css' | asset_url }}"
+  media="all"
+>
+
+<div class="content">
+  <div class="title_wrap">
+    <h2 class="title">{{ title }}</h2>
+    {% if productCount != blank %}
+      <span class="product_count">({{ productCount }})</span>
+    {% endif %}
+  </div>
+  <span class="description">{{ description }}</span>
+</div>

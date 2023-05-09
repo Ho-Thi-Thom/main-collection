@@ -1,0 +1,641 @@
+{% liquid
+ assign title = section.settings.font_size_title
+ assign title_array = title | split: "," 
+ assign font_title_mobile = title_array[0] 
+ assign font_title_desktop = title_array[1] 
+
+ assign sub_title = section.settings.font_size_sub_title
+ assign sub_title_array = sub_title | split: "," 
+ assign font_sub_title_mobile = sub_title_array[0] 
+ assign font_sub_title_desktop = sub_title_array[1] 
+
+ assign margin_top = section.settings.v3_margin_top 
+ assign margin_top_array = margin_top | split: "," 
+ assign margin_top_mobile = margin_top_array[0] 
+ assign margin_top_desktop = margin_top_array[1] 
+
+ assign items_per_line = section.settings.items_per_line_custom 
+ assign items_per_line_array = items_per_line | split: "," 
+ assign items_per_line_mobile = items_per_line_array[0] 
+ assign items_per_line_desktop = items_per_line_array[1] 
+
+ assign items_per_line_tablet = items_per_line_mobile | plus:  items_per_line_desktop | divided_by: 2 | ceil 
+
+ assign count_up_number = section.settings.count_up_number 
+ %}
+<style>
+  .shopify-section-{{ section.id}}.section-container .section-container__list {
+    {% case section.settings.flex %}
+      {% when 'option1' %}
+      grid-template-columns: 37% 63%;
+      {% when 'option2' %}
+      grid-template-columns: 63% 37%;
+      {% when 'option3' %}
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      --height_image: {{ "auto" | escape }}
+      ;
+      --item_width: {{ items_per_line_desktop | number}}
+      ;
+      --image_width: 100%;
+      --item_padding: 1px;
+      --margin_list: -1px;
+      {% when 'option4' %}
+      grid-template-columns: repeat({{ items_per_line_desktop }} , 1fr);
+      grid-column-gap: {{ section.settings.item_gap |append: 'px'  }}
+      ;
+    {% else %}
+    {% endcase %}
+  }
+
+  .shopify-section-{{ section.id}}.section-container {
+    {% case section.settings.max_width %}
+      {% when 'container1' %}
+      --max_width: 100%;
+      {% when 'container2' %}
+      --max_width: 1000px;
+      {% when 'container3' %}
+      --max_width: 1600px;
+    {% else %}
+    {% endcase %}
+    --section_margin_top: {{ margin_top_desktop | append: 'px'  }}
+    ;
+    {% if section.settings.is_heading %}
+      --display: {{ "flex" | escape }}
+      ;
+    {% else %}
+      --display: {{ "none" | escape }}
+      ;
+    {% endif %}
+    {% case section.settings.content_position %}
+      {% when 'position1' %}
+      --left: 40px;
+      --bottom: 80px;
+      --position: {{ "absolute" | escape }}
+      ;
+      {% when 'position2' %}
+      --left: 40px;
+      --bottom: 80px;
+      --position: {{ "absolute" | escape }}
+      ;
+      {% when 'position3' %}
+      --content_margin_top: 20px;
+      --align_item: {{ "center" | escape }}
+      ;
+      --position: {{ "static" | escape }}
+      ;
+      --text_align: {{ "center" | escape }}
+      ;
+      --font_weight_sub_title: 500;
+      {% when 'position4' %}
+      --align_item: {{ "center" | escape }}
+      ;
+      --position: {{ "absolute" | escape }}
+      ;
+      --left: 50%;
+      --bottom: 30px;
+      --transform: translateX(-50%);
+    {% else %}
+    {% endcase %}
+
+    --font_title: {{ font_title_desktop  |append: 'px' | default: font_title_mobile  }}
+    ;
+    --font_sub_title: {{ font_sub_title_desktop  | default: font_sub_title_mobile| append: 'px' }}
+    ;
+
+    {% if section.settings.is_border_radius %}
+      --border_radius: {{ "4px" |escape  }}
+      ;
+    {% else %}
+      --border_redius: {{ "0px" |escape }}
+      ;
+    {% endif %}
+    {% case section.settings.gap_content %}
+      {% when 'option1' %}
+      --gap_content: 40px;
+      {% when 'option2' %}
+      --gap_content: 20px;
+      {% when 'option3' %}
+      --gap_content: 10px;
+    {% else %}
+    {% endcase %}
+  }
+
+  @media(max-width:1024px) {
+    .shopify-section-{{ section.id}}.section-container .section-container__list {
+      {% case section.settings.flex %}
+        {% when 'option1' %}
+        {% when 'option2' %}
+        {% when 'option3' %}
+        --item_width: {{ items_per_line_tablet | number}}
+        ;
+        --padding_top_item: {{ section.settings.item_gap |append: 'px'  }}
+        ;
+        --margin_top_list: {{ section.settings.item_gap |append: 'px'  }}
+        ;
+        {% when 'option4' %}
+        grid-template-columns: repeat({{ items_per_line_tablet }} , 1fr);
+      {% else %}
+      {% endcase %}
+    }
+
+    .shopify-section-{{ section.id}}.section-container {
+      {% case section.settings.max_width %}
+        {% when 'container1' %}
+        --max_width: 100%;
+        {% when 'container2' %}
+        --max_width: 533px;
+        {% when 'container3' %}
+        --max_width: 850px;
+      {% else %}
+      {% endcase %}
+      {% assign margin_avg = margin_top_mobile | plus: margin_top_desktop | divided_by: 2 %}
+      ;
+      --section_margin_top: {{ margin_avg | append: 'px' }}
+      ;
+      {% case section.settings.content_position %}
+        {% when 'position1' %}
+        --left: 20px;
+        --bottom: 40px;
+        {% when 'position2' %}
+        --left: 20px;
+        --bottom: 40px;
+        {% when 'position3' %}
+        --content_margin_top: 10px;
+        {% when 'position4' %}
+        --left: 50%;
+        --bottom: 15px;
+        --transform: translateX(-50%);
+      {% else %}
+      {% endcase %}
+
+      --font_title: {{ font_title_desktop | plus: font_title_mobile |  divided_by: 2   |append: 'px' | default: font_title_mobile  }}
+      ;
+      --font_sub_title: {{ font_sub_title_desktop | plus: font_sub_title_mobile |  divided_by: 2  | default: font_sub_title_mobile| append: 'px' }}
+      ;
+
+      {% case section.settings.gap_content %}
+        {% when 'option1' %}
+        --gap_content: 20px;
+        {% when 'option2' %}
+        --gap_content: 10px;
+        {% when 'option3' %}
+        --gap_content: 5px;
+      {% else %}
+      {% endcase %}
+    }
+  }
+  @media(max-width:768px) {
+    .shopify-section-{{ section.id}}.section-container {
+      {% case section.settings.max_width %}
+        {% when 'container1' %}
+        {% when 'container2' %}
+        --margin_inline: 20px;
+        {% when 'container3' %}
+      {% else %}
+      {% endcase %}
+      --section_margin_top: {{ margin_top_mobile |append: 'px'  }}
+      ;
+      {% if section.settings.is_heading %}
+        --display: {{ "flex" | escape }}
+        ;
+      {% else %}
+        --display: {{ "none" | escape }}
+        ;
+      {% endif %}
+      {% case section.settings.content_position %}
+        {% when 'position1' %}
+        --left: 16px;
+        --bottom: 14px;
+        {% when 'position2' %}
+        --left: 16px;
+        --bottom: auto;
+        --top: 50%;
+        --transform: translateY(-50%);
+        {% when 'position3' %}
+        {% when 'position4' %}
+        --left: 50%;
+        --bottom: 30px;
+        --transform: translateX(-50%);
+      {% else %}
+      {% endcase %}
+      --font_title: {{ font_title_mobile | append: 'px' }}
+      ;
+      --font_sub_title: {{ font_sub_title_mobile | append: 'px'   }}
+      ;
+      {% case section.settings.gap_content %}
+        {% when 'option1' %}
+        --gap_content: 12px;
+        {% when 'option2' %}
+        --gap_content: 12px;
+        {% when 'option3' %}
+        --gap_content: 10px;
+      {% else %}
+      {% endcase %}
+    }
+    .shopify-section-{{ section.id}}.section-container .section-container__list {
+      {% case section.settings.flex %}
+        {% when 'option1' or 'option2'%}
+        display: flex;
+        flex-direction: column;
+        {% when 'option3' %}
+        --item_width: {{ items_per_line_mobile | number}}
+        ;
+        --item_padding: 0;
+        --margin_list: 0;
+        --item_gap: {{ section.settings.item_gap |append: 'px' }}
+        ;
+        {% when 'option4' %}
+        grid-template-columns: repeat({{ items_per_line_mobile }} , 1fr);
+        grid-row-gap: {{ section.settings.item_gap |append: 'px'  }}
+        ;
+      {% else %}
+      {% endcase %}
+    }
+  }
+</style>
+
+<div class="shopify-section-{{ section.id}} section-container">
+  {% if section.settings.heading != blank %}
+    <div class="section-container__heading">{{ section.settings.heading }}</div>
+  {% endif %}
+  {% if count_up_number != 0 and count_up_number > 0 %}
+    <div class="number_count_up" data-item-number-count-up="{{ count_up_number }}">{{ count_up_number }}</div>
+  {% endif %}
+  <div
+    class="section-container__list {%if section.settings.is_slide_show%}owl-carousel{%endif%}"
+    data-item-gap="{{ section.settings.item_gap }}"
+    data-items-per-line-mobile="{{ items_per_line_mobile }}"
+    data-items-per-line-tablet="{{ items_per_line_tablet }}"
+    data-items-per-line-desktop="{{ items_per_line_desktop }}">
+    {% for _block in section.blocks %}
+      {% case _block.type %}
+        {% when 'component_first' %}
+        {% assign item = _block.settings %}
+        {% assign _id = _block.id %}
+        <div class="shopify-section-block-{{_id}} section-container__list__item">
+          <style>
+            {% assign imgDesktop = item.img_desktop %}
+            {% assign imgMobile = item.img_mobile | default: imgDesktop %}
+            .shopify-section-block-{{ _id}}.section-container__list__item {
+              {% case item.btn_style %}
+                {% when "btn_style1" %}
+                {% when "btn_style2" %}
+                --btn_background: white;
+                --btn_border: none;
+                {% when "btn_style3" %}
+                --btn_padding: 0;
+                --font_weight_button: 400;
+                --font_button: 15px;
+                --btn_color: white;
+                --btn_border: none;
+                --text_decoration: underline;
+                --text-align: start;
+                {% when "btn_style4" %}
+                --btn_padding: 0;
+                --font_weight_button: 400;
+                --font_button: 15px;
+                --btn_color: black;
+                --btn_border: none;
+                --text_decoration: underline;
+                --text-align: start;
+                {% when "btn_style5" %}
+                --btn_padding: 0 40px;
+                --font_button: 14px;
+                --btn_color: white;
+                --btn_border: 1px solid white;
+              {% else %}
+              {% endcase %}
+              --content_text_color: {{ item.content_text_color | escape }}
+              ;
+              --padding_top: {{ 1 | divided_by: imgDesktop.aspect_ratio | times: 100 | append: '%'  }}
+              ;
+            }
+            @media(max-width: 768px) {
+              .shopify-section-block-{{ _id}}.section-container__list__item {
+                {% case item.btn_style %}
+                  {% when "btn_style1" %}
+                  {% if item.difference_button %}
+                    --font_button: 14px;
+                    --btn_padding: 6px 40px;
+                    --btn_background: white;
+                    --btn_border: none;
+                    --width: 223px;
+                  {% else %}
+                    --width: 223px;
+                  {% endif %}
+                  {% when "btn_style2" %}
+                  --font_button: 14px;
+                  --btn_padding: 6px 40px;
+                  --width: 223px;
+                  {% when "btn_style3" %}
+                  --font_button: 16px;
+                  {% when "btn_style4" %}
+                  --font_button: 16px;
+                  {% when "btn_style5" %}
+                  --font_button: 14px;
+                  --btn_padding: 6px 40px;
+                {% else %}
+                {% endcase %}
+                --padding_top: {{ 1 | divided_by: imgMobile.aspect_ratio | times: 100 | append: '%'  }}
+                ;
+              }
+            }
+          </style>
+          {% if imgDesktop == blank %}
+            <div class="section-container__list__item__image1">
+              {{ "image" | placeholder_svg_tag }}
+            </div>
+          {% else %}
+            <div class="section-container__list__item__image1">
+              <img src="{{ imgDesktop | image_url}}" alt="img">
+            </div>
+          {% endif %}
+          {% if imgMobile == blank %}
+            <div class="section-container__list__item__image2">
+
+              {{ "image" | placeholder_svg_tag }}
+            </div>
+          {% else %}
+            <div class="section-container__list__item__image2">
+              <img src="{{ imgMobile | image_url}}" alt="img">
+            </div>
+          {% endif %}
+          <div class="section-container__list__item__content">
+            <div class="section-container__list__item__content__text">
+              {% if item.title != blank %}
+                <h5>{{ item.title }}</h5>
+              {% endif %}
+              {% if item.sub_title != blank %}
+                <p>{{ item.sub_title }}</p>
+              {% endif %}
+            </div>
+            <div class="section-container__list__item__content__buttons">
+              {% if item.button_left != blank %}
+                <div class="section-container__list__item__content__buttons--first">
+                  <a href="{{ item.button_left_url }}">{{ item.button_left }}</a>
+                </div>
+              {% endif %}
+              {% if item.button_right != blank %}
+                <div class="section-container__list__item__content__buttons--second">
+                  <a href="{{ item.button_right_url }}">
+                    {{ item.button_right }}</a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+
+
+{% if section.settings.is_slide_show %}
+  <script>
+    slide()
+  </script>
+{% endif %}
+
+{% if count_up_number != 0 and count_up_number > 0 %}
+  <script>
+    countUp()
+  </script>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Section V3",
+    "tag": "section",
+    "blocks": [
+      {
+        "name": "Section V3",
+        "type": "component_first",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "img_desktop",
+            "label": "Image Desktop:"
+          },
+          {
+            "type": "image_picker",
+            "id": "img_mobile",
+            "label": "Image Mobile:"
+          },
+          {
+            "type": "textarea",
+            "label": "Title",
+            "id": "title",
+            "info": "Ex: Extra 50% off Sale"
+          },
+          {
+            "type": "text",
+            "id": "sub_title",
+            "label": "Sub Title",
+            "info": "Ex: Only best, selected brands!"
+          }, {
+            "type": "color",
+            "id": "content_text_color",
+            "label": "Content Text Color",
+            "default": "#000"
+          }, {
+            "id": "button_left",
+            "type": "text",
+            "label": "Button Left",
+            "info": "Ex: Clothes on sale"
+          }, {
+            "type": "url",
+            "id": "button_left_url",
+            "label": "Url Button Left"
+          }, {
+            "id": "button_right",
+            "type": "text",
+            "label": "Button Right",
+            "info": " Shoes on sale"
+          }, {
+            "type": "url",
+            "id": "button_right_url",
+            "label": "Url Button Right"
+          }, {
+            "type": "select",
+            "id": "btn_style",
+            "label": "Style Button",
+            "options": [
+              {
+                "label": "Style 1",
+                "value": "btn_style1"
+              },
+              {
+                "label": "Style 2",
+                "value": "btn_style2"
+              },
+              {
+                "label": "Style 3",
+                "value": "btn_style3"
+              },
+              {
+                "label": "Style 4",
+                "value": "btn_style4"
+              }, {
+                "label": "Style 5",
+                "value": "btn_style5"
+              }
+            ],
+            "default": "btn_style1"
+          }, {
+            "type": "checkbox",
+            "id": "difference_button",
+            "label": "Difference Button",
+            "default": false
+          }
+        ]
+      }
+
+    ],
+    "settings": [
+      {
+        "type": "text",
+        "id": "v3_margin_top",
+        "label": "Margin Top",
+        "default": "0,0"
+      },
+      {
+        "type": "header",
+        "content": "Containner"
+      },
+      {
+        "type": "select",
+        "id": "max_width",
+        "label": "Max Width",
+        "options": [
+          {
+            "label": "Container 1",
+            "value": "container1"
+          }, {
+            "label": "Container 2",
+            "value": "container2"
+          }, {
+            "label": "Container 3",
+            "value": "container3"
+          }
+        ],
+        "default": "container1"
+      },
+      {
+        "type": "header",
+        "content": "Heading"
+      }, {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading Text"
+      }, {
+        "type": "header",
+        "content": "List Item"
+      }, {
+        "type": "checkbox",
+        "id": "is_slide_show",
+        "label": "Slide Show",
+        "default": false
+      }, {
+        "type": "select",
+        "label": "Flex Item Style",
+        "id": "flex",
+        "options": [
+          {
+            "label": "Flex banner 36%/64%",
+            "value": "option1"
+          }, {
+            "label": "Flex banner 64/36%",
+            "value": "option2"
+          }, {
+            "label": "Flex Wrap List",
+            "value": "option3"
+          }, {
+            "label": "Flex Slider",
+            "value": "option4"
+          }
+        ],
+        "default": "option1"
+      }, {
+        "type": "text",
+        "id": "items_per_line_custom",
+        "label": "Items/line: Mobile, Desktop",
+        "default": "1,3"
+      }, {
+        "type": "text",
+        "id": "item_gap",
+        "label": "Item Gap: Ex: 2 -> 2px",
+        "default": "0",
+        "info": "distance between items"
+      }, {
+        "type": "header",
+        "content": "Content"
+      }, {
+        "type": "select",
+        "id": "content_position",
+        "label": "Content Position",
+        "options": [
+          {
+            "label": "Position 1",
+            "value": "position1"
+          }, {
+            "label": "Position 2",
+            "value": "position2"
+          }, {
+            "label": "Position 3",
+            "value": "position3"
+          }, {
+            "label": "Position 4",
+            "value": "position4"
+          }
+        ],
+        "default": "position1"
+      }, {
+        "type": "text",
+        "id": "font_size_title",
+        "label": "Font Title : Mobile, Desktop",
+        "default": "30,50",
+        "info": "In case the following value is not entered, the font size is calculated according to mobile"
+      }, {
+        "type": "text",
+        "id": "font_size_sub_title",
+        "label": "Font Sub Title : Mobile, Desktop",
+        "default": "20,18",
+        "info": "In case the following value is not entered, the font size is calculated according to mobile"
+      }, {
+        "type": "select",
+        "id": "gap_content",
+        "label": "Content Gap",
+        "options": [
+          {
+            "label": "Space 17,40",
+            "value": "option1"
+          }, {
+            "label": "Space 12,20",
+            "value": "option2"
+          }, {
+            "label": "Space 10,10",
+            "value": "option3"
+          }
+        ],
+        "info": "space between text and button"
+      }, {
+        "type": "checkbox",
+        "id": "is_border_radius",
+        "label": "Image Border Radius",
+        "default": true
+      }, {
+        "type": "number",
+        "id": "count_up_number",
+        "label": "Count Up Max Numbber",
+        "default": 0
+      }
+    ],
+    "presets": [
+      {
+        "name": "V3 Section"
+      }
+    ]
+  }
+{% endschema %}

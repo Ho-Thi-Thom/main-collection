@@ -1,0 +1,14 @@
+{% if isLink %}
+  <button data-url="{{ link }}" data-section-id="{{ section.id}}" class="paginate_link">
+    {% case value %}
+      {% when 'previous' %}
+        {% render 'arrow' %}
+      {% when 'next' %}
+        {% render 'arrow', flipY: true %}
+      {% else %}
+        {{ value }}
+    {% endcase %}
+  </button>
+{% else %}
+  <button class="paginate_link active">{{ value }}</button>
+{% endif %}

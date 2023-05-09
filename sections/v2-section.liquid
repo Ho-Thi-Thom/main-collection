@@ -1,0 +1,485 @@
+<link
+  rel="stylesheet"
+  href="{{ 'v2-section.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'">
+
+{% liquid
+ assign title = section.settings.font_size_title 
+ assign title_array = title | split: "," 
+ assign font_title_mobile = title_array[0] 
+ assign font_title_desktop = title_array[1] 
+
+ assign sub_title = section.settings.font_size_sub_title
+ assign sub_title_array = sub_title | split: "," 
+ assign font_sub_title_mobile = sub_title_array[0] 
+ assign font_sub_title_desktop = sub_title_array[1] 
+
+ assign font_button = section.settings.font_size_button 
+ assign font_button_array = font_button | split: "," 
+ assign font_button_mobile = font_button_array[0] 
+ assign font_button_desktop = font_button_array[1] 
+
+ assign gap_content = section.settings.gap_content
+ assign gap_content_array = gap_content | split: "," 
+ assign gap_content_mobile = gap_content_array[0] 
+ assign gap_content_desktop = gap_content_array[1] 
+%}
+<style>
+  .shopify-section-{{ section.id}}.section {
+    {% case section.settings.flex %}
+      {% when 'option1' %}
+      grid-template-columns: 37% 63%;
+      {% when 'option2' %}
+      grid-template-columns: 63% 37%;
+      {% when 'option3' %}
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      {% when 'option4' %}
+      grid-template-columns: repeat({{ section.settings.items_per_line }}, 1fr);
+      grid-row-gap: 0;
+    {% else %}
+    {% endcase %}
+  }
+
+  .shopify-section-{{ section.id}}.section {
+    --margin_top: {{ section.settings.margin_top | escape | append: 'px'  }}
+    ;
+    --margin_inline: {{ section.settings.margin_vertical | escape |append: 'px'  }}
+    ;
+    --item_gap: {{ section.settings.item_gap | append: 'px'  }}
+    ;
+    /*section-v2__item img*/
+    --item_width: {{ section.settings.item_width }}
+    ;
+    --border-radius: {{ section.settings.image_border_radius | append: 'px'  }}
+    ;
+    /*section .section-v2__item-content*/
+    {% case section.settings.content_position %}
+      {% when 'position1' %}
+      --left-desktop: {{ 40 | append: 'px'  }}
+      ;
+      --bottom-desktop: {{ 80 | append: 'px'  }}
+      ;
+      --left-mobile: {{ 16 | append: 'px'  }}
+      ;
+      --bottom-mobile: {{ 14 | append: 'px'  }}
+      ;
+      {% when 'position2' %}
+      --left-desktop: {{ 40 | append: 'px'  }}
+      ;
+      --bottom-desktop: {{ 111 | append: 'px'  }}
+      ;
+      --left-mobile: {{ 16 | append: 'px'  }}
+      ;
+      --bottom-mobile: {{ 61 | append: 'px'  }}
+      ;
+    {% else %}
+    {% endcase %}
+
+    --gap_content_desktop: {{ gap_content_desktop | append: 'px'  }}
+    ;
+    --gap_content_mobile: {{ gap_content_desktop | append: 'px'  }}
+    ;
+
+    {% if section.settings.is_item_content_center %}
+      --left-desktop: {{ 50 | escape | append: '%'  }}
+      ;
+      --bottom-desktop: {{ 30 | escape |append: 'px' }}
+      ;
+      --transform: {{ -50 | escape | append: '%' }}
+      ;
+    {% endif %}
+    {% if section.settings.is_content_center %}
+      --align_item: {{ "center" | escape }}
+      ;
+    {% else %}
+      --align_item: {{ "start" | escape}}
+      ;
+    {% endif %}
+
+    {% if section.settings.is_content_position %}
+      --position: {{ "static" | escape }}
+      ;
+    {% else %}
+      --position: {{ "absolute"  | escape}}
+      ;
+    {% endif %};
+    /*section-v2__item-content__group-text-title*/
+    --font_title_desktop: {{ font_title_desktop | append: 'px'  }}
+    ;
+    /*section-v2__item-content__group-text-sub-title*/
+    --font_sub_title_desktop: {{ font_sub_title_desktop | append: 'px'  }}
+    ;
+    /*button*/
+    --font_button_desktop: {{ font_button_desktop | append: 'px' }}
+    ;
+    --font-weight-button: {{ section.settings.font_weight_button  }}
+    ;
+    /*button a*/
+    {% if section.settings.text_decoration %}
+      --text-decoration: underline;
+    {% else %}
+      --text-decoration: none;
+    {% endif %};
+    /*section-v2__item-img*/
+    --height_img: {{ section.settings.img_height | append: 'px'  }}
+    ;
+  }
+</style>
+<div class="shopify-section-{{ section.id}} section">
+  {% for _block in section.blocks %}
+    {% case _block.type %}
+      {% when 'banner' %}
+      {% assign item = _block.settings %}
+      {% assign _id = _block.id %}
+
+      <style>
+        .section-v2__item[data-element="{{ _id }}"] .button {
+          {% case item.button_style %}
+            {% when 'option1' %}
+            --color: black;
+            --background: transparent;
+            --border: 1px solid #000;
+            --padding: {{ 60 | append: 'px'  }}
+            ;
+            {% when 'option2' %}
+            --color: black;
+            --background: white;
+            --border: none;
+            --padding: {{ 60 | append: 'px'  }}
+            ;
+            {% when 'option3' %}
+            --color: #fff;
+            --background: transparent;
+            --border: none;
+            --padding: {{ 0 | append: 'px'  }}
+            ;
+            {% when 'option4' %}
+            --color: #000;
+            --background: transparent;
+            --border: none;
+            --padding: {{ 0 | append: 'px'  }}
+            ;
+            {% when "option5" %}
+            --color: #fff;
+            --background: transparent;
+            --border: 1px solid #fff;
+            --padding: {{ 40 | append: 'px'  }}
+            ;
+          {% else %}
+          {% endcase %}
+        }
+
+        .section-v2__item[data-element="{{ _id }}"] .section-v2__item-content__group-text {
+          --color: {{ item.content_text_color | escape }}
+          ;
+        }
+      </style>
+
+      <div class="section-v2__item" data-element="{{ _id }}">
+        {% comment %} assign imgDesk = setting.desk
+        assign imgMObile = setings.img | default: imgDesk {% endcomment %}
+        {% if item.img_desktop == blank %}
+          {{ "image" | placeholder_svg_tag: 'section-v2__item-img' }}
+        {% else %}
+          <img
+            src="{{ item.img_desktop | image_url }}"
+            alt="image"
+            class="section-v2__item-img">
+        {% endif %}
+
+        {% if item.img_mobile == blank %}
+          {{ "image" | placeholder_svg_tag: 'section-v2__item-img2' }}
+        {% else %}
+          <img
+            src="{{ item.img_mobile | image_url }}"
+            alt="image"
+            class="section-v2__item-img2">
+        {% endif %}
+
+        <div class="section-v2__item-content">
+          <div class="section-v2__item-content__group-text">
+            <span class="section-v2__item-content__group-text-title">{{ item.title }}</span>
+            {% if item.sub_title != blank %}
+              <span class="section-v2__item-content__group-text-sub-title">{{ item.sub_title }}</span>
+            {% endif %}
+          </div>
+          <div class="section-v2__item-content__group-button">
+            {% if item.button_left != blank %}
+              <div class="button section-v2__item-content__group-button-left">
+                <a href="{{ item.button_left_url }}">{{ item.button_left }}</a>
+              </div>
+            {% endif %}
+            {% if item.button_right != blank %}
+              <div class="button section-v2__item-content__group-button-right">
+                <a href="{{ item.button_right_url }}">{{ item.button_right }}</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endcase %}
+  {% endfor %}
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Section V2",
+    "tag": "section",
+    "blocks": [
+      {
+        "name": "Section V2",
+        "type": "banner",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Banner"
+          },
+          {
+            "type": "image_picker",
+            "id": "img_desktop",
+            "label": "Image Desktop"
+          },
+          {
+            "type": "image_picker",
+            "id": "img_mobile",
+            "label": "Image Mobile"
+          },
+          {
+            "type": "textarea",
+            "label": "Title",
+            "id": "title",
+            "info": "Ex: Extra 50% off Sale"
+          }, {
+            "type": "color",
+            "id": "content_text_color",
+            "label": "Content Text Color",
+            "default": "#000"
+          }, {
+            "type": "text",
+            "id": "sub_title",
+            "label": "Sub Title",
+            "info": "Ex: Only best, selected brands!"
+          }, {
+            "id": "button_left",
+            "type": "text",
+            "label": "Button Left",
+            "info": "Ex: Clothes on sale"
+          }, {
+            "type": "url",
+            "id": "button_left_url",
+            "label": "Url Button Left"
+          }, {
+            "id": "button_right",
+            "type": "text",
+            "label": "Button Right",
+            "info": " Shoes on sale"
+          }, {
+            "type": "url",
+            "id": "button_right_url",
+            "label": "Url Button Right"
+          }, {
+            "type": "select",
+            "id": "button_style",
+            "label": "Style Button",
+            "options": [
+              {
+                "label": "Option 1",
+                "value": "option1"
+              },
+              {
+                "label": "Option 2",
+                "value": "option2"
+              },
+              {
+                "label": "Option 3",
+                "value": "option3"
+              },
+              {
+                "label": "Option 4",
+                "value": "option4"
+              }, {
+                "label": "Option 5",
+                "value": "option5"
+              }
+            ],
+            "default": "option1"
+          }
+
+        ]
+      }
+
+    ],
+    "settings": [
+      {
+        "type": "text",
+        "id": "margin_top",
+        "label": "Margin Top",
+        "default": "0"
+      },
+      {
+        "type": "text",
+        "id": "margin_vertical",
+        "label": "Section Margin Inline",
+        "default": "0"
+      },
+      {
+        "type": "select",
+        "label": "Flex Item Style",
+        "id": "flex",
+        "options": [
+          {
+            "label": "Flex banner 36%/64%",
+            "value": "option1"
+          }, {
+            "label": "Flex banner 64/36%",
+            "value": "option2"
+          }, {
+            "label": "Flex Wrap List",
+            "value": "option3"
+          }, {
+            "label": "Flex Slider",
+            "value": "option4"
+          }
+        ],
+        "default": "option1"
+      },
+      {
+        "type": "text",
+        "id": "item_gap",
+        "label": "Item Gap: Ex: 2 -> 2px",
+        "default": "0",
+        "info": "distance between items"
+      }, {
+        "type": "select",
+        "id": "content_position",
+        "label": "Content Position Desktop/Mobile",
+        "options": [
+          {
+            "label": "Left - Bottom: 40 - 80 / 16 - 14",
+            "value": "position1"
+          }, {
+            "label": "Left - Bottom: 40 - 111/ 16 - 61",
+            "value": "position2"
+          }
+        ],
+        "default": "position1"
+      }, {
+        "type": "text",
+        "id": "font_size_title",
+        "label": "Font Title : Mobile, Desktop",
+        "default": "30,50"
+      }, {
+        "type": "text",
+        "id": "font_size_sub_title",
+        "label": "Font Sub Title : Desktop, Mobile",
+        "default": "20,18"
+      }, {
+        "type": "checkbox",
+        "id": "text_decoration",
+        "label": "Text Decoration",
+        "default": false
+      }, {
+        "type": "text",
+        "default": "17,40",
+        "id": "gap_content",
+        "label": "Content Gap",
+        "info": "space between text and button"
+      }, {
+        "type": "checkbox",
+        "id": "is_content_center",
+        "label": "Content Bottom Center",
+        "default": false
+      }, {
+        "type": "checkbox",
+        "id": "is_item_content_center",
+        "label": "Item Content Center",
+        "default": false
+      }, {
+        "type": "checkbox",
+        "id": "is_content_position",
+        "label": "Is Content Bottom",
+        "default": false
+      }, {
+        "type": "text",
+        "id": "font_size_button",
+        "label": "Font Size Buttom: Mobile, Desktop",
+        "default": "16,16"
+      }, {
+        "type": "text",
+        "id": "font_weight_button",
+        "label": "Font Weight Button",
+        "default": "400"
+      }, {
+        "type": "text",
+        "id": "img_height",
+        "label": "Height Img",
+        "default": "600"
+      }, {
+        "type": "text",
+        "id": "item_width",
+        "label": "Item Width: 332px / 100%",
+        "default": "100%"
+      }, {
+        "type": "number",
+        "id": "items_per_line",
+        "label": "Items/line",
+        "default": 3
+      }, {
+        "type": "number",
+        "id": "image_border_radius",
+        "label": "Image Border Radius",
+        "default": 4
+      }
+    ],
+    "presets": [
+      {
+        "name": "V2 Section"
+      }
+    ]
+  }
+{% endschema %}
+
+{% comment %} 
+{% case item.button_style %}
+{% when 'btn_style1' %}
+--btn_color: red;
+--btn_background: transparent;
+--btn_border: 1px solid #000;
+--btn_padding: {{ 60 | append: 'px'  }}
+;
+{% when 'btn_style2' %}
+--color: black;
+--background: white;
+--border: none;
+--padding: {{ 60 | append: 'px'  }}
+;
+{% when 'btn_style3' %}
+--color: #fff;
+--background: transparent;
+--border: none;
+--padding: {{ 0 | append: 'px'  }}
+;
+{% when 'btn_style4' %}
+--color: #000;
+--background: transparent;
+--border: none;
+--padding: {{ 0 | append: 'px'  }}
+;
+{% else %}
+{% endcase %} {% endcomment %}
+
+<!--
+{% section 'header1' %}
+<main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+</main>
+
+{% section 'footer' %}
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js' defer></script>
+<script src="{{ 'theme.js' | asset_url }}" defer></script>
+NOTE: prior to v2.2.1 tiny-slider.js need to be in <body> -->

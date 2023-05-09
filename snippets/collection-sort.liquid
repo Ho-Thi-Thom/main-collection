@@ -1,0 +1,35 @@
+<link
+  rel="stylesheet"
+  href="{{ 'collection-sort.css' | asset_url }}"
+  media="all"
+>
+
+<div class="form_wrapper">
+  <label for="{{ _id_select }}">{{ label }} </label>
+  <select
+    name="{{ _name }}"
+    id="{{ _id_select }}"
+    data-section-id="{{ section.id }}"
+  >
+    {% for item in options %}
+      {%- assign view = item | strip | times: 1 -%}
+      {% if item.value %}
+        {% comment %} sort by {% endcomment %}
+        {% assign value = item.value %}
+        {% assign name = item.name %}
+      {% else %}
+        {% comment %} show {% endcomment %}
+        {% assign value = view %}
+        {% assign name = view %}
+      {% endif %}
+      <option
+        value="{{ value }}"
+        {% if value == _sort %}
+          selected
+        {% endif %}
+      >
+        {{ name }}
+      </option>
+    {% endfor %}
+  </select>
+</div>

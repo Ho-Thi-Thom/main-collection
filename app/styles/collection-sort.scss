@@ -1,0 +1,39 @@
+.form {
+
+    &_wrapper {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        label {
+            font-size: 16px;
+            font-weight: 400;
+            color: #333;
+        }
+
+        select {
+            border: none;
+            font-size: inherit;
+            color: #1A1A1A;
+            font-weight: 600;
+            line-height: 40px;
+            min-width: 142px;
+            width: auto;
+
+            option {
+                padding: 5px 15px;
+                font-size: 16px;
+                color: #333;
+                font-weight: 400;
+                transition: all .25s ease-in-out;
+            }
+        }
+
+        select:focus {
+            border-color: #666;
+            outline: none;
+        }
+    }
+
+}
