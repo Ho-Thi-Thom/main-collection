@@ -19,21 +19,21 @@ function infinityFuc(infinityPoint) {
                     const url = target.dataset.url
                     const sectionId = target.dataset.sectionId
 
-
                     function callback(searchParams) {
                         searchParams.set('section_id', sectionId)
                     }
-                    const _url = createUrl(callback, url.split('?')[1])
 
+                    const _url = url ? createUrl(callback, url.split('?')[1]) : null
+                    if (_url == null) {
+                        observer.disconnect();
+                        return;
+                    }
                     loading(target);
                     getApi(_url)
                         .then((data) => {
                             const infinityPoint = data.getElementPointInfinity()
                             appendProduct(data.getElementProduct())
                             updatePointInfinity(infinityPoint)
-                            if (!infinityPoint.dataset.url) {
-                                observer.disconnect()
-                            }
                         }).finally(() => {
                             hiddenLoading(target);
                         })
@@ -93,8 +93,73 @@ if (show) {
             setProduct(data.getElementProduct())
             updatePointInfinity(data.getElementPointInfinity())
             updatePaginate(data.getPaginate())
-
         })
+    })
+}
+
+
+if (filterForms) {
+    filterForms.forEach(input => {
+        input.addEventListener('change', event => {
+            const value = event.target.value;
+            const name = event.target.name;
+            function callback(checkedValues) {
+                if (event.target.checked) {
+                    if (!checkedValues[name]) {
+                        checkedValues[name] = [];
+                    }
+                    checkedValues[name].push(value);
+                } else {
+                    if (checkedValues[name]) {
+                        checkedValues[name] = checkedValues[name].filter(val => val !== value);
+                    }
+                }
+
+            }
+            const url = createUrlFilter(callback, window.location.search)
+            history.pushState(null, null, url);
+
+            getApi(url).then((data) => {
+                setProduct(data.getElementProduct())
+                updateCount(data.getProductCount())
+                updatePointInfinity(data.getElementPointInfinity())
+                updatePaginate(data.getPaginate())
+            })
+        })
+    })
+}
+
+
+
+
+if (filterPrice) {
+    const params = { 'filter.v.price.gte': 0, 'filter.v.price.lte': Number.MAX_SAFE_INTEGER }
+    filterPrice.forEach(input => {
+        input.addEventListener('change', event => {
+            const value = event.target.value;
+            const name = event.target.name;
+            const max = event.target.dataset.max;
+            params['filter.v.price.lte'] = max;
+            params[name] = value;
+
+            function callback(checkedValues) {
+                for (const key in params) {
+                    checkedValues[key] = [];
+                    checkedValues[key].push(params[key]);
+                }
+
+            }
+            const url = createUrlFilter(callback, window.location.search)
+            history.pushState(null, null, url);
+            getApi(url).then((data) => {
+                setProduct(data.getElementProduct())
+                updateCount(data.getProductCount())
+                updatePointInfinity(data.getElementPointInfinity())
+                updatePaginate(data.getPaginate())
+            })
+        }
+
+        )
     })
 }
 

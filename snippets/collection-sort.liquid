@@ -33,3 +33,50 @@
     {% endfor %}
   </select>
 </div>
+
+{% comment %}
+  v1
+    <form action="{{ _collection_url }}" class="form_wrapper">
+      <label for="{{ _id }}">{{ label }} </label>
+      <select name="{{ _name }}" id="{{ _id }}" onchange="this.closest('form').submit();">
+        {% for item in options %}
+          <option
+            value="{{ item.value }}"
+            {% if item.value == _sort_by %}
+              selected
+            {% endif %}
+          >
+            {{ item.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+{% endcomment %}
+
+{% comment %}
+  https://arena-commerce-pineapple.myshopify.com/collections/car?sort_by=title-descending
+{% endcomment %}
+
+{% comment %}
+  v2
+  <form class="form_wrapper">
+    <label for="{{ _id }}">{{ label }} </label>
+    <select
+      name="{{ _name }}"
+      id="{{ _id }}"
+      onchange="handleChange(event);"
+      data-url="{{ _collection_url }}"
+    >
+      {% for item in options %}
+        <option
+          value="{{ item.value }}"
+          {% if item.value == _sort_by %}
+            selected
+          {% endif %}
+        >
+          {{ item.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </form>
+{% endcomment %}

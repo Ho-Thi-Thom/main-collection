@@ -1,232 +1,75 @@
 {
   "sections": {
+    "94a6b189-5c90-487c-bbef-079b01d5e547": {
+      "type": "v2-section",
+      "disabled": true,
+      "blocks": {
+        "bfb0f2ff-de66-40d1-84af-605ff31d4788": {
+          "type": "banner",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/2024.png",
+            "title": "",
+            "content_text_color": "#000000",
+            "sub_title": "",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "",
+            "button_right_url": "",
+            "button_style": "option1"
+          }
+        },
+        "1d84f9c1-d5dd-4683-9ef6-ff42cfdd9686": {
+          "type": "banner",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/2_dc2baff9-3c5a-4bb0-b18f-4db432a1b0b1.png",
+            "title": "",
+            "content_text_color": "#000000",
+            "sub_title": "",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "",
+            "button_right_url": "",
+            "button_style": "option1"
+          }
+        }
+      },
+      "block_order": [
+        "bfb0f2ff-de66-40d1-84af-605ff31d4788",
+        "1d84f9c1-d5dd-4683-9ef6-ff42cfdd9686"
+      ],
+      "settings": {
+        "margin_top": "0",
+        "margin_vertical": "0",
+        "flex": "option1",
+        "item_gap": "0",
+        "content_position": "position1",
+        "font_size_title": "30,50",
+        "font_size_sub_title": "20,18",
+        "text_decoration": false,
+        "gap_content": "17,40",
+        "is_content_center": false,
+        "is_item_content_center": false,
+        "is_content_position": false,
+        "font_size_button": "16,16",
+        "font_weight_button": "400",
+        "img_height": "600",
+        "item_width": "100%",
+        "items_per_line": 3,
+        "image_border_radius": 4
+      }
+    },
     "header": {
       "type": "header",
+      "disabled": true,
       "settings": {
         "menu": "menu-header",
         "text_color": "black",
         "select_position": "1"
       }
     },
-    "005a1776-635d-4207-8373-25440df91642": {
-      "type": "slider1",
-      "blocks": {
-        "9f7339a8-2fef-4bc4-b72f-64442b64bae8": {
-          "type": "Image",
-          "settings": {
-            "image_url": "shopify:\/\/shop_images\/manny-moreno-TbXRTGdDaHY-unsplash_1.png",
-            "title-text": "Extra 50% off Sale",
-            "font-size-title": "80,30",
-            "sub-text": "Use code “ss22” in cart to check the discount.",
-            "font-size-sub-title": "18,14",
-            "text-color": "#ffffff",
-            "button1": "Clothes on sale",
-            "slider-content-button1-url": "",
-            "button2": "Shoes on sale",
-            "slider-content-button2-url": "",
-            "btn-style": "secondary"
-          }
-        },
-        "3ebed69a-c1ea-41c3-97cd-a58fcfa613b2": {
-          "type": "Image",
-          "settings": {
-            "image_url": "shopify:\/\/shop_images\/imgpsh_fullsize_anim.jpg",
-            "title-text": "Extra 50% off Sale A",
-            "font-size-title": "80,30",
-            "sub-text": "Use code “ss22” A",
-            "font-size-sub-title": "18,14",
-            "text-color": "#ffffff",
-            "button1": "Clothes on sale",
-            "slider-content-button1-url": "",
-            "button2": "Shoes on sale",
-            "slider-content-button2-url": "",
-            "btn-style": "primary"
-          }
-        }
-      },
-      "block_order": [
-        "9f7339a8-2fef-4bc4-b72f-64442b64bae8",
-        "3ebed69a-c1ea-41c3-97cd-a58fcfa613b2"
-      ],
-      "settings": {}
-    },
-    "46f77db1-2e16-42cb-8f62-e5cad056d084": {
-      "type": "banner",
-      "blocks": {
-        "7d7e952f-9d61-4a37-9270-e89550dd9d40": {
-          "type": "list",
-          "settings": {
-            "banner_item-image": "shopify:\/\/shop_images\/alex-hudson-ALDmHPj9b7Q-unsplash_1.png",
-            "banner_item-title": "Looking<br>\nfor new<br>\nshoes?",
-            "banner_item-sub-title": "Upcoming trends",
-            "banner-item-content-sub-title-url": "",
-            "banner_item-content-color": "#ffffff"
-          }
-        },
-        "a4e4dbd4-20b0-4da2-8780-5a056baf85fd": {
-          "type": "list",
-          "settings": {
-            "banner_item-image": "shopify:\/\/shop_images\/pexels-marco-trinidad-2881785_1.png",
-            "banner_item-title": "Be ready <br>\nfor Summer<br>\n2023",
-            "banner_item-sub-title": "Upcoming trends",
-            "banner-item-content-sub-title-url": "",
-            "banner_item-content-color": "#000000"
-          }
-        },
-        "3b3dbc88-7585-4c9b-b820-8a40b8191372": {
-          "type": "list",
-          "settings": {
-            "banner_item-image": "shopify:\/\/shop_images\/coast1_2ea6824a-3b66-4c92-a982-da9d695eba58.png",
-            "banner_item-title": "Be ready for Summer 2021",
-            "banner_item-sub-title": "Upcoming trends",
-            "banner-item-content-sub-title-url": "",
-            "banner_item-content-color": "#ffffff"
-          }
-        },
-        "31e42d4a-e97f-4577-84cd-74cdc807caad": {
-          "type": "list",
-          "settings": {
-            "banner_item-image": "shopify:\/\/shop_images\/shirts.png",
-            "banner_item-title": "Be ready for Summer 2021",
-            "banner_item-sub-title": "Upcoming trends",
-            "banner-item-content-sub-title-url": "",
-            "banner_item-content-color": "#000000"
-          }
-        }
-      },
-      "block_order": [
-        "7d7e952f-9d61-4a37-9270-e89550dd9d40",
-        "a4e4dbd4-20b0-4da2-8780-5a056baf85fd",
-        "3b3dbc88-7585-4c9b-b820-8a40b8191372",
-        "31e42d4a-e97f-4577-84cd-74cdc807caad"
-      ],
-      "settings": {}
-    },
-    "532a03c7-f35f-4432-ae3d-52fdc483d688": {
-      "type": "list-product",
-      "blocks": {
-        "3f2fb106-e105-43a2-b7d4-e86d79de25f9": {
-          "type": "list",
-          "settings": {
-            "list-product-item-img": "shopify:\/\/shop_images\/jeans.png",
-            "list-product-item-button": "Jeans",
-            "list-product-item-url": ""
-          }
-        },
-        "fb1a6529-5559-4007-9bdb-84811a5a8581": {
-          "type": "list",
-          "settings": {
-            "list-product-item-img": "shopify:\/\/shop_images\/shoes.png",
-            "list-product-item-button": "Shoes",
-            "list-product-item-url": ""
-          }
-        },
-        "d02db4cd-0dad-4569-be57-0550278a3212": {
-          "type": "list",
-          "settings": {
-            "list-product-item-img": "shopify:\/\/shop_images\/coats.png",
-            "list-product-item-button": "Coats",
-            "list-product-item-url": ""
-          }
-        },
-        "07a0069a-60c7-4011-962d-8ad7eb3e5212": {
-          "type": "list",
-          "settings": {
-            "list-product-item-img": "shopify:\/\/shop_images\/shirts.png",
-            "list-product-item-button": "Shirts",
-            "list-product-item-url": ""
-          }
-        },
-        "82794024-3267-45b5-87e9-b1054c9944c5": {
-          "type": "list",
-          "settings": {
-            "list-product-item-img": "shopify:\/\/shop_images\/accessories.png",
-            "list-product-item-button": "Accessories",
-            "list-product-item-url": ""
-          }
-        },
-        "0ed65713-acca-46a2-9d55-97bdc38996ff": {
-          "type": "list",
-          "settings": {
-            "list-product-item-img": "shopify:\/\/shop_images\/shoes1.png",
-            "list-product-item-button": "T-Shirt",
-            "list-product-item-url": ""
-          }
-        }
-      },
-      "block_order": [
-        "3f2fb106-e105-43a2-b7d4-e86d79de25f9",
-        "fb1a6529-5559-4007-9bdb-84811a5a8581",
-        "d02db4cd-0dad-4569-be57-0550278a3212",
-        "07a0069a-60c7-4011-962d-8ad7eb3e5212",
-        "82794024-3267-45b5-87e9-b1054c9944c5",
-        "0ed65713-acca-46a2-9d55-97bdc38996ff"
-      ],
-      "settings": {
-        "list-product__item-button": "primary"
-      }
-    },
-    "c14552ba-388c-4b8e-ad54-d0513cfb7195": {
-      "type": "new-arrivals",
-      "settings": {
-        "collection": "new-arrivals",
-        "text_title": "New Arrivals",
-        "title_color": "#000000"
-      }
-    },
-    "06803d8e-d7b9-4681-8691-e42b3914a311": {
-      "type": "three-banner",
-      "blocks": {
-        "7c20dfa2-2b55-4d86-86eb-b21b58552a45": {
-          "type": "list",
-          "settings": {
-            "banner_item_img": "shopify:\/\/shop_images\/alex-hudson-ALDmHPj9b7Q-unsplash_2.png",
-            "banner_item_title": "Many styles in one look",
-            "banner_item_link": "Discover more",
-            "banner_item_url": ""
-          }
-        },
-        "0e1efc60-5ba2-4e73-867b-869457b2db85": {
-          "type": "list",
-          "settings": {
-            "banner_item_img": "shopify:\/\/shop_images\/shoes1.png",
-            "banner_item_title": "Shoes for you",
-            "banner_item_link": "Shop now",
-            "banner_item_url": ""
-          }
-        },
-        "7a69fd30-88c5-4ca0-afec-b8b1334703ce": {
-          "type": "list",
-          "settings": {
-            "banner_item_img": "shopify:\/\/shop_images\/coast1_2ea6824a-3b66-4c92-a982-da9d695eba58.png",
-            "banner_item_title": "Sporty elegance",
-            "banner_item_link": "New collection",
-            "banner_item_url": ""
-          }
-        }
-      },
-      "block_order": [
-        "7c20dfa2-2b55-4d86-86eb-b21b58552a45",
-        "0e1efc60-5ba2-4e73-867b-869457b2db85",
-        "7a69fd30-88c5-4ca0-afec-b8b1334703ce"
-      ],
-      "settings": {
-        "banner_item_text_color": "#000000"
-      }
-    },
-    "70b145a3-3706-4542-acdb-c66230c9b9c4": {
-      "type": "newsletter",
-      "settings": {
-        "newseletter-title": "Join our newsletter <br> and get $20 for your first order",
-        "newseletter-title-fontsize": "28,20",
-        "newseletter-title-color": "#000000",
-        "newseletter-input-placeholder": "Your e-mail address",
-        "newseletter-button-text": "Subscribe",
-        "newseletter-form-button": "primary"
-      }
-    },
     "8ce34b82-817b-4e18-b07d-846227959839": {
       "type": "social",
+      "disabled": true,
       "blocks": {
         "7ee93d2e-d3f4-47d8-977b-5aeb15fc97b8": {
           "type": "desktop",
@@ -296,11 +139,13 @@
         "c97be6d2-d9fb-4f8e-b9ee-3002de8ebce7"
       ],
       "settings": {
-        "text-color": "#000000"
+        "text-color": "#000000",
+        "margin-inline": "160"
       }
     },
     "3a15c7e1-c31a-4afd-9aa4-d57afdf505a3": {
       "type": "footer1",
+      "disabled": true,
       "blocks": {
         "0b4ad4f4-8f4e-48ca-94cd-d2806ec7fd74": {
           "type": "list",
@@ -378,19 +223,648 @@
         "f93379e0-e195-4113-b1b5-b91f89bcfa70"
       ],
       "settings": {
-        "footer-copy-right": "Copyright © 2023 arenacommerce. All Rights Reserved"
+        "footer-copy-right": "Copyright © 2023 arenacommerce. All Rights Reserved",
+        "margin-inline": "160"
+      }
+    },
+    "4562115f-3519-458a-a0f2-e0eb595e0a2f": {
+      "type": "v3-section",
+      "blocks": {
+        "dbce9b24-4740-4859-9e94-f018c85c9060": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/1_e8914251-edeb-4c1f-9b42-9e5062bebe83.png",
+            "img_mobile": "shopify:\/\/shop_images\/2024_cb8b8c36-3347-48c5-8c5a-7e50ce96d0ff.png",
+            "title": "Glasses <br>\n& Bags",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Shop now",
+            "button_right_url": "",
+            "btn_style": "btn_style1",
+            "difference_button": true
+          }
+        },
+        "1df219ea-f0a9-4faf-af03-3d7d3f992fad": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/2_dc2baff9-3c5a-4bb0-b18f-4db432a1b0b1.png",
+            "img_mobile": "shopify:\/\/shop_images\/22.png",
+            "title": "Extra 50% <br>\noff Sale",
+            "sub_title": "Only best, selected brands!",
+            "content_text_color": "#ffffff",
+            "button_left": "Clothes on sale",
+            "button_left_url": "",
+            "button_right": "Shoes on sale",
+            "button_right_url": "",
+            "btn_style": "btn_style2",
+            "difference_button": false
+          }
+        }
+      },
+      "block_order": [
+        "dbce9b24-4740-4859-9e94-f018c85c9060",
+        "1df219ea-f0a9-4faf-af03-3d7d3f992fad"
+      ],
+      "settings": {
+        "v3_margin_top": "0,0",
+        "max_width": "container1",
+        "heading": "",
+        "is_slide_show": false,
+        "flex": "option1",
+        "items_per_line_custom": "1,3",
+        "item_gap": "0",
+        "content_position": "position1",
+        "font_size_title": "30,50",
+        "font_size_sub_title": "18,20",
+        "gap_content": "option1",
+        "is_border_radius": true,
+        "count_up_number": 0
+      }
+    },
+    "8950c1ef-39ff-4082-a8d5-03ff4abdb609": {
+      "type": "v3-section",
+      "blocks": {
+        "f29ce4a9-07e1-4780-8e88-6ba76be23721": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/phil-monte-fRNm4azug0I-unsplash_1_3b5bfc58-f8ff-4fc1-b399-e331de0cb127.png",
+            "img_mobile": "shopify:\/\/shop_images\/33.png",
+            "title": "All watches<br>\non sale!",
+            "sub_title": "Only best, selected brands!",
+            "content_text_color": "#ffffff",
+            "button_left": "Watches",
+            "button_left_url": "",
+            "button_right": "Smartwatches",
+            "button_right_url": "",
+            "btn_style": "btn_style2",
+            "difference_button": false
+          }
+        },
+        "1993f6f4-6fb4-4c53-814c-5f12ef5c7c12": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/nchoa.png",
+            "img_mobile": "shopify:\/\/shop_images\/nchoa.png",
+            "title": "The best <br>\nfragrances",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Shop now",
+            "button_right_url": "",
+            "btn_style": "btn_style1",
+            "difference_button": false
+          }
+        }
+      },
+      "block_order": [
+        "f29ce4a9-07e1-4780-8e88-6ba76be23721",
+        "1993f6f4-6fb4-4c53-814c-5f12ef5c7c12"
+      ],
+      "settings": {
+        "v3_margin_top": "0,0",
+        "max_width": "container1",
+        "heading": "",
+        "is_slide_show": false,
+        "flex": "option2",
+        "items_per_line_custom": "1,3",
+        "item_gap": "0",
+        "content_position": "position1",
+        "font_size_title": "30,50",
+        "font_size_sub_title": "20,18",
+        "gap_content": "option1",
+        "is_border_radius": true,
+        "count_up_number": 0
+      }
+    },
+    "214da911-a764-4adf-8c6f-7696960303f8": {
+      "type": "v3-section",
+      "blocks": {
+        "576a98eb-7e54-4bdd-8bba-a285a0ce9d8a": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/bb.png",
+            "img_mobile": "shopify:\/\/shop_images\/1_3272ddf7-c4f2-400d-a171-0443d585eeca.png",
+            "title": "",
+            "sub_title": "Sweatshirts  <br>& longsleeves",
+            "content_text_color": "#ffffff",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Shop now",
+            "button_right_url": "",
+            "btn_style": "btn_style3",
+            "difference_button": false
+          }
+        },
+        "1a4c92e6-d33c-443e-b779-aca8282e9fb1": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/bb_07f196e5-3fa0-48ab-a999-486cd3b76e64.png",
+            "img_mobile": "shopify:\/\/shop_images\/5_f86be59e-62f9-452d-9926-a92fc4905d3f.png",
+            "title": "",
+            "sub_title": "Sneakers <br>-25%",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Sneakers",
+            "button_right_url": "",
+            "btn_style": "btn_style4",
+            "difference_button": false
+          }
+        },
+        "6209b5b8-66c3-421c-9eaa-67b4cc069552": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/pexels-gabby-k-6311121_1_1.png",
+            "img_mobile": "shopify:\/\/shop_images\/3_ad04cfb7-5017-42c8-86a7-2f7446960d47.png",
+            "title": "",
+            "sub_title": "Swimsuits  <br>Last pices!",
+            "content_text_color": "#ffffff",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Swimsuits",
+            "button_right_url": "",
+            "btn_style": "btn_style3",
+            "difference_button": false
+          }
+        },
+        "25cc3c19-7f5d-44e4-b460-e08bf171706a": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/2026.png",
+            "img_mobile": "shopify:\/\/shop_images\/2025.png",
+            "title": "",
+            "sub_title": "Sneakers <br>-25%",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Sneakers",
+            "button_right_url": "",
+            "btn_style": "btn_style4",
+            "difference_button": false
+          }
+        }
+      },
+      "block_order": [
+        "576a98eb-7e54-4bdd-8bba-a285a0ce9d8a",
+        "1a4c92e6-d33c-443e-b779-aca8282e9fb1",
+        "6209b5b8-66c3-421c-9eaa-67b4cc069552",
+        "25cc3c19-7f5d-44e4-b460-e08bf171706a"
+      ],
+      "settings": {
+        "v3_margin_top": "20,50",
+        "max_width": "container1",
+        "heading": "",
+        "is_slide_show": true,
+        "flex": "option4",
+        "items_per_line_custom": "1,3",
+        "item_gap": "0",
+        "content_position": "position2",
+        "font_size_title": "30,50",
+        "font_size_sub_title": "18,30",
+        "gap_content": "option2",
+        "is_border_radius": true,
+        "count_up_number": 0
+      }
+    },
+    "e2841524-1a59-44b5-94bc-949a7fff8233": {
+      "type": "v3-section",
+      "blocks": {
+        "7f7a994a-d3c5-4550-bbec-3325e156dada": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/alex-hudson-ALDmHPj9b7Q-unsplash_2_3ceafb09-b82e-44a6-babd-fc62b4102316.png",
+            "img_mobile": "shopify:\/\/shop_images\/sss.png",
+            "title": "",
+            "sub_title": "Many styles in one look",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Discover more",
+            "button_right_url": "",
+            "btn_style": "btn_style4",
+            "difference_button": false
+          }
+        },
+        "bc3039d2-a8c9-48fd-97c6-4522534e2c84": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/Frame_28_5a7abd2c-2cf3-4e6d-a416-78049de9e3ae.png",
+            "img_mobile": "shopify:\/\/shop_images\/Frame_28.png",
+            "title": "",
+            "sub_title": "Up to -50%",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Shop now",
+            "button_right_url": "",
+            "btn_style": "btn_style4",
+            "difference_button": false
+          }
+        },
+        "1d485ac9-4ef9-4eaa-8839-207268ce624a": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/alex-hudson-ALDmHPj9b7Q-unsplash_2_1_ba472e76-b307-4eaa-8a85-a1ad0eae7870.png",
+            "img_mobile": "shopify:\/\/shop_images\/ssss.png",
+            "title": "",
+            "sub_title": "Sporty elegance",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "New collection",
+            "button_right_url": "",
+            "btn_style": "btn_style4",
+            "difference_button": false
+          }
+        },
+        "c4e04eda-5985-49f9-903b-58fa5c741ca2": {
+          "type": "component_first",
+          "disabled": true,
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/sss.png",
+            "img_mobile": "shopify:\/\/shop_images\/sss.png",
+            "title": "Many styles in one look",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Discover more",
+            "button_right_url": "",
+            "btn_style": "btn_style4",
+            "difference_button": false
+          }
+        }
+      },
+      "block_order": [
+        "7f7a994a-d3c5-4550-bbec-3325e156dada",
+        "bc3039d2-a8c9-48fd-97c6-4522534e2c84",
+        "1d485ac9-4ef9-4eaa-8839-207268ce624a",
+        "c4e04eda-5985-49f9-903b-58fa5c741ca2"
+      ],
+      "settings": {
+        "v3_margin_top": "16,100",
+        "max_width": "container2",
+        "heading": "",
+        "is_slide_show": false,
+        "flex": "option3",
+        "items_per_line_custom": "1,3",
+        "item_gap": "15",
+        "content_position": "position3",
+        "font_size_title": "",
+        "font_size_sub_title": "18,25",
+        "gap_content": "option3",
+        "is_border_radius": true,
+        "count_up_number": 0
+      }
+    },
+    "babfabee-8919-41e8-af49-604b64af763d": {
+      "type": "v3-section",
+      "blocks": {
+        "0c6cdb11-68f1-4de3-9b51-b36eb1a9b66e": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/pexels-john-ray-ebora-3724367_1.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Jeans",
+            "button_right_url": "",
+            "btn_style": "btn_style5",
+            "difference_button": false
+          }
+        },
+        "4cacdcc5-f6bd-4d30-9796-aa4e1e47b385": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/pexels-hassan-ouajbir-1306248_1.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Shoes",
+            "button_right_url": "",
+            "btn_style": "btn_style5",
+            "difference_button": false
+          }
+        },
+        "9b3cdcb9-fe14-451c-8c67-c2c9590b40e0": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/michael-fenton--m3g8UAsWQk-unsplash_1.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Coats",
+            "button_right_url": "",
+            "btn_style": "btn_style5",
+            "difference_button": false
+          }
+        },
+        "95bec7fa-8efc-483f-b6f2-9ff9dcc11021": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/pexels-emre-keshavarz-3919746_1.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Shirts",
+            "button_right_url": "",
+            "btn_style": "btn_style5",
+            "difference_button": false
+          }
+        },
+        "b2de4712-e713-4704-84b7-004c1a889c5a": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/pexels-mister-mister-3434525_1.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Accessories",
+            "button_right_url": "",
+            "btn_style": "btn_style5",
+            "difference_button": false
+          }
+        }
+      },
+      "block_order": [
+        "0c6cdb11-68f1-4de3-9b51-b36eb1a9b66e",
+        "4cacdcc5-f6bd-4d30-9796-aa4e1e47b385",
+        "9b3cdcb9-fe14-451c-8c67-c2c9590b40e0",
+        "95bec7fa-8efc-483f-b6f2-9ff9dcc11021",
+        "b2de4712-e713-4704-84b7-004c1a889c5a"
+      ],
+      "settings": {
+        "v3_margin_top": "47,54",
+        "max_width": "container1",
+        "heading": "",
+        "is_slide_show": true,
+        "flex": "option4",
+        "items_per_line_custom": "1.2,5",
+        "item_gap": "2",
+        "content_position": "position4",
+        "font_size_title": "30,50",
+        "font_size_sub_title": "20,18",
+        "gap_content": "option1",
+        "is_border_radius": true,
+        "count_up_number": 0
+      }
+    },
+    "51e98d4a-b79d-4785-a5de-b56026d0f2b3": {
+      "type": "v3-section",
+      "blocks": {
+        "30069bef-840c-4084-ad1e-d8705e8e1644": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/a1.png",
+            "img_mobile": "shopify:\/\/shop_images\/ss_32847717-ee8c-40db-93a3-af006cf69185.png",
+            "title": "",
+            "sub_title": "Many styles in one look",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Discover more",
+            "button_right_url": "",
+            "btn_style": "btn_style4",
+            "difference_button": false
+          }
+        },
+        "eb08daff-c176-4fe4-8005-a1624c74b395": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/alex-hudson-ALDmHPj9b7Q-unsplash_2_2_01ce6daa-9241-4150-b7d2-e7956a4d679d.png",
+            "img_mobile": "shopify:\/\/shop_images\/88.png",
+            "title": "",
+            "sub_title": "Shoes for you",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "Shop now",
+            "button_right_url": "",
+            "btn_style": "btn_style4",
+            "difference_button": false
+          }
+        },
+        "c319dfc6-8971-494e-a7c4-08610b8deb2f": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/9.png",
+            "img_mobile": "shopify:\/\/shop_images\/99.png",
+            "title": "",
+            "sub_title": "Sporty elegance",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "New collection",
+            "button_right_url": "",
+            "btn_style": "btn_style4",
+            "difference_button": false
+          }
+        }
+      },
+      "block_order": [
+        "30069bef-840c-4084-ad1e-d8705e8e1644",
+        "eb08daff-c176-4fe4-8005-a1624c74b395",
+        "c319dfc6-8971-494e-a7c4-08610b8deb2f"
+      ],
+      "settings": {
+        "v3_margin_top": "20,50",
+        "max_width": "container2",
+        "heading": "",
+        "is_slide_show": false,
+        "flex": "option3",
+        "items_per_line_custom": "1,3",
+        "item_gap": "15",
+        "content_position": "position3",
+        "font_size_title": "",
+        "font_size_sub_title": "18,20",
+        "gap_content": "option3",
+        "is_border_radius": true,
+        "count_up_number": 0
+      }
+    },
+    "1c92ec99-9ac0-455d-bd2d-38eb61acfd49": {
+      "type": "v3-section",
+      "blocks": {
+        "bed02f59-3081-4dd3-ab6a-a8d4c313528e": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/1_1dfc5afa-41bc-4bad-91df-4ef84cc98d38.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "",
+            "button_right_url": "",
+            "btn_style": "btn_style1",
+            "difference_button": false
+          }
+        },
+        "da8e2da6-d63c-45b4-b0a6-78abf7c722e6": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/ali-pazani-9XIWuBBKyqI-unsplash.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "",
+            "button_right_url": "",
+            "btn_style": "btn_style1",
+            "difference_button": false
+          }
+        },
+        "dcf72e60-2562-48bb-be39-5beb85824a43": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/3_8d05abff-4ed5-479a-95e5-259a61aa0463.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "",
+            "button_right_url": "",
+            "btn_style": "btn_style1",
+            "difference_button": false
+          }
+        },
+        "f25833af-e61f-4a56-8e61-7c716e8484d8": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/4_17c64ed7-6c5d-433c-86f6-8c36d20f44af.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "",
+            "button_right_url": "",
+            "btn_style": "btn_style1",
+            "difference_button": false
+          }
+        },
+        "ac07d2ac-9287-48de-92e2-946634c46a22": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/5_f27a7a92-b434-429e-9c35-5bba82c47d3f.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "",
+            "button_right_url": "",
+            "btn_style": "btn_style1",
+            "difference_button": false
+          }
+        },
+        "9c278850-4719-40fa-a538-e26ef7d0d581": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/6_1d6ce62b-e4df-496c-bec4-a67e8d662ceb.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "",
+            "button_right_url": "",
+            "btn_style": "btn_style1",
+            "difference_button": false
+          }
+        }
+      },
+      "block_order": [
+        "bed02f59-3081-4dd3-ab6a-a8d4c313528e",
+        "da8e2da6-d63c-45b4-b0a6-78abf7c722e6",
+        "dcf72e60-2562-48bb-be39-5beb85824a43",
+        "f25833af-e61f-4a56-8e61-7c716e8484d8",
+        "ac07d2ac-9287-48de-92e2-946634c46a22",
+        "9c278850-4719-40fa-a538-e26ef7d0d581"
+      ],
+      "settings": {
+        "v3_margin_top": "20,50",
+        "max_width": "container3",
+        "heading": "@miti on instagram",
+        "is_slide_show": true,
+        "flex": "option4",
+        "items_per_line_custom": "1.3,6",
+        "item_gap": "0",
+        "content_position": "position1",
+        "font_size_title": "30,50",
+        "font_size_sub_title": "20,18",
+        "gap_content": "option1",
+        "is_border_radius": false,
+        "count_up_number": 0
+      }
+    },
+    "514b3575-1b78-448f-bec7-1258d24134ca": {
+      "type": "v3-section",
+      "blocks": {
+        "1c505a9a-a1a5-41b8-9d68-d1c4c5440e2e": {
+          "type": "component_first",
+          "settings": {
+            "img_desktop": "shopify:\/\/shop_images\/ACCESSORIES_46d76610-b651-4b47-8a8b-c5d35a967c54.png",
+            "img_mobile": "shopify:\/\/shop_images\/mb.png",
+            "title": "",
+            "sub_title": "",
+            "content_text_color": "#000000",
+            "button_left": "",
+            "button_left_url": "",
+            "button_right": "",
+            "button_right_url": "",
+            "btn_style": "btn_style1",
+            "difference_button": false
+          }
+        }
+      },
+      "block_order": [
+        "1c505a9a-a1a5-41b8-9d68-d1c4c5440e2e"
+      ],
+      "settings": {
+        "v3_margin_top": "20,50",
+        "max_width": "container3",
+        "heading": "",
+        "is_slide_show": false,
+        "flex": "option3",
+        "items_per_line_custom": "1,1",
+        "item_gap": "0",
+        "content_position": "position1",
+        "font_size_title": "30,50",
+        "font_size_sub_title": "20,18",
+        "gap_content": "option1",
+        "is_border_radius": true,
+        "count_up_number": 99999
       }
     }
   },
   "order": [
+    "94a6b189-5c90-487c-bbef-079b01d5e547",
     "header",
-    "005a1776-635d-4207-8373-25440df91642",
-    "46f77db1-2e16-42cb-8f62-e5cad056d084",
-    "532a03c7-f35f-4432-ae3d-52fdc483d688",
-    "c14552ba-388c-4b8e-ad54-d0513cfb7195",
-    "06803d8e-d7b9-4681-8691-e42b3914a311",
-    "70b145a3-3706-4542-acdb-c66230c9b9c4",
     "8ce34b82-817b-4e18-b07d-846227959839",
-    "3a15c7e1-c31a-4afd-9aa4-d57afdf505a3"
+    "3a15c7e1-c31a-4afd-9aa4-d57afdf505a3",
+    "4562115f-3519-458a-a0f2-e0eb595e0a2f",
+    "8950c1ef-39ff-4082-a8d5-03ff4abdb609",
+    "214da911-a764-4adf-8c6f-7696960303f8",
+    "e2841524-1a59-44b5-94bc-949a7fff8233",
+    "babfabee-8919-41e8-af49-604b64af763d",
+    "51e98d4a-b79d-4785-a5de-b56026d0f2b3",
+    "1c92ec99-9ac0-455d-bd2d-38eb61acfd49",
+    "514b3575-1b78-448f-bec7-1258d24134ca"
   ]
 }

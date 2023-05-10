@@ -1,8 +1,25 @@
 {
   "sections": {
     "main": {
-      "type": "main-collection"
+      "type": "main-collection",
+      "blocks": {
+        "a6e4c048-df20-4943-9c6f-3c53c977b24a": {
+          "type": "filter",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "a6e4c048-df20-4943-9c6f-3c53c977b24a"
+      ],
+      "settings": {
+        "items_per_page": 5,
+        "items_per_row": 4,
+        "paginate_style": "infinity",
+        "total_viewlist": "5,10,15,20"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

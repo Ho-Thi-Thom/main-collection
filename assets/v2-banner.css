@@ -1,0 +1,42 @@
+.section {
+  display: grid;
+  grid-template-columns: var(--option);
+}
+
+.section-v2__item {
+  position: relative;
+}
+
+.section-v2__item-img {
+  height: var(--height);
+  width: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.section-v2__item-content {
+  position: absolute;
+  left: 40px;
+  bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--content-gap);
+}
+
+.section-v2__item-content__group-text {
+}
+
+.section-v2__item-content__group-text-title {
+}
+
+.section-v2__item-content__group-text-sub-title {
+}
+
+.section-v2__item-content__group-button {
+}
+
+.section-v2__item-content__group-button-left {
+}
+
+.section-v2__item-content__group-button-right {
+}

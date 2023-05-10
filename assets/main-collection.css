@@ -13,19 +13,22 @@
 }
 
 .collection__toolbar-filter-btn {
+  min-width: 130px;
+  height: 40px;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-weight: 500;
   background-color: transparent;
-  border-radius: 7px;
-  padding: 0 16px;
-  border: 1px solid #000;
+  transition: all .3s ease;
+  position: relative;
+  box-shadow: inset 1px 1px 2px 0 rgba(255, 255, 255, 0.5), 2px 2px 4px 0 rgba(0, 0, 0, 0.1), 2px 2px 4px 0 rgba(0, 0, 0, 0.1);
+  outline: none;
   --button-color:#000;
   overflow: hidden;
   cursor: pointer;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  font-size: 18px;
-  font-weight: 500;
-  gap: 4px;
 }
 
 .collection__toolbar .collection__toolbar-filter-btn[aria-expanded=true] .hamburger {
