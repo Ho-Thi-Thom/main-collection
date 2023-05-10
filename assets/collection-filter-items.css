@@ -13,7 +13,7 @@
   margin-bottom: 10px;
   font-weight: 500;
   background-color: #05a845;
-  padding: 4px 8px;
+  padding: 8px;
   border-radius: 4px 0;
   color: #fff;
 }
@@ -51,6 +51,9 @@
   height: 40px;
   font-size: 18px;
   font-weight: 400;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
   padding: 2px 4px;
 }
 
@@ -59,7 +62,8 @@
   height: 40px;
   font-size: 18px;
   font-weight: 400;
-  min-width: 200px;
+  min-width: 150px;
+  width: 90%;
   padding: 2px 4px;
 }
 
