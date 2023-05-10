@@ -1,6 +1,8 @@
 .block__filter__items .filter-form .filter-form__item {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  padding: 8px 16px;
+  gap: 10px 5px;
 }
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper {
@@ -9,7 +11,17 @@
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-title {
   margin-bottom: 10px;
-  font-weight: 700;
+  font-weight: 500;
+  background-color: #05a845;
+  padding: 8px;
+  border-radius: 4px 0;
+  color: #fff;
+}
+
+.block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option {
+  max-height: 350px;
+  overflow: auto;
+  height: 100%;
 }
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__list {
@@ -28,17 +40,31 @@
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__price-range {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__price-range .filter-group-display__price-range-from, .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__price-range .filter-group-display__price-range-to {
+  border-radius: 4px;
+  height: 40px;
+  font-size: 18px;
+  font-weight: 400;
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
-  margin-right: 10px;
+  padding: 2px 4px;
 }
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__price-range .filter-group-display__price-range-from input[type=number], .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__price-range .filter-group-display__price-range-to input[type=number] {
-  width: 100px;
+  border-radius: 4px;
+  height: 40px;
+  font-size: 18px;
+  font-weight: 400;
+  min-width: 150px;
+  width: 90%;
+  padding: 2px 4px;
 }
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__price-range .filter-group-display__price-range-from span, .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__price-range .filter-group-display__price-range-to span {

@@ -16,5 +16,3 @@ buttons.forEach((button) => {
         }
     });
 });
-
-
