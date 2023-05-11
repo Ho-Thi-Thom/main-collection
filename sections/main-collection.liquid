@@ -18,13 +18,11 @@
 
 {% liquid
   assign products = collection.products
-  assign productSize = collection.products_count
-  assign collectionTitle = collection.title
-  assign collectionDescription = collection.description
   assign itemsPerPage = section.settings.items_per_page | default: 20 | times: 1
   assign itemPerRow = section.settings.items_per_row
   assign itemsPerPageCustom = cart.attributes.items_per_page | default: itemsPerPage | times: 1
 %}
+
 {% if request.design_mode %}
   {% assign itemsPerPageCustom = itemsPerPage %}
 {% endif %}
@@ -33,83 +31,96 @@
   .section_container {
     --items_per_row: {{itemPerRow}};
   }
+  #shopify-section-{{ section.id}}{
+    flex: 1;
+  }
 </style>
-
-{% assign filter = '' %}
-
-<div class="section_container container_wrapper" data: {{ collection.filters.boolean }}>
-  {% comment %}
-    ------------------------
-    COLLECTION TOP
-    ------------------------
-  {% endcomment %}
-  <div class="collection__header">
-    <div class="collection__header-content">
-      {% render 'collection-content',
-        title: collectionTitle,
-        description: collectionDescription,
-        productCount: collection.products_count
-      %}
+{%- paginate collection.products by itemsPerPageCustom -%}
+  <div class="section_container container_wrapper">
+    {% comment %}
+      ------------------------
+      COLLECTION TOP
+      ------------------------
+    {% endcomment %}
+    <div class="collection__header">
+      <div class="collection__header-content">
+        {% render 'collection-content',
+          title: collection.title,
+          description: collection.description,
+          productCount: collection.products_count
+        %}
+      </div>
+      {% if collection.image %}
+        <div class="collection__header-content">
+          {% render 'collection-image', image: collection.image %}
+        </div>
+      {% endif %}
     </div>
-    <div class="collection__header-content">
-      {% render 'collection-image', image: collection.image %}
-    </div>
-  </div>
 
-  <div class="collection__toolbar">
+    <div class="collection__toolbar">
+      <div class="collection__toolbar-filter">
+        {% if collection.products.size > 0 %}
+          <button class="collection__toolbar-filter-btn" aria-controls="primary-mavigation" aria-expanded="false">
+            <div class="collection__toolbar-filter-icon">{% render 'icon-filter' %}</div>
+            Filter
+          </button>
+        {% endif %}
+        {% if paginate %}
+          <div class="collection__toolbar-filter-showing">
+            {% render 'collection-showing', paginate: paginate, type: section.settings.paginate_style %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="collection__toolbar-sort">
+        <div class="collection__toolbar-sort-by">
+          {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+          {% render 'collection-sort',
+            label: 'Sort by',
+            options: collection.sort_options,
+            _sort: sort_by,
+            _id_select: 'sort_by'
+          %}
+        </div>
+
+        <div class="collection__toolbar-sort-show">
+          {% assign showingList = section.settings.total_viewlist | split: ',' -%}
+          {% render 'collection-sort',
+            label: 'Show',
+            options: showingList,
+            _sort: itemsPerPageCustom,
+            _id_select: 'show'
+          %}
+        </div>
+      </div>
+    </div>
     {% if true %}
-      <button class="collection__toolbar-filter-btn" aria-controls="primary-mavigation" aria-expanded="false">
-        <div class="collection__toolbar-filter-icon">{% render 'icon-filter' %}</div>
-        Filter
-      </button>
+      <div class="collection__toolbar__filter">
+        {% render 'collection-filter' %}
+      </div>
     {% endif %}
-    <div class="collection__toolbar-sort">
-      <div class="collection__toolbar-sort-by">
-        {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
-        {% render 'collection-sort',
-          label: 'Sort by',
-          options: collection.sort_options,
-          _sort: sort_by,
-          _id_select: 'sort_by'
-        %}
-      </div>
 
-      <div class="collection__toolbar-sort-show">
-        {% assign showingList = section.settings.total_viewlist | split: ',' -%}
-        {% render 'collection-sort',
-          label: 'Show',
-          options: showingList,
-          _sort: itemsPerPageCustom,
-          _id_select: 'show'
-        %}
+    <div class="collection__hr"></div>
+
+    {%- comment -%}
+      -------------------------------
+      RENDER PRODUCT
+      -------------------------------
+    {%- endcomment -%}
+
+    {% if collection.products.size != 0 %}
+      <div class="collection__products" id="collection__products">
+        {% for product in collection.products %}
+          {% render 'collection-product', product: product %}
+        {% endfor %}
       </div>
-    </div>
+      <div class="collection__paginate">
+        {%- render 'pagination', paginate: paginate, type: section.settings.paginate_style -%}
+      </div>
+    {% else %}
+      <div class="collection__products-hollow">No product found in this collection</div>
+    {% endif %}
   </div>
-  {% if true %}
-    <div class="collection__toolbar__filter">
-      {% render 'collection-filter' %}
-    </div>
-  {% endif %}
-
-  <div class="collection__hr"></div>
-
-  {%- comment -%}
-    -------------------------------
-    RENDER PRODUCT
-    -------------------------------
-  {%- endcomment -%}
-
-  {%- paginate collection.products by itemsPerPageCustom -%}
-    <div class="collection__products" id="collection__products">
-      {% for product in collection.products %}
-        {% render 'collection-product', product: product %}
-      {% endfor %}
-    </div>
-    <div class="collection__paginate">
-      {%- render 'pagination', paginate: paginate, type: section.settings.paginate_style -%}
-    </div>
-  {%- endpaginate -%}
-</div>
+{%- endpaginate -%}
 
 {% schema %}
 {

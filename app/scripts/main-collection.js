@@ -4,9 +4,9 @@ const show = document.querySelector('#show')
 const filterForms = document.querySelectorAll('input[type="checkbox"]')
 const filterPrice = document.querySelectorAll('input[type="number"]')
 const paginateLinks = document.querySelectorAll('.paginate_link[data-url]')
+const showing = document.querySelector('.collection__toolbar-filter-showing')
 
-const { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService()
-
+const { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updateShowing, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService()
 
 infinityFuc(infinityPoint)
 
@@ -34,6 +34,7 @@ function infinityFuc(infinityPoint) {
                             const infinityPoint = data.getElementPointInfinity()
                             appendProduct(data.getElementProduct())
                             updatePointInfinity(infinityPoint)
+                            updateShowing(data.getElementShowing())
                         }).finally(() => {
                             hiddenLoading(target);
                         })
@@ -61,6 +62,8 @@ if (sortBy) {
         getApi(url).then((data) => {
             setProduct(data.getElementProduct())
             updatePointInfinity(data.getElementPointInfinity())
+            updateShowing(data.getElementShowing())
+
         })
     })
 }
@@ -93,6 +96,7 @@ if (show) {
             setProduct(data.getElementProduct())
             updatePointInfinity(data.getElementPointInfinity())
             updatePaginate(data.getPaginate())
+            updateShowing(data.getElementShowing())
         })
     })
 }
@@ -113,7 +117,6 @@ if (filterForms) {
                         checkedValues[name] = checkedValues[name].filter(val => val !== value);
                     }
                 }
-
             }
             const url = createUrlFilter(callback, window.location.search)
             history.pushState(null, null, url);
@@ -123,13 +126,11 @@ if (filterForms) {
                 updateCount(data.getProductCount())
                 updatePointInfinity(data.getElementPointInfinity())
                 updatePaginate(data.getPaginate())
+                updateShowing(data.getElementShowing())
             })
         })
     })
 }
-
-
-
 
 if (filterPrice) {
     const params = { 'filter.v.price.gte': 0, 'filter.v.price.lte': Number.MAX_SAFE_INTEGER }
@@ -155,6 +156,7 @@ if (filterPrice) {
                 updateCount(data.getProductCount())
                 updatePointInfinity(data.getElementPointInfinity())
                 updatePaginate(data.getPaginate())
+                updateShowing(data.getElementShowing())
             })
         }
 
@@ -179,6 +181,7 @@ function paginateFuc(paginateLinks) {
                 getApi(_url).then((data) => {
                     setProduct(data.getElementProduct());
                     updatePaginate(data.getPaginate())
+                    updateShowing(data.getElementShowing())
                     // remove listener
                 })
             })
@@ -189,6 +192,7 @@ function paginateFuc(paginateLinks) {
 function collectionService() {
     let listProduct = document.querySelector('#collection__products');
     let productCount = document.querySelector('.product_count')
+    let showing = document.querySelector('.collection__toolbar-filter-showing')
     let infinityPoint = document.querySelector('#infinity_point')
     let paginate = document.querySelector('.paginate')
 
@@ -206,7 +210,6 @@ function collectionService() {
         return window.location.pathname + "?" + urlSearchParams.toString()
 
     }
-
 
     function createUrlFilter(callback, search) {
         const params = new URLSearchParams(search);
@@ -253,6 +256,13 @@ function collectionService() {
         }
     }
 
+    function updateShowing(element) {
+        if (showing) {
+            showing.parentNode.replaceChild(element, showing)
+            showing = document.querySelector('.collection__toolbar-filter-showing')
+        }
+    }
+
     function updatePointInfinity(element) {
         if (infinityPoint) {
             infinityPoint.parentNode.replaceChild(element, infinityPoint)
@@ -271,6 +281,7 @@ function collectionService() {
     }
 
     function _extract(data) {
+
         const div = document.createElement("div");
         div.innerHTML = data;
 
@@ -286,10 +297,12 @@ function collectionService() {
             },
             getPaginate() {
                 return div.querySelector(".paginate")
+            },
+            getElementShowing() {
+                return div.querySelector(".collection__toolbar-filter-showing")
             }
         }
     }
-
 
     const services = {
         loading,
@@ -298,6 +311,7 @@ function collectionService() {
         appendProduct,
         setProduct,
         updateCount,
+        updateShowing,
         updatePointInfinity,
         createUrl,
         updatePaginate,

@@ -16,7 +16,13 @@
   flex-wrap: wrap;
 }
 
-.collection__toolbar-filter-btn {
+.collection__toolbar .collection__toolbar-filter {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-btn {
+  flex: 1;
   min-width: 130px;
   height: 40px;
   border-radius: 5px;
@@ -37,28 +43,37 @@
   justify-content: unset;
 }
 
-.collection__toolbar .collection__toolbar-filter-btn[aria-expanded=true] .hamburger {
+.collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-btn[aria-expanded=true] .hamburger {
   rotate: 45deg;
 }
 
-.collection__toolbar .collection__toolbar-filter-btn .line {
+.collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-btn .line {
   transition: 1s;
   stroke-dasharray: 60 31 60 300;
 }
 
-.collection__toolbar .collection__toolbar-filter-btn[aria-expanded=true] .line {
+.collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-btn[aria-expanded=true] .line {
   stroke-dasharray: 60 105 60 300;
   stroke-dashoffset: -90;
 }
 
-.collection__toolbar-filter-icon {
+.collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-icon {
   --button-color:#000;
 }
 
-.collection__toolbar-filter-icon .hamburger {
+.collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-icon .hamburger {
   transition: translate 1s,rotate 1s;
   width: 40px;
   height: 40px;
+}
+
+.collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-showing {
+  color: #000;
+  flex: 1;
+  white-space: nowrap;
+  -webkit-margin-start: 30px;
+  display: flex;
+  align-items: center;
 }
 
 .collection__toolbar-sort {
@@ -104,9 +119,18 @@
   overflow: hidden;
 }
 
-.collection__paginate {
+.collection__products-hollow {
+  padding: 20px 0;
+  font-size: small;
+  font-style: italic;
+}
+
+.collection__paginate, .collection__products-hollow {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.collection__paginate {
   gap: 10px;
 }
