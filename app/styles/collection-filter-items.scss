@@ -234,5 +234,12 @@
                 }
             }
         }
+
+        .flex_column_item {
+            display: flex;
+            flex-direction: column;
+            width: 250px;
+            max-width: 300px;
+        }
     }
 }

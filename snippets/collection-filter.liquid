@@ -6,6 +6,6 @@
 {% for block in section.blocks %}
   {% case block.type %}
     {% when 'filter' %}
-      {% render 'collection-filter-items', _filter: collection.filters %}
+      {% render 'collection-filter-items', _filter: collection.filters, _filter_style: filter_style %}
   {% endcase %}
 {% endfor %}

@@ -19,6 +19,7 @@
 .collection__toolbar .collection__toolbar-filter {
   display: flex;
   flex-wrap: wrap;
+  gap: 30px;
 }
 
 .collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-btn {
@@ -71,7 +72,6 @@
   color: #000;
   flex: 1;
   white-space: nowrap;
-  -webkit-margin-start: 30px;
   display: flex;
   align-items: center;
 }
@@ -79,16 +79,13 @@
 .collection__toolbar-sort {
   display: flex;
   flex-wrap: wrap;
+  gap: 30px;
 }
 
 .collection__toolbar-sort-by, .collection__toolbar-sort-show {
   flex: 1;
   height: 100%;
   display: flex;
-}
-
-.collection__toolbar-sort-show {
-  -webkit-margin-start: 30px;
 }
 
 .collection__toolbar__filter {
@@ -106,31 +103,39 @@
   box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.1);
 }
 
+.collection__toolbar__filter-sidebar {
+  height: 100%;
+}
+
 .collection__hr {
   margin-top: 20px;
   height: 1px;
   background-color: #ccc;
 }
 
-.collection__products {
+.collection-main {
+  display: flex;
+}
+
+.collection-main .collection-main__group-product .collection__products {
   margin-top: 50px;
   display: grid;
   grid-template-columns: repeat(var(--items_per_row), 1fr);
   overflow: hidden;
 }
 
-.collection__products-hollow {
+.collection-main .collection-main__group-product .collection__products-hollow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px 0;
   font-size: small;
   font-style: italic;
 }
 
-.collection__paginate, .collection__products-hollow {
+.collection-main .collection-main__group-product .collection__paginate {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.collection__paginate {
   gap: 10px;
 }
