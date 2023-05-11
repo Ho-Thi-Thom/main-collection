@@ -1,0 +1,16 @@
+{% assign countProduct = paginate.items %}
+{% assign currentPage = paginate.current_page %}
+{% assign itemPerPage = paginate.page_size %}
+
+{% assign firstPosition = currentPage | minus: 1 | times: itemPerPage | plus: 1 %}
+{% assign lastPosition = currentPage | times: itemPerPage | min: countProduct %}
+
+{% if lastPosition > countProduct %}
+  {% assign lastPosition = countProduct %}
+{% endif %}
+
+{% if type == 'infinity' %}
+  {% assign firstPosition = 1 %}
+{% endif %}
+
+<span>Showing: {{ firstPosition }} - {{ lastPosition }} of {{ countProduct }} </span>

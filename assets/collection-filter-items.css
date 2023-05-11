@@ -74,3 +74,10 @@
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__price-range .price-dash {
   margin-right: 10px;
 }
+
+.block__filter__items .filter-form .flex_column_item {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  max-width: 300px;
+}

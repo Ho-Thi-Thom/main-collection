@@ -6,7 +6,8 @@
   var filterForms = document.querySelectorAll('input[type="checkbox"]');
   var filterPrice = document.querySelectorAll('input[type="number"]');
   var paginateLinks = document.querySelectorAll(".paginate_link[data-url]");
-  var { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService();
+  var showing = document.querySelector(".collection__toolbar-filter-showing");
+  var { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updateShowing, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService();
   infinityFuc(infinityPoint);
   function infinityFuc(infinityPoint2) {
     if (infinityPoint2) {
@@ -30,6 +31,7 @@
               const infinityPoint3 = data.getElementPointInfinity();
               appendProduct(data.getElementProduct());
               updatePointInfinity(infinityPoint3);
+              updateShowing(data.getElementShowing());
             }).finally(() => {
               hiddenLoading(target);
             });
@@ -53,6 +55,7 @@
       getApi(url).then((data) => {
         setProduct(data.getElementProduct());
         updatePointInfinity(data.getElementPointInfinity());
+        updateShowing(data.getElementShowing());
       });
     });
   }
@@ -81,6 +84,7 @@
         setProduct(data2.getElementProduct());
         updatePointInfinity(data2.getElementPointInfinity());
         updatePaginate(data2.getPaginate());
+        updateShowing(data2.getElementShowing());
       });
     });
   }
@@ -108,6 +112,7 @@
           updateCount(data.getProductCount());
           updatePointInfinity(data.getElementPointInfinity());
           updatePaginate(data.getPaginate());
+          updateShowing(data.getElementShowing());
         });
       });
     });
@@ -134,6 +139,7 @@
           updateCount(data.getProductCount());
           updatePointInfinity(data.getElementPointInfinity());
           updatePaginate(data.getPaginate());
+          updateShowing(data.getElementShowing());
         });
       });
     });
@@ -153,6 +159,7 @@
           getApi(_url).then((data) => {
             setProduct(data.getElementProduct());
             updatePaginate(data.getPaginate());
+            updateShowing(data.getElementShowing());
           });
         });
       });
@@ -161,6 +168,7 @@
   function collectionService() {
     let listProduct = document.querySelector("#collection__products");
     let productCount = document.querySelector(".product_count");
+    let showing2 = document.querySelector(".collection__toolbar-filter-showing");
     let infinityPoint2 = document.querySelector("#infinity_point");
     let paginate = document.querySelector(".paginate");
     function loading2(target) {
@@ -213,6 +221,12 @@
         productCount = document.querySelector(".product_count");
       }
     }
+    function updateShowing2(element) {
+      if (showing2) {
+        showing2.parentNode.replaceChild(element, showing2);
+        showing2 = document.querySelector(".collection__toolbar-filter-showing");
+      }
+    }
     function updatePointInfinity2(element) {
       if (infinityPoint2) {
         infinityPoint2.parentNode.replaceChild(element, infinityPoint2);
@@ -242,6 +256,9 @@
         },
         getPaginate() {
           return div.querySelector(".paginate");
+        },
+        getElementShowing() {
+          return div.querySelector(".collection__toolbar-filter-showing");
         }
       };
     }
@@ -252,6 +269,7 @@
       appendProduct: appendProduct2,
       setProduct: setProduct2,
       updateCount: updateCount2,
+      updateShowing: updateShowing2,
       updatePointInfinity: updatePointInfinity2,
       createUrl: createUrl2,
       updatePaginate: updatePaginate2,
