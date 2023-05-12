@@ -51,8 +51,9 @@
           productCount: collection.products_count
         %}
       </div>
+
       {% if collection.image %}
-        <div class="collection__header-content">
+        <div class="collection__header-content content-image">
           {% render 'collection-image', image: collection.image %}
         </div>
       {% endif %}
@@ -69,8 +70,6 @@
         <div class="collection__toolbar-filter-showing">
           {% render 'collection-showing', paginate: paginate, type: section.settings.paginate_style %}
         </div>
-        {% # if paginate and collection.products.size > 0 %}
-        {% # endif %}
       </div>
       <div class="collection__toolbar-sort">
         <div class="collection__toolbar-sort-by">

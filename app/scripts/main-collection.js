@@ -1,3 +1,6 @@
+import collectionService from "./service"
+
+
 const infinityPoint = document.querySelector('#infinity_point')
 const sortBy = document.querySelector('#sort_by')
 const show = document.querySelector('#show')
@@ -8,6 +11,7 @@ const showing = document.querySelector('.collection__toolbar-filter-showing')
 
 const { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updateShowing, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService()
 
+console.log(2)
 infinityFuc(infinityPoint)
 
 function infinityFuc(infinityPoint) {
@@ -33,7 +37,7 @@ function infinityFuc(infinityPoint) {
                         .then((data) => {
                             const infinityPoint = data.getElementPointInfinity()
                             appendProduct(data.getElementProduct())
-                            updatePointInfinity(infinityPoint)
+                            updatePointInfinity(infinityPoint, infinityFuc)
                             updateShowing(data.getElementShowing())
                         }).finally(() => {
                             hiddenLoading(target);
@@ -61,7 +65,7 @@ if (sortBy) {
 
         getApi(url).then((data) => {
             setProduct(data.getElementProduct())
-            updatePointInfinity(data.getElementPointInfinity())
+            updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
             updateShowing(data.getElementShowing())
 
         })
@@ -94,8 +98,8 @@ if (show) {
 
         getApi(url, options, getResponse).then((data) => {
             setProduct(data.getElementProduct())
-            updatePointInfinity(data.getElementPointInfinity())
-            updatePaginate(data.getPaginate())
+            updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
+            updatePaginate(data.getPaginate(), paginateFuc)
             updateShowing(data.getElementShowing())
         })
     })
@@ -124,9 +128,9 @@ if (filterForms) {
             getApi(url).then((data) => {
                 setProduct(data.getElementProduct())
                 updateCount(data.getProductCount())
-                updatePaginate(data.getPaginate())
+                updatePaginate(data.getPaginate(), paginateFuc)
                 updateShowing(data.getElementShowing())
-                updatePointInfinity(data.getElementPointInfinity())
+                updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
             })
         })
     })
@@ -154,8 +158,8 @@ if (filterPrice) {
             getApi(url).then((data) => {
                 setProduct(data.getElementProduct())
                 updateCount(data.getProductCount())
-                updatePointInfinity(data.getElementPointInfinity())
-                updatePaginate(data.getPaginate())
+                updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
+                updatePaginate(data.getPaginate(), paginateFuc)
                 updateShowing(data.getElementShowing())
             })
         }
@@ -180,143 +184,11 @@ function paginateFuc(paginateLinks) {
                 const _url = createUrl(callback, url.split('?')[1])
                 getApi(_url).then((data) => {
                     setProduct(data.getElementProduct());
-                    updatePaginate(data.getPaginate())
+                    updatePaginate(data.getPaginate(), paginateFuc)
                     updateShowing(data.getElementShowing())
                     // remove listener
                 })
             })
         })
     }
-}
-
-function collectionService() {
-    let listProduct = document.querySelector('#collection__products');
-    let productCount = document.querySelector('.product_count')
-    let showing = document.querySelector('.collection__toolbar-filter-showing')
-    let infinityPoint = document.querySelector('#infinity_point')
-    let paginate = document.querySelector('.paginate')
-
-    function loading(target) {
-        target.innerHTML = "Loading..."
-    }
-
-    function hiddenLoading(target) {
-        target.innerHTML = ""
-    }
-
-    function createUrl(callback, initParam) {
-        const urlSearchParams = new URLSearchParams(initParam)
-        callback(urlSearchParams)
-        return window.location.pathname + "?" + urlSearchParams.toString()
-
-    }
-
-    function createUrlFilter(callback, search) {
-        const params = new URLSearchParams(search);
-        const checkedValues = {};
-        params.forEach(function (value, key) {
-            if (!checkedValues[key]) {
-                checkedValues[key] = [];
-            }
-            checkedValues[key].push(value);
-        });
-        callback(checkedValues);
-        const urlParams = new URLSearchParams();
-        Object.keys(checkedValues).forEach((name) => {
-            checkedValues[name].forEach((value) => {
-                urlParams.append(name, value);
-            });
-        });
-        const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-        return newUrl
-    }
-
-
-    function getApi(url, options, getResponse) {
-        return fetch(url, options).then(res => getResponse?.(res) ?? res.text()).then(data => _extract(data))
-    }
-
-    function appendProduct(elements) {
-        elements.querySelectorAll("#collection__products > *")?.forEach(element => {
-            listProduct?.appendChild(element);
-        });
-    }
-
-    function setProduct(element) {
-        if (listProduct) {
-            listProduct.parentNode.replaceChild(element, listProduct)
-            listProduct = document.querySelector('#collection__products')
-        }
-    }
-
-    function updateCount(element) {
-        if (productCount) {
-            productCount.parentNode.replaceChild(element, productCount)
-            productCount = document.querySelector('.product_count')
-        }
-    }
-
-    function updateShowing(element) {
-        console.log(showing, element)
-        if (showing) {
-            showing.parentNode.replaceChild(element, showing)
-            showing = document.querySelector('.collection__toolbar-filter-showing')
-        }
-    }
-
-    function updatePointInfinity(element) {
-        if (infinityPoint) {
-            infinityPoint.parentNode.replaceChild(element, infinityPoint)
-            infinityPoint = document.querySelector('#infinity_point');
-            infinityFuc(document.querySelector('#infinity_point'));
-        }
-    }
-
-
-    function updatePaginate(element) {
-        if (paginate) {
-            paginate.parentNode.replaceChild(element, paginate)
-            paginate = document.querySelector('.paginate')
-            paginateFuc(document.querySelectorAll('.paginate_link[data-url]'))
-        }
-    }
-
-    function _extract(data) {
-
-        const div = document.createElement("div");
-        div.innerHTML = data;
-
-        return {
-            getElementProduct() {
-                return div.querySelector('#collection__products')
-            },
-            getProductCount() {
-                return div.querySelector(".product_count")
-            },
-            getElementPointInfinity() {
-                return div.querySelector("#infinity_point")
-            },
-            getPaginate() {
-                return div.querySelector(".paginate")
-            },
-            getElementShowing() {
-                return div.querySelector(".collection__toolbar-filter-showing")
-            }
-        }
-    }
-
-    const services = {
-        loading,
-        hiddenLoading,
-        getApi,
-        appendProduct,
-        setProduct,
-        updateCount,
-        updateShowing,
-        updatePointInfinity,
-        createUrl,
-        updatePaginate,
-        createUrlFilter
-    }
-    return services;
 }

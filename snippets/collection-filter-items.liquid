@@ -8,15 +8,15 @@
   <div class="filter-form">
     <div class="filter-form__item {{ _filter_style | default: 'layout' }}_item">
       {%- for filter in _filter -%}
-        <div class="filter-wrapper">
-          <div class="filter-title">
+        <div class="filter-wrapper {{ _filter_style | default: 'layout'  }}_wrapper">
+          <div class="filter-title {{ _filter_style | default: 'layout'  }}_title">
             <span>{{ filter.label }}</span>
           </div>
 
-          <div class="filter-option">
+          <div class="filter-option {{ _filter_style | default: 'layout'  }}_option">
             {%- case filter.type -%}
               {%- when 'boolean', 'list' -%}
-                <ul class="filter-group-display__list" id="filter_list">
+                <ul class="filter-group-display__list {{ _filter_style | default: 'layout'  }}_list" id="filter_list">
                   {%- for filter_value in filter.values -%}
                     <li class="filter-group-display__list-item">
                       <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">

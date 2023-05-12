@@ -1,170 +1,5 @@
 (() => {
-  // app/scripts/main-collection.js
-  var infinityPoint = document.querySelector("#infinity_point");
-  var sortBy = document.querySelector("#sort_by");
-  var show = document.querySelector("#show");
-  var filterForms = document.querySelectorAll('input[type="checkbox"]');
-  var filterPrice = document.querySelectorAll('input[type="number"]');
-  var paginateLinks = document.querySelectorAll(".paginate_link[data-url]");
-  var showing = document.querySelector(".collection__toolbar-filter-showing");
-  var { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updateShowing, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService();
-  infinityFuc(infinityPoint);
-  function infinityFuc(infinityPoint2) {
-    if (infinityPoint2) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            let callback2 = function(searchParams) {
-              searchParams.set("section_id", sectionId);
-            };
-            var callback = callback2;
-            const target = entry.target;
-            const url = target.dataset.url;
-            const sectionId = target.dataset.sectionId;
-            const _url = url ? createUrl(callback2, url.split("?")[1]) : null;
-            if (_url == null) {
-              observer.disconnect();
-              return;
-            }
-            loading(target);
-            getApi(_url).then((data) => {
-              const infinityPoint3 = data.getElementPointInfinity();
-              appendProduct(data.getElementProduct());
-              updatePointInfinity(infinityPoint3);
-              updateShowing(data.getElementShowing());
-            }).finally(() => {
-              hiddenLoading(target);
-            });
-          }
-        });
-      });
-      observer.observe(infinityPoint2);
-    }
-  }
-  if (sortBy) {
-    sortBy.addEventListener("change", (event) => {
-      const value = event.target.value;
-      const sectionId = event.target.dataset.sectionId;
-      function callback(searchParams) {
-        searchParams.set("sort_by", value);
-      }
-      let url = createUrl(callback, window.location.href.split("?")[1]);
-      history.pushState(null, null, url);
-      url += url.includes("?") ? "&" : "?";
-      url += `section_id=${sectionId}`;
-      getApi(url).then((data) => {
-        setProduct(data.getElementProduct());
-        updatePointInfinity(data.getElementPointInfinity());
-        updateShowing(data.getElementShowing());
-      });
-    });
-  }
-  if (show) {
-    show.addEventListener("change", (event) => {
-      const value = event.target.value;
-      const sectionId = event.target.dataset.sectionId;
-      const url = `${window.Shopify.routes.root}cart/update.js`;
-      const data = {
-        attributes: {
-          items_per_page: value
-        },
-        sections: [sectionId]
-      };
-      const options = {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      };
-      function getResponse(res) {
-        return res.json().then((data2) => data2.sections[sectionId]);
-      }
-      getApi(url, options, getResponse).then((data2) => {
-        setProduct(data2.getElementProduct());
-        updatePointInfinity(data2.getElementPointInfinity());
-        updatePaginate(data2.getPaginate());
-        updateShowing(data2.getElementShowing());
-      });
-    });
-  }
-  if (filterForms) {
-    filterForms.forEach((input) => {
-      input.addEventListener("change", (event) => {
-        const value = event.target.value;
-        const name = event.target.name;
-        function callback(checkedValues) {
-          if (event.target.checked) {
-            if (!checkedValues[name]) {
-              checkedValues[name] = [];
-            }
-            checkedValues[name].push(value);
-          } else {
-            if (checkedValues[name]) {
-              checkedValues[name] = checkedValues[name].filter((val) => val !== value);
-            }
-          }
-        }
-        const url = createUrlFilter(callback, window.location.search);
-        history.pushState(null, null, url);
-        getApi(url).then((data) => {
-          setProduct(data.getElementProduct());
-          updateCount(data.getProductCount());
-          updatePaginate(data.getPaginate());
-          updateShowing(data.getElementShowing());
-          updatePointInfinity(data.getElementPointInfinity());
-        });
-      });
-    });
-  }
-  if (filterPrice) {
-    const params = { "filter.v.price.gte": 0, "filter.v.price.lte": Number.MAX_SAFE_INTEGER };
-    filterPrice.forEach((input) => {
-      input.addEventListener("change", (event) => {
-        const value = event.target.value;
-        const name = event.target.name;
-        const max = event.target.dataset.max;
-        params["filter.v.price.lte"] = max;
-        params[name] = value;
-        function callback(checkedValues) {
-          for (const key in params) {
-            checkedValues[key] = [];
-            checkedValues[key].push(params[key]);
-          }
-        }
-        const url = createUrlFilter(callback, window.location.search);
-        history.pushState(null, null, url);
-        getApi(url).then((data) => {
-          setProduct(data.getElementProduct());
-          updateCount(data.getProductCount());
-          updatePointInfinity(data.getElementPointInfinity());
-          updatePaginate(data.getPaginate());
-          updateShowing(data.getElementShowing());
-        });
-      });
-    });
-  }
-  paginateFuc(paginateLinks);
-  function paginateFuc(paginateLinks2) {
-    if (paginateLinks2) {
-      paginateLinks2.forEach((paginateLink) => {
-        paginateLink.addEventListener("click", (event) => {
-          const target = event.target;
-          const url = target.dataset.url;
-          const sectionId = target.dataset.sectionId;
-          function callback(searchParams) {
-            searchParams.set("section_id", sectionId);
-          }
-          const _url = createUrl(callback, url.split("?")[1]);
-          getApi(_url).then((data) => {
-            setProduct(data.getElementProduct());
-            updatePaginate(data.getPaginate());
-            updateShowing(data.getElementShowing());
-          });
-        });
-      });
-    }
-  }
+  // app/scripts/service.js
   function collectionService() {
     let listProduct = document.querySelector("#collection__products");
     let productCount = document.querySelector(".product_count");
@@ -185,7 +20,7 @@
     function createUrlFilter2(callback, search) {
       const params = new URLSearchParams(search);
       const checkedValues = {};
-      params.forEach(function(value, key) {
+      params.forEach(function (value, key) {
         if (!checkedValues[key]) {
           checkedValues[key] = [];
         }
@@ -210,36 +45,35 @@
       });
     }
     function setProduct2(element) {
-      if (listProduct) {
+      if (element) {
         listProduct.parentNode.replaceChild(element, listProduct);
-        listProduct = document.querySelector("#collection__products");
+        listProduct = element;
       }
     }
     function updateCount2(element) {
-      if (productCount) {
+      if (element) {
         productCount.parentNode.replaceChild(element, productCount);
-        productCount = document.querySelector(".product_count");
+        productCount = element;
       }
     }
     function updateShowing2(element) {
-      console.log(showing2, element);
-      if (showing2) {
+      if (element) {
         showing2.parentNode.replaceChild(element, showing2);
-        showing2 = document.querySelector(".collection__toolbar-filter-showing");
+        showing2 = element;
       }
     }
-    function updatePointInfinity2(element) {
-      if (infinityPoint2) {
+    function updatePointInfinity2(element, infinityFuc2) {
+      if (element) {
         infinityPoint2.parentNode.replaceChild(element, infinityPoint2);
-        infinityPoint2 = document.querySelector("#infinity_point");
-        infinityFuc(document.querySelector("#infinity_point"));
+        infinityPoint2 = element;
+        infinityFuc2(element);
       }
     }
-    function updatePaginate2(element) {
-      if (paginate) {
+    function updatePaginate2(element, paginateFuc2) {
+      if (element) {
         paginate.parentNode.replaceChild(element, paginate);
-        paginate = document.querySelector(".paginate");
-        paginateFuc(document.querySelectorAll(".paginate_link[data-url]"));
+        paginate = element;
+        paginateFuc2(document.querySelectorAll(".paginate_link[data-url]"));
       }
     }
     function _extract(data) {
@@ -277,5 +111,173 @@
       createUrlFilter: createUrlFilter2
     };
     return services;
+  }
+
+
+  // app/scripts/main-collection.js
+  var infinityPoint = document.querySelector("#infinity_point");
+  var sortBy = document.querySelector("#sort_by");
+  var show = document.querySelector("#show");
+  var filterForms = document.querySelectorAll('input[type="checkbox"]');
+  var filterPrice = document.querySelectorAll('input[type="number"]');
+  var paginateLinks = document.querySelectorAll(".paginate_link[data-url]");
+  var showing = document.querySelector(".collection__toolbar-filter-showing");
+  var { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updateShowing, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService();
+
+  infinityFuc(infinityPoint);
+  function infinityFuc(infinityPoint2) {
+    if (infinityPoint2) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            let callback = function (searchParams) {
+              searchParams.set("section_id", sectionId);
+            };
+            const target = entry.target;
+            const url = target.dataset.url;
+            const sectionId = target.dataset.sectionId;
+            const _url = url ? createUrl(callback, url.split("?")[1]) : null;
+            if (_url == null) {
+              observer.disconnect();
+              return;
+            }
+            loading(target);
+            getApi(_url).then((data) => {
+              const infinityPoint3 = data.getElementPointInfinity();
+              appendProduct(data.getElementProduct());
+              updatePointInfinity(infinityPoint3, infinityFuc);
+              updateShowing(data.getElementShowing());
+            }).finally(() => {
+              hiddenLoading(target);
+            });
+          }
+        });
+      });
+      observer.observe(infinityPoint2);
+    }
+  }
+  if (sortBy) {
+    sortBy.addEventListener("change", (event) => {
+      const value = event.target.value;
+      const sectionId = event.target.dataset.sectionId;
+      function callback(searchParams) {
+        searchParams.set("sort_by", value);
+      }
+      let url = createUrl(callback, window.location.href.split("?")[1]);
+      history.pushState(null, null, url);
+      url += url.includes("?") ? "&" : "?";
+      url += `section_id=${sectionId}`;
+      getApi(url).then((data) => {
+        setProduct(data.getElementProduct());
+        updatePointInfinity(data.getElementPointInfinity(), infinityFuc);
+        updateShowing(data.getElementShowing());
+      });
+    });
+  }
+  if (show) {
+    show.addEventListener("change", (event) => {
+      const value = event.target.value;
+      const sectionId = event.target.dataset.sectionId;
+      const url = `${window.Shopify.routes.root}cart/update.js`;
+      const data = {
+        attributes: {
+          items_per_page: value
+        },
+        sections: [sectionId]
+      };
+      const options = {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      function getResponse(res) {
+        return res.json().then((data2) => data2.sections[sectionId]);
+      }
+      getApi(url, options, getResponse).then((data2) => {
+        setProduct(data2.getElementProduct());
+        updatePointInfinity(data2.getElementPointInfinity(), infinityFuc);
+        updatePaginate(data2.getPaginate(), paginateFuc);
+        updateShowing(data2.getElementShowing());
+      });
+    });
+  }
+  if (filterForms) {
+    filterForms.forEach((input) => {
+      input.addEventListener("change", (event) => {
+        const value = event.target.value;
+        const name = event.target.name;
+        function callback(checkedValues) {
+          if (event.target.checked) {
+            if (!checkedValues[name]) {
+              checkedValues[name] = [];
+            }
+            checkedValues[name].push(value);
+          } else {
+            if (checkedValues[name]) {
+              checkedValues[name] = checkedValues[name].filter((val) => val !== value);
+            }
+          }
+        }
+        const url = createUrlFilter(callback, window.location.search);
+        history.pushState(null, null, url);
+        getApi(url).then((data) => {
+          setProduct(data.getElementProduct());
+          updateCount(data.getProductCount());
+          updatePaginate(data.getPaginate(), paginateFuc);
+          updateShowing(data.getElementShowing());
+          updatePointInfinity(data.getElementPointInfinity(), infinityFuc);
+        });
+      });
+    });
+  }
+  if (filterPrice) {
+    const params = { "filter.v.price.gte": 0, "filter.v.price.lte": Number.MAX_SAFE_INTEGER };
+    filterPrice.forEach((input) => {
+      input.addEventListener("change", (event) => {
+        const value = event.target.value;
+        const name = event.target.name;
+        const max = event.target.dataset.max;
+        params["filter.v.price.lte"] = max;
+        params[name] = value;
+        function callback(checkedValues) {
+          for (const key in params) {
+            checkedValues[key] = [];
+            checkedValues[key].push(params[key]);
+          }
+        }
+        const url = createUrlFilter(callback, window.location.search);
+        history.pushState(null, null, url);
+        getApi(url).then((data) => {
+          setProduct(data.getElementProduct());
+          updateCount(data.getProductCount());
+          updatePointInfinity(data.getElementPointInfinity(), infinityFuc);
+          updatePaginate(data.getPaginate(), paginateFuc);
+          updateShowing(data.getElementShowing());
+        });
+      });
+    });
+  }
+  paginateFuc(paginateLinks);
+  function paginateFuc(paginateLinks2) {
+    if (paginateLinks2) {
+      paginateLinks2.forEach((paginateLink) => {
+        paginateLink.addEventListener("click", (event) => {
+          const target = event.target;
+          const url = target.dataset.url;
+          const sectionId = target.dataset.sectionId;
+          function callback(searchParams) {
+            searchParams.set("section_id", sectionId);
+          }
+          const _url = createUrl(callback, url.split("?")[1]);
+          getApi(_url).then((data) => {
+            setProduct(data.getElementProduct());
+            updatePaginate(data.getPaginate(), paginateFuc);
+            updateShowing(data.getElementShowing());
+          });
+        });
+      });
+    }
   }
 })();
