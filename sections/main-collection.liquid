@@ -66,11 +66,11 @@
             Filter
           </button>
         {% endif %}
-        {% if paginate and collection.products.size > 0 %}
-          <div class="collection__toolbar-filter-showing">
-            {% render 'collection-showing', paginate: paginate, type: section.settings.paginate_style %}
-          </div>
-        {% endif %}
+        <div class="collection__toolbar-filter-showing">
+          {% render 'collection-showing', paginate: paginate, type: section.settings.paginate_style %}
+        </div>
+        {% # if paginate and collection.products.size > 0 %}
+        {% # endif %}
       </div>
       <div class="collection__toolbar-sort">
         <div class="collection__toolbar-sort-by">
@@ -122,12 +122,12 @@
               {% render 'collection-product', product: product %}
             {% endfor %}
           </div>
-          <div class="collection__paginate">
-            {%- render 'pagination', paginate: paginate, type: section.settings.paginate_style -%}
-          </div>
         {% else %}
-          <div class="collection__products-hollow">No product found in this collection</div>
+          <div class="collection__products-hollow" id="collection__products">No product found in this collection</div>
         {% endif %}
+        <div class="collection__paginate">
+          {%- render 'pagination', paginate: paginate, type: section.settings.paginate_style -%}
+        </div>
       </div>
     </div>
   </div>

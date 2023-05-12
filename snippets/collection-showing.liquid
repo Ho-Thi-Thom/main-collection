@@ -13,4 +13,11 @@
   {% assign firstPosition = 1 %}
 {% endif %}
 
-<span>Showing: {{ firstPosition }} - {{ lastPosition }} of {{ countProduct }} </span>
+<span
+  class="
+    {% if collection.products.size < 1  %}
+      hidden_box
+    {% endif %}
+  "
+  >Showing: {{ firstPosition }} - {{ lastPosition }} of {{ countProduct }}
+</span>

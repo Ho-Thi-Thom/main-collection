@@ -110,9 +110,9 @@
         getApi(url).then((data) => {
           setProduct(data.getElementProduct());
           updateCount(data.getProductCount());
-          updatePointInfinity(data.getElementPointInfinity());
           updatePaginate(data.getPaginate());
           updateShowing(data.getElementShowing());
+          updatePointInfinity(data.getElementPointInfinity());
         });
       });
     });
@@ -222,6 +222,7 @@
       }
     }
     function updateShowing2(element) {
+      console.log(showing2, element);
       if (showing2) {
         showing2.parentNode.replaceChild(element, showing2);
         showing2 = document.querySelector(".collection__toolbar-filter-showing");

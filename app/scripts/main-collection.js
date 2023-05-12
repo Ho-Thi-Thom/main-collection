@@ -124,9 +124,9 @@ if (filterForms) {
             getApi(url).then((data) => {
                 setProduct(data.getElementProduct())
                 updateCount(data.getProductCount())
-                updatePointInfinity(data.getElementPointInfinity())
                 updatePaginate(data.getPaginate())
                 updateShowing(data.getElementShowing())
+                updatePointInfinity(data.getElementPointInfinity())
             })
         })
     })
@@ -257,6 +257,7 @@ function collectionService() {
     }
 
     function updateShowing(element) {
+        console.log(showing, element)
         if (showing) {
             showing.parentNode.replaceChild(element, showing)
             showing = document.querySelector('.collection__toolbar-filter-showing')
