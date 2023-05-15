@@ -37,3 +37,7 @@
   border-color: #666;
   outline: none;
 }
+
+.form_wrapper.show_number select option:first-child {
+  display: none;
+}

@@ -87,11 +87,15 @@
 
         <div class="collection__toolbar-sort-show">
           {% assign showingList = section.settings.total_viewlist | split: ',' -%}
+          {% assign items_per_page = section.settings.items_per_page -%}
+          {% assign _showingList = items_per_page | concat: showingList -%}
+
           {% render 'collection-sort',
             label: 'Show',
-            options: showingList,
+            options: _showingList,
             _sort: itemsPerPageCustom,
-            _id_select: 'show'
+            _id_select: 'show',
+            _class: 'show_number'
           %}
         </div>
       </div>

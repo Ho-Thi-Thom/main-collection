@@ -176,26 +176,27 @@ if (filterPrice) {
 }
 
 paginateFuc(paginateLinks)
+function paginate(event) {
+    const target = event.target
+    const url = target.dataset.url
+    const sectionId = target.dataset.sectionId
+
+    function callback(searchParams) {
+        searchParams.set('section_id', sectionId)
+    }
+    const _url = createUrl(callback, url.split('?')[1])
+    getApi(_url).then((data) => {
+        setProduct(data.getElementProduct());
+        updatePaginate(data.getPaginate(), paginateFuc)
+        updateShowing(data.getElementShowing())
+        // remove listener
+    })
+}
 
 function paginateFuc(paginateLinks) {
     if (paginateLinks) {
         paginateLinks.forEach(paginateLink => {
-            paginateLink.addEventListener("click", (event) => {
-                const target = event.target
-                const url = target.dataset.url
-                const sectionId = target.dataset.sectionId
-
-                function callback(searchParams) {
-                    searchParams.set('section_id', sectionId)
-                }
-                const _url = createUrl(callback, url.split('?')[1])
-                getApi(_url).then((data) => {
-                    setProduct(data.getElementProduct());
-                    updatePaginate(data.getPaginate(), paginateFuc)
-                    updateShowing(data.getElementShowing())
-                    // remove listener
-                })
-            })
+            paginateLink.addEventListener("click", paginate)
         })
     }
 }
@@ -221,6 +222,13 @@ document.addEventListener("shopify:section:load", () => {
         const params = { 'filter.v.price.gte': 0, 'filter.v.price.lte': Number.MAX_SAFE_INTEGER }
         filterPrice.forEach(input => {
             input.addEventListener('change', (event) => _filterPrice(event, params))
+        })
+    }
+
+    const paginateLinks = document.querySelectorAll('.paginate_link[data-url]')
+    if (paginateLinks) {
+        paginateLinks.forEach(paginateLink => {
+            paginateLink.addEventListener("click", paginate)
         })
     }
 

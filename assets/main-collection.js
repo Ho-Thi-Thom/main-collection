@@ -67,9 +67,9 @@
       }
     }
     function updatePaginate2(element, paginateFuc2) {
-      let paginate = document.querySelector(".paginate");
+      let paginate2 = document.querySelector(".paginate");
       if (element) {
-        paginate.parentNode.replaceChild(element, paginate);
+        paginate2.parentNode.replaceChild(element, paginate2);
         paginateFuc2(document.querySelectorAll(".paginate_link[data-url]"));
       }
     }
@@ -262,23 +262,24 @@
     });
   }
   paginateFuc(paginateLinks);
+  function paginate(event) {
+    const target = event.target;
+    const url = target.dataset.url;
+    const sectionId = target.dataset.sectionId;
+    function callback(searchParams) {
+      searchParams.set("section_id", sectionId);
+    }
+    const _url = createUrl(callback, url.split("?")[1]);
+    getApi(_url).then((data) => {
+      setProduct(data.getElementProduct());
+      updatePaginate(data.getPaginate(), paginateFuc);
+      updateShowing(data.getElementShowing());
+    });
+  }
   function paginateFuc(paginateLinks2) {
     if (paginateLinks2) {
       paginateLinks2.forEach((paginateLink) => {
-        paginateLink.addEventListener("click", (event) => {
-          const target = event.target;
-          const url = target.dataset.url;
-          const sectionId = target.dataset.sectionId;
-          function callback(searchParams) {
-            searchParams.set("section_id", sectionId);
-          }
-          const _url = createUrl(callback, url.split("?")[1]);
-          getApi(_url).then((data) => {
-            setProduct(data.getElementProduct());
-            updatePaginate(data.getPaginate(), paginateFuc);
-            updateShowing(data.getElementShowing());
-          });
-        });
+        paginateLink.addEventListener("click", paginate);
       });
     }
   }
@@ -299,6 +300,12 @@
       const params = { "filter.v.price.gte": 0, "filter.v.price.lte": Number.MAX_SAFE_INTEGER };
       filterPrice2.forEach((input) => {
         input.addEventListener("change", (event) => _filterPrice(event, params));
+      });
+    }
+    const paginateLinks2 = document.querySelectorAll(".paginate_link[data-url]");
+    if (paginateLinks2) {
+      paginateLinks2.forEach((paginateLink) => {
+        paginateLink.addEventListener("click", paginate);
       });
     }
   });

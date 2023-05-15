@@ -40,4 +40,8 @@
         }
     }
 
+    &_wrapper.show_number select option:first-child {
+        display: none;
+    }
+
 }

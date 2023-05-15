@@ -230,7 +230,15 @@
 
     .collection__toolbar {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: normal;
+
+        .collection__toolbar-filter {
+            justify-content: space-between;
+        }
+
+        .collection__toolbar-sort {
+            justify-content: space-between;
+        }
     }
 
     .collection-main {

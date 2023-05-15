@@ -118,6 +118,10 @@ body {
   height: 100vh;
 }
 
+#admin-bar-iframe {
+  display: none;
+}
+
 ol,
 ul {
   list-style: none;
