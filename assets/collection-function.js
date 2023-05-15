@@ -163,6 +163,41 @@
       });
     }
   }
+  function show(showElement) {
+    if (showElement) {
+      showElement.addEventListener("change", (event) => {
+        const value = event.target.value;
+        const sectionId = event.target.dataset.sectionId;
+        const url = `${window.Shopify.routes.root}cart/update.js`;
+        const data = {
+          attributes: {
+            items_per_page: value
+          },
+          sections: [sectionId],
+          section_url: location.pathname + location.search
+        };
+        const options = {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        };
+        getApi(url, options).then(() => {
+          let collectionUrl = location.pathname;
+          collectionUrl += location.search;
+          collectionUrl += location.search.includes("?") ? "&" : "?";
+          collectionUrl += "section_id=" + sectionId;
+          getApi(collectionUrl).then((data2) => {
+            setProduct(data2.getElementProduct());
+            updatePointInfinity(data2.getElementPointInfinity(), infinity);
+            updatePaginate(data2.getPaginate(), paginate);
+            updateShowing(data2.getElementShowing());
+          });
+        });
+      });
+    }
+  }
   function filterForm(filterForms) {
     if (filterForms) {
       filterForms.forEach((input) => {
@@ -242,21 +277,5 @@
         });
       });
     }
-  }
-
-  // app/scripts/main-collection.js
-  init();
-  document.addEventListener("shopify:section:load", init);
-  function init() {
-    const infinityPoint = document.querySelector("#infinity_point");
-    const sort_by = document.querySelector("#sort_by");
-    const filterForms = document.querySelectorAll('input[type="checkbox"]');
-    const filterPrice2 = document.querySelectorAll('input[type="number"]');
-    const paginateLinks = document.querySelectorAll(".paginate_link[data-url]");
-    infinity(infinityPoint);
-    sortBy(sort_by);
-    filterForm(filterForms);
-    filterPrice(filterPrice2);
-    paginate(paginateLinks);
   }
 })();
