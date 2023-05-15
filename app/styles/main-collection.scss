@@ -8,28 +8,34 @@
     justify-content: space-between;
     gap: 20px;
 
-    &-content {}
+    &-content:nth-child(1) {
+        flex: 4;
+    }
+
+    &-content:nth-child(2) {
+        flex: 1;
+    }
 }
 
 .collection__toolbar {
-    margin-top: 50px;
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 50px;
+    gap: 20px;
 
     .collection__toolbar-filter {
         display: flex;
-        flex-wrap: wrap;
-        gap: 30px;
-        height: 40px;
+        align-items: center;
+        gap: 20px;
 
         .collection__toolbar-filter-btn {
-            flex: 1;
-            max-width: 130px;
-            height: 100%;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
             border-radius: 5px;
-            padding: 10px 25px;
-            font-weight: 500;
+            font-weight: 700;
+            font-size: 16px;
             background-color: transparent;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -39,13 +45,14 @@
                 2px 2px 4px 0px rgba(0, 0, 0, .1);
             outline: none;
             --button-color: black;
-            overflow: hidden;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            width: auto;
-            justify-content: unset;
+
+            &.dropdown {
+                display: flex;
+            }
+
+            &.sidebar {
+                display: none;
+            }
         }
 
         .collection__toolbar-filter-btn[aria-expanded="true"] .hamburger {
@@ -62,43 +69,19 @@
             stroke-dashoffset: -90;
         }
 
-        .collection__toolbar-filter-icon {
+
+        .hamburger {
             --button-color: #000;
-
-            .hamburger {
-                transition: translate 1s, rotate 1s;
-                width: 40px;
-                height: 40px;
-            }
-        }
-
-        .collection__toolbar-filter-showing {
-            color: #000;
-            flex: 1;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
+            transition: translate 1s, rotate 1s;
+            width: 24px;
+            height: 24px;
         }
     }
 
     .collection__toolbar-sort {
         display: flex;
-        flex-wrap: wrap;
-        gap: 30px;
-
-        .collection__toolbar-sort-by {
-            flex: 1;
-            height: 40px;
-            display: flex;
-
-        }
-
-        .collection__toolbar-sort-show {
-            flex: 1;
-            height: 40px;
-            // -webkit-margin-start: 30px;
-            display: flex;
-        }
+        align-items: center;
+        gap: 20px;
     }
 }
 
@@ -119,6 +102,11 @@
 
 .collection__toolbar__filter-sidebar {
     height: 100%;
+    overflow: auto;
+
+    &>span {
+        display: none;
+    }
 }
 
 .collection__hr {
@@ -133,6 +121,8 @@
     overflow: hidden;
 
     .collection-main__group-product {
+        flex: 1;
+
         .collection__products {
             margin-top: 50px;
             display: grid;
@@ -161,72 +151,56 @@
 
 
 @media (max-width: 1024px) {
-
-    .section_container {
-        // padding-inline: 20px;
-    }
-
     .collection__header {
         margin-top: 30px;
 
-        &-content {}
+        &-content:nth-child(1) {
+            flex: 1;
+        }
+
+        &-content:nth-child(2) {
+            flex: 1;
+        }
+
     }
 
     .collection__toolbar {
         margin-top: 30px;
 
         .collection__toolbar-filter {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            height: 40px;
+            .collection__toolbar-filter-btn {
 
-            .collection__toolbar-filter-btn {}
-
-            .collection__toolbar-filter-btn[aria-expanded="true"] .hamburger {}
-
-            .collection__toolbar-filter-btn .line {}
-
-            .collection__toolbar-filter-btn[aria-expanded="true"] .line {}
-
-            .collection__toolbar-filter-icon {
-
-                .hamburger {}
-            }
-
-            .collection__toolbar-filter-showing {}
-        }
-
-        .collection__toolbar-sort {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-
-            .collection__toolbar-sort-by {
-                flex: 1;
-                height: 40px;
-                display: flex;
-
-            }
-
-            .collection__toolbar-sort-show {
-                flex: 1;
-                height: 40px;
-                // -webkit-margin-start: 30px;
-                display: flex;
+                &.sidebar,
+                &.dropdown {
+                    display: flex;
+                }
             }
         }
-    }
 
-    .collection__toolbar__filter {
-        &.active {}
     }
 
     .collection__toolbar__filter-sidebar {
-        height: 100%;
-    }
+        position: fixed;
+        inset: 0;
+        width: 0;
+        overflow: auto;
+        background-color: white;
+        z-index: 99;
+        transition: width 0.5s ease-in-out;
 
-    .collection__hr {}
+        &.active {
+            width: 100%;
+        }
+
+        &>span {
+            display: block;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    }
 
     .collection-main {
         .collection-main__group-product {
@@ -234,66 +208,29 @@
                 margin-top: 30px;
                 grid-template-columns: repeat(3, 1fr);
             }
-
-
-            .collection__products-hollow {}
-
-            .collection__paginate {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 10px;
-            }
         }
     }
 }
 
 
 @media (max-width: 768px) {
-
     .collection__header {
         margin-top: 20px;
         display: flex;
         flex-direction: column;
 
-        .content-image {
-            width: 50vw;
-            margin-inline: auto;
+        &-content:nth-child(1) {
+            flex: none;
+        }
+
+        &-content:nth-child(2) {
+            flex: none;
         }
     }
 
     .collection__toolbar {
-        margin-top: 30px;
-        display: flex;
         flex-direction: column;
-        gap: 10px;
-
-        .collection__toolbar-filter {
-            display: flex;
-            justify-content: space-between;
-
-            .collection__toolbar-filter-showing {
-                flex: none;
-            }
-        }
-
-        .collection__toolbar-sort {
-            display: flex;
-            justify-content: space-between;
-
-            .collection__toolbar-sort-by {
-                flex: none;
-            }
-
-            .collection__toolbar-sort-show {
-                flex: none;
-
-            }
-        }
-    }
-
-    .collection__toolbar__filter-sidebar {
-        height: 100%;
+        align-items: flex-start;
     }
 
     .collection-main {
@@ -312,39 +249,18 @@
         padding-inline: 10px;
     }
 
-    .collection__header {
-
-        .content-image {}
-    }
-
     .collection__toolbar {
 
 
         .collection__toolbar-filter {
-
-
-            .collection__toolbar-filter-showing {
-                flex: none;
-            }
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .collection__toolbar-sort {
             flex-direction: column;
-            gap: 0;
-
-            .collection__toolbar-sort-by {
-                flex: none;
-            }
-
-            .collection__toolbar-sort-show {
-                flex: none;
-
-            }
+            align-items: flex-start;
         }
-    }
-
-    .collection__toolbar__filter-sidebar {
-        height: 100%;
     }
 
     .collection-main {

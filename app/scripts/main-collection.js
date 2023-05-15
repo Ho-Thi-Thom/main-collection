@@ -11,7 +11,6 @@ const showing = document.querySelector('.collection__toolbar-filter-showing')
 
 const { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updateShowing, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService()
 
-console.log(2)
 infinityFuc(infinityPoint)
 
 function infinityFuc(infinityPoint) {
@@ -49,27 +48,29 @@ function infinityFuc(infinityPoint) {
     }
 }
 
-if (sortBy) {
-    sortBy.addEventListener("change", (event) => {
-        const value = event.target.value;
-        const sectionId = event.target.dataset.sectionId
+function _sortBy(event) {
+    const value = event.target.value;
+    const sectionId = event.target.dataset.sectionId
 
-        function callback(searchParams) {
-            searchParams.set('sort_by', value)
-        }
-        let url = createUrl(callback, window.location.href.split('?')[1])
-        history.pushState(null, null, url);
+    function callback(searchParams) {
+        searchParams.set('sort_by', value)
+    }
+    let url = createUrl(callback, window.location.href.split('?')[1])
+    history.pushState(null, null, url);
 
-        url += url.includes('?') ? '&' : '?';
-        url += `section_id=${sectionId}`;
+    url += url.includes('?') ? '&' : '?';
+    url += `section_id=${sectionId}`;
 
-        getApi(url).then((data) => {
-            setProduct(data.getElementProduct())
-            updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
-            updateShowing(data.getElementShowing())
+    getApi(url).then((data) => {
+        setProduct(data.getElementProduct())
+        updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
+        updateShowing(data.getElementShowing())
 
-        })
     })
+}
+
+if (sortBy) {
+    sortBy.addEventListener("change", _sortBy)
 }
 
 if (show) {
@@ -81,7 +82,8 @@ if (show) {
             attributes: {
                 items_per_page: value
             },
-            sections: [sectionId]
+            sections: [sectionId],
+            section_url: location.pathname + location.search
         };
         const options = {
             method: 'POST',
@@ -91,80 +93,85 @@ if (show) {
             }
         };
 
-        function getResponse(res) {
-            return res.json()
-                .then(data => data.sections[sectionId])
-        }
+        getApi(url, options).then(() => {
+            let collectionUrl = location.pathname;
+            collectionUrl += location.search;
+            collectionUrl += location.search.includes('?') ? '&' : '?';
+            collectionUrl += 'section_id=' + sectionId;
 
-        getApi(url, options, getResponse).then((data) => {
-            setProduct(data.getElementProduct())
-            updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
-            updatePaginate(data.getPaginate(), paginateFuc)
-            updateShowing(data.getElementShowing())
+            getApi(collectionUrl).then(data => {
+                setProduct(data.getElementProduct())
+                updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
+                updatePaginate(data.getPaginate(), paginateFuc)
+                updateShowing(data.getElementShowing())
+
+            })
         })
+    })
+}
+
+function filterListAndCheckbox(event) {
+    const value = event.target.value;
+    const name = event.target.name;
+    function callback(checkedValues) {
+        if (event.target.checked) {
+            if (!checkedValues[name]) {
+                checkedValues[name] = [];
+            }
+            checkedValues[name].push(value);
+        } else {
+            if (checkedValues[name]) {
+                checkedValues[name] = checkedValues[name].filter(val => val !== value);
+            }
+        }
+    }
+    const url = createUrlFilter(callback, window.location.search)
+    history.pushState(null, null, url);
+
+    getApi(url).then((data) => {
+        setProduct(data.getElementProduct())
+        updateCount(data.getProductCount())
+        updatePaginate(data.getPaginate(), paginateFuc)
+        updateShowing(data.getElementShowing())
+        updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
     })
 }
 
 if (filterForms) {
     filterForms.forEach(input => {
-        input.addEventListener('change', event => {
-            const value = event.target.value;
-            const name = event.target.name;
-            function callback(checkedValues) {
-                if (event.target.checked) {
-                    if (!checkedValues[name]) {
-                        checkedValues[name] = [];
-                    }
-                    checkedValues[name].push(value);
-                } else {
-                    if (checkedValues[name]) {
-                        checkedValues[name] = checkedValues[name].filter(val => val !== value);
-                    }
-                }
-            }
-            const url = createUrlFilter(callback, window.location.search)
-            history.pushState(null, null, url);
+        input.addEventListener('change', filterListAndCheckbox)
+    })
+}
 
-            getApi(url).then((data) => {
-                setProduct(data.getElementProduct())
-                updateCount(data.getProductCount())
-                updatePaginate(data.getPaginate(), paginateFuc)
-                updateShowing(data.getElementShowing())
-                updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
-            })
-        })
+function _filterPrice(event, params) {
+    const value = event.target.value;
+    const name = event.target.name;
+    const max = event.target.dataset.max;
+    params['filter.v.price.lte'] = max;
+    params[name] = value;
+
+    function callback(checkedValues) {
+        for (const key in params) {
+            checkedValues[key] = [];
+            checkedValues[key].push(params[key]);
+        }
+
+    }
+    const url = createUrlFilter(callback, window.location.search)
+    history.pushState(null, null, url);
+    getApi(url).then((data) => {
+        setProduct(data.getElementProduct())
+        updateCount(data.getProductCount())
+        updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
+        updatePaginate(data.getPaginate(), paginateFuc)
+        updateShowing(data.getElementShowing())
     })
 }
 
 if (filterPrice) {
     const params = { 'filter.v.price.gte': 0, 'filter.v.price.lte': Number.MAX_SAFE_INTEGER }
     filterPrice.forEach(input => {
-        input.addEventListener('change', event => {
-            const value = event.target.value;
-            const name = event.target.name;
-            const max = event.target.dataset.max;
-            params['filter.v.price.lte'] = max;
-            params[name] = value;
-
-            function callback(checkedValues) {
-                for (const key in params) {
-                    checkedValues[key] = [];
-                    checkedValues[key].push(params[key]);
-                }
-
-            }
-            const url = createUrlFilter(callback, window.location.search)
-            history.pushState(null, null, url);
-            getApi(url).then((data) => {
-                setProduct(data.getElementProduct())
-                updateCount(data.getProductCount())
-                updatePointInfinity(data.getElementPointInfinity(), infinityFuc)
-                updatePaginate(data.getPaginate(), paginateFuc)
-                updateShowing(data.getElementShowing())
-            })
-        }
-
-        )
+        input.addEventListener('change', (event) => _filterPrice(event, params))
     })
 }
 
@@ -192,3 +199,29 @@ function paginateFuc(paginateLinks) {
         })
     }
 }
+
+
+document.addEventListener("shopify:section:load", () => {
+    infinityFuc(document.querySelector('#infinity_point'))
+    const sort_by = document.querySelector('#sort_by')
+    if (sort_by) {
+        sort_by.addEventListener("change", _sortBy)
+    }
+
+    const filterForms = document.querySelectorAll('input[type="checkbox"]')
+    if (filterForms) {
+        filterForms.forEach(input => {
+            input.addEventListener('change', filterListAndCheckbox)
+        })
+    }
+
+
+    const filterPrice = document.querySelectorAll('input[type="number"]')
+    if (filterPrice) {
+        const params = { 'filter.v.price.gte': 0, 'filter.v.price.lte': Number.MAX_SAFE_INTEGER }
+        filterPrice.forEach(input => {
+            input.addEventListener('change', (event) => _filterPrice(event, params))
+        })
+    }
+
+});

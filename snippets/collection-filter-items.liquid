@@ -28,9 +28,6 @@
                           {% if filter_value.active -%}
                             checked
                           {%- endif %}
-                          {% if filter_value.count == 0 and filter_value.active == false -%}
-                            disabled
-                          {%- endif %}
                         >
                         {{- filter_value.label -}}
                       </label>

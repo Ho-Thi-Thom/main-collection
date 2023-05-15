@@ -19,7 +19,6 @@
             color: #1A1A1A;
             font-weight: 600;
             line-height: 40px;
-            min-width: 142px;
             width: auto;
 
             option {
@@ -29,6 +28,10 @@
                 font-weight: 400;
                 transition: all .25s ease-in-out;
             }
+        }
+
+        #show {
+            width: 44px;
         }
 
         select:focus {

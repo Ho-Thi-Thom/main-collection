@@ -1,11 +1,6 @@
 (() => {
   // app/scripts/service.js
   function collectionService() {
-    let listProduct = document.querySelector("#collection__products");
-    let productCount = document.querySelector(".product_count");
-    let showing2 = document.querySelector(".collection__toolbar-filter-showing");
-    let infinityPoint2 = document.querySelector("#infinity_point");
-    let paginate = document.querySelector(".paginate");
     function loading2(target) {
       target.innerHTML = "Loading...";
     }
@@ -20,7 +15,7 @@
     function createUrlFilter2(callback, search) {
       const params = new URLSearchParams(search);
       const checkedValues = {};
-      params.forEach(function (value, key) {
+      params.forEach(function(value, key) {
         if (!checkedValues[key]) {
           checkedValues[key] = [];
         }
@@ -36,43 +31,45 @@
       const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
       return newUrl;
     }
-    function getApi2(url, options, getResponse) {
-      return fetch(url, options).then((res) => getResponse?.(res) ?? res.text()).then((data) => _extract(data));
+    function getApi2(url, options) {
+      return fetch(url, options).then((res) => res.text()).then((data) => _extract(data));
     }
     function appendProduct2(elements) {
+      let listProduct = document.querySelector("#collection__products");
       elements.querySelectorAll("#collection__products > *")?.forEach((element) => {
         listProduct?.appendChild(element);
       });
     }
     function setProduct2(element) {
+      let listProduct = document.querySelector("#collection__products");
       if (element) {
         listProduct.parentNode.replaceChild(element, listProduct);
         listProduct = element;
       }
     }
     function updateCount2(element) {
+      let productCount = document.querySelector(".product_count");
       if (element) {
         productCount.parentNode.replaceChild(element, productCount);
-        productCount = element;
       }
     }
     function updateShowing2(element) {
+      let showing2 = document.querySelector(".collection__toolbar-filter-showing");
       if (element) {
         showing2.parentNode.replaceChild(element, showing2);
-        showing2 = element;
       }
     }
     function updatePointInfinity2(element, infinityFuc2) {
+      let infinityPoint2 = document.querySelector("#infinity_point");
       if (element) {
         infinityPoint2.parentNode.replaceChild(element, infinityPoint2);
-        infinityPoint2 = element;
         infinityFuc2(element);
       }
     }
     function updatePaginate2(element, paginateFuc2) {
+      let paginate = document.querySelector(".paginate");
       if (element) {
         paginate.parentNode.replaceChild(element, paginate);
-        paginate = element;
         paginateFuc2(document.querySelectorAll(".paginate_link[data-url]"));
       }
     }
@@ -113,7 +110,6 @@
     return services;
   }
 
-
   // app/scripts/main-collection.js
   var infinityPoint = document.querySelector("#infinity_point");
   var sortBy = document.querySelector("#sort_by");
@@ -123,14 +119,13 @@
   var paginateLinks = document.querySelectorAll(".paginate_link[data-url]");
   var showing = document.querySelector(".collection__toolbar-filter-showing");
   var { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updateShowing, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService();
-
   infinityFuc(infinityPoint);
   function infinityFuc(infinityPoint2) {
     if (infinityPoint2) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            let callback = function (searchParams) {
+            let callback = function(searchParams) {
               searchParams.set("section_id", sectionId);
             };
             const target = entry.target;
@@ -156,23 +151,24 @@
       observer.observe(infinityPoint2);
     }
   }
-  if (sortBy) {
-    sortBy.addEventListener("change", (event) => {
-      const value = event.target.value;
-      const sectionId = event.target.dataset.sectionId;
-      function callback(searchParams) {
-        searchParams.set("sort_by", value);
-      }
-      let url = createUrl(callback, window.location.href.split("?")[1]);
-      history.pushState(null, null, url);
-      url += url.includes("?") ? "&" : "?";
-      url += `section_id=${sectionId}`;
-      getApi(url).then((data) => {
-        setProduct(data.getElementProduct());
-        updatePointInfinity(data.getElementPointInfinity(), infinityFuc);
-        updateShowing(data.getElementShowing());
-      });
+  function _sortBy(event) {
+    const value = event.target.value;
+    const sectionId = event.target.dataset.sectionId;
+    function callback(searchParams) {
+      searchParams.set("sort_by", value);
+    }
+    let url = createUrl(callback, window.location.href.split("?")[1]);
+    history.pushState(null, null, url);
+    url += url.includes("?") ? "&" : "?";
+    url += `section_id=${sectionId}`;
+    getApi(url).then((data) => {
+      setProduct(data.getElementProduct());
+      updatePointInfinity(data.getElementPointInfinity(), infinityFuc);
+      updateShowing(data.getElementShowing());
     });
+  }
+  if (sortBy) {
+    sortBy.addEventListener("change", _sortBy);
   }
   if (show) {
     show.addEventListener("change", (event) => {
@@ -183,7 +179,8 @@
         attributes: {
           items_per_page: value
         },
-        sections: [sectionId]
+        sections: [sectionId],
+        section_url: location.pathname + location.search
       };
       const options = {
         method: "POST",
@@ -192,71 +189,76 @@
           "Content-Type": "application/json"
         }
       };
-      function getResponse(res) {
-        return res.json().then((data2) => data2.sections[sectionId]);
-      }
-      getApi(url, options, getResponse).then((data2) => {
-        setProduct(data2.getElementProduct());
-        updatePointInfinity(data2.getElementPointInfinity(), infinityFuc);
-        updatePaginate(data2.getPaginate(), paginateFuc);
-        updateShowing(data2.getElementShowing());
+      getApi(url, options).then(() => {
+        let collectionUrl = location.pathname;
+        collectionUrl += location.search;
+        collectionUrl += location.search.includes("?") ? "&" : "?";
+        collectionUrl += "section_id=" + sectionId;
+        getApi(collectionUrl).then((data2) => {
+          setProduct(data2.getElementProduct());
+          updatePointInfinity(data2.getElementPointInfinity(), infinityFuc);
+          updatePaginate(data2.getPaginate(), paginateFuc);
+          updateShowing(data2.getElementShowing());
+        });
       });
+    });
+  }
+  function filterListAndCheckbox(event) {
+    const value = event.target.value;
+    const name = event.target.name;
+    function callback(checkedValues) {
+      if (event.target.checked) {
+        if (!checkedValues[name]) {
+          checkedValues[name] = [];
+        }
+        checkedValues[name].push(value);
+      } else {
+        if (checkedValues[name]) {
+          checkedValues[name] = checkedValues[name].filter((val) => val !== value);
+        }
+      }
+    }
+    const url = createUrlFilter(callback, window.location.search);
+    history.pushState(null, null, url);
+    getApi(url).then((data) => {
+      setProduct(data.getElementProduct());
+      updateCount(data.getProductCount());
+      updatePaginate(data.getPaginate(), paginateFuc);
+      updateShowing(data.getElementShowing());
+      updatePointInfinity(data.getElementPointInfinity(), infinityFuc);
     });
   }
   if (filterForms) {
     filterForms.forEach((input) => {
-      input.addEventListener("change", (event) => {
-        const value = event.target.value;
-        const name = event.target.name;
-        function callback(checkedValues) {
-          if (event.target.checked) {
-            if (!checkedValues[name]) {
-              checkedValues[name] = [];
-            }
-            checkedValues[name].push(value);
-          } else {
-            if (checkedValues[name]) {
-              checkedValues[name] = checkedValues[name].filter((val) => val !== value);
-            }
-          }
-        }
-        const url = createUrlFilter(callback, window.location.search);
-        history.pushState(null, null, url);
-        getApi(url).then((data) => {
-          setProduct(data.getElementProduct());
-          updateCount(data.getProductCount());
-          updatePaginate(data.getPaginate(), paginateFuc);
-          updateShowing(data.getElementShowing());
-          updatePointInfinity(data.getElementPointInfinity(), infinityFuc);
-        });
-      });
+      input.addEventListener("change", filterListAndCheckbox);
+    });
+  }
+  function _filterPrice(event, params) {
+    const value = event.target.value;
+    const name = event.target.name;
+    const max = event.target.dataset.max;
+    params["filter.v.price.lte"] = max;
+    params[name] = value;
+    function callback(checkedValues) {
+      for (const key in params) {
+        checkedValues[key] = [];
+        checkedValues[key].push(params[key]);
+      }
+    }
+    const url = createUrlFilter(callback, window.location.search);
+    history.pushState(null, null, url);
+    getApi(url).then((data) => {
+      setProduct(data.getElementProduct());
+      updateCount(data.getProductCount());
+      updatePointInfinity(data.getElementPointInfinity(), infinityFuc);
+      updatePaginate(data.getPaginate(), paginateFuc);
+      updateShowing(data.getElementShowing());
     });
   }
   if (filterPrice) {
     const params = { "filter.v.price.gte": 0, "filter.v.price.lte": Number.MAX_SAFE_INTEGER };
     filterPrice.forEach((input) => {
-      input.addEventListener("change", (event) => {
-        const value = event.target.value;
-        const name = event.target.name;
-        const max = event.target.dataset.max;
-        params["filter.v.price.lte"] = max;
-        params[name] = value;
-        function callback(checkedValues) {
-          for (const key in params) {
-            checkedValues[key] = [];
-            checkedValues[key].push(params[key]);
-          }
-        }
-        const url = createUrlFilter(callback, window.location.search);
-        history.pushState(null, null, url);
-        getApi(url).then((data) => {
-          setProduct(data.getElementProduct());
-          updateCount(data.getProductCount());
-          updatePointInfinity(data.getElementPointInfinity(), infinityFuc);
-          updatePaginate(data.getPaginate(), paginateFuc);
-          updateShowing(data.getElementShowing());
-        });
-      });
+      input.addEventListener("change", (event) => _filterPrice(event, params));
     });
   }
   paginateFuc(paginateLinks);
@@ -280,4 +282,24 @@
       });
     }
   }
+  document.addEventListener("shopify:section:load", () => {
+    infinityFuc(document.querySelector("#infinity_point"));
+    const sort_by = document.querySelector("#sort_by");
+    if (sort_by) {
+      sort_by.addEventListener("change", _sortBy);
+    }
+    const filterForms2 = document.querySelectorAll('input[type="checkbox"]');
+    if (filterForms2) {
+      filterForms2.forEach((input) => {
+        input.addEventListener("change", filterListAndCheckbox);
+      });
+    }
+    const filterPrice2 = document.querySelectorAll('input[type="number"]');
+    if (filterPrice2) {
+      const params = { "filter.v.price.gte": 0, "filter.v.price.lte": Number.MAX_SAFE_INTEGER };
+      filterPrice2.forEach((input) => {
+        input.addEventListener("change", (event) => _filterPrice(event, params));
+      });
+    }
+  });
 })();

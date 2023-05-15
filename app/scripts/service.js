@@ -1,10 +1,4 @@
 export default function collectionService() {
-    let listProduct = document.querySelector('#collection__products');
-    let productCount = document.querySelector('.product_count')
-    let showing = document.querySelector('.collection__toolbar-filter-showing')
-    let infinityPoint = document.querySelector('#infinity_point')
-    let paginate = document.querySelector('.paginate')
-
     function loading(target) {
         target.innerHTML = "Loading..."
     }
@@ -41,17 +35,19 @@ export default function collectionService() {
     }
 
 
-    function getApi(url, options, getResponse) {
-        return fetch(url, options).then(res => getResponse?.(res) ?? res.text()).then(data => _extract(data))
+    function getApi(url, options) {
+        return fetch(url, options).then(res => res.text()).then(data => _extract(data))
     }
 
     function appendProduct(elements) {
+        let listProduct = document.querySelector('#collection__products');
         elements.querySelectorAll("#collection__products > *")?.forEach(element => {
             listProduct?.appendChild(element);
         });
     }
 
     function setProduct(element) {
+        let listProduct = document.querySelector('#collection__products');
         if (element) {
             listProduct.parentNode.replaceChild(element, listProduct)
             listProduct = element
@@ -59,32 +55,32 @@ export default function collectionService() {
     }
 
     function updateCount(element) {
+        let productCount = document.querySelector('.product_count')
         if (element) {
             productCount.parentNode.replaceChild(element, productCount)
-            productCount = element
         }
     }
 
     function updateShowing(element) {
+        let showing = document.querySelector('.collection__toolbar-filter-showing')
         if (element) {
             showing.parentNode.replaceChild(element, showing)
-            showing = element
         }
     }
 
     function updatePointInfinity(element, infinityFuc) {
+        let infinityPoint = document.querySelector('#infinity_point')
         if (element) {
             infinityPoint.parentNode.replaceChild(element, infinityPoint)
-            infinityPoint = element;
             infinityFuc(element);
         }
     }
 
 
     function updatePaginate(element, paginateFuc) {
+        let paginate = document.querySelector('.paginate')
         if (element) {
             paginate.parentNode.replaceChild(element, paginate)
-            paginate = element
             paginateFuc(document.querySelectorAll('.paginate_link[data-url]'))
         }
     }
