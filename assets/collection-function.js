@@ -31,6 +31,10 @@
       const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
       return newUrl;
     }
+    function updateUrl2(url, sectionId) {
+      url += url.includes("?") ? "&" : "?";
+      return url += `section_id=${sectionId}`;
+    }
     function getApi2(url, options) {
       return fetch(url, options).then((res) => res.text()).then((data) => _extract(data));
     }
@@ -105,38 +109,43 @@
       updatePointInfinity: updatePointInfinity2,
       createUrl: createUrl2,
       updatePaginate: updatePaginate2,
-      createUrlFilter: createUrlFilter2
+      createUrlFilter: createUrlFilter2,
+      updateUrl: updateUrl2
     };
     return services;
   }
 
   // app/scripts/collection-function.js
-  var { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updateShowing, updatePointInfinity, updatePaginate, createUrlFilter } = collectionService();
+  var { loading, createUrl, hiddenLoading, getApi, appendProduct, setProduct, updateCount, updateShowing, updatePointInfinity, updatePaginate, createUrlFilter, updateUrl } = collectionService();
   function infinity(infinityPoint) {
     if (infinityPoint) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            let callback = function(searchParams) {
-              searchParams.set("section_id", sectionId);
-            };
             const target = entry.target;
             const url = target.dataset.url;
             const sectionId = target.dataset.sectionId;
-            const _url = url ? createUrl(callback, url.split("?")[1]) : null;
-            if (_url == null) {
-              observer.disconnect();
-              return;
+            try {
+              let callback = function(searchParams) {
+                searchParams.set("section_id", sectionId);
+              };
+              const _url = url ? createUrl(callback, url.split("?")[1]) : null;
+              if (_url == null) {
+                observer.disconnect();
+                return;
+              }
+              loading(target);
+              getApi(_url).then((data) => {
+                const infinityPoint2 = data.getElementPointInfinity();
+                appendProduct(data.getElementProduct());
+                updatePointInfinity(infinityPoint2, infinity);
+                updateShowing(data.getElementShowing());
+              }).finally(() => {
+                hiddenLoading(target);
+              });
+            } catch (error) {
+              console.error(error);
             }
-            loading(target);
-            getApi(_url).then((data) => {
-              const infinityPoint2 = data.getElementPointInfinity();
-              appendProduct(data.getElementProduct());
-              updatePointInfinity(infinityPoint2, infinity);
-              updateShowing(data.getElementShowing());
-            }).finally(() => {
-              hiddenLoading(target);
-            });
           }
         });
       });
@@ -153,8 +162,7 @@
         }
         let url = createUrl(callback, window.location.href.split("?")[1]);
         history.pushState(null, null, url);
-        url += url.includes("?") ? "&" : "?";
-        url += `section_id=${sectionId}`;
+        url = updateUrl(url, sectionId);
         getApi(url).then((data) => {
           setProduct(data.getElementProduct());
           updatePointInfinity(data.getElementPointInfinity(), infinity);
@@ -198,33 +206,38 @@
       });
     }
   }
-  function filterForm(filterForms) {
+  async function filterForm(filterForms) {
     if (filterForms) {
       filterForms.forEach((input) => {
-        input.addEventListener("change", (event) => {
+        input.addEventListener("change", async (event) => {
           const value = event.target.value;
           const name = event.target.name;
-          function callback(checkedValues) {
-            if (event.target.checked) {
-              if (!checkedValues[name]) {
-                checkedValues[name] = [];
+          const sectionId = event.target.dataset.sectionId;
+          try {
+            let callback = function(checkedValues) {
+              if (event.target.checked) {
+                if (!checkedValues[name]) {
+                  checkedValues[name] = [];
+                }
+                checkedValues[name].push(value);
+              } else {
+                if (checkedValues[name]) {
+                  checkedValues[name] = checkedValues[name].filter((val) => val !== value);
+                }
               }
-              checkedValues[name].push(value);
-            } else {
-              if (checkedValues[name]) {
-                checkedValues[name] = checkedValues[name].filter((val) => val !== value);
-              }
-            }
-          }
-          const url = createUrlFilter(callback, window.location.search);
-          history.pushState(null, null, url);
-          getApi(url).then((data) => {
+            };
+            let url = createUrlFilter(callback, window.location.search);
+            history.pushState(null, null, url);
+            url = updateUrl(url, sectionId);
+            const data = await getApi(url);
             setProduct(data.getElementProduct());
             updateCount(data.getProductCount());
             updatePaginate(data.getPaginate(), paginate);
             updateShowing(data.getElementShowing());
             updatePointInfinity(data.getElementPointInfinity(), infinity);
-          });
+          } catch (error) {
+            console.error(error);
+          }
         });
       });
     }
@@ -237,23 +250,29 @@
           const value = event.target.value;
           const name = event.target.name;
           const max = event.target.dataset.max;
+          const sectionId = event.target.dataset.sectionId;
           params["filter.v.price.lte"] = max;
           params[name] = value;
-          function callback(checkedValues) {
-            for (const key in params) {
-              checkedValues[key] = [];
-              checkedValues[key].push(params[key]);
-            }
+          try {
+            let callback = function(checkedValues) {
+              for (const key in params) {
+                checkedValues[key] = [];
+                checkedValues[key].push(params[key]);
+              }
+            };
+            const url = createUrlFilter(callback, window.location.search);
+            history.pushState(null, null, url);
+            const updatedUrl = updateUrl(url, sectionId);
+            getApi(updatedUrl).then((data) => {
+              setProduct(data.getElementProduct());
+              updateCount(data.getProductCount());
+              updatePointInfinity(data.getElementPointInfinity(), infinity);
+              updatePaginate(data.getPaginate(), paginate);
+              updateShowing(data.getElementShowing());
+            });
+          } catch (error) {
+            console.error(error);
           }
-          const url = createUrlFilter(callback, window.location.search);
-          history.pushState(null, null, url);
-          getApi(url).then((data) => {
-            setProduct(data.getElementProduct());
-            updateCount(data.getProductCount());
-            updatePointInfinity(data.getElementPointInfinity(), infinity);
-            updatePaginate(data.getPaginate(), paginate);
-            updateShowing(data.getElementShowing());
-          });
         });
       });
     }

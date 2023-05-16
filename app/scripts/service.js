@@ -34,6 +34,10 @@ export default function collectionService() {
         return newUrl
     }
 
+    function updateUrl(url, sectionId) {
+        url += url.includes('?') ? '&' : '?';
+        return url += `section_id=${sectionId}`;
+    }
 
     function getApi(url, options) {
         return fetch(url, options).then(res => res.text()).then(data => _extract(data))
@@ -85,6 +89,8 @@ export default function collectionService() {
         }
     }
 
+
+
     function _extract(data) {
 
         const div = document.createElement("div");
@@ -120,7 +126,8 @@ export default function collectionService() {
         updatePointInfinity,
         createUrl,
         updatePaginate,
-        createUrlFilter
+        createUrlFilter,
+        updateUrl
     }
     return services;
 }
