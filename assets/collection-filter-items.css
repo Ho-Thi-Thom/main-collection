@@ -32,14 +32,57 @@
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__list .filter-group-display__list-item {
   margin-bottom: 5px;
+  position: relative;
 }
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__list .filter-group-display__list-item input[type=checkbox] {
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__list .filter-group-display__list-item label {
   white-space: nowrap;
+}
+
+.block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__list.type_color {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__list.type_color li {
+  margin-bottom: 0;
+}
+
+.block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__list.type_color li label span {
+  display: none;
+}
+
+.block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__list.type_color li label input[type=checkbox] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--bgColor);
+  left: 0;
+  top: 0;
+  border: 1px solid #000;
+}
+
+.block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__list.type_color li span {
+  display: none;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__list.type_color li:hover span {
+  display: block;
+  position: absolute;
+  right: -50%;
+  top: -50%;
+  z-index: 10;
 }
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__price-range {
@@ -77,6 +120,10 @@
 
 .block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option .filter-group-display__price-range .price-dash {
   margin-right: 10px;
+}
+
+.block__filter__items .filter-form .filter-form__item .filter-wrapper .filter-option.overflow_hidden {
+  overflow: inherit;
 }
 
 .block__filter__items .filter-form .flex_column_item {

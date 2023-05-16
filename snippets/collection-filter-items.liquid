@@ -8,15 +8,24 @@
   <div class="filter-form">
     <div class="filter-form__item {{ _filter_style | default: 'layout' }}_item">
       {%- for filter in _filter -%}
-        <div class="filter-wrapper {{ _filter_style | default: 'layout'  }}_wrapper">
+        <div
+          class="filter-wrapper {{ _filter_style | default: 'layout'  }}_wrapper"
+        >
           <div class="filter-title {{ _filter_style | default: 'layout'  }}_title">
             <span>{{ filter.label }}</span>
           </div>
-
-          <div class="filter-option {{ _filter_style | default: 'layout'  }}_option">
+          <div class="filter-option {{ _filter_style | default: 'layout'  }}_option {% if filter.label == 'Color' %} overflow_hidden{% endif %}">
             {%- case filter.type -%}
               {%- when 'boolean', 'list' -%}
-                <ul class="filter-group-display__list {{ _filter_style | default: 'layout'  }}_list" id="filter_list">
+                {% if filter.param_name == 'filter.v.option.color' %}
+                  {% assign isColor = 'type_color' %}
+                {% else %}
+                  {% assign isColor = '' %}
+                {% endif %}
+                <ul
+                  class="filter-group-display__list {{ _filter_style | default: 'layout'  }}_list  {{ isColor}}"
+                  id="filter_list"
+                >
                   {%- for filter_value in filter.values -%}
                     <li class="filter-group-display__list-item">
                       <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
@@ -29,9 +38,15 @@
                           {% if filter_value.active -%}
                             checked
                           {%- endif %}
+                          {% if isColor == 'type_color' %}
+                            style="--bgColor:{{ filter_value.value }}"
+                          {% endif %}
                         >
-                        {{- filter_value.label -}}
+                        <span>{{- filter_value.label -}}</span>
                       </label>
+                      {% if isColor == 'type_color' %}
+                        <span class="tooltiptext">{{ filter_value.value }}</span>
+                      {% endif %}
                     </li>
                   {%- endfor -%}
                 </ul>

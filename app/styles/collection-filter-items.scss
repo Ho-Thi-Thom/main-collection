@@ -30,13 +30,64 @@
 
                         .filter-group-display__list-item {
                             margin-bottom: 5px;
+                            position: relative;
 
                             input[type="checkbox"] {
                                 margin-right: 5px;
+                                cursor: pointer;
                             }
 
                             label {
                                 white-space: nowrap;
+                            }
+
+
+
+                        }
+                    }
+
+                    .filter-group-display__list.type_color {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 10px;
+
+                        li {
+                            margin-bottom: 0px;
+
+                            label {
+                                span {
+                                    display: none;
+                                }
+                            }
+
+                            label input[type="checkbox"] {
+                                appearance: none;
+                                -webkit-appearance: none;
+                                -moz-appearance: none;
+                                width: 30px;
+                                height: 30px;
+                                border-radius: 50%;
+                                border: 1px solid transparent;
+                                background-color: var(--bgColor);
+                                left: 0;
+                                top: 0;
+                                border: 1px solid black;
+                            }
+
+                            span {
+                                display: none;
+                                font-size: 14px;
+                                font-weight: 400;
+                            }
+                        }
+
+                        li:hover {
+                            span {
+                                display: block;
+                                position: absolute;
+                                right: -50%;
+                                top: -50%;
+                                z-index: 10;
                             }
                         }
                     }
@@ -79,7 +130,13 @@
                         }
                     }
                 }
+
+                .filter-option.overflow_hidden {
+                    overflow: inherit;
+                }
             }
+
+
         }
 
         .flex_column_item {
