@@ -217,6 +217,8 @@
 {{ 'collection.js' | asset_url | script_tag }}
 {{ 'main-collection.js' | asset_url | script_tag }}
 
-{% for color in shop.metaobjects.colors.values %}
-  {{ color.name_color }}
-{% endfor %}
+{% comment %}
+  {% for color in shop.metaobjects.colors.values %}
+    {{ color.name_color }}
+  {% endfor %}
+{% endcomment %}

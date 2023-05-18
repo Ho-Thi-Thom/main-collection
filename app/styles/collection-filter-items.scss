@@ -46,51 +46,51 @@
                         }
                     }
 
-                    .filter-group-display__list.type_color {
-                        display: flex;
-                        flex-wrap: wrap;
-                        gap: 10px;
+                    // .filter-group-display__list.type_color {
+                    //     display: flex;
+                    //     flex-wrap: wrap;
+                    //     gap: 10px;
 
-                        li {
-                            margin-bottom: 0px;
+                    //     li {
+                    //         margin-bottom: 0px;
 
-                            label {
-                                span {
-                                    display: none;
-                                }
-                            }
+                    //         label {
+                    //             span {
+                    //                 display: none;
+                    //             }
+                    //         }
 
-                            label input[type="checkbox"] {
-                                appearance: none;
-                                -webkit-appearance: none;
-                                -moz-appearance: none;
-                                width: 30px;
-                                height: 30px;
-                                border-radius: 50%;
-                                border: 1px solid transparent;
-                                background-color: var(--bgColor);
-                                left: 0;
-                                top: 0;
-                                border: 1px solid black;
-                            }
+                    //         label input[type="checkbox"] {
+                    //             appearance: none;
+                    //             -webkit-appearance: none;
+                    //             -moz-appearance: none;
+                    //             width: 30px;
+                    //             height: 30px;
+                    //             border-radius: 50%;
+                    //             border: 1px solid transparent;
+                    //             background-color: var(--bgColor);
+                    //             left: 0;
+                    //             top: 0;
+                    //             border: 1px solid black;
+                    //         }
 
-                            span {
-                                display: none;
-                                font-size: 14px;
-                                font-weight: 400;
-                            }
-                        }
+                    //         span {
+                    //             display: none;
+                    //             font-size: 14px;
+                    //             font-weight: 400;
+                    //         }
+                    //     }
 
-                        li:hover {
-                            span {
-                                display: block;
-                                position: absolute;
-                                right: -50%;
-                                top: -50%;
-                                z-index: 10;
-                            }
-                        }
-                    }
+                    //     li:hover {
+                    //         span {
+                    //             display: block;
+                    //             position: absolute;
+                    //             right: -50%;
+                    //             top: -50%;
+                    //             z-index: 10;
+                    //         }
+                    //     }
+                    // }
 
                     .filter-group-display__price-range {
                         display: flex;
@@ -133,6 +133,69 @@
 
                 .filter-option.overflow_hidden {
                     overflow: inherit;
+                }
+
+                .filter-colors {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+
+                    label {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        position: relative;
+
+                        .filter-colors__image {
+                            height: 30px;
+                            width: 30px;
+                            border-radius: 50%;
+                            cursor: pointer;
+                            background-size: cover;
+                            position: relative;
+
+                            &:hover {
+                                opacity: 0.7;
+                            }
+
+                            input {
+                                position: absolute;
+                                opacity: 1;
+                                right: -25%;
+                                top: -25%;
+                                accent-color: white;
+                            }
+
+                            input:checked {
+                                display: block;
+                            }
+
+                            input {
+                                display: none;
+                            }
+                        }
+
+
+
+                        span {
+                            position: absolute;
+                            display: none;
+                            z-index: 20;
+                            bottom: -100%;
+                            left: 0%;
+                            white-space: nowrap;
+                            font-size: 14px;
+                        }
+
+
+                    }
+
+                    label:hover {
+                        span {
+                            display: block;
+                        }
+                    }
                 }
             }
 
@@ -283,3 +346,32 @@
         }
     }
 }
+
+// {%- for filter_value in filter.values -%}
+
+//                       {% for color in shop.metaobjects.colors.values %}
+
+//                         {% if filter_value.value == color.name_color %}
+//                           {% assign image = color.image | img_url: 'medium' %}
+//                           <label>
+//                             <div
+//                               class="filter-colors__image"
+//                               style="{% if color.image  != null %}background-image:url('{{ image }}');{%else%}background: {{ color.text_color}};{% endif %}"
+//                             >
+//                               <input
+//                                 type="checkbox"
+//                                 name="{{ filter_value.param_name }}"
+//                                 value="{{ filter_value.value }}"
+//                                 data-section-id="{{ section.id }}"
+//                                 {% if filter_value.active -%}
+//                                   checked
+//                                 {%- endif %}
+//                               >
+//                             </div>
+
+//                             <span>{{- filter_value.label -}}</span>
+//                           </label>
+//                         {% endif %}
+//                       {% endfor %}
+
+//                     {%- endfor -%}

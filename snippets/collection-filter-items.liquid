@@ -18,38 +18,66 @@
             {%- case filter.type -%}
               {%- when 'boolean', 'list' -%}
                 {% if filter.param_name == 'filter.v.option.color' %}
-                  {% assign isColor = 'type_color' %}
-                {% else %}
-                  {% assign isColor = '' %}
-                {% endif %}
-                <ul
-                  class="filter-group-display__list {{ _filter_style | default: 'layout'  }}_list  {{ isColor}}"
-                  id="filter_list"
-                >
-                  {%- for filter_value in filter.values -%}
-                    <li class="filter-group-display__list-item">
-                      <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
-                        <input
-                          type="checkbox"
-                          name="{{ filter_value.param_name }}"
-                          value="{{ filter_value.value }}"
-                          id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
-                          data-section-id="{{ section.id }}"
-                          {% if filter_value.active -%}
-                            checked
-                          {%- endif %}
-                          {% if isColor == 'type_color' %}
-                            style="--bgColor:{{ filter_value.value }}"
+                  <div
+                    class="filter-colors {{ _filter_style | default: 'layout'  }}_list"
+                  >
+                    {%- for filter_value in filter.values -%}
+                      {% assign value = null %}
+                      {% for color in shop.metaobjects.colors.values %}
+                        {% if filter_value.value == color.name_color %}
+                          {% assign value = color %}
+                          {% break %}
+                        {% endif %}
+                      {% endfor %}
+                      {% if value != null %}
+                        {% assign image = value.image | img_url: 'medium' %}
+                      {% endif %}
+                      <label>
+                        <div
+                          class="filter-colors__image"
+                          {% if value != null %}
+                            style="{% if value.image  != null %}background-image:url('{{ image }}');{%else%}background: {{ value.text_color}};{% endif %}"
+                          {% else %}
+                            style="border: 1px solid #05933C;"
                           {% endif %}
                         >
+                          <input
+                            type="checkbox"
+                            name="{{ filter_value.param_name }}"
+                            value="{{ filter_value.value }}"
+                            data-section-id="{{ section.id }}"
+                            {% if filter_value.active -%}
+                              checked
+                            {%- endif %}
+                          >
+                        </div>
                         <span>{{- filter_value.label -}}</span>
                       </label>
-                      {% if isColor == 'type_color' %}
-                        <span class="tooltiptext">{{ filter_value.value }}</span>
-                      {% endif %}
-                    </li>
-                  {%- endfor -%}
-                </ul>
+                    {%- endfor -%}
+                  </div>
+                {% else %}
+                  <ul
+                    class="filter-group-display__list {{ _filter_style | default: 'layout'  }}_list"
+                  >
+                    {%- for filter_value in filter.values -%}
+                      <li class="filter-group-display__list-item">
+                        <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
+                          <input
+                            type="checkbox"
+                            name="{{ filter_value.param_name }}"
+                            value="{{ filter_value.value }}"
+                            id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
+                            data-section-id="{{ section.id }}"
+                            {% if filter_value.active -%}
+                              checked
+                            {%- endif %}
+                          >
+                          <span>{{- filter_value.label -}}</span>
+                        </label>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {% endif %}
 
               {%- when 'price_range' -%}
                 <div class="filter-group-display__price-range">
