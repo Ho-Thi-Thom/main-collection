@@ -1,0 +1,32 @@
+{% liquid
+  assign className = 'ss-bg-'
+  assign varName = 'background'
+%}
+{% comment %}
+  ------------------------
+  LIST DEFINE
+  ------------------------
+{% endcomment %}
+{% assign _list = list | split: ';' %}
+{% for item in _list %}
+  {% liquid
+    assign colorName = item | split: ':' | first | strip | replace: ' ', '-' | downcase
+    assign color = item | split: ':' | last | strip
+  %}
+
+  {%- capture data -%}{{data}}{{colorName}}:{{ className | append: colorName | handle }};{%- endcapture -%}
+  {%- capture color_class -%}{{color_class}}.{{ className | append: colorName | handle }}{ {{ varName }}: {{ color }};}{%- endcapture -%}
+{% endfor %}
+{%- for block in blocks -%}
+  {%- liquid
+    assign colorName = block.settings.text | replace: ' ', '-' | downcase
+    assign image = block.settings.image
+    assign type = block.settings.type
+  -%}
+  {%- capture value -%}{%- if type != 'image' -%}{{block.settings[type]}}{%- elsif image != blank -%}url({{ image | image_url: width: 150 }}){%- endif -%}{%- endcapture -%}
+  {%- capture data -%}{{data}}{{colorName}}:{{ className | append: colorName | handle }};{%- endcapture -%}
+  {%- capture color_class -%}{{color_class}}.{{ className | append: colorName | handle }}{ {{ varName }}: {{ value }};}{%- endcapture -%}
+{% endfor %}
+{{- color_class -}}
+{{- split -}}
+{{- data -}}

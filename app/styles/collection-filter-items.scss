@@ -40,57 +40,8 @@
                             label {
                                 white-space: nowrap;
                             }
-
-
-
                         }
                     }
-
-                    // .filter-group-display__list.type_color {
-                    //     display: flex;
-                    //     flex-wrap: wrap;
-                    //     gap: 10px;
-
-                    //     li {
-                    //         margin-bottom: 0px;
-
-                    //         label {
-                    //             span {
-                    //                 display: none;
-                    //             }
-                    //         }
-
-                    //         label input[type="checkbox"] {
-                    //             appearance: none;
-                    //             -webkit-appearance: none;
-                    //             -moz-appearance: none;
-                    //             width: 30px;
-                    //             height: 30px;
-                    //             border-radius: 50%;
-                    //             border: 1px solid transparent;
-                    //             background-color: var(--bgColor);
-                    //             left: 0;
-                    //             top: 0;
-                    //             border: 1px solid black;
-                    //         }
-
-                    //         span {
-                    //             display: none;
-                    //             font-size: 14px;
-                    //             font-weight: 400;
-                    //         }
-                    //     }
-
-                    //     li:hover {
-                    //         span {
-                    //             display: block;
-                    //             position: absolute;
-                    //             right: -50%;
-                    //             top: -50%;
-                    //             z-index: 10;
-                    //         }
-                    //     }
-                    // }
 
                     .filter-group-display__price-range {
                         display: flex;
@@ -154,6 +105,7 @@
                             cursor: pointer;
                             background-size: cover;
                             position: relative;
+                            border: 1px solid #d1cdcd;
 
                             &:hover {
                                 opacity: 0.7;
@@ -176,8 +128,6 @@
                             }
                         }
 
-
-
                         span {
                             position: absolute;
                             display: none;
@@ -187,8 +137,6 @@
                             white-space: nowrap;
                             font-size: 14px;
                         }
-
-
                     }
 
                     label:hover {
@@ -238,7 +186,6 @@
                 padding: 8px 8px 8px 8px;
 
                 .filter-wrapper {
-
 
                     .filter-title {}
 
@@ -297,7 +244,6 @@
             .filter-form__item {
                 grid-template-columns: repeat(1, 1fr);
 
-
                 .filter-wrapper {
                     margin-bottom: 0px;
 
@@ -323,7 +269,9 @@
 
                                 input[type="number"] {}
 
-                                span {}
+                                span {
+                                    border: 1px solid black;
+                                }
                             }
 
                             .price-dash {}
@@ -346,32 +294,3 @@
         }
     }
 }
-
-// {%- for filter_value in filter.values -%}
-
-//                       {% for color in shop.metaobjects.colors.values %}
-
-//                         {% if filter_value.value == color.name_color %}
-//                           {% assign image = color.image | img_url: 'medium' %}
-//                           <label>
-//                             <div
-//                               class="filter-colors__image"
-//                               style="{% if color.image  != null %}background-image:url('{{ image }}');{%else%}background: {{ color.text_color}};{% endif %}"
-//                             >
-//                               <input
-//                                 type="checkbox"
-//                                 name="{{ filter_value.param_name }}"
-//                                 value="{{ filter_value.value }}"
-//                                 data-section-id="{{ section.id }}"
-//                                 {% if filter_value.active -%}
-//                                   checked
-//                                 {%- endif %}
-//                               >
-//                             </div>
-
-//                             <span>{{- filter_value.label -}}</span>
-//                           </label>
-//                         {% endif %}
-//                       {% endfor %}
-
-//                     {%- endfor -%}

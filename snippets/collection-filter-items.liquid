@@ -22,24 +22,9 @@
                     class="filter-colors {{ _filter_style | default: 'layout'  }}_list"
                   >
                     {%- for filter_value in filter.values -%}
-                      {% assign value = null %}
-                      {% for color in shop.metaobjects.colors.values %}
-                        {% if filter_value.value == color.name_color %}
-                          {% assign value = color %}
-                          {% break %}
-                        {% endif %}
-                      {% endfor %}
-                      {% if value != null %}
-                        {% assign image = value.image | img_url: 'medium' %}
-                      {% endif %}
                       <label>
                         <div
-                          class="filter-colors__image"
-                          {% if value != null %}
-                            style="{% if value.image  != null %}background-image:url('{{ image }}');{%else%}background: {{ value.text_color}};{% endif %}"
-                          {% else %}
-                            style="border: 1px solid #05933C;"
-                          {% endif %}
+                          class="filter-colors__image ss-bg-{{filter_value.label  | downcase | replace: ' ', '-' }}"
                         >
                           <input
                             type="checkbox"

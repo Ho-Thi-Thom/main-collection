@@ -1,0 +1,100 @@
+<link
+  rel="stylesheet"
+  href="{{ 'dynamic-section-swatch.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
+
+{% assign split = 'htthom' %}
+{%- capture data -%}{% render 'colors-class', list: section.settings.colors, blocks: section.blocks ,split:split%}{%- endcapture -%}
+<style>
+  {{- data | split: split | first -}}
+</style>
+
+{%- if request.design_mode -%}
+  <div class="pop-up">
+    <div class="wrapper">
+      {%- assign text_color = data | split: split | last | strip -%}
+      {% assign colors = text_color | split: ';' %}
+
+      {% for color in colors %}
+        {% assign name = color | split: ':' | first | strip %}
+        {% assign bg = color | split: ':' | last | strip %}
+        {% render 'box-color', color: bg, name: name %}
+      {% endfor %}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Swatch color define",
+  "tag": "section",
+  "class": "shopify-section-swatch-color",
+  "presets": [
+    {
+      "name": "Swatch color define"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product", "collection"],
+    "groups": ["custom.colors"]
+  },
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "colors",
+      "label": "Hex code define",
+      "info": "Color Name: #hexcode; ...."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Color Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Color name"
+        },
+        {
+          "type": "radio",
+          "id": "type",
+          "label": "Use style from",
+          "options": [
+            {
+              "value": "hex_color",
+              "label": "Hex color"
+            },
+            {
+              "value": "gradient_color",
+              "label": "Gradient color"
+            },
+            {
+              "value": "image",
+              "label": "Image"
+            }
+          ],
+          "default": "hex_color"
+        },
+        {
+          "type": "color",
+          "id": "hex_color",
+          "label": "Color"
+        },
+        {
+          "type": "color_background",
+          "id": "gradient_color",
+          "label": "Gradient Color"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

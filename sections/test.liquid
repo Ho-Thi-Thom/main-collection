@@ -1,0 +1,23 @@
+<link
+  rel="stylesheet"
+  href="{{ 'test.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
+
+<div class="base_css">
+  {% render 'snippet-button', class: 'custom-btn btn-4 ', content: 'Submit' %}
+</div>
+
+{% schema %}
+{
+  "name": "Test",
+  "tag": "section",
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Test"
+    }
+  ]
+}
+{% endschema %}
