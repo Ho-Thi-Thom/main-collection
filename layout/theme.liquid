@@ -80,13 +80,21 @@
     {{ 'theme-editor.js' | asset_url | script_tag }}
     {{ 'countup.js' | asset_url | script_tag }}
   </head>
-
   <body>
     <div id="bg-color" class=""></div>
     {% section 'header' %}
     {{ content_for_layout }}
+    {% sections 'colors-swatches' %}
     {% section 'social' %}
     {% section 'footer1' %}
-    {% sections 'colors-swatches' %}
+
+    {% if request.design_mode %}
+      <link
+        rel="stylesheet"
+        href="{{ 'dynamic-section-swatch.css' | asset_url }}"
+        media="print"
+        onload="this.media='all'"
+      >
+    {%- endif %}
   </body>
 </html>

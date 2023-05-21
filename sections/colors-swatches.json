@@ -1,7 +1,62 @@
 {
   "type": "custom.colors",
   "name": "Colors swatch",
-  "sections": {},
+  "sections": {
+    "02fb0db1-1607-4c8c-af04-faa2783e0205": {
+      "type": "dynamic-section-swatch",
+      "blocks": {
+        "3729f148-8400-4ea3-967b-de9b28967325": {
+          "type": "block",
+          "settings": {
+            "text": "pastel",
+            "type": "gradient_color",
+            "hex_color": "#000000",
+            "gradient_color": "linear-gradient(180deg, rgba(255, 211, 226, 1), rgba(168, 255, 251, 1) 100%)",
+            "image": "shopify:\/\/shop_images\/fashion-model-in-pink.jpg"
+          }
+        },
+        "ec9f2a29-6cc3-405e-93da-ed111713c2a9": {
+          "type": "block",
+          "settings": {
+            "text": "linear",
+            "type": "gradient_color",
+            "hex_color": "",
+            "gradient_color": "linear-gradient(180deg, rgba(255, 228, 49, 1), rgba(249, 32, 32, 1) 100%)"
+          }
+        },
+        "efc572cc-b22a-4556-9f5b-c713501d729c": {
+          "type": "block",
+          "settings": {
+            "text": "Pink Pastel",
+            "type": "image",
+            "hex_color": "",
+            "gradient_color": "",
+            "image": "shopify:\/\/shop_images\/4.0.jpg"
+          }
+        },
+        "d54f0da8-05bb-47e8-825f-ad7bfc10aedf": {
+          "type": "block",
+          "settings": {
+            "text": "pink",
+            "type": "image",
+            "hex_color": "",
+            "gradient_color": "",
+            "image": "shopify:\/\/shop_images\/TenderHeartCo_TieDyeCrewneck_MultiPastel.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "3729f148-8400-4ea3-967b-de9b28967325",
+        "ec9f2a29-6cc3-405e-93da-ed111713c2a9",
+        "efc572cc-b22a-4556-9f5b-c713501d729c",
+        "d54f0da8-05bb-47e8-825f-ad7bfc10aedf"
+      ],
+      "settings": {
+        "colors": "aqua: #00FFFF;\nblack: yellow;\nblue: #0000FF;\nfuchsia: #FF00FF;\ngray: #808080;\ngreen: #008000;\nlime: #00FF00;\nmaroon: #800000;\nnavy: #000080;\nolive: #808000;\npurple: #800080;\nred: #FF0000;\nsilver: #C0C0C0;\nteal: #008080;\nwhite: #FFFFFF;\nyellow: #FFFF00;"
+      }
+    }
+  },
   "order": [
+    "02fb0db1-1607-4c8c-af04-faa2783e0205"
   ]
 }

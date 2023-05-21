@@ -10,7 +10,7 @@
 {% assign _list = list | split: ';' %}
 {% for item in _list %}
   {% liquid
-    assign colorName = item | split: ':' | first | strip | replace: ' ', '-' | downcase
+    assign colorName = item | split: ':' | first | strip | handle
     assign color = item | split: ':' | last | strip
   %}
 
@@ -19,7 +19,7 @@
 {% endfor %}
 {%- for block in blocks -%}
   {%- liquid
-    assign colorName = block.settings.text | replace: ' ', '-' | downcase
+    assign colorName = block.settings.text | handle
     assign image = block.settings.image
     assign type = block.settings.type
   -%}

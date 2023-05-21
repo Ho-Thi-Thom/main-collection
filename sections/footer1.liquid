@@ -15,7 +15,7 @@
   <div class="footer__copy-right">{{ section.settings['footer-copy-right'] }}</div>
   <div class="footer__list-icon">
     {% for item in section.blocks %}
-      <div class="footer__list-icon__item">
+      <div class="footer__list-icon__item" {{ item.shopify_attributes }}>
         <a href="{{ item.settings.footer__list-icon-url}}">
           <img
             src="{{item.settings.footer__list-icon-img| image_url }}"

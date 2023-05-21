@@ -52,3 +52,5 @@ function addEventButtonFilter() {
 document.addEventListener("shopify:section:load", () => {
     addEventButtonFilter()
 });
+
+

@@ -36,7 +36,6 @@
     flex: 1;
   }
 </style>
-
 {%- paginate collection.products by itemsPerPageCustom -%}
   <div class="section_container container_wrapper">
     {% comment %}
@@ -198,11 +197,6 @@
         }
       ],
       "default": "sidebar"
-    },
-    {
-      "type": "richtext",
-      "id": "paragraph",
-      "label": "Paragraph"
     }
   ],
   "blocks": [
@@ -216,9 +210,3 @@
 {% endschema %}
 {{ 'collection.js' | asset_url | script_tag }}
 {{ 'main-collection.js' | asset_url | script_tag }}
-
-{% comment %}
-  {% for color in shop.metaobjects.colors.values %}
-    {{ color.name_color }}
-  {% endfor %}
-{% endcomment %}

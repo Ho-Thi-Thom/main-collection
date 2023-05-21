@@ -31,10 +31,6 @@
       const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
       return newUrl;
     }
-    function updateUrl(url, sectionId) {
-      url += url.includes("?") ? "&" : "?";
-      return url += `section_id=${sectionId}`;
-    }
     function getApi(url, options) {
       return fetch(url, options).then((res) => res.text()).then((data) => _extract(data));
     }
@@ -109,8 +105,7 @@
       updatePointInfinity,
       createUrl,
       updatePaginate,
-      createUrlFilter,
-      updateUrl
+      createUrlFilter
     };
     return services;
   }

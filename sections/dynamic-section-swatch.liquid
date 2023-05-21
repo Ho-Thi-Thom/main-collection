@@ -1,10 +1,3 @@
-<link
-  rel="stylesheet"
-  href="{{ 'dynamic-section-swatch.css' | asset_url }}"
-  media="print"
-  onload="this.media='all'"
->
-
 {% assign split = 'htthom' %}
 {%- capture data -%}{% render 'colors-class', list: section.settings.colors, blocks: section.blocks ,split:split%}{%- endcapture -%}
 <style>
@@ -13,17 +6,21 @@
 
 {%- if request.design_mode -%}
   <div class="pop-up">
-    <div class="wrapper">
-      {%- assign text_color = data | split: split | last | strip -%}
-      {% assign colors = text_color | split: ';' %}
+    <h2>Color Table</h2>
+    <div>
+      <div class="wrapper">
+        {%- assign text_color = data | split: split | last | strip -%}
+        {% assign colors = text_color | split: ';' %}
 
-      {% for color in colors %}
-        {% assign name = color | split: ':' | first | strip %}
-        {% assign bg = color | split: ':' | last | strip %}
-        {% render 'box-color', color: bg, name: name %}
-      {% endfor %}
+        {% for color in colors %}
+          {% assign name = color | split: ':' | first | strip %}
+          {% assign bg = color | split: ':' | last | strip %}
+          {% render 'box-color', color: bg, name: name %}
+        {% endfor %}
+      </div>
     </div>
   </div>
+  {{ 'pop-up.js' | asset_url | script_tag }}
 {%- endif -%}
 
 {% schema %}
@@ -92,9 +89,47 @@
           "type": "image_picker",
           "id": "image",
           "label": "Background image"
+        },
+        {
+          "type": "link_list",
+          "id": "image3",
+          "label": "tesst image"
         }
       ]
     }
   ]
 }
 {% endschema %}
+
+{% comment %}
+  let isActive = false;
+
+  function close() {
+      const closeTableColors = document.querySelector('.close-button');
+      closeTableColors.addEventListener('click', () => {
+          popupToggle(false);
+      });
+  }
+
+  popupToggle(document.querySelector('.pop-up').classList.contains('active'));
+
+  function popupToggle(boolean) {
+      const popUp = document.querySelector('.pop-up');
+      popUp.classList.toggle('active', boolean);
+      isActive = boolean;
+  }
+
+  document.addEventListener("shopify:block:select", (e) => {
+      if (e.target.closest('.shopify-section-swatch-color') && !isActive) {
+          popupToggle(true);
+      }
+  });
+
+  document.addEventListener("shopify:section:select", (e) => {
+      if (e.target.classList.contains('shopify-section-swatch-color') && !isActive) {
+          popupToggle(true);
+      } else {
+          popupToggle(false);
+      }
+  });
+{% endcomment %}

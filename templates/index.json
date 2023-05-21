@@ -1,62 +1,9 @@
 {
   "sections": {
-    "94a6b189-5c90-487c-bbef-079b01d5e547": {
-      "type": "v2-section",
+    "783d5633-d68c-4f41-a6f6-949b8a8383f1": {
+      "type": "test",
       "disabled": true,
-      "blocks": {
-        "bfb0f2ff-de66-40d1-84af-605ff31d4788": {
-          "type": "banner",
-          "settings": {
-            "img_desktop": "shopify:\/\/shop_images\/2024.png",
-            "title": "",
-            "content_text_color": "#000000",
-            "sub_title": "",
-            "button_left": "",
-            "button_left_url": "",
-            "button_right": "",
-            "button_right_url": "",
-            "button_style": "option1"
-          }
-        },
-        "1d84f9c1-d5dd-4683-9ef6-ff42cfdd9686": {
-          "type": "banner",
-          "settings": {
-            "img_desktop": "shopify:\/\/shop_images\/2_dc2baff9-3c5a-4bb0-b18f-4db432a1b0b1.png",
-            "title": "",
-            "content_text_color": "#000000",
-            "sub_title": "",
-            "button_left": "",
-            "button_left_url": "",
-            "button_right": "",
-            "button_right_url": "",
-            "button_style": "option1"
-          }
-        }
-      },
-      "block_order": [
-        "bfb0f2ff-de66-40d1-84af-605ff31d4788",
-        "1d84f9c1-d5dd-4683-9ef6-ff42cfdd9686"
-      ],
-      "settings": {
-        "margin_top": "0",
-        "margin_vertical": "0",
-        "flex": "option1",
-        "item_gap": "0",
-        "content_position": "position1",
-        "font_size_title": "30,50",
-        "font_size_sub_title": "20,18",
-        "text_decoration": false,
-        "gap_content": "17,40",
-        "is_content_center": false,
-        "is_item_content_center": false,
-        "is_content_position": false,
-        "font_size_button": "16,16",
-        "font_weight_button": "400",
-        "img_height": "600",
-        "item_width": "100%",
-        "items_per_line": 3,
-        "image_border_radius": 4
-      }
+      "settings": {}
     },
     "header": {
       "type": "header",
@@ -854,7 +801,7 @@
     }
   },
   "order": [
-    "94a6b189-5c90-487c-bbef-079b01d5e547",
+    "783d5633-d68c-4f41-a6f6-949b8a8383f1",
     "header",
     "8ce34b82-817b-4e18-b07d-846227959839",
     "3a15c7e1-c31a-4afd-9aa4-d57afdf505a3",
