@@ -1,0 +1,35 @@
+<div class="product-gallery-wrapper">
+  <div class="thumbnail-gallery">
+    <div class="thumbnail-slider-wrapper">
+      <div class="thumbnail-slider-in">
+        <div class="back">
+          <div class="arrow">
+            {% render 'expand' %}
+          </div>
+        </div>
+        <div class="next">
+          <div class="arrow">
+            {% render 'expand' %}
+          </div>
+        </div>
+      </div>
+      <div class="thumbnail-slider" id="thumbnail-slider">
+        {% for item in product.media %}
+          <div
+            class="item-image"
+          >
+            <img src="{{ item.src | image_url }}" alt="">
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="main-gallery">
+    <div
+      class="gallery-img"
+      style="--padding-top:{{ 1 | divided_by: product.media[0].aspect_ratio | times: 100 | append: '%'  }}"
+    >
+      <img src="{{product.featured_image | image_url}}" alt="product-image">
+    </div>
+  </div>
+</div>

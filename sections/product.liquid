@@ -1,0 +1,30 @@
+<script>
+  console.log({{product | json}})
+</script>
+
+<link
+  rel="stylesheet"
+  href="{{ 'product.css' | asset_url }}"
+  media="all"
+>
+<link
+  rel="stylesheet"
+  href="{{ 'product-gallery-wrapper.css' | asset_url }}"
+  media="all"
+>
+<link
+  rel="stylesheet"
+  href="{{ 'product-infor-wrapper.css' | asset_url }}"
+  media="all"
+>
+
+<div class="product-section-wrapper container_wrapper" id="{{ section.id }}">
+  <div class="product-layout">
+    <div class="product-container">
+      {% render 'product-gallery-wrapper', product: product %}
+      {% render 'product-infor-wrapper', product: product %}
+    </div>
+  </div>
+</div>
+
+{{ 'product.js' | asset_url | script_tag }}

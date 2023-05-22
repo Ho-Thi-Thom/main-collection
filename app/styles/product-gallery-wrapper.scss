@@ -1,0 +1,108 @@
+.product-gallery-wrapper {
+    flex: 1;
+    display: flex;
+    gap: 4px;
+    position: relative;
+
+    .thumbnail-gallery {
+        flex: 0 0 90px;
+        max-width: 90px;
+        order: 1;
+        position: relative;
+
+
+        .thumbnail-slider-wrapper {
+
+            position: relative;
+
+            .thumbnail-slider-in {
+                position: absolute;
+                z-index: 1000;
+                inset: -10px 0 0 -10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+
+
+
+                .back,
+                .next {
+                    text-align: center;
+                    fill: #079e39;
+
+                    .arrow {
+                        border-radius: 50%;
+                        display: inline-block;
+                        padding: 4px;
+                        border: 1px solid #E0E0E0;
+                        background-color: #fff;
+                    }
+                }
+
+                .next {
+                    svg {
+                        transform: rotate(180deg)
+                    }
+                }
+            }
+
+            .thumbnail-slider {
+                display: grid;
+                grid-template-columns: repeat(1, 90px);
+                grid-gap: 7px;
+
+                .item-image {
+                    max-width: 100%;
+                    position: relative;
+                    padding-bottom: 75%;
+                    overflow: hidden;
+                    border-radius: 4px;
+                    padding-top: 70%;
+
+                    img {
+                        max-width: 100%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        bottom: 0;
+                        right: 0;
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        border-radius: 4px;
+                    }
+                }
+            }
+        }
+    }
+
+    .main-gallery {
+        flex: 1;
+        order: 2;
+
+        .gallery-img {
+            max-width: 100%;
+            position: relative;
+            padding-bottom: 75%;
+            overflow: hidden;
+            border-radius: 4px;
+            padding-top: var(--padding-top);
+            animation: opacity 1.3s cubic-bezier(0, 0.51, 0.25, 1) 0s forwards;
+
+            img {
+                max-width: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 4px;
+                object-position: center !important;
+            }
+        }
+    }
+}

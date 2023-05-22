@@ -12,7 +12,8 @@
             "type": "gradient_color",
             "hex_color": "#000000",
             "gradient_color": "linear-gradient(180deg, rgba(255, 211, 226, 1), rgba(168, 255, 251, 1) 100%)",
-            "image": "shopify:\/\/shop_images\/fashion-model-in-pink.jpg"
+            "image": "shopify:\/\/shop_images\/fashion-model-in-pink.jpg",
+            "image3": ""
           }
         },
         "ec9f2a29-6cc3-405e-93da-ed111713c2a9": {
@@ -21,7 +22,8 @@
             "text": "linear",
             "type": "gradient_color",
             "hex_color": "",
-            "gradient_color": "linear-gradient(180deg, rgba(255, 228, 49, 1), rgba(249, 32, 32, 1) 100%)"
+            "gradient_color": "linear-gradient(180deg, rgba(255, 228, 49, 1), rgba(249, 32, 32, 1) 100%)",
+            "image3": ""
           }
         },
         "efc572cc-b22a-4556-9f5b-c713501d729c": {
@@ -31,7 +33,8 @@
             "type": "image",
             "hex_color": "",
             "gradient_color": "",
-            "image": "shopify:\/\/shop_images\/4.0.jpg"
+            "image": "shopify:\/\/shop_images\/4.0.jpg",
+            "image3": ""
           }
         },
         "d54f0da8-05bb-47e8-825f-ad7bfc10aedf": {
@@ -41,7 +44,28 @@
             "type": "image",
             "hex_color": "",
             "gradient_color": "",
-            "image": "shopify:\/\/shop_images\/TenderHeartCo_TieDyeCrewneck_MultiPastel.jpg"
+            "image": "shopify:\/\/shop_images\/TenderHeartCo_TieDyeCrewneck_MultiPastel.jpg",
+            "image3": ""
+          }
+        },
+        "1444bbe8-259e-4ccb-ad13-e12e37783139": {
+          "type": "block",
+          "settings": {
+            "text": "abc",
+            "type": "gradient_color",
+            "hex_color": "",
+            "gradient_color": "linear-gradient(0deg, rgba(35, 47, 230, 1), rgba(120, 245, 223, 1) 100%)",
+            "image3": ""
+          }
+        },
+        "a9394552-fbdf-4864-b66f-351078c2d882": {
+          "type": "block",
+          "settings": {
+            "text": "jerry",
+            "type": "gradient_color",
+            "hex_color": "",
+            "gradient_color": "linear-gradient(180deg, rgba(104, 238, 102, 1), rgba(222, 238, 109, 1) 50%, rgba(236, 181, 82, 1) 100%)",
+            "image3": ""
           }
         }
       },
@@ -49,7 +73,9 @@
         "3729f148-8400-4ea3-967b-de9b28967325",
         "ec9f2a29-6cc3-405e-93da-ed111713c2a9",
         "efc572cc-b22a-4556-9f5b-c713501d729c",
-        "d54f0da8-05bb-47e8-825f-ad7bfc10aedf"
+        "d54f0da8-05bb-47e8-825f-ad7bfc10aedf",
+        "1444bbe8-259e-4ccb-ad13-e12e37783139",
+        "a9394552-fbdf-4864-b66f-351078c2d882"
       ],
       "settings": {
         "colors": "aqua: #00FFFF;\nblack: yellow;\nblue: #0000FF;\nfuchsia: #FF00FF;\ngray: #808080;\ngreen: #008000;\nlime: #00FF00;\nmaroon: #800000;\nnavy: #000080;\nolive: #808000;\npurple: #800080;\nred: #FF0000;\nsilver: #C0C0C0;\nteal: #008080;\nwhite: #FFFFFF;\nyellow: #FFFF00;"
