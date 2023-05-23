@@ -33,6 +33,7 @@
     "localforage": "^1.10.0",
     "mapbox-gl": "^2.13.0",
     "nouislider": "^15.7.0",
+    "tiny-slider": "^2.9.4",
     "vanilla-sharing": "^6.1.1",
     "zenscroll": "^4.0.2"
   }

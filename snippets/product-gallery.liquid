@@ -1,0 +1,24 @@
+{% comment %}
+  screen : 'desktop' , 'mobile','undifine'
+  count : number 4,1
+  axis: 'vertical', 'horizental'
+{% endcomment %}
+
+<div class="thumbnail-gallery" data-screen="{{screen }}">
+  <div class="prev" data-axis="{{ axis | default: 'vertical'  }}">
+    {% render 'expand' %}
+  </div>
+  <div class="next" data-axis="{{ axis | default: 'vertical'  }}">
+    {% render 'expand' %}
+  </div>
+  <div class="thumbnail-slider" data-item-count="{{ count | default:4}}" data-axis="{{ axis | default: 'vertical'  }}">
+    {% for item in product.media %}
+      <div
+        class="item-image"
+        style="--padding-top:{{ 1 | divided_by: item.aspect_ratio | times: 100 | append: '%'  }}"
+      >
+        <img src="{{ item.src | image_url }}" alt="">
+      </div>
+    {% endfor %}
+  </div>
+</div>
