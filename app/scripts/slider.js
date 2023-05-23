@@ -27,12 +27,14 @@ var slider = tns({
     autoplayTimeout: 1000,
     speed: 400,
     mouseDrag: true,
-
+    loop: false,
+    nextButton: '.thumbnail-slider ~ .next',
+    prevButton: '.thumbnail-slider ~ .prev',
 
 });
 
-var slidercustom = tns({
-    container: ".customize-thumbnails ",
+var sliderCustom = tns({
+    container: ".customize-thumbnails",
     items: 4,
     axis: "vertical",
     autoplay: false,
@@ -40,5 +42,12 @@ var slidercustom = tns({
     speed: 400,
     loop: false,
     mouseDrag: true,
+    nextButton: '.customize-thumbnails ~ .next',
+    prevButton: '.customize-thumbnails ~ .prev',
 
 });
+
+
+slider.events.on('indexChanged', function (info) {
+    sliderCustom.goTo(info.index)
+})

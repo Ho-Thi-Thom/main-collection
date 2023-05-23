@@ -2620,16 +2620,24 @@
     autoplay: false,
     autoplayTimeout: 1e3,
     speed: 400,
-    mouseDrag: true
+    mouseDrag: true,
+    loop: false,
+    nextButton: ".thumbnail-slider ~ .next",
+    prevButton: ".thumbnail-slider ~ .prev"
   });
-  var slidercustom = (0, import_tiny_slider.tns)({
-    container: ".customize-thumbnails ",
+  var sliderCustom = (0, import_tiny_slider.tns)({
+    container: ".customize-thumbnails",
     items: 4,
     axis: "vertical",
     autoplay: false,
     autoplayTimeout: 1e3,
     speed: 400,
     loop: false,
-    mouseDrag: true
+    mouseDrag: true,
+    nextButton: ".customize-thumbnails ~ .next",
+    prevButton: ".customize-thumbnails ~ .prev"
+  });
+  slider.events.on("indexChanged", function(info) {
+    sliderCustom.goTo(info.index);
   });
 })();
