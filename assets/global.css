@@ -17,9 +17,13 @@
 }
 
 .tns-nav-active {
-  background: #232368 !important;
-  width: 40px !important;
+
   border-radius: 10px !important;
+  width: 100% !important;
+}
+
+.tns-nav-active img {
+  border: 1px solid rgb(3, 161, 42);
 }
 
 button {

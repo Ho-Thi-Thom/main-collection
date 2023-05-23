@@ -2612,36 +2612,24 @@
 
   // app/scripts/slider.js
   var import_tiny_slider = __toModule(require_tiny_slider());
-  var thumbnailSliders = document.querySelectorAll(".thumbnail-slider");
-  if (thumbnailSliders) {
-    thumbnailSliders.forEach((thumbnailSlider) => {
-      const { itemCount = 1, axis = "vertical" } = thumbnailSlider.dataset;
-      const slider = (0, import_tiny_slider.tns)({
-        container: thumbnailSlider,
-        items: itemCount,
-        slideBy: "page",
-        axis,
-        nav: false,
-        nextButton: ".next",
-        prevButton: ".prev",
-        gutter: 7,
-        mouseDrag: true,
-        loop: false
-      });
-      slider.events.on("indexChanged", function(info) {
-        var isFirst = info.index === 0;
-        var isLast = info.index === info.slideCount - info.items;
-        if (isFirst) {
-          info.prevButton.style.opacity = 0;
-        } else {
-          info.prevButton.style.opacity = 1;
-        }
-        if (isLast) {
-          info.nextButton.style.opacity = 0;
-        } else {
-          info.nextButton.style.opacity = 1;
-        }
-      });
-    });
-  }
+  var slider = (0, import_tiny_slider.tns)({
+    container: ".thumbnail-slider",
+    navContainer: ".customize-thumbnails",
+    items: 1,
+    axis: "horizontal",
+    autoplay: false,
+    autoplayTimeout: 1e3,
+    speed: 400,
+    mouseDrag: true
+  });
+  var slidercustom = (0, import_tiny_slider.tns)({
+    container: ".customize-thumbnails ",
+    items: 4,
+    axis: "vertical",
+    autoplay: false,
+    autoplayTimeout: 1e3,
+    speed: 400,
+    loop: false,
+    mouseDrag: true
+  });
 })();

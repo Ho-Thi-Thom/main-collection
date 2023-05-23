@@ -1,39 +1,44 @@
-import { tns } from 'tiny-slider';
+import { tns } from "tiny-slider";
 
-const thumbnailSliders = document.querySelectorAll('.thumbnail-slider')
-if (thumbnailSliders) {
-    thumbnailSliders.forEach(thumbnailSlider => {
-        const { itemCount = 1, axis = 'vertical' } = thumbnailSlider.dataset;
+// const thumbnailSliders = document.querySelectorAll('thumbnail-slider')
+// if (thumbnailSliders) {
+//     thumbnailSliders.forEach(thumbnailSlider => {
+//         const slider = tns({
+//             container: thumbnailSlider,
+//             items: 4,
+//             slideBy: 'page',
+//             axis: 'vertical',
+//             nav: false,
+//             nextButton: '.next',
+//             prevButton: '.prev',
+//             gutter: 7,
+//             mouseDrag: true,
+//             loop: false,
+//         });
+//     })
+// }
 
-        const slider = tns({
-            container: thumbnailSlider,
-            items: itemCount,
-            slideBy: 'page',
-            axis: axis,
-            nav: false,
-            nextButton: '.next',
-            prevButton: '.prev',
-            gutter: 7,
-            mouseDrag: true,
-            loop: false,
-        });
+var slider = tns({
+    container: ".thumbnail-slider",
+    navContainer: ".customize-thumbnails",
+    items: 1,
+    axis: "horizontal",
+    autoplay: false,
+    autoplayTimeout: 1000,
+    speed: 400,
+    mouseDrag: true,
 
 
-        slider.events.on('indexChanged', function (info) {
-            var isFirst = info.index === 0;
-            var isLast = info.index === info.slideCount - info.items;
+});
 
-            if (isFirst) {
-                info.prevButton.style.opacity = 0;
-            } else {
-                info.prevButton.style.opacity = 1;
-            }
+var slidercustom = tns({
+    container: ".customize-thumbnails ",
+    items: 4,
+    axis: "vertical",
+    autoplay: false,
+    autoplayTimeout: 1000,
+    speed: 400,
+    loop: false,
+    mouseDrag: true,
 
-            if (isLast) {
-                info.nextButton.style.opacity = 0;
-            } else {
-                info.nextButton.style.opacity = 1;
-            }
-        });
-    })
-}
+});
