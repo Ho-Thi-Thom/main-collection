@@ -3,6 +3,7 @@
   href="{{ 'product-options.css' | asset_url }}"
   media="all"
 >
+{%- capture formID -%}f{{productSelect.id | append: section.id}}{%- endcapture -%}
 
 <div class="variants-wrapper">
   {%- if product.has_only_default_variant != true and product.variants.size > 1 -%}
@@ -11,7 +12,7 @@
       <div class="variant-options option-type-select">
         <label class="variant-options-header" for="Option{{ option.position }}">{{ option.name }}</label>
         <div class="select-wrapper">
-          {% render 'product-option', styleOption: styleOption, option: option, product: product %}
+          {% render 'product-option', styleOption: styleOption, option: option, product: product, formID: formID %}
         </div>
       </div>
     {% endfor %}

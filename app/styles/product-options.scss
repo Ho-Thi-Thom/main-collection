@@ -29,17 +29,23 @@
             gap: 10px;
 
             .option-button {
+                display: none;
+            }
+
+            .option-button+label {
+                display: inline-block;
                 padding: 8px 16px;
-                cursor: pointer;
-                font-size: medium;
-                background-color: transparent;
                 border: 1px solid rgb(201, 201, 201);
+                background-color: transparent;
+                color: #000000;
+                cursor: pointer;
                 border-radius: 4px;
             }
 
-            .option-button[data-selected="true"] {
-                background-color: rgb(3, 3, 3);
-                color: white;
+            .option-button:checked+label {
+                background-color: #f2f2f2;
+                color: #333;
+                font-weight: bold;
             }
         }
 
@@ -60,7 +66,6 @@
                     width: 30px;
                     border-radius: 50%;
                     cursor: pointer;
-
                     position: relative;
                     border: 1px solid #d1cdcd;
 
@@ -68,13 +73,6 @@
                         opacity: 0.5;
                     }
 
-                    input {
-                        position: absolute;
-                        opacity: 1;
-                        right: -25%;
-                        top: -25%;
-                        accent-color: white;
-                    }
 
                     input:checked {
                         display: block;
@@ -82,6 +80,42 @@
 
                     input {
                         display: none;
+                    }
+
+                    .option-radio {
+                        appearance: none;
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        width: 20px;
+                        height: 20px;
+                        background-color: transparent;
+                        border: none;
+                        position: relative;
+                        cursor: pointer;
+                        opacity: 1;
+                        right: -25%;
+                        top: -65%;
+                        accent-color: white;
+                    }
+
+
+                    .option-radio::before {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%) rotate(45deg);
+                        width: 6px;
+                        height: 12px;
+                        border: 2px solid #22af22;
+                        border-top: none;
+                        border-left: none;
+                        transform-origin: bottom left;
+                        opacity: 0;
+                    }
+
+                    .option-radio:checked::before {
+                        opacity: 1;
                     }
                 }
 

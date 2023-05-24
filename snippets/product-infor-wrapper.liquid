@@ -1,3 +1,73 @@
+<link
+  rel="stylesheet"
+  href="{{ 'product-infor-wrapper.css' | asset_url }}"
+  media="all"
+>
+
+{%- assign productSelect = productSelect | default: product.selected_or_first_available_variant -%}
+
+<div class="product-infor-wrapper">
+  <div class="product-infor">
+    {% comment %} VENDOR {% endcomment %}
+    <p class="product-vendor">{{ product.vendor }}</p>
+    {% comment %} TITLE {% endcomment %}
+    <h1 class="product-title">{{ product.title }}</h1>
+    {% comment %} REVIEW {% endcomment %}
+
+    {% comment %}
+      <div class="product-total-review">
+        <div class="rating"></div>
+        <div class="seperate"></div>
+        <div>
+          <a href="#">3<span>total review</span></a>
+        </div>
+      </div>
+    {% endcomment %}
+
+    {% comment %} PRICE {% endcomment %}
+    <div class="product-price">
+      <span class="compare-price">{{- productSelect.price | money -}}</span>
+      <span class="price">{{- productSelect.compare_at_price | money -}}</span>
+    </div>
+    <div class="hr"></div>
+
+    {% comment %} PRODUCT OPTIONS {% endcomment %}
+    <div class="product-option">
+      {% render 'product-options', styleOption: styleOption, product: product, productSelect: productSelect %}
+    </div>
+
+    {% comment %} ADD TO CART {% endcomment %}
+    <p class="product-quantity">
+      {% assign selectedQuantity = 0 %}
+      {% for variant in product.variants %}
+        {% if variant.id == productSelect.id %}
+          {% assign selectedQuantity = variant.inventory_quantity %}
+        {% endif %}
+      {% endfor %}
+      <span>Total Quantity</span>
+      <span class="variant-inventory">
+        {% if selectedQuantity > 0 %}
+          Only {{ selectedQuantity }} left in stock!
+        {% else %}
+          Sold out
+        {% endif %}
+      </span>
+    </p>
+
+    <div class="product-cart">
+      {% render 'product-card' %}
+    </div>
+    {% comment %} SOCIAL SHARING {% endcomment %}
+    <div class="product-social-sharing"></div>
+    <div class="hr"></div>
+
+    {% comment %} TAGS AND SKU {% endcomment %}
+    <div class="product-tags-and-sku"></div>
+
+    <!-- comment -->
+  </div>
+</div>
+
 {% comment %}
   <div class="product-infor-wrapper">
     <div class="product-infor">
@@ -116,68 +186,3 @@
     </div>
   </div>
 {% endcomment %}
-
-<link
-  rel="stylesheet"
-  href="{{ 'product-infor-wrapper.css' | asset_url }}"
-  media="all"
->
-
-<div class="product-infor-wrapper">
-  <div class="product-infor">
-    {% comment %} VENDOR {% endcomment %}
-    <p class="product-vendor">{{ product.vendor }}</p>
-    {% comment %} TITLE {% endcomment %}
-    <h1 class="product-title">{{ product.title }}</h1>
-    {% comment %} REVIEW {% endcomment %}
-
-    {% comment %}
-      <div class="product-total-review">
-        <div class="rating"></div>
-        <div class="seperate"></div>
-        <div>
-          <a href="#">3<span>total review</span></a>
-        </div>
-      </div>
-    {% endcomment %}
-
-    {% comment %} PRICE {% endcomment %}
-    <div class="product-price">
-      <span class="compare-price"> {{ product.compare_at_price_max | money }}</span>
-      <span class="price">{{- product.price | money -}}</span>
-    </div>
-    <div class="hr"></div>
-    {% comment %} PRODUCT OPTIONS {% endcomment %}
-    <div class="product-option">
-      {% render 'product-options', styleOption: styleOption, product: product %}
-    </div>
-    {% comment %} ADD TO CART {% endcomment %}
-
-    <p class="product-quantity">
-      {% assign totalQuantity = 0 %}
-      {% for variant in product.variants %}
-        {% if variant.inventory_quantity != null %}
-          {% assign totalQuantity = totalQuantity | plus: variant.inventory_quantity %}
-        {% endif %}
-      {% endfor %}
-      <span>Total Quantity</span>
-      <span class="variant-inventory">
-        {% if totalQuantity > 0 %}
-          Only {{ totalQuantity }} left in stock!
-        {% else %}
-          Sold out
-        {% endif %}
-      </span>
-    </p>
-    <div class="product-cart">
-      {% render 'product-card' %}
-    </div>
-    {% comment %}
-      {% comment %} SOCIAL SHARING {% endcomment %}
-      <div class="product-social-sharing"></div>
-      <div class="hr"></div>
-      {% comment %} TAGS AND SKU {% endcomment %}
-      <div class="product-tags-and-sku"></div>
-    {% endcomment %}
-  </div>
-</div>

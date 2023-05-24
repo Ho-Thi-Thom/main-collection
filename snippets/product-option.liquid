@@ -1,6 +1,10 @@
 {%- capture optionIndex -%}option{{ option.position }}{%- endcapture -%}
+{% liquid
+  assign formID = formID | default: 'mainProductForm'
+  assign sectionID = '.section-' | append: section.id
+  assign styleOption = styleOption | handle
+%}
 
-{% assign styleOption = styleOption | handle %}
 {% case styleOption %}
   {% when 'select' %}
     <select
@@ -21,21 +25,30 @@
         </option>
       {%- endfor -%}
     </select>
+
   {% when 'button' %}
     <div class="button-list">
       {%- for value in option.values -%}
-        {%- assign valueDownCase = value | downcase -%}
-        <input
-          type="radio"
-          class="option-radio"
-          value="{{ value | escape }}"
-          data-value="{{ value | escape }}"
-          {%- if option.selected_value == value -%}
-            data-selected="true"
-          {%- endif -%}
-        >
+        {%- capture swtID -%}
+         {{ sectionID | remove: '.' }}swt{{ option.position }}_{{ value | handle }}
+        {%- endcapture -%}
+        {%- assign variantSelect = product.variants | where: optionIndex, value | first -%}
+        <div class="button-item">
+          <input
+            type="radio"
+            id="{{ swtID }}"
+            name="{{ option.name | handleize }}"
+            class="option-button"
+            value="{{ value | escape }}"
+            {%- if option.selected_value == value -%}
+              checked="checked"
+            {%- endif -%}
+          >
+          <label for="{{ swtID }}">{{ value }}</label>
+        </div>
       {%- endfor -%}
     </div>
+
   {% when 'image' %}
     <div class="image-list">
       {%- for value in option.values -%}
@@ -44,19 +57,20 @@
         <label>
           <div
             class="image-item"
-            style="background:url({{ variantSelect.featured_media | image_url }}) ;background-size: cover;"
+            style="background:url({{ variantSelect.featured_media | image_url }}); background-size: cover;"
           >
             <input
               type="radio"
               class="option-radio"
+              name="{{ option.name | handleize }}"
               value="{{ value | escape }}"
               data-value="{{ value | escape }}"
               {%- if option.selected_value == value -%}
-                data-selected="true"
+                checked="checked"
               {%- endif -%}
             >
           </div>
-          <span>{{- value -}}</span>
+          <span>{{ value }}</span>
         </label>
       {%- endfor -%}
     </div>
