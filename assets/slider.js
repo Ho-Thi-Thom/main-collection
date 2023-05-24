@@ -2612,32 +2612,38 @@
 
   // app/scripts/slider.js
   var import_tiny_slider = __toModule(require_tiny_slider());
-  var slider = (0, import_tiny_slider.tns)({
-    container: ".thumbnail-slider",
-    navContainer: ".customize-thumbnails",
-    items: 1,
-    axis: "horizontal",
-    autoplay: false,
-    autoplayTimeout: 1e3,
-    speed: 400,
-    mouseDrag: true,
-    loop: false,
-    nextButton: ".thumbnail-slider ~ .next",
-    prevButton: ".thumbnail-slider ~ .prev"
-  });
-  var sliderCustom = (0, import_tiny_slider.tns)({
-    container: ".customize-thumbnails",
-    items: 4,
-    axis: "vertical",
-    autoplay: false,
-    autoplayTimeout: 1e3,
-    speed: 400,
-    loop: false,
-    mouseDrag: true,
-    nextButton: ".customize-thumbnails ~ .next",
-    prevButton: ".customize-thumbnails ~ .prev"
-  });
-  slider.events.on("indexChanged", function(info) {
-    sliderCustom.goTo(info.index);
+  runSlider();
+  function runSlider() {
+    var slider = (0, import_tiny_slider.tns)({
+      container: ".thumbnail-slider",
+      navContainer: ".customize-thumbnails",
+      items: 1,
+      axis: "horizontal",
+      autoplay: false,
+      autoplayTimeout: 1e3,
+      speed: 400,
+      mouseDrag: true,
+      loop: false,
+      nextButton: ".thumbnail-slider ~ .next",
+      prevButton: ".thumbnail-slider ~ .prev"
+    });
+    var sliderCustom = (0, import_tiny_slider.tns)({
+      container: ".customize-thumbnails",
+      items: 4,
+      axis: "vertical",
+      autoplay: false,
+      autoplayTimeout: 1e3,
+      speed: 400,
+      loop: false,
+      mouseDrag: true,
+      nextButton: ".customize-thumbnails ~ .next",
+      prevButton: ".customize-thumbnails ~ .prev"
+    });
+    slider.events.on("indexChanged", function(info) {
+      sliderCustom.goTo(info.index);
+    });
+  }
+  document.addEventListener("shopify:section:load", () => {
+    runSlider();
   });
 })();

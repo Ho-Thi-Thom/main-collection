@@ -1,0 +1,19 @@
+<link
+  rel="stylesheet"
+  href="{{ 'product-options.css' | asset_url }}"
+  media="all"
+>
+
+<div class="variants-wrapper">
+  {%- if product.has_only_default_variant != true and product.variants.size > 1 -%}
+    {%- for option in product.options_with_values -%}
+      {%- assign optionName = option.name | downcase -%}
+      <div class="variant-options option-type-select">
+        <label class="variant-options-header" for="Option{{ option.position }}">{{ option.name }}</label>
+        <div class="select-wrapper">
+          {% render 'product-option', styleOption: styleOption, option: option, product: product %}
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>

@@ -1,0 +1,106 @@
+.variant-options {
+  margin-bottom: 25px;
+  font-size: 12px;
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.variant-options .variant-options-header {
+  width: 100%;
+  font-size: 13px;
+}
+
+.variant-options .select-wrapper {
+  width: 100%;
+}
+
+.variant-options .select-wrapper select {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.variant-options .select-wrapper .button-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.variant-options .select-wrapper .button-list .option-button {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: medium;
+  background-color: transparent;
+  border: 1px solid #c9c9c9;
+  border-radius: 4px;
+}
+
+.variant-options .select-wrapper .button-list .option-button[data-selected=true] {
+  background-color: #030303;
+  color: #fff;
+}
+
+.variant-options .select-wrapper .image-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.variant-options .select-wrapper .image-list label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.variant-options .select-wrapper .image-list label .image-item {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid #d1cdcd;
+}
+
+.variant-options .select-wrapper .image-list label .image-item:hover {
+  opacity: .5;
+}
+
+.variant-options .select-wrapper .image-list label .image-item input {
+  position: absolute;
+  opacity: 1;
+  right: -25%;
+  top: -25%;
+  accent-color: #fff;
+}
+
+.variant-options .select-wrapper .image-list label .image-item input:checked {
+  display: block;
+}
+
+.variant-options .select-wrapper .image-list label .image-item input {
+  display: none;
+}
+
+.variant-options .select-wrapper .image-list label span {
+  position: absolute;
+  display: none;
+  z-index: 20;
+  bottom: -100%;
+  left: 0;
+  white-space: nowrap;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #16af16;
+  color: #fff;
+}
+
+.variant-options .select-wrapper .image-list label:hover span {
+  display: block;
+}

@@ -1,0 +1,111 @@
+.variant-options {
+    margin-bottom: 25px;
+    font-size: 12px;
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .variant-options-header {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .select-wrapper {
+        width: 100%;
+
+        // select
+        select {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .button-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            .option-button {
+                padding: 8px 16px;
+                cursor: pointer;
+                font-size: medium;
+                background-color: transparent;
+                border: 1px solid rgb(201, 201, 201);
+                border-radius: 4px;
+            }
+
+            .option-button[data-selected="true"] {
+                background-color: rgb(3, 3, 3);
+                color: white;
+            }
+        }
+
+        .image-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            label {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+
+                .image-item {
+                    height: 30px;
+                    width: 30px;
+                    border-radius: 50%;
+                    cursor: pointer;
+
+                    position: relative;
+                    border: 1px solid #d1cdcd;
+
+                    &:hover {
+                        opacity: 0.5;
+                    }
+
+                    input {
+                        position: absolute;
+                        opacity: 1;
+                        right: -25%;
+                        top: -25%;
+                        accent-color: white;
+                    }
+
+                    input:checked {
+                        display: block;
+                    }
+
+                    input {
+                        display: none;
+                    }
+                }
+
+                span {
+                    position: absolute;
+                    display: none;
+                    z-index: 20;
+                    bottom: -100%;
+                    left: 0%;
+                    white-space: nowrap;
+                    font-size: 14px;
+
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    background-color: rgb(22, 175, 22);
+                    color: #fff;
+                }
+            }
+
+            label:hover {
+                span {
+                    display: block;
+                }
+            }
+        }
+    }
+}

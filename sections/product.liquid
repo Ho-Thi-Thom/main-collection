@@ -18,11 +18,55 @@
   media="all"
 >
 
+{% capture styleOption %}
+{% for _block in section.blocks %}
+  {% case _block.type %}
+    {% when 'swatch_style' %}
+   {{ _block.settings.radio }}
+  {% endcase %}
+{% endfor %}
+{% endcapture %}
+
 <div class="product-section-wrapper container_wrapper" id="{{ section.id }}">
   <div class="product-layout">
     <div class="product-container">
       {% render 'product-gallery-wrapper', product: product %}
-      {% render 'product-infor-wrapper', product: product %}
+      {% render 'product-infor-wrapper', product: product, styleOption: styleOption %}
     </div>
   </div>
 </div>
+{% schema %}
+{
+  "name": "product",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "swatch_style",
+      "name": "Product Options",
+      "settings": [
+        {
+          "type": "radio",
+          "id": "radio",
+          "label": "Swatch style",
+          "options": [
+            {
+              "value": "button",
+              "label": "Button"
+            },
+            {
+              "value": "select",
+              "label": "Select"
+            },
+            {
+              "value": "image",
+              "label": "Color / Image"
+            }
+          ],
+          "default": "button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

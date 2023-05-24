@@ -55,6 +55,10 @@
   opacity: 1;
 }
 
+.product-gallery-wrapper .thumbnail-gallery[data-thumbnail=product-main] .item-image {
+  margin-top: 28px;
+}
+
 .product-gallery-wrapper .thumbnail-gallery[data-thumbnail=product-main] .prev {
   left: 0;
   top: 50%;

@@ -60,6 +60,10 @@
     }
 
     .thumbnail-gallery[data-thumbnail="product-main"] {
+        .item-image {
+            margin-top: 28px;
+        }
+
         .prev {
             left: 0;
             top: 50%;

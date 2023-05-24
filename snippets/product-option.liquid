@@ -1,0 +1,63 @@
+{%- capture optionIndex -%}option{{ option.position }}{%- endcapture -%}
+
+{% assign styleOption = styleOption | handle %}
+{% case styleOption %}
+  {% when 'select' %}
+    <select
+      id="Option{{ option.position }}"
+      class="js-variant-change"
+      name="option{{ option.position}}"
+      form="{{formID}}"
+    >
+      {%- for value in option.values -%}
+        {%- assign valueDownCase = value | downcase -%}
+        <option
+          value="{{ value | escape }}"
+          {%- if option.selected_value == value %}
+            selected
+          {% endif -%}
+        >
+          {{- value -}}
+        </option>
+      {%- endfor -%}
+    </select>
+  {% when 'button' %}
+    <div class="button-list">
+      {%- for value in option.values -%}
+        {%- assign valueDownCase = value | downcase -%}
+        <input
+          type="radio"
+          class="option-radio"
+          value="{{ value | escape }}"
+          data-value="{{ value | escape }}"
+          {%- if option.selected_value == value -%}
+            data-selected="true"
+          {%- endif -%}
+        >
+      {%- endfor -%}
+    </div>
+  {% when 'image' %}
+    <div class="image-list">
+      {%- for value in option.values -%}
+        {%- assign valueDownCase = value | downcase -%}
+        {%- assign variantSelect = product.variants | where: optionIndex, value | first -%}
+        <label>
+          <div
+            class="image-item"
+            style="background:url({{ variantSelect.featured_media | image_url }}) ;background-size: cover;"
+          >
+            <input
+              type="radio"
+              class="option-radio"
+              value="{{ value | escape }}"
+              data-value="{{ value | escape }}"
+              {%- if option.selected_value == value -%}
+                data-selected="true"
+              {%- endif -%}
+            >
+          </div>
+          <span>{{- value -}}</span>
+        </label>
+      {%- endfor -%}
+    </div>
+{% endcase %}
