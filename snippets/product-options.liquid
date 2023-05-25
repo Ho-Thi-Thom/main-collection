@@ -5,7 +5,7 @@
 >
 {%- capture formID -%}f{{productSelect.id | append: section.id}}{%- endcapture -%}
 
-<div class="variants-wrapper" id="varients" data-variants="{{ varients }}">
+<div class="variants-wrapper">
   {%- if product.has_only_default_variant != true and product.variants.size > 1 -%}
     {%- for option in product.options_with_values -%}
       {%- assign optionName = option.name | downcase -%}

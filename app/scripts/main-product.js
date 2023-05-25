@@ -1,9 +1,6 @@
 const selects = document.querySelectorAll('.js-variant-change');
 const radio = document.querySelectorAll('input[type="radio"]');
 const productData = JSON.parse(document.getElementById("product_data").textContent);
-// const variantsDataSet = document.getElementById("varients");
-// const variantQt = variantsDataSet.dataset.variants;
-// console.log(variantQt);
 const variants = productData.variants
 
 function createUrl(callback) {
@@ -12,27 +9,42 @@ function createUrl(callback) {
     return window.location.pathname + "?" + urlSearchParams.toString()
 
 }
-function getApi(url) {
-    return fetch(url).then(res => res.text())
+
+function updateElementPrice(divCompare, divPrice) {
+    const cpPrice = document.querySelector('.compare-price')
+    const price = document.querySelector(".price")
+    cpPrice.parentNode.replaceChild(divCompare, cpPrice)
+    price.parentNode.replaceChild(divPrice, price)
 }
 
-async function onVariantChange(sectionId) {
+function updateElementVariantInventory(element) {
+    const variantInventory = document.querySelector(".variant-inventory");
+    variantInventory.parentNode.replaceChild(element, variantInventory)
+
+}
+
+function updateElementSKU(element) {
+    const sku = document.querySelector(".product-sku");
+    sku.parentNode.replaceChild(element, sku)
+}
+
+function onVariantChange(sectionId) {
     const value = getValue();
     const result = getVariant(value);
-    console.log(`shopify-section-${sectionId}`)
     function callback(searchParams) {
         searchParams.set('section_id', sectionId);
-        searchParams.set('varient', result.id);
+        searchParams.set('variant', result.id);
     }
     const _url = createUrl(callback)
-    getApi(_url).then(data => {
-        const div = document.createElement("div");
-        div.innerHTML = data;
-
-    })
-    const comparePrice = document.querySelector('.compare-price')
-    const price = document.getElementsByName("price");
-    const variantInventory = document.getElementsByName("variant-inventory");
+    fetch(_url)
+        .then(res => res.text())
+        .then(data => {
+            const div = document.createElement("div");
+            div.innerHTML = data;
+            updateElementPrice(div.querySelector('.compare-price'), div.querySelector(".price"));
+            updateElementVariantInventory(div.querySelector(".variant-inventory"))
+            updateElementSKU(div.querySelector(".product-sku"))
+        })
 }
 
 const formEl = document.querySelector('.jsProductForm');

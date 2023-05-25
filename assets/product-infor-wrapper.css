@@ -59,6 +59,7 @@
 .product-infor-wrapper .product-infor .product-cart {
   display: flex;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 .product-infor-wrapper .product-infor .product-cart .quantity-select {
@@ -107,11 +108,7 @@
   min-width: 200px;
 }
 
-.product-infor-wrapper .product-infor .product-cart .add-to-cart a {
-  text-decoration: none;
-}
-
-.product-infor-wrapper .product-infor .product-cart .add-to-cart a .btn-add {
+.product-infor-wrapper .product-infor .product-cart .add-to-cart .btn-add {
   gap: 10px;
   width: 100%;
   height: 100%;
@@ -122,8 +119,45 @@
   background-color: #03a12a;
   border: 4px;
   color: #fff;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
-.product-infor-wrapper .product-infor .product-cart .add-to-cart a .btn-add svg path {
+.product-infor-wrapper .product-infor .product-cart .add-to-cart .btn-add svg path {
   stroke: #fff;
+}
+
+.product-infor-wrapper .product-infor .product-tags {
+  margin-bottom: 5px;
+  font-size: 12px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product-infor-wrapper .product-infor .product-tags span {
+  min-width: 40px;
+  font-weight: 500;
+}
+
+.product-infor-wrapper .product-infor .product-tags ul {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.product-infor-wrapper .product-infor .product-tags ul li {
+  display: inline-block;
+}
+
+.product-infor-wrapper .product-infor .product-sku {
+  display: flex;
+  font-size: 12px;
+}
+
+.product-infor-wrapper .product-infor .product-sku span {
+  min-width: 40px;
+  font-weight: 500;
 }

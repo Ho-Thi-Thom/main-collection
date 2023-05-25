@@ -32,23 +32,12 @@
       <div class="hr"></div>
 
       {% comment %} PRODUCT OPTIONS {% endcomment %}
-
-      {% assign variantIq = '' %}
-      {% for variant in product.variants %}
-        {% assign variantIq = variantIq
-          | append: variant.id
-          | append: ':'
-          | append: variant.inventory_quantity
-          | append: ';'
-        %}
-      {% endfor %}
       <div class="product-option">
         {% render 'product-options',
           styleOption: styleOption,
           product: product,
           productSelect: productSelect,
-          sectionID: sectionID,
-          varients: variantIq
+          sectionID: sectionID
         %}
       </div>
       {% comment %} ADD TO CART {% endcomment %}
@@ -79,128 +68,30 @@
       <div class="product-social-sharing"></div>
       <div class="hr"></div>
 
-      {% comment %} TAGS AND SKU {% endcomment %}
-      <div class="product-tags-and-sku"></div>
+      {% comment %} TAGS {% endcomment %}
+      {% assign tag_count = product.tags.size %}
+      {% unless tag_count < 1 %}
+        <div class="product-tags">
+          <span>Tags: </span>
+          <ul>
+            {% for tag in product.tags %}
+              <li>
+                {{ tag | capitalize -}}
+                {%- if forloop.last %}{% else %},{% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endunless %}
 
-      <!-- comment -->
+      {% comment %} SKU {% endcomment %}
+
+      <div class="product-sku">
+        {% assign sku = productSelect.sku %}
+        {% if sku != blank %}
+          <span>SKU: </span> {{ sku }}
+        {% endif %}
+      </div>
     </div>
   {% endform %}
 </div>
-{% comment %}
-  <div class="product-infor-wrapper">
-    <div class="product-infor">
-      <p class="product-vendor">{{ product.vendor }}</p>
-      <h1 class="product-title">{{ product.title }}</h1>
-      <div class="product-total-review">
-        <div class="rating"></div>
-        <div class="seperate"></div>
-        <div>
-          <a href="#">3<span>total review</span></a>
-        </div>
-      </div>
-      <div class="product-price">
-        <span class="compare-price"> {{ product.compare_at_price_max | money }}</span>
-        <span class="price">{{- product.price | money -}}</span>
-      </div>
-      <div class="hr"></div>
-      <div class="product-select-size">
-        <h4>Select size</h4>
-
-        <div class="list-size">
-          {% assign unique_option1_values = '' | split: ',' %}
-          {% for variant in product.variants %}
-            {% assign option1_value = variant.option1 %}
-            {% unless option1_value == blank %}
-              {% assign value_exists = false %}
-              {% for value in unique_option1_values %}
-                {% if value == option1_value %}
-                  {% assign value_exists = true %}
-                  {% break %}
-                {% endif %}
-              {% endfor %}
-              {% unless value_exists %}
-                {% assign unique_option1_values = unique_option1_values
-                  | join: ','
-                  | append: ','
-                  | append: option1_value
-                  | split: ','
-                %}
-              {% endunless %}
-            {% endunless %}
-          {% endfor %}
-
-          {% for value in unique_option1_values %}
-            {{ value }}
-          {% endfor %}
-        </div>
-      </div>
-      <div class="product-select-color">
-        <h4>Select Color</h4>
-        <div class="list-color">
-          {% assign unique_option1_values = '' | split: ',' %}
-          {% for variant in product.variants %}
-            {% assign option1_value = variant.option2 %}
-            {% unless option1_value == blank %}
-              {% assign value_exists = false %}
-              {% for value in unique_option1_values %}
-                {% if value == option1_value %}
-                  {% assign value_exists = true %}
-                  {% break %}
-                {% endif %}
-              {% endfor %}
-              {% unless value_exists %}
-                {% assign unique_option1_values = unique_option1_values
-                  | join: ','
-                  | append: ','
-                  | append: option1_value
-                  | split: ','
-                %}
-              {% endunless %}
-            {% endunless %}
-          {% endfor %}
-
-          {% for value in unique_option1_values %}
-            {{ value }}
-          {% endfor %}
-        </div>
-      </div>
-      <div class="product-quantity">
-        {% assign totalQuantity = 0 %}
-        {% for variant in product.variants %}
-          {% if variant.inventory_quantity != null %}
-            {% assign totalQuantity = totalQuantity | plus: variant.inventory_quantity %}
-          {% endif %}
-        {% endfor %}
-
-        Total Quantity: {{ totalQuantity }}
-      </div>
-      <div class="product-cart">
-        <div class="quantity-select">
-          <span class="remove">
-            {% render 'icon-remove' %}
-          </span>
-          <input type="number" value="1" min="1" class="quantity__input">
-          <span class="remove">
-            {% render 'icon-add' %}
-          </span>
-        </div>
-        <div class="add-to-cart">
-          <a href="#">
-            <div class="btn-add">
-              {% render 'card' %}
-              <span>Add to cart</span>
-            </div>
-          </a>
-        </div>
-        <div class="buy-it-now">
-          <a href="#">
-            <div class="btn-buy">
-              <span>Buy it now</span>
-            </div>
-          </a>
-        </div>
-        <div class="product-share">Share</div>
-      </div>
-    </div>
-  </div>
-{% endcomment %}
