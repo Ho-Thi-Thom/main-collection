@@ -89,8 +89,6 @@ export default function collectionService() {
         }
     }
 
-
-
     function _extract(data) {
 
         const div = document.createElement("div");

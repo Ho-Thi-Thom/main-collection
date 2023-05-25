@@ -93,6 +93,15 @@
   background-color: #f2f2f2;
 }
 
+.product-infor-wrapper .product-infor .product-cart .quantity-select .quantity__input::-webkit-inner-spin-button, .product-infor-wrapper .product-infor .product-cart .quantity-select .quantity__input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.product-infor-wrapper .product-infor .product-cart .quantity-select .quantity__input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .product-infor-wrapper .product-infor .product-cart .add-to-cart {
   flex: 1;
   min-width: 200px;

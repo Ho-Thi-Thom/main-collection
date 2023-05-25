@@ -1,7 +1,6 @@
 {%- capture optionIndex -%}option{{ option.position }}{%- endcapture -%}
 {% liquid
   assign formID = formID | default: 'mainProductForm'
-  assign sectionID = '.section-' | append: section.id
   assign styleOption = styleOption | handle
 %}
 
@@ -10,8 +9,9 @@
     <select
       id="Option{{ option.position }}"
       class="js-variant-change"
-      name="option{{ option.position}}"
+      name="{{ option.name}}"
       form="{{formID}}"
+      data-section-id="{{ sectionID }}"
     >
       {%- for value in option.values -%}
         {%- assign valueDownCase = value | downcase -%}

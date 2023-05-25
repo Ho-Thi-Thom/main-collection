@@ -28,11 +28,16 @@
 {% endfor %}
 {% endcapture %}
 
-<div class="product-section-wrapper container_wrapper" id="{{ section.id }}">
+<div class="product-section-wrapper container_wrapper">
   <div class="product-layout">
     <div class="product-container">
       {% render 'product-gallery-wrapper', product: product %}
-      {% render 'product-infor-wrapper', styleOption: styleOption, productSelect: productSelect %}
+      {%
+        render 'product-infor-wrapper',
+        styleOption: styleOption,
+        productSelect: productSelect,
+        sectionID:sectionID ,
+      %}
     </div>
   </div>
 </div>
@@ -71,3 +76,7 @@
   ]
 }
 {% endschema %}
+<script id="product_data" type="application/json">
+  {{product | json}}
+</script>
+{{ 'main-product.js' | asset_url | script_tag }}

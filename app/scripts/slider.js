@@ -1,24 +1,5 @@
 import { tns } from "tiny-slider";
 
-// const thumbnailSliders = document.querySelectorAll('thumbnail-slider')
-// if (thumbnailSliders) {
-//     thumbnailSliders.forEach(thumbnailSlider => {
-//         const slider = tns({
-//             container: thumbnailSlider,
-//             items: 4,
-//             slideBy: 'page',
-//             axis: 'vertical',
-//             nav: false,
-//             nextButton: '.next',
-//             prevButton: '.prev',
-//             gutter: 7,
-//             mouseDrag: true,
-//             loop: false,
-//         });
-//     })
-// }
-
-
 runSlider()
 
 function runSlider() {
