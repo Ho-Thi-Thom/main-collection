@@ -82,13 +82,16 @@ function updateCssOption(event) {
 
     const mergedArray = filteredPositions.map((element, index) => [element, result[index]]);
     // console.log("mergedArray", mergedArray)
-    const checkPositions = document.querySelectorAll(".check-positon");
+    const checkPositions = document.querySelectorAll(".check-position");
     // console.log("checkPositions", checkPositions)
     mergedArray.forEach(item => {
         checkPositions.forEach(element => {
             if (item[0] == element.dataset.position) {
                 const inputs = element.querySelectorAll('input[type="radio"]');
-                inputs.forEach(input => {
+                const options = element.querySelectorAll("option")
+
+
+                Array.from(inputs).concat(Array.from(options)).forEach(input => {
                     const value = input.value;
                     if (!item[1].includes(value)) {
                         input.setAttribute("disabled", "")

@@ -69,12 +69,13 @@
       return acc;
     }, []);
     const mergedArray = filteredPositions.map((element2, index) => [element2, result[index]]);
-    const checkPositions = document.querySelectorAll(".check-positon");
+    const checkPositions = document.querySelectorAll(".check-position");
     mergedArray.forEach((item) => {
       checkPositions.forEach((element2) => {
         if (item[0] == element2.dataset.position) {
           const inputs = element2.querySelectorAll('input[type="radio"]');
-          inputs.forEach((input2) => {
+          const options = element2.querySelectorAll("option");
+          Array.from(inputs).concat(Array.from(options)).forEach((input2) => {
             const value2 = input2.value;
             if (!item[1].includes(value2)) {
               input2.setAttribute("disabled", "");
