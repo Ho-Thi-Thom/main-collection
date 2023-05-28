@@ -1,8 +1,9 @@
+
 const selects = document.querySelectorAll('.js-variant-change');
 const radio = document.querySelectorAll('input[type="radio"]');
 const productData = JSON.parse(document.getElementById("product_data").textContent);
+const productOptions = JSON.parse(document.getElementById("product_options").textContent);
 const variants = productData.variants
-
 function createUrl(callback) {
     const urlSearchParams = new URLSearchParams()
     callback(urlSearchParams)
@@ -31,25 +32,83 @@ function updateElementSKU(element) {
 function onVariantChange(sectionId) {
     const value = getValue();
     const result = getVariant(value);
-    function callback(searchParams) {
-        searchParams.set('section_id', sectionId);
-        searchParams.set('variant', result.id);
+    if (result != undefined) {
+        mainSlider.goTo(result.featured_image.position);
+        function callback(searchParams) {
+            searchParams.set('section_id', sectionId);
+            searchParams.set('variant', result.id);
+        }
+        const _url = createUrl(callback)
+        fetch(_url)
+            .then(res => res.text())
+            .then(data => {
+                const div = document.createElement("div");
+                div.innerHTML = data;
+                updateElementPrice(div.querySelector('.compare-price'), div.querySelector(".price"));
+                updateElementVariantInventory(div.querySelector(".variant-inventory"))
+                updateElementSKU(div.querySelector(".product-sku"))
+            })
     }
-    const _url = createUrl(callback)
-    fetch(_url)
-        .then(res => res.text())
-        .then(data => {
-            const div = document.createElement("div");
-            div.innerHTML = data;
-            updateElementPrice(div.querySelector('.compare-price'), div.querySelector(".price"));
-            updateElementVariantInventory(div.querySelector(".variant-inventory"))
-            updateElementSKU(div.querySelector(".product-sku"))
-        })
+
 }
 
+function updateCssOption(event) {
+    const value = event.target.value
+    const _name = event.target.name
+    const name = _name.charAt(0).toUpperCase() + _name.slice(1);
+    const filteredProducts = variants.filter(variant => Object.values(variant).includes(value));
+    const filteredPositions = productOptions
+        .filter((item) => item.name !== name)
+        .map((item) => item.position);
+    const titles = filteredProducts.map(product => product.title);
+
+    const element = productOptions.find(item => item.name === name);
+    const input = element ? element.position : null;;
+    const uniqueElements = [...new Set(titles)];
+    const result = uniqueElements.reduce((acc, item) => {
+        const parts = item.split(" / ");
+        const filteredParts = parts.filter((_, index) => index !== input - 1);
+        filteredParts.forEach((part, index) => {
+            if (!acc[index]) {
+                acc[index] = [];
+            }
+            if (!acc[index].includes(part)) {
+                acc[index].push(part);
+            }
+        });
+
+        return acc;
+    }, []);
+
+    const mergedArray = filteredPositions.map((element, index) => [element, result[index]]);
+    // console.log("mergedArray", mergedArray)
+    const checkPositions = document.querySelectorAll(".check-positon");
+    // console.log("checkPositions", checkPositions)
+    mergedArray.forEach(item => {
+        checkPositions.forEach(element => {
+            if (item[0] == element.dataset.position) {
+                const inputs = element.querySelectorAll('input[type="radio"]');
+                inputs.forEach(input => {
+                    const value = input.value;
+                    if (!item[1].includes(value)) {
+                        input.setAttribute("disabled", "")
+                    } else {
+                        input.removeAttribute("disabled")
+                    }
+                });
+            }
+        });
+    });
+
+
+
+}
+
+
 const formEl = document.querySelector('.jsProductForm');
-formEl.addEventListener('change', e => {
+formEl.addEventListener('change', event => {
     onVariantChange(formEl.dataset.sectionId);
+    updateCssOption(event);
 })
 
 function getVariant(data) {

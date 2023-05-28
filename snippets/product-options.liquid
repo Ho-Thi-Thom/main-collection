@@ -9,11 +9,15 @@
   {%- if product.has_only_default_variant != true and product.variants.size > 1 -%}
     {%- for option in product.options_with_values -%}
       {%- assign optionName = option.name | downcase -%}
+      {% assign _styleOption = styleOption %}
+      {% if listStyle contains optionName %}
+        {% assign _styleOption = 'image' %}
+      {% endif %}
       <div class="variant-options option-type-select">
         <label class="variant-options-header" for="Option{{ option.position }}">{{ option.name }}</label>
         <div class="select-wrapper">
           {% render 'product-option',
-            styleOption: styleOption,
+            styleOption: _styleOption,
             option: option,
             product: product,
             formID: formID,

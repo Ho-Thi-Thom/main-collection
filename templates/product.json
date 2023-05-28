@@ -2,7 +2,10 @@
   "sections": {
     "main": {
       "type": "product",
-      "settings": {}
+      "settings": {
+        "radio": "button",
+        "style-image": "color"
+      }
     }
   },
   "order": [

@@ -1,8 +1,8 @@
 import { tns } from "tiny-slider";
 
-runSlider()
 
-function runSlider() {
+
+export function runSlider() {
     var slider = tns({
         container: ".thumbnail-slider",
         navContainer: ".customize-thumbnails",
@@ -36,8 +36,10 @@ function runSlider() {
     slider.events.on('indexChanged', function (info) {
         sliderCustom.goTo(info.index)
     })
-}
 
+    window.mainSlider = slider;
+}
+runSlider()
 document.addEventListener("shopify:section:load", () => {
     runSlider()
 });

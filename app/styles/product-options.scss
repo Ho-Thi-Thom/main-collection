@@ -28,6 +28,14 @@
             flex-wrap: wrap;
             gap: 10px;
 
+            .button-item {
+                opacity: 1;
+
+                &:hover {
+                    opacity: 0.5;
+                }
+            }
+
             .option-button {
                 display: none;
             }
@@ -54,19 +62,26 @@
             flex-wrap: wrap;
             gap: 10px;
 
-            label {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
+
+            .image-item label:has(>input:disabled) {
+                opacity: 0.4;
+                cursor: not-allowed;
+
+                &+span {
+                    display: none;
+                }
+            }
+
+            .image-item {
                 position: relative;
 
-                .image-item {
+
+                label {
+                    display: block;
                     height: 30px;
                     width: 30px;
                     border-radius: 50%;
                     cursor: pointer;
-                    position: relative;
                     border: 1px solid #d1cdcd;
 
                     &:hover {
@@ -81,6 +96,7 @@
                     input {
                         display: none;
                     }
+
 
                     .option-radio {
                         appearance: none;
@@ -119,23 +135,24 @@
                     }
                 }
 
-                span {
-                    position: absolute;
-                    display: none;
-                    z-index: 20;
-                    bottom: -100%;
-                    left: 0%;
-                    white-space: nowrap;
-                    font-size: 14px;
-
-                    padding: 4px 8px;
-                    border-radius: 4px;
-                    background-color: rgb(22, 175, 22);
-                    color: #fff;
-                }
             }
 
-            label:hover {
+            span {
+                position: absolute;
+                display: none;
+                z-index: 20;
+                bottom: -100%;
+                left: 0%;
+                white-space: nowrap;
+                font-size: 14px;
+
+                padding: 4px 8px;
+                border-radius: 4px;
+                background-color: rgb(22, 175, 22);
+                color: #fff;
+            }
+
+            .image-item:hover {
                 span {
                     display: block;
                 }

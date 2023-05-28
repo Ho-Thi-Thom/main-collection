@@ -8,15 +8,17 @@
   {% when 'select' %}
     <select
       id="Option{{ option.position }}"
-      class="js-variant-change"
+      class="js-variant-change check-positon"
       name="{{ option.name}}"
       form="{{formID}}"
       data-section-id="{{ sectionID }}"
+      data-position="{{ option.position }}"
     >
       {%- for value in option.values -%}
         {%- assign valueDownCase = value | downcase -%}
         <option
           value="{{ value | escape }}"
+          data-disable="false"
           {%- if option.selected_value == value %}
             selected
           {% endif -%}
@@ -27,7 +29,7 @@
     </select>
 
   {% when 'button' %}
-    <div class="button-list">
+    <div class="button-list check-positon" data-position="{{ option.position }}">
       {%- for value in option.values -%}
         {%- capture swtID -%}
          {{ sectionID | remove: '.' }}swt{{ option.position }}_{{ value | handle }}
@@ -50,13 +52,15 @@
     </div>
 
   {% when 'image' %}
-    <div class="image-list">
+    <div class="image-list check-positon" data-position="{{ option.position }}">
       {%- for value in option.values -%}
+        {%- capture swtID -%}
+          {{ sectionID | remove: '.' }}swt{{ option.position }}_{{ value | handle }}
+         {%- endcapture -%}
         {%- assign valueDownCase = value | downcase -%}
         {%- assign variantSelect = product.variants | where: optionIndex, value | first -%}
-        <label>
-          <div
-            class="image-item"
+        <div class="image-item">
+          <label
             style="background:url({{ variantSelect.featured_media | image_url }}); background-size: cover;"
           >
             <input
@@ -69,9 +73,9 @@
                 checked="checked"
               {%- endif -%}
             >
-          </div>
+          </label>
           <span>{{ value }}</span>
-        </label>
+        </div>
       {%- endfor -%}
     </div>
 {% endcase %}

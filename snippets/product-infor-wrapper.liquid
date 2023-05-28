@@ -33,11 +33,13 @@
 
       {% comment %} PRODUCT OPTIONS {% endcomment %}
       <div class="product-option">
-        {% render 'product-options',
+        {%
+          render 'product-options',
           styleOption: styleOption,
           product: product,
           productSelect: productSelect,
-          sectionID: sectionID
+          sectionID: sectionID,
+          listStyle:listStyle,
         %}
       </div>
       {% comment %} ADD TO CART {% endcomment %}

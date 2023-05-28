@@ -18,15 +18,7 @@
   assign sectionID = '#shopify-section-' | append: section.id
   assign productSelect = product.selected_or_first_available_variant
 -%}
-
-{% capture styleOption %}
-{% for _block in section.blocks %}
-  {% case _block.type %}
-    {% when 'swatch_style' %}
-   {{ _block.settings.radio }}
-  {% endcase %}
-{% endfor %}
-{% endcapture %}
+{% assign listStyle = section.settings['style-image'] | split: ',' | downcase %}
 
 <div class="product-section-wrapper container_wrapper">
   <div class="product-layout">
@@ -34,9 +26,10 @@
       {% render 'product-gallery-wrapper', product: product %}
       {%
         render 'product-infor-wrapper',
-        styleOption: styleOption,
+        styleOption: section.settings.radio,
         productSelect: productSelect,
         sectionID:sectionID ,
+        listStyle:listStyle,
       %}
     </div>
   </div>
@@ -45,38 +38,41 @@
 {
   "name": "product",
   "tag": "section",
-  "settings": [],
-  "blocks": [
+  "settings": [
     {
-      "type": "swatch_style",
-      "name": "Product Options",
-      "settings": [
+      "type": "radio",
+      "id": "radio",
+      "label": "Swatch style",
+      "options": [
         {
-          "type": "radio",
-          "id": "radio",
-          "label": "Swatch style",
-          "options": [
-            {
-              "value": "button",
-              "label": "Button"
-            },
-            {
-              "value": "select",
-              "label": "Select"
-            },
-            {
-              "value": "image",
-              "label": "Color / Image"
-            }
-          ],
-          "default": "button"
+          "value": "button",
+          "label": "Button"
+        },
+        {
+          "value": "select",
+          "label": "Select"
+        },
+        {
+          "value": "image",
+          "label": "Color / Image"
         }
-      ]
+      ],
+      "default": "button"
+    },
+    {
+      "type": "textarea",
+      "id": "style-image",
+      "label": "Use swatch image for option name",
+      "info": "e.g: Color"
     }
-  ]
+  ],
+  "blocks": []
 }
 {% endschema %}
 <script id="product_data" type="application/json">
   {{product | json}}
+</script>
+<script id="product_options" type="application/json">
+  {{ product.options_with_values | json}}
 </script>
 {{ 'main-product.js' | asset_url | script_tag }}

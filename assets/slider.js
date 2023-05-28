@@ -2612,7 +2612,6 @@
 
   // app/scripts/slider.js
   var import_tiny_slider = __toModule(require_tiny_slider());
-  runSlider();
   function runSlider() {
     var slider = (0, import_tiny_slider.tns)({
       container: ".thumbnail-slider",
@@ -2642,7 +2641,9 @@
     slider.events.on("indexChanged", function(info) {
       sliderCustom.goTo(info.index);
     });
+    window.mainSlider = slider;
   }
+  runSlider();
   document.addEventListener("shopify:section:load", () => {
     runSlider();
   });
