@@ -8,8 +8,17 @@
   </span>
 </div>
 <div class="add-to-cart">
-  <button class="btn-add">
+  <button
+    class="btn-add"
+    {% if selectedQuantity == 0 %}
+      disabled
+    {% endif %}
+  >
     {% render 'card' %}
-    <span>Add to cart</span>
+    {% if selectedQuantity > 0 %}
+      <span>Add to cart</span>
+    {% else %}
+      <span class="sold-out">Sold out</span>
+    {% endif %}
   </button>
 </div>

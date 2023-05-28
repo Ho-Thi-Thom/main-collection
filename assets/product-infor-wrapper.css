@@ -129,6 +129,26 @@
   stroke: #fff;
 }
 
+.product-infor-wrapper .product-infor .product-cart .add-to-cart .btn-add:has(> span.sold-out) {
+  opacity: .4;
+}
+
+.product-infor-wrapper .product-infor .list-link {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.product-infor-wrapper .product-infor .list-link .wish-list {
+  display: flex;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.product-infor-wrapper .product-infor .list-link .wish-list.active svg path {
+  stroke: red;
+  fill: red;
+}
+
 .product-infor-wrapper .product-infor .product-tags {
   margin-bottom: 5px;
   font-size: 12px;

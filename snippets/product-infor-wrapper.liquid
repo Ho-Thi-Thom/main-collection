@@ -5,6 +5,13 @@
 >
 
 {%- assign productSelect = productSelect | default: product.selected_or_first_available_variant -%}
+{% assign selectedQuantity = 0 %}
+{% for variant in product.variants %}
+  {% if variant.id == productSelect.id %}
+    {% assign selectedQuantity = variant.inventory_quantity %}
+  {% endif %}
+{% endfor %}
+
 <div class="product-infor-wrapper">
   {% form 'product', product, class: 'jsProductForm', data-section-id: section.id %}
     <div class="product-infor">
@@ -44,12 +51,6 @@
       </div>
       {% comment %} ADD TO CART {% endcomment %}
       <p class="product-quantity">
-        {% assign selectedQuantity = 0 %}
-        {% for variant in product.variants %}
-          {% if variant.id == productSelect.id %}
-            {% assign selectedQuantity = variant.inventory_quantity %}
-          {% endif %}
-        {% endfor %}
         <span>Total Quantity</span>
         <span class="variant-inventory">
           {% if selectedQuantity > 0 %}
@@ -61,11 +62,17 @@
       </p>
 
       <div class="product-cart">
-        {% render 'product-card' %}
+        {% render 'product-card', selectedQuantity: selectedQuantity %}
       </div>
 
       {{ form | payment_button }}
-
+      {% comment %} LIST {% endcomment %}
+      <div class="list-link">
+        <div class="wish-list">
+          {% render 'heart' %}
+          Add to Wishlist
+        </div>
+      </div>
       {% comment %} SOCIAL SHARING {% endcomment %}
       <div class="product-social-sharing"></div>
       <div class="hr"></div>

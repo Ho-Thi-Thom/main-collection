@@ -34,10 +34,9 @@
          {{ sectionID | remove: '.' }}swt{{ option.position }}_{{ value | handle }}
         {%- endcapture -%}
         {%- assign variantSelect = product.variants | where: optionIndex, value | first -%}
-        <div class="button-item">
+        <label class="button-item">
           <input
             type="radio"
-            id="{{ swtID }}"
             name="{{ option.name | handleize }}"
             class="option-button"
             value="{{ value | escape }}"
@@ -45,8 +44,8 @@
               checked="checked"
             {%- endif -%}
           >
-          <label for="{{ swtID }}">{{ value }}</label>
-        </div>
+          {{ value -}}
+        </label>
       {%- endfor -%}
     </div>
 

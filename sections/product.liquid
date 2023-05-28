@@ -19,7 +19,6 @@
   assign productSelect = product.selected_or_first_available_variant
 -%}
 {% assign listStyle = section.settings['style-image'] | split: ',' | downcase %}
-
 <div class="product-section-wrapper container_wrapper">
   <div class="product-layout">
     <div class="product-container">
@@ -76,3 +75,6 @@
   {{ product.options_with_values | json}}
 </script>
 {{ 'main-product.js' | asset_url | script_tag }}
+<script>
+  productTrigger({{product.id}})
+</script>

@@ -31,18 +31,6 @@
 }
 
 .variant-options .select-wrapper .button-list .button-item {
-  opacity: 1;
-}
-
-.variant-options .select-wrapper .button-list .button-item:hover {
-  opacity: .5;
-}
-
-.variant-options .select-wrapper .button-list .option-button {
-  display: none;
-}
-
-.variant-options .select-wrapper .button-list .option-button + label {
   display: inline-block;
   padding: 8px 16px;
   border: 1px solid #c9c9c9;
@@ -50,27 +38,32 @@
   color: #000;
   cursor: pointer;
   border-radius: 4px;
+  opacity: 1;
 }
 
-.variant-options .select-wrapper .button-list .option-button:checked + label {
+.variant-options .select-wrapper .button-list .button-item:has(> input[data-disabled=true]) {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+.variant-options .select-wrapper .button-list .button-item:has(> input:checked) {
   background-color: #f2f2f2;
   color: #333;
   font-weight: 700;
+}
+
+.variant-options .select-wrapper .button-list .button-item:hover {
+  opacity: .5;
+}
+
+.variant-options .select-wrapper .button-list .button-item .option-button {
+  display: none;
 }
 
 .variant-options .select-wrapper .image-list {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-}
-
-.variant-options .select-wrapper .image-list .image-item label:has(> input:disabled) {
-  opacity: .4;
-  cursor: not-allowed;
-}
-
-.variant-options .select-wrapper .image-list .image-item label:has(> input:disabled) + span {
-  display: none;
 }
 
 .variant-options .select-wrapper .image-list .image-item {
@@ -84,6 +77,15 @@
   border-radius: 50%;
   cursor: pointer;
   border: 1px solid #d1cdcd;
+}
+
+.variant-options .select-wrapper .image-list .image-item label:has(> input[data-disabled=true]) {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+.variant-options .select-wrapper .image-list .image-item label:has(> input[data-disabled=true]) + span {
+  display: none;
 }
 
 .variant-options .select-wrapper .image-list .image-item label:hover {
