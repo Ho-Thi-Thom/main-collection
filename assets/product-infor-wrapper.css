@@ -181,3 +181,8 @@
   min-width: 40px;
   font-weight: 500;
 }
+
+.product-infor-wrapper .product-infor .product-social-sharing {
+  display: flex;
+  gap: 20px;
+}

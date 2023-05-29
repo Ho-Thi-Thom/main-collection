@@ -1,0 +1,10 @@
+{%- capture tabID -%}tab{{ heading | md5 }}{%- endcapture -%}
+
+{% case type %}
+  {% when 'tab_header' %}
+    <div class="des_btn jsNavTab" data-id="{{ tabID }}">{{ heading }}</div>
+  {% when 'tab_body' %}
+    <div class="tab__panel-item jsBodyTab">
+      <div class="tab__panel-content" data-id="{{ tabID }}">{{ body }}</div>
+    </div>
+{% endcase %}

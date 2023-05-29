@@ -15,92 +15,124 @@
 <div class="product-infor-wrapper">
   {% form 'product', product, class: 'jsProductForm', data-section-id: section.id %}
     <div class="product-infor">
-      {% comment %} VENDOR {% endcomment %}
-      <p class="product-vendor">{{ product.vendor }}</p>
-      {% comment %} TITLE {% endcomment %}
-      <h1 class="product-title">{{ product.title }}</h1>
-      {% comment %} REVIEW {% endcomment %}
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'title' %}
+            {% comment %} VENDOR {% endcomment %}
+            <p class="product-vendor">{{ product.vendor }}</p>
+            {% comment %} TITLE {% endcomment %}
+            <h1 class="product-title">{{ product.title }}</h1>
 
-      {% comment %}
-        <div class="product-total-review">
-          <div class="rating"></div>
-          <div class="seperate"></div>
-          <div>
-            <a href="#">3<span>total review</span></a>
-          </div>
-        </div>
-      {% endcomment %}
+          {% when '@app' %}
+            {% comment %} REVIEW {% endcomment %}
+            <div class="product-rating">
+              {% render block %}
+            </div>
+            {% comment %}
+              <div class="product-total-review">
+                <div class="rating"></div>
+                <div class="seperate"></div>
+                <div>
+                  <a href="#">3<span>total review</span></a>
+                </div>
+              </div>
+            {% endcomment %}
+          {% when 'price' %}
+            {% comment %} PRICE {% endcomment %}
+            <div class="product-price">
+              <span class="compare-price">{{- productSelect.price | money -}}</span>
+              <span class="price">{{- productSelect.compare_at_price | money -}}</span>
+            </div>
+          {% when 'hr' %}
+            <div class="hr"></div>
+          {% when 'product_options' %}
+            {% comment %} PRODUCT OPTIONS {% endcomment %}
+            <div class="product-option">
+              {% assign listStyle = block.settings.style_image | split: ',' | downcase %}
 
-      {% comment %} PRICE {% endcomment %}
-      <div class="product-price">
-        <span class="compare-price">{{- productSelect.price | money -}}</span>
-        <span class="price">{{- productSelect.compare_at_price | money -}}</span>
-      </div>
-      <div class="hr"></div>
-
-      {% comment %} PRODUCT OPTIONS {% endcomment %}
-      <div class="product-option">
-        {%
-          render 'product-options',
-          styleOption: styleOption,
-          product: product,
-          productSelect: productSelect,
-          sectionID: sectionID,
-          listStyle:listStyle,
-        %}
-      </div>
-      {% comment %} ADD TO CART {% endcomment %}
-      <p class="product-quantity">
-        <span>Total Quantity</span>
-        <span class="variant-inventory">
-          {% if selectedQuantity > 0 %}
-            Only {{ selectedQuantity }} left in stock!
-          {% else %}
-            Sold out
-          {% endif %}
-        </span>
-      </p>
-
-      <div class="product-cart">
-        {% render 'product-card', selectedQuantity: selectedQuantity %}
-      </div>
-
-      {{ form | payment_button }}
-      {% comment %} LIST {% endcomment %}
-      <div class="list-link">
-        <div class="wish-list">
-          {% render 'heart' %}
-          Add to Wishlist
-        </div>
-      </div>
-      {% comment %} SOCIAL SHARING {% endcomment %}
-      <div class="product-social-sharing"></div>
-      <div class="hr"></div>
-
-      {% comment %} TAGS {% endcomment %}
-      {% assign tag_count = product.tags.size %}
-      {% unless tag_count < 1 %}
-        <div class="product-tags">
-          <span>Tags: </span>
-          <ul>
-            {% for tag in product.tags %}
-              <li>
-                {{ tag | capitalize -}}
-                {%- if forloop.last %}{% else %},{% endif %}
-              </li>
+              {%
+                render 'product-options',
+                styleOption: block.settings.radio,
+                product: product,
+                productSelect: productSelect,
+                sectionID: sectionID,
+                listStyle:listStyle,
+              %}
+            </div>
+          {% when 'add_to_cart' %}
+            {% comment %} ADD TO CART {% endcomment %}
+            <p class="product-quantity">
+              <span>Total Quantity</span>
+              <span class="variant-inventory">
+                {% if selectedQuantity > 0 %}
+                  Only {{ selectedQuantity }} left in stock!
+                {% else %}
+                  Sold out
+                {% endif %}
+              </span>
+            </p>
+            <div class="product-cart">
+              {% render 'product-card', selectedQuantity: selectedQuantity %}
+            </div>
+            {{ form | payment_button }}
+          {% when 'list_link' %}
+            {% comment %} LIST {% endcomment %}
+            <div class="list-link">
+              <div class="wish-list">
+                {% render 'heart' %}
+                Add to Wishlist
+              </div>
+            </div>
+          {% when 'social_sharing' %}
+            {% comment %} SOCIAL SHARING {% endcomment %}
+            {% assign blockIcon = '' %}
+            {% for block in section.blocks offset: forloop.index %}
+              {% case block.type %}
+                {% when 'child_icon-social' %}
+                  {% assign item = block.settings %}
+                  {% capture blockIcon %}
+                 {{ blockIcon }}
+                  <a href="{{ item.social-icon-url }}">
+                    <div class="social__item-icon">
+                    <img
+                      src="{{ item.social-icon | image_url }}"
+                      alt="icon"
+                      class="social__item-icon-img">
+                  </div>
+                  </a>
+               {% endcapture %}
+              {% endcase %}
             {% endfor %}
-          </ul>
-        </div>
-      {% endunless %}
+            <div class="product-social-sharing">
+              {{ blockIcon }}
+            </div>
+          {% when 'tag_and_sku' %}
+            {% comment %} TAGS {% endcomment %}
+            {% assign tag_count = product.tags.size %}
+            {% unless tag_count < 1 %}
+              <div class="product-tags">
+                <span>Tags: </span>
+                <ul>
+                  {% for tag in product.tags %}
+                    <li>
+                      {{ tag | capitalize -}}
+                      {%- if forloop.last %}{% else %},{% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endunless %}
 
-      {% comment %} SKU {% endcomment %}
+            {% comment %} SKU {% endcomment %}
 
-      <div class="product-sku">
-        {% assign sku = productSelect.sku %}
-        {% if sku != blank %}
-          <span>SKU: </span> {{ sku }}
-        {% endif %}
-      </div>
+            <div class="product-sku">
+              {% assign sku = productSelect.sku %}
+              {% if sku != blank %}
+                <span>SKU: </span> {{ sku }}
+              {% endif %}
+            </div>
+        {% endcase %}
+      {% endfor %}
     </div>
   {% endform %}
 </div>

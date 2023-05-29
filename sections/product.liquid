@@ -18,14 +18,12 @@
   assign sectionID = '#shopify-section-' | append: section.id
   assign productSelect = product.selected_or_first_available_variant
 -%}
-{% assign listStyle = section.settings['style-image'] | split: ',' | downcase %}
 <div class="product-section-wrapper container_wrapper">
   <div class="product-layout">
     <div class="product-container">
       {% render 'product-gallery-wrapper', product: product %}
       {%
         render 'product-infor-wrapper',
-        styleOption: section.settings.radio,
         productSelect: productSelect,
         sectionID:sectionID ,
         listStyle:listStyle,
@@ -37,35 +35,88 @@
 {
   "name": "product",
   "tag": "section",
-  "settings": [
+  "settings": [],
+  "blocks": [
     {
-      "type": "radio",
-      "id": "radio",
-      "label": "Swatch style",
-      "options": [
-        {
-          "value": "button",
-          "label": "Button"
-        },
-        {
-          "value": "select",
-          "label": "Select"
-        },
-        {
-          "value": "image",
-          "label": "Color / Image"
-        }
-      ],
-      "default": "button"
+      "type": "title",
+      "name": "Title"
     },
     {
-      "type": "textarea",
-      "id": "style-image",
-      "label": "Use swatch image for option name",
-      "info": "e.g: Color"
+      "type": "@app"
+    },
+    {
+      "type": "price",
+      "name": "Price"
+    },
+    {
+      "type": "product_options",
+      "name": "Product Option",
+      "settings": [
+        {
+          "type": "radio",
+          "id": "radio",
+          "label": "Swatch style",
+          "options": [
+            {
+              "value": "button",
+              "label": "Button"
+            },
+            {
+              "value": "select",
+              "label": "Select"
+            },
+            {
+              "value": "image",
+              "label": "Color / Image"
+            }
+          ],
+          "default": "button"
+        },
+        {
+          "type": "textarea",
+          "id": "style_image",
+          "label": "Use swatch image for option name",
+          "info": "e.g: Color"
+        }
+      ]
+    },
+    {
+      "type": "add_to_cart",
+      "name": "Add to cart"
+    },
+    {
+      "type": "list_link",
+      "name": "Link"
+    },
+    {
+      "type": "social_sharing",
+      "name": "Social sharing"
+    },
+    {
+      "type": "child_icon-social",
+      "name": "Icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Image",
+          "id": "social-icon"
+        },
+        {
+          "type": "url",
+          "id": "social-icon-url",
+          "label": "Url"
+        }
+      ]
+    },
+    {
+      "type": "hr",
+      "name": "Straight Line"
+    },
+    {
+      "type": "tag_and_sku",
+      "name": "Tag & SKU"
     }
-  ],
-  "blocks": []
+  ]
 }
 {% endschema %}
 <script id="product_data" type="application/json">
