@@ -30,12 +30,11 @@
 
       {%- if descriptionCheck == blank -%}
         {%- continue -%}{%- endif -%}
-      {%- capture tabHead -%}
-        {{ tabHead }}{%- render 'snippet-description', type: 'tab_header', heading: heading -%}{%- endcapture -%}
-      {%- capture tabBody -%}
-        {{ tabBody }}{%- render 'snippet-description', type: 'tab_body', heading: heading, body: description  -%}{%- endcapture -%}
-      {% continue %}
-
+      {% assign body = description %}
+      
+      {%- when 'page' -%}
+       {%- assign heading  = heading | default: pages[body].title -%}
+        {%- assign body     = pages[body].content -%} 
     {% endcase %}
 
     {%- if body == blank -%}
@@ -98,6 +97,26 @@
           "id": "text_description",
           "label": "Tab heading content",
           "default": "Tab heading"
+        }
+      ]
+    },
+    {
+      "type": "page",
+      "name": "Static page",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Static tan is created based on Page content. It's ueseful to add the same content for all products such as Shipping term, Size guide, etc."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Heading"
+        },
+        {
+          "type": "page",
+          "id": "content",
+          "label": "Select a Page"
         }
       ]
     }
