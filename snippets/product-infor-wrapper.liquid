@@ -44,7 +44,10 @@
               <span class="price">{{- productSelect.compare_at_price | money -}}</span>
             </div>
           {% when 'hr' %}
-            <div class="hr"></div>
+            <div
+              class="hr"
+              style="height:{{ block.settings.height }}; margin:{{ block.settings.margin }}; background-color:#D6D6D6;"
+            ></div>
           {% when 'product_options' %}
             {% comment %} PRODUCT OPTIONS {% endcomment %}
             <div class="product-option">

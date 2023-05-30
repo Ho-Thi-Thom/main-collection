@@ -5,14 +5,14 @@
 >
 
 {%- capture content -%}
-
-  {%- for block in section.blocks -%}
+  {% for block in section.blocks %}
     {%- if block.type == '@app' -%}
       {%- continue -%}{%- endif -%}
     {%- assign heading = block.settings.text -%}
     {%- assign body = block.settings.content -%}
-    {%- case block.type -%}
-      {%- when 'tab_heading' -%}
+
+    {% case block.type %}
+      {% when "tab_heading" %}
       {%- assign heading = block.settings.text -%}
       {%- capture body -%}
         {%- for childBlock in section.blocks offset: forloop.index -%}
@@ -21,50 +21,44 @@
           {% render childBlock %}
         {%- endfor -%}
       {%- endcapture -%}
-      {% comment %} {%- when 'description' -%} {% endcomment %}
-      {% comment %} {%- liquid
-        assign enable_multi_tab   = block.settings.enable_multi_tab
-        assign description        = product.description
-        assign descriptionCheck   = description | strip_html | strip
-        assign description_parts  = description | strip_newlines | strip | split: "<h5"
-      -%}
+      {%- when 'description' -%}
+      {% liquid
+           assign description = product.description
+           assign descriptionCheck = description | strip_html | strip
+           assign heading = block.settings.text_description | strip_html | strip
+        %}
 
       {%- if descriptionCheck == blank -%}
-        {%- continue -%}
-      {%- endif -%}
+        {%- continue -%}{%- endif -%}
+      {%- capture tabHead -%}
+        {{ tabHead }}{%- render 'snippet-description', type: 'tab_header', heading: heading -%}{%- endcapture -%}
+      {%- capture tabBody -%}
+        {{ tabBody }}{%- render 'snippet-description', type: 'tab_body', heading: heading, body: description  -%}{%- endcapture -%}
+      {% continue %}
 
-      {% if enable_multi_tab != true %}
-        {%- liquid
-         assign heading = 'headingabc' | t
-         assign body = description | split: '<h5>' | first
-       -%}
-        {% capture tab_header %}
-          {% render 'snippet-description', type: 'tab_header', heading: heading %}
-        {% endcapture %}
-        {% capture tab_body %}
-          {% render 'snippet-description', type: 'tab_body', heading: heading, body: body %}
-        {% endcapture %}
+    {% endcase %}
 
+    {%- if body == blank -%}
+      {%- continue -%}{%- endif -%}
 
-      {% endif %}
-      {% if enable_multi_tab %}{% endif %} {% endcomment %}
-    {%- endcase -%}
+    {%- capture tabHead -%}
+      {{ tabHead }}{%- render 'snippet-description', type: 'tab_header', heading: heading -%}{%- endcapture -%}
+    {%- capture tabBody -%}
+      {{ tabBody }}{%- render 'snippet-description', type: 'tab_body', heading: heading, body: body -%}{%- endcapture -%}
+
   {% endfor %}
 
-  <div class="product-section-description">
-    <div class="section-container">
-      <div class="tab__panel-wrapper">
-        <div class="tab__panel-header">{{ heading }}</div>
-        <div class="tab__panel-body">{{ body }}</div>
-      </div>
-    </div>
-  </div> 
-
+  <div class="product-description">
+        <div class="tab__panel-wrapper">
+          <div class="tab__panel-header">{{ tabHead }}</div>
+          <div class="tab__panel-body">{{ tabBody }}</div>
+        </div>
+  </div>
 {% endcapture %}
 
-{% comment %} <div class="container_wrapper"> {% endcomment %}
-{{ content }}
-{% comment %} </div> {% endcomment %}
+<div class="container_wrapper section_container">
+  {{ content }}
+</div>
 
 {% schema %}
 {
@@ -98,6 +92,12 @@
           "id": "enable_multil_tab",
           "label": "Use Multi-tabs with heading 5 tag",
           "info": "We use heading 5 in Product's description to seperate Multi-tabs, each <h5>Tabs Title</h5> will be considered as content seperator and tabs title"
+        },
+        {
+          "type": "text",
+          "id": "text_description",
+          "label": "Tab heading content",
+          "default": "Tab heading"
         }
       ]
     }
@@ -109,3 +109,5 @@
   ]
 }
 {% endschema %}
+
+{{ 'main-description.js' | asset_url | script_tag }}

@@ -1,3 +1,51 @@
-.product-layout {
-  padding-inline: 20px;
+.section_container {
+  margin-top: 20px;
+}
+
+.section_container .product-description {
+  margin-inline: 20px;
+}
+
+.section_container .product-description .tab__panel-wrapper .tab__panel-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-block: 20px;
+  border-block: 1px solid #e6e6e6;
+  gap: 20px;
+}
+
+.section_container .product-description .tab__panel-wrapper .tab__panel-header .des_btn {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.section_container .product-description .tab__panel-wrapper .tab__panel-header .des_btn.active {
+  font-weight: 500;
+  color: #000;
+  border-bottom: 2px solid #000;
+}
+
+.section_container .product-description .tab__panel-wrapper .tab__panel-body .tab__panel-item {
+  display: none;
+}
+
+.section_container .product-description .tab__panel-wrapper .tab__panel-body .tab__panel-item.active {
+  display: block;
+}
+
+.section_container .product-description .tab__panel-wrapper .tab__panel-body .tab__panel-item .tab__panel-content {
+  height: 40vh;
+  overflow-y: auto;
+}
+
+.section_container .product-description .tab__panel-wrapper .tab__panel-body .tab__panel-item .tab__panel-content h5 {
+  font-size: medium;
+  font-weight: 500;
+  padding-block: 10px;
+}
+
+.section_container .product-description .tab__panel-wrapper .tab__panel-body .tab__panel-item .tab__panel-content p {
+  font-size: medium;
+  font-weight: 400;
 }

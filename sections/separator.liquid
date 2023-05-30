@@ -1,0 +1,47 @@
+{% for block in section.blocks %}
+  {% case block.type %}
+    {% when 'spacing' %}
+      <div class="container_wrapper">
+        <div
+          style="height:{{ block.settings.height }}; margin:{{ block.settings.margin }}; background-color:#D6D6D6;"
+          class="container-margin"
+        ></div>
+      </div>
+  {% endcase %}
+{% endfor %}
+
+{% schema %}
+{
+  "name": "Separator",
+  "class": "shopify-section-separator",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "spacing",
+      "name": "Spacing",
+      "settings": [
+        {
+          "type": "text",
+          "id": "height",
+          "label": "Height",
+          "default": "1px",
+          "info": "E.g: 1px, 10px"
+        },
+        {
+          "type": "text",
+          "id": "margin",
+          "label": "Margin",
+          "default": "20px 0 0 0",
+          "info": "E.g: 20px 0 0 0"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Separator"
+    }
+  ]
+}
+{% endschema %}
