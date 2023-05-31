@@ -6,6 +6,38 @@ const productOptions = JSON.parse(document.getElementById("product_options").tex
 const variants = productData.variants
 const wishList = document.querySelector('.wish-list')
 
+const recentlyTrigger = (handle) => {
+    const RECENTLY_LIST_KEY = "recently-list";
+
+    const getRecentlyList = () => {
+        try {
+            const data = window.localStorage.getItem(RECENTLY_LIST_KEY);
+            if (data) {
+                return JSON.parse(data);
+            }
+            return [];
+        } catch (error) {
+            console.log(error);
+            return [];
+        }
+    };
+
+    const setRecentlyList = () => {
+        const data = getRecentlyList();
+        const index = data.findIndex(item => item === handle);
+        if (index > -1) {
+            data.splice(index, 1);
+        }
+        data.unshift(handle);
+        window.localStorage.setItem(RECENTLY_LIST_KEY, JSON.stringify(data));
+    };
+
+
+    setRecentlyList()
+};
+window.recentlyTrigger = recentlyTrigger
+
+
 const productTrigger = (id) => {
     const WISH_LIST_KEY = "wish-list"
 
@@ -117,6 +149,7 @@ function onVariantChange(sectionId, event) {
 
 
 }
+
 function updateCssOption(value, name) {
     name = name.charAt(0).toUpperCase() + name.slice(1);
     const filteredProducts = variants.filter(variant => Object.values(variant).includes(value));
@@ -231,3 +264,9 @@ quantityInput.addEventListener('keydown', function (event) {
         event.preventDefault();
     }
 });
+
+
+
+
+
+

@@ -144,4 +144,5 @@
 {{ 'main-product.js' | asset_url | script_tag }}
 <script>
   productTrigger({{product.id}})
+  recentlyTrigger("{{ product.handle}}")
 </script>

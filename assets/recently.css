@@ -1,8 +1,8 @@
-.recommendations-container {
+.recently-container {
   margin: var(--margin);
 }
 
-.recommendations-container .recommendations-header {
+.recently-container .recently-header {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,6 +10,6 @@
   font-weight: 600;
 }
 
-.recommendations-container .list-product {
+.recently-container .recently {
   margin-top: 20px;
 }

@@ -6,6 +6,32 @@
   var productOptions = JSON.parse(document.getElementById("product_options").textContent);
   var variants = productData.variants;
   var wishList = document.querySelector(".wish-list");
+  var recentlyTrigger = (handle) => {
+    const RECENTLY_LIST_KEY = "recently-list";
+    const getRecentlyList = () => {
+      try {
+        const data = window.localStorage.getItem(RECENTLY_LIST_KEY);
+        if (data) {
+          return JSON.parse(data);
+        }
+        return [];
+      } catch (error) {
+        console.log(error);
+        return [];
+      }
+    };
+    const setRecentlyList = () => {
+      const data = getRecentlyList();
+      const index = data.findIndex((item) => item === handle);
+      if (index > -1) {
+        data.splice(index, 1);
+      }
+      data.unshift(handle);
+      window.localStorage.setItem(RECENTLY_LIST_KEY, JSON.stringify(data));
+    };
+    setRecentlyList();
+  };
+  window.recentlyTrigger = recentlyTrigger;
   var productTrigger = (id) => {
     const WISH_LIST_KEY = "wish-list";
     const getWishList = () => {

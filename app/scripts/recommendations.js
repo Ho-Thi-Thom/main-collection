@@ -1,6 +1,11 @@
 import { tns } from "tiny-slider";
 const element = document.querySelector(".jsRecommendations")
 const url = element.dataset.url;
+const data = JSON.parse(document.getElementById("recommendation").textContent);
+const myArray = data.split(";");
+const spacingItem = myArray[1];
+const [mobile, tablet, desktop] = myArray[0].split(",");
+
 
 fetch(url)
     .then(response => response.text())
@@ -12,14 +17,26 @@ fetch(url)
 
         tns({
             container: '.tns-sli',
-            items: 4,
             slideBy: 'page',
             autoplay: false,
             loop: false,
             mouseDrag: true,
             nextButton: '.recommendation-slider ~ .next',
             prevButton: '.recommendation-slider ~ .prev',
+            gutter: spacingItem,
+            responsive: {
+                0: {
+                    items: mobile
+                },
+                768: {
+                    items: tablet
+                },
+                1024: {
+                    items: desktop
+                }
+            }
         });
+
     })
 
 // function runSlider() {

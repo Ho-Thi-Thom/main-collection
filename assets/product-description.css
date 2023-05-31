@@ -35,7 +35,7 @@
 }
 
 .section_container .product-description .tab__panel-wrapper .tab__panel-body .tab__panel-item .tab__panel-content {
-  height: 40vh;
+  max-height: 40vh;
   overflow-y: auto;
 }
 

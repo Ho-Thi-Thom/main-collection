@@ -142,8 +142,19 @@
         top: 50%;
         left: 0;
         transform: translateY(-50%);
-        display: none;
-        border: 1px solid #05933c;
+        text-align: center;
+        fill: #079e39;
+        position: absolute;
+        cursor: pointer;
+        border: 2px solid #079e39;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.7);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
 
         svg {
             transform: rotate(-90deg);
@@ -155,9 +166,19 @@
         top: 50%;
         right: 0;
         transform: translateY(-50%);
-        display: none;
-        background-color: rgb(190, 185, 185);
-        border: 1px solid #05933c;
+        text-align: center;
+        fill: #079e39;
+        position: absolute;
+        cursor: pointer;
+        border: 2px solid #079e39;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.7);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
 
         svg {
             transform: rotate(90deg);
@@ -166,11 +187,11 @@
 
     &:hover {
         .prev {
-            display: block;
+            opacity: .7;
         }
 
         .next {
-            display: block;
+            opacity: .7;
         }
     }
 

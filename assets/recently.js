@@ -354,13 +354,13 @@
           }
         };
       }
-      function jsTransform(element2, attr, prefix, postfix, to, duration, callback) {
-        var tick = Math.min(duration, 10), unit = to.indexOf("%") >= 0 ? "%" : "px", to = to.replace(unit, ""), from = Number(element2.style[attr].replace(prefix, "").replace(postfix, "").replace(unit, "")), positionTick = (to - from) / duration * tick;
+      function jsTransform(element, attr, prefix, postfix, to, duration, callback) {
+        var tick = Math.min(duration, 10), unit = to.indexOf("%") >= 0 ? "%" : "px", to = to.replace(unit, ""), from = Number(element.style[attr].replace(prefix, "").replace(postfix, "").replace(unit, "")), positionTick = (to - from) / duration * tick;
         setTimeout(moveElement, tick);
         function moveElement() {
           duration -= tick;
           from += positionTick;
-          element2.style[attr] = prefix + from + unit + postfix;
+          element.style[attr] = prefix + from + unit + postfix;
           if (duration > 0) {
             setTimeout(moveElement, tick);
           } else {
@@ -2610,39 +2610,70 @@
     }
   });
 
-  // app/scripts/recommendations.js
+  // app/scripts/recently.js
   var import_tiny_slider = __toModule(require_tiny_slider());
-  var element = document.querySelector(".jsRecommendations");
-  var url = element.dataset.url;
-  var data = JSON.parse(document.getElementById("recommendation").textContent);
+  var data = JSON.parse(document.getElementById("recently").textContent);
   var myArray = data.split(";");
   var spacingItem = myArray[1];
   var [mobile, tablet, desktop] = myArray[0].split(",");
-  fetch(url).then((response) => response.text()).then((data2) => {
-    const div = document.createElement("div");
-    div.innerHTML = data2;
-    const recommendationElm = document.querySelector(".jsRecommendations");
-    recommendationElm.parentNode.replaceChild(div.querySelector(".jsRecommendations"), recommendationElm);
-    (0, import_tiny_slider.tns)({
-      container: ".tns-sli",
-      slideBy: "page",
-      autoplay: false,
-      loop: false,
-      mouseDrag: true,
-      nextButton: ".recommendation-slider ~ .next",
-      prevButton: ".recommendation-slider ~ .prev",
-      gutter: spacingItem,
-      responsive: {
-        0: {
-          items: mobile
-        },
-        768: {
-          items: tablet
-        },
-        1024: {
-          items: desktop
+  function updateRecently() {
+    const jsRecently = document.querySelector(".jsRecently");
+    const RECENTLY_LIST_KEY = "recently-list";
+    const getRecentlyList = () => {
+      try {
+        const data2 = window.localStorage.getItem(RECENTLY_LIST_KEY);
+        if (data2) {
+          return JSON.parse(data2);
         }
+        return [];
+      } catch (error) {
+        console.log(error);
+        return [];
       }
-    });
-  });
+    };
+    const updateData = async () => {
+      const sectionId = jsRecently.dataset.sectionId;
+      const productCurrent = jsRecently.dataset.productHandel;
+      const listHandle = getRecentlyList();
+      const list = listHandle.map(async (item) => {
+        if (item === productCurrent) {
+          return null;
+        }
+        const url = `/products/${item}?section_id=${sectionId}`;
+        const res = await fetch(url);
+        const data3 = await res.text();
+        const div = document.createElement("div");
+        div.innerHTML = data3;
+        return div.querySelector('.jsRecently script[type="application/json"]').textContent.trim();
+      });
+      const data2 = await Promise.all(list);
+      const recently = document.querySelector(".recently");
+      data2.forEach((item) => {
+        recently.insertAdjacentHTML("beforeend", item);
+      });
+      (0, import_tiny_slider.tns)({
+        container: ".recently",
+        slideBy: "page",
+        autoplay: false,
+        loop: false,
+        mouseDrag: true,
+        nextButton: ".recently ~ .next",
+        prevButton: ".recently ~ .prev",
+        gutter: spacingItem,
+        responsive: {
+          0: {
+            items: mobile
+          },
+          768: {
+            items: tablet
+          },
+          1024: {
+            items: desktop
+          }
+        }
+      });
+    };
+    updateData();
+  }
+  updateRecently();
 })();
