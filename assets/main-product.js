@@ -79,7 +79,7 @@
         searchParams.set("variant", result.id);
       };
       var callback = callback2;
-      mainSlider.goTo(result.featured_image.position);
+      mainSlider.goTo(result.featured_image.position - 1);
       let url = createUrl(callback2);
       history.pushState(null, null, url);
       let _url = updateUrl(url, sectionId);

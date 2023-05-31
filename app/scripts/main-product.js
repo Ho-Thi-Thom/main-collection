@@ -94,7 +94,7 @@ function onVariantChange(sectionId, event) {
     const value = getValue();
     const result = getVariant(value);
     if (result != undefined) {
-        mainSlider.goTo(result.featured_image.position);
+        mainSlider.goTo(result.featured_image.position - 1);
         function callback(searchParams) {
             searchParams.set('variant', result.id);
         }

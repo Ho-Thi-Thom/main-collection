@@ -1,0 +1,92 @@
+<link
+  rel="stylesheet"
+  href="{{ 'recommendations.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
+
+{% assign items_per_row = section.settings.items_per_row %}
+{% assign items_per_row-array = items_per_row | split: ',' %}
+{% assign items_per_row-mobile = items_per_row-array[0] %}
+{% assign items_per_row-tablet = items_per_row-array[1] | default: items_per_row-mobile %}
+{% assign items_per_row-desktop = items_per_row-array[2] | default: items_per_row-tablet %}
+
+<style>
+  .shopify-section-{{ section.id}}.recommendations-container{
+    --margin: {{ section.settings.margin }};
+    --item-per-row-mobile:{{ items_per_row-mobile }};
+    --item-per-row-tablet:{{ items_per_row-tablet }};
+    --item-per-row-desktop:{{ items_per_row-desktop }};
+    --items_spacing :{{ section.settings.items_spacing }}
+  }
+</style>
+
+<div class="container_wrapper">
+  <div
+    class="shopify-section-{{ section.id}} recommendations-container jsRecommendations"
+    data-url="{{ routes.product_recommendations_url }}?product_id={{product.id}}&limit={{ section.settings.limit }}&intent=related&section_id={{ section.id }}"
+  >
+    {%- if recommendations.performed? -%}
+      {%- if recommendations.products_count > 0 -%}
+        <div class="recommendations-header">{{ section.settings.text_title }}</div>
+        {% render 'list-product', productList: recommendations.products, classSilder: 'recommendation-slider' %}
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Recommendations",
+  "tag": "section",
+  "class": "shopify-section-recommendation",
+  "settings": [
+    {
+      "id": "text_title",
+      "type": "text",
+      "label": "Heding",
+      "default": "Recommendations"
+    },
+    {
+      "type": "text",
+      "id": "margin",
+      "label": "Section Margin",
+      "default": "20px 0"
+    },
+    {
+      "type": "text",
+      "id": "items_per_row",
+      "label": "Max number of item per row",
+      "default": "1,3,5"
+    },
+    {
+      "type": "text",
+      "id": "items_spacing",
+      "label": "Item spacing",
+      "default": "4px",
+      "info": "e.g: 15px"
+    },
+    {
+      "type": "number",
+      "id": "limit",
+      "label": "Limit",
+      "default": 10
+    },
+    {
+      "type": "checkbox",
+      "id": "navs",
+      "label": "Show next/prev arrows",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recommendation"
+    }
+  ]
+}
+{% endschema %}
+<script id="recommendation" type="application/json">
+  {{ items_per_row-mobile| append: ',' | append: item-per-row-tablet | append: ',' |append: item-per-row-desktop |append: ';' |append: section.settings.items_spacing   | json}}
+</script>
+{{ 'recommendations.js' | asset_url | script_tag }}

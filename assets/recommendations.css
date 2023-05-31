@@ -1,0 +1,11 @@
+.recommendations-container {
+  margin: var(--margin);
+}
+
+.recommendations-container .recommendations-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+}
