@@ -38,7 +38,7 @@
   transition: transform .3s ease;
 }
 
-.wrapper .card .card__inner .card__image-wrapper a .image__style:hover {
+.wrapper .card .card__inner .card__image-wrapper a .image__style img:hover {
   transform: scale(1.1);
 }
 

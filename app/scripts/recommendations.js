@@ -38,28 +38,3 @@ fetch(url)
         });
 
     })
-
-// function runSlider() {
-//     tns({
-//         container: ".recommendation-slider",
-//         items: 3,
-//         axis: "horizontal",
-//         autoplay: true,
-//         autoplayTimeout: 1000,
-//         speed: 400,
-//         mouseDrag: true,
-//         loop: false,
-//         nextButton: '.recommendation-slider ~ .next',
-//         prevButton: '.recommendation-slider ~ .prev',
-
-//     });
-// }
-
-// runSlider()
-// document.addEventListener("shopify:section:load", () => {
-//     runSlider()
-// });
-
-
-
-

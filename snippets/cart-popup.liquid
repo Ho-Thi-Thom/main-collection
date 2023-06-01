@@ -1,0 +1,25 @@
+<link
+  rel="stylesheet"
+  href="{{ 'cart-popup.css' | asset_url }}"
+  media="all"
+>
+
+<div class="cart-popup">
+  <div class="popup-layer jsClose"></div>
+  <div class="popup__content">
+    <div class="popup__head">
+      <h2><a href="/cart">Cart</a></h2>
+    </div>
+    <div class="progress__bar-msg"></div>
+    <div class="popup__body">
+      <div class="cart__drawer-items">
+        {% comment %}
+          {% for item in collection %}
+              <div class="cart__item"></div>
+          {% endfor %}
+        {% endcomment %}
+      </div>
+    </div>
+  </div>
+  <div class="popup__footer"></div>
+</div>

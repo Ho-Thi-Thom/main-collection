@@ -211,4 +211,38 @@
       event.preventDefault();
     }
   });
+  var formProduct = document.getElementById("jsFormProduct");
+  if (formProduct.dataset.type == "b") {
+    formProduct.addEventListener("submit", async function(event) {
+      event.preventDefault();
+      const productFormData = Object.fromEntries(new FormData(event.target).entries());
+      let formData = {
+        "items": [productFormData]
+      };
+      fetch(window.Shopify.routes.root + "cart/add.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      }).then(async (data) => {
+        switch (data.status) {
+          case 200:
+            const _data = await data.json();
+            alert("More product success:", _data.items[0].product_title);
+            break;
+          case 404:
+            break;
+          case 422:
+            const res = await data.json();
+            alert(res.description);
+            break;
+          default:
+            break;
+        }
+      }).catch((error) => {
+        console.log("Error:", error);
+      });
+    });
+  }
 })();

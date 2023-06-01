@@ -1,4 +1,3 @@
-
 const selects = document.querySelectorAll('.js-variant-change');
 const radio = document.querySelectorAll('input[type="radio"]');
 const productData = JSON.parse(document.getElementById("product_data").textContent);
@@ -121,6 +120,7 @@ function updateElementAddToCart(element) {
     const btnAdd = document.querySelector(".btn-add");
     btnAdd.parentNode.replaceChild(element, btnAdd)
 }
+
 
 function onVariantChange(sectionId, event) {
     const value = getValue();
@@ -264,6 +264,73 @@ quantityInput.addEventListener('keydown', function (event) {
         event.preventDefault();
     }
 });
+
+
+async function fetchDataCart() {
+    try {
+        const response = await fetch(window.Shopify.routes.root + 'cart.js');
+        const data = await response.json();
+        return data.items;
+    } catch (error) {
+        return error;
+    }
+}
+
+async function getCountByVariant(variantId) {
+    try {
+        const arrCart = await fetchDataCart();
+        let quantity = 0;
+
+        for (let i = 0; i < arrCart.length; i++) {
+            if (arrCart[i].variant_id === variantId) {
+                quantity = arrCart[i].quantity;
+                break;
+            }
+        }
+        return quantity
+    } catch (error) {
+        return error
+    }
+}
+
+
+const formProduct = document.getElementById('jsFormProduct');
+if (formProduct.dataset.type == 'b') {
+    formProduct.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const productFormData = Object.fromEntries(new FormData(event.target).entries());
+        let formData = {
+            "items": [productFormData]
+        }
+        fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(async data => {
+                switch (data.status) {
+                    case 200:
+                        const _data = await data.json();
+                        alert('More product success:', _data.items[0].product_title)
+                        break;
+                    case 404:
+                        break;
+                    case 422:
+                        const res = await data.json();
+                        alert(res.description)
+                        break;
+                    default:
+                        break;
+                }
+            })
+            .catch((error) => {
+                console.log('Error:', error);
+            });
+    });
+}
+
 
 
 

@@ -6,14 +6,22 @@
 
 {%- assign productSelect = productSelect | default: product.selected_or_first_available_variant -%}
 {% assign selectedQuantity = 0 %}
+{% assign variantIdSelect = '' %}
 {% for variant in product.variants %}
   {% if variant.id == productSelect.id %}
+    {% assign variantIdSelect = variant.id %}
     {% assign selectedQuantity = variant.inventory_quantity %}
   {% endif %}
 {% endfor %}
 
 <div class="product-infor-wrapper">
-  {% form 'product', product, class: 'jsProductForm', data-section-id: section.id %}
+  {% form 'product',
+    product,
+    class: 'jsProductForm',
+    data-section-id: section.id,
+    id: 'jsFormProduct',
+    data-type: section.settings.type__submit
+  %}
     <div class="product-infor">
       {% for block in section.blocks %}
         {% case block.type %}
@@ -66,19 +74,28 @@
             {% comment %} ADD TO CART {% endcomment %}
             <p class="product-quantity">
               <span>Total Quantity</span>
-              <span class="variant-inventory">
+              <span
+                class="variant-inventory"
+              >
                 {% if selectedQuantity > 0 %}
-                  Only {{ selectedQuantity }} left in stock!
+                  {% if selectedQuantity < 10 %}
+                    Only {{ selectedQuantity }} left in stock!
+                  {% endif %}
                 {% else %}
                   Sold out
                 {% endif %}
               </span>
             </p>
             <div class="product-cart">
-              {% render 'product-card', selectedQuantity: selectedQuantity %}
+              {% render 'product-cart', selectedQuantity: selectedQuantity %}
             </div>
             {{ form | payment_button }}
-            <input name="id" value="{{product.selected_or_first_available_variant.id}}" style="display: none;">
+            <input
+              name="id"
+              value="{{product.selected_or_first_available_variant.id}}"
+              style="display: none;"
+              class="jsSubmit"
+            >
           {% when 'list_link' %}
             {% comment %} LIST {% endcomment %}
             <div class="list-link">

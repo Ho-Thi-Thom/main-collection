@@ -2,13 +2,15 @@
   <span class="icon remove__qlt">
     {% render 'icon-remove' %}
   </span>
-  <input type="number" value="1" min="1" class="quantity__input">
+  <input type="number" value="1" min="1" class="quantity__input" name="quantity">
   <span class="icon add__qlt">
     {% render 'icon-add' %}
   </span>
 </div>
 <div class="add-to-cart">
   <button
+    type="submit"
+    name="add"
     class="btn-add"
     {% if selectedQuantity == 0 %}
       disabled
