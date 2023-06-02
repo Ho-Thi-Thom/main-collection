@@ -28,7 +28,8 @@ const recentlyTrigger = (handle) => {
             data.splice(index, 1);
         }
         data.unshift(handle);
-        window.localStorage.setItem(RECENTLY_LIST_KEY, JSON.stringify(data));
+        let newData = data.length > 11 ? data.slice(0, 10) : data;
+        window.localStorage.setItem(RECENTLY_LIST_KEY, JSON.stringify(newData));
     };
 
 

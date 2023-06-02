@@ -27,9 +27,10 @@
     data-section-id="{{ section.id }}"
     data-product-handel="{{ product.handle }}"
   >
-    <script type="application/json">
+    <div class="hidden">
       {% render 'product-item', product: product %}
-    </script>
+    </div>
+
     <div class="recently-header">{{ section.settings.text_title }}</div>
     <div class="wrapper">
       <div class="recently"></div>

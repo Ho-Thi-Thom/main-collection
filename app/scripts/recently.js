@@ -22,10 +22,17 @@ function updateRecently() {
         }
     }
 
+    function removeItemRecently(listHandle, listHandleInvalid) {
+        const RECENTLY_LIST_KEY = "recently-list";
+        const filteredList = listHandle.filter(item => !listHandleInvalid.includes(item));
+        window.localStorage.setItem(RECENTLY_LIST_KEY, JSON.stringify(filteredList));
+    }
+
     const updateData = async () => {
         const sectionId = jsRecently.dataset.sectionId
         const productCurrent = jsRecently.dataset.productHandel
         const listHandle = getRecentlyList();
+        const listHandleInvalid = []
         const list = listHandle.map(async item => {
             if (item === productCurrent) {
                 return null
@@ -35,12 +42,23 @@ function updateRecently() {
             const data = await res.text();
             const div = document.createElement("div")
             div.innerHTML = data
-            return div.querySelector('.jsRecently script[type="application/json"]').textContent.trim()
+            const elementHidden = div.querySelector('.jsRecently .hidden .card')
+            const hrefValue = elementHidden ? (elementHidden.querySelector('a') ? elementHidden.querySelector('a').getAttribute('href') : null) : null;
+            if (!hrefValue) {
+                listHandleInvalid.push(item)
+                return null
+            }
+            return elementHidden
         })
         const data = await Promise.all(list);
+        if (listHandleInvalid.length > 0) {
+            removeItemRecently(listHandle, listHandleInvalid)
+        }
         const recently = document.querySelector('.recently')
         data.forEach(item => {
-            recently.insertAdjacentHTML("beforeend", item);
+            if (item) {
+                recently.appendChild(item);
+            }
         })
 
         tns({
@@ -66,8 +84,6 @@ function updateRecently() {
         });
     }
     updateData()
-
-
 }
 
 updateRecently()

@@ -1,6 +1,10 @@
 .recently-container {
     margin: var(--margin);
 
+    .hidden {
+        display: none;
+    }
+
     .recently-header {
         display: flex;
         justify-content: center;
