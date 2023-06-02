@@ -1,3 +1,7 @@
+.product-section-wrapper {
+  position: relative;
+}
+
 .product-section-wrapper .product-layout {
   padding-inline: 20px;
 }

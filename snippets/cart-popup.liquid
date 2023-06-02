@@ -3,23 +3,46 @@
   href="{{ 'cart-popup.css' | asset_url }}"
   media="all"
 >
+<link
+  rel="stylesheet"
+  href="{{ 'cart-item.css' | asset_url }}"
+  media="all"
+>
 
-<div class="cart-popup">
-  <div class="popup-layer jsClose"></div>
-  <div class="popup__content">
+<div class="cart-popup jsCartPopup">
+  <div class="popup-layer">
     <div class="popup__head">
-      <h2><a href="/cart">Cart</a></h2>
+      <a href="/cart">Cart</a>
     </div>
+    <div class="header-close">{% render 'icon-close' %}</div>
+  </div>
+  <div class="popup__content">
     <div class="progress__bar-msg"></div>
     <div class="popup__body">
       <div class="cart__drawer-items">
-        {% comment %}
-          {% for item in collection %}
-              <div class="cart__item"></div>
-          {% endfor %}
-        {% endcomment %}
+        {% assign index = 0 %}
+        {% for item in cart.items %}
+          {% render 'cart-item', item: item, index: index %}
+          {% assign index = index | plus: 1 %}
+        {% endfor %}
       </div>
     </div>
   </div>
-  <div class="popup__footer"></div>
+  <div class="popup__footer">
+    <form action="/cart" id="cartFormcart-section">
+      <div class="cart__drawer-subtotal">
+        <div class="cart__drawer-subtotal--label">Subtotal</div>
+        <div class="cart__drawer-subtotal--price">
+          <span class="price-compare">$157.83</span>
+          <span class="price">$151.57</span>
+        </div>
+      </div>
+      <div class="cart__drawer-taxes">Tax included and shipping calculated at checkout</div>
+      <div class="cart__drawer-button-group">
+        <a href="/cart" class="btn-go-cart">View cart</a>
+        <button class="btn-checkout" type="submit">Check out</button>
+      </div>
+    </form>
+  </div>
 </div>
+{{ 'cart-item.js' | asset_url | script_tag }}

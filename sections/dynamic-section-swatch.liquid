@@ -100,36 +100,3 @@
   ]
 }
 {% endschema %}
-
-{% comment %}
-  let isActive = false;
-
-  function close() {
-      const closeTableColors = document.querySelector('.close-button');
-      closeTableColors.addEventListener('click', () => {
-          popupToggle(false);
-      });
-  }
-
-  popupToggle(document.querySelector('.pop-up').classList.contains('active'));
-
-  function popupToggle(boolean) {
-      const popUp = document.querySelector('.pop-up');
-      popUp.classList.toggle('active', boolean);
-      isActive = boolean;
-  }
-
-  document.addEventListener("shopify:block:select", (e) => {
-      if (e.target.closest('.shopify-section-swatch-color') && !isActive) {
-          popupToggle(true);
-      }
-  });
-
-  document.addEventListener("shopify:section:select", (e) => {
-      if (e.target.classList.contains('shopify-section-swatch-color') && !isActive) {
-          popupToggle(true);
-      } else {
-          popupToggle(false);
-      }
-  });
-{% endcomment %}

@@ -122,6 +122,10 @@ function updateElementAddToCart(element) {
     btnAdd.parentNode.replaceChild(element, btnAdd)
 }
 
+function updateElementInput(element) {
+    const input = document.querySelector(".jsSubmit")
+    input.value = element.value
+}
 
 function onVariantChange(sectionId, event) {
     const value = getValue();
@@ -143,6 +147,7 @@ function onVariantChange(sectionId, event) {
                 updateElementVariantInventory(div.querySelector(".variant-inventory"))
                 updateElementAddToCart(div.querySelector(".btn-add"))
                 updateElementSKU(div.querySelector(".product-sku"))
+                updateElementInput(div.querySelector(".jsSubmit"))
             })
     } else {
         console.log(value)
@@ -313,14 +318,15 @@ if (formProduct.dataset.type == 'b') {
             .then(async data => {
                 switch (data.status) {
                     case 200:
-                        const _data = await data.json();
-                        alert('More product success:', _data.items[0].product_title)
+                        // console.log("200", productFormData)
+                        const jsCartPopup = document.querySelector(".jsCartPopup")
+                        jsCartPopup.classList.add('active');
                         break;
                     case 404:
                         break;
                     case 422:
-                        const res = await data.json();
-                        alert(res.description)
+                        const _data = await data.json();
+                        console.log("422", _data.description)
                         break;
                     default:
                         break;

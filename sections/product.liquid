@@ -30,6 +30,7 @@
       %}
     </div>
   </div>
+  {% render 'cart-popup' %}
 </div>
 {% schema %}
 {
@@ -159,6 +160,7 @@
   {{ product.options_with_values | json}}
 </script>
 {{ 'main-product.js' | asset_url | script_tag }}
+{{ 'cart-popup.js' | asset_url | script_tag }}
 <script>
   productTrigger({{product.id}})
   recentlyTrigger("{{ product.handle}}")
