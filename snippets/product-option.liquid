@@ -38,7 +38,7 @@
           <input
             type="radio"
             name="{{ option.name | handleize }}"
-            class="option-button"
+            class="option-button js-radio"
             value="{{ value | escape }}"
             {%- if option.selected_value == value -%}
               checked="checked"
@@ -63,7 +63,7 @@
           >
             <input
               type="radio"
-              class="option-radio"
+              class="option-radio js-radio"
               name="{{ option.name | handleize }}"
               value="{{ value | escape }}"
               data-value="{{ value | escape }}"

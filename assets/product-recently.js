@@ -53,7 +53,7 @@
       function checkStorageValue(value) {
         return ["true", "false"].indexOf(value) >= 0 ? JSON.parse(value) : value;
       }
-      function setLocalStorage(storage, key, value, access) {
+      function setLocalStorage2(storage, key, value, access) {
         if (access) {
           try {
             storage.setItem(key, value);
@@ -344,11 +344,11 @@
               }
             }
           },
-          emit: function(eventName, data2) {
-            data2.type = eventName;
+          emit: function(eventName, data) {
+            data.type = eventName;
             if (this.topics[eventName]) {
               this.topics[eventName].forEach(function(fn) {
-                fn(data2, eventName);
+                fn(data, eventName);
               });
             }
           }
@@ -474,7 +474,7 @@
             localStorage["tnsApp"] = browserInfo;
           }
         }
-        var CALC = tnsStorage["tC"] ? checkStorageValue(tnsStorage["tC"]) : setLocalStorage(tnsStorage, "tC", calc(), localStorageAccess), PERCENTAGELAYOUT = tnsStorage["tPL"] ? checkStorageValue(tnsStorage["tPL"]) : setLocalStorage(tnsStorage, "tPL", percentageLayout(), localStorageAccess), CSSMQ = tnsStorage["tMQ"] ? checkStorageValue(tnsStorage["tMQ"]) : setLocalStorage(tnsStorage, "tMQ", mediaquerySupport(), localStorageAccess), TRANSFORM = tnsStorage["tTf"] ? checkStorageValue(tnsStorage["tTf"]) : setLocalStorage(tnsStorage, "tTf", whichProperty("transform"), localStorageAccess), HAS3DTRANSFORMS = tnsStorage["t3D"] ? checkStorageValue(tnsStorage["t3D"]) : setLocalStorage(tnsStorage, "t3D", has3DTransforms(TRANSFORM), localStorageAccess), TRANSITIONDURATION = tnsStorage["tTDu"] ? checkStorageValue(tnsStorage["tTDu"]) : setLocalStorage(tnsStorage, "tTDu", whichProperty("transitionDuration"), localStorageAccess), TRANSITIONDELAY = tnsStorage["tTDe"] ? checkStorageValue(tnsStorage["tTDe"]) : setLocalStorage(tnsStorage, "tTDe", whichProperty("transitionDelay"), localStorageAccess), ANIMATIONDURATION = tnsStorage["tADu"] ? checkStorageValue(tnsStorage["tADu"]) : setLocalStorage(tnsStorage, "tADu", whichProperty("animationDuration"), localStorageAccess), ANIMATIONDELAY = tnsStorage["tADe"] ? checkStorageValue(tnsStorage["tADe"]) : setLocalStorage(tnsStorage, "tADe", whichProperty("animationDelay"), localStorageAccess), TRANSITIONEND = tnsStorage["tTE"] ? checkStorageValue(tnsStorage["tTE"]) : setLocalStorage(tnsStorage, "tTE", getEndProperty(TRANSITIONDURATION, "Transition"), localStorageAccess), ANIMATIONEND = tnsStorage["tAE"] ? checkStorageValue(tnsStorage["tAE"]) : setLocalStorage(tnsStorage, "tAE", getEndProperty(ANIMATIONDURATION, "Animation"), localStorageAccess);
+        var CALC = tnsStorage["tC"] ? checkStorageValue(tnsStorage["tC"]) : setLocalStorage2(tnsStorage, "tC", calc(), localStorageAccess), PERCENTAGELAYOUT = tnsStorage["tPL"] ? checkStorageValue(tnsStorage["tPL"]) : setLocalStorage2(tnsStorage, "tPL", percentageLayout(), localStorageAccess), CSSMQ = tnsStorage["tMQ"] ? checkStorageValue(tnsStorage["tMQ"]) : setLocalStorage2(tnsStorage, "tMQ", mediaquerySupport(), localStorageAccess), TRANSFORM = tnsStorage["tTf"] ? checkStorageValue(tnsStorage["tTf"]) : setLocalStorage2(tnsStorage, "tTf", whichProperty("transform"), localStorageAccess), HAS3DTRANSFORMS = tnsStorage["t3D"] ? checkStorageValue(tnsStorage["t3D"]) : setLocalStorage2(tnsStorage, "t3D", has3DTransforms(TRANSFORM), localStorageAccess), TRANSITIONDURATION = tnsStorage["tTDu"] ? checkStorageValue(tnsStorage["tTDu"]) : setLocalStorage2(tnsStorage, "tTDu", whichProperty("transitionDuration"), localStorageAccess), TRANSITIONDELAY = tnsStorage["tTDe"] ? checkStorageValue(tnsStorage["tTDe"]) : setLocalStorage2(tnsStorage, "tTDe", whichProperty("transitionDelay"), localStorageAccess), ANIMATIONDURATION = tnsStorage["tADu"] ? checkStorageValue(tnsStorage["tADu"]) : setLocalStorage2(tnsStorage, "tADu", whichProperty("animationDuration"), localStorageAccess), ANIMATIONDELAY = tnsStorage["tADe"] ? checkStorageValue(tnsStorage["tADe"]) : setLocalStorage2(tnsStorage, "tADe", whichProperty("animationDelay"), localStorageAccess), TRANSITIONEND = tnsStorage["tTE"] ? checkStorageValue(tnsStorage["tTE"]) : setLocalStorage2(tnsStorage, "tTE", getEndProperty(TRANSITIONDURATION, "Transition"), localStorageAccess), ANIMATIONEND = tnsStorage["tAE"] ? checkStorageValue(tnsStorage["tAE"]) : setLocalStorage2(tnsStorage, "tAE", getEndProperty(ANIMATIONDURATION, "Animation"), localStorageAccess);
         var supportConsoleWarn = win2.console && typeof win2.console.warn === "function", tnsList = ["container", "controlsContainer", "prevButton", "nextButton", "navContainer", "autoplayButton"], optionsElements = {};
         tnsList.forEach(function(item) {
           if (typeof options[item] === "string") {
@@ -2610,87 +2610,132 @@
     }
   });
 
-  // app/scripts/recently.js
+  // app/scripts/product-recently.js
   var import_tiny_slider = __toModule(require_tiny_slider());
-  var data = JSON.parse(document.getElementById("recently").textContent);
-  var myArray = data.split(";");
-  var spacingItem = myArray[1];
-  var [mobile, tablet, desktop] = myArray[0].split(",");
-  function updateRecently() {
-    const jsRecently = document.querySelector(".jsRecently");
-    const RECENTLY_LIST_KEY = "recently-list";
-    const getRecentlyList = () => {
-      try {
-        const data2 = window.localStorage.getItem(RECENTLY_LIST_KEY);
-        if (data2) {
-          return JSON.parse(data2);
-        }
-        return [];
-      } catch (error) {
-        console.log(error);
-        return [];
+
+  // app/scripts/constants.js
+  var RECENTLY_LIST_KEY = "recently-list";
+
+  // app/scripts/utils.js
+  function readLocalStorage(key, defaultValue = []) {
+    try {
+      const data = window.localStorage.getItem(key);
+      if (data) {
+        return JSON.parse(data);
       }
-    };
-    function removeItemRecently(listHandle, listHandleInvalid) {
-      const RECENTLY_LIST_KEY2 = "recently-list";
-      const filteredList = listHandle.filter((item) => !listHandleInvalid.includes(item));
-      window.localStorage.setItem(RECENTLY_LIST_KEY2, JSON.stringify(filteredList));
+      return defaultValue;
+    } catch (error) {
+      console.log(error);
+      return defaultValue;
     }
-    const updateData = async () => {
-      const sectionId = jsRecently.dataset.sectionId;
-      const productCurrent = jsRecently.dataset.productHandel;
-      const listHandle = getRecentlyList();
-      const listHandleInvalid = [];
-      const list = listHandle.map(async (item) => {
-        if (item === productCurrent) {
-          return null;
-        }
-        const url = `/products/${item}?section_id=${sectionId}`;
-        const res = await fetch(url);
-        const data3 = await res.text();
-        const div = document.createElement("div");
-        div.innerHTML = data3;
-        const elementHidden = div.querySelector(".jsRecently .hidden .card");
-        const hrefValue = elementHidden ? elementHidden.querySelector("a") ? elementHidden.querySelector("a").getAttribute("href") : null : null;
-        if (!hrefValue) {
-          listHandleInvalid.push(item);
-          return null;
-        }
-        return elementHidden;
-      });
-      const data2 = await Promise.all(list);
-      if (listHandleInvalid.length > 0) {
-        removeItemRecently(listHandle, listHandleInvalid);
-      }
-      const recently = document.querySelector(".recently");
-      data2.forEach((item) => {
-        if (item) {
-          recently.appendChild(item);
-        }
-      });
-      (0, import_tiny_slider.tns)({
-        container: ".recently",
-        slideBy: "page",
-        autoplay: false,
-        loop: false,
-        mouseDrag: true,
-        nextButton: ".recently ~ .next",
-        prevButton: ".recently ~ .prev",
-        gutter: spacingItem,
-        responsive: {
-          0: {
-            items: mobile
-          },
-          768: {
-            items: tablet
-          },
-          1024: {
-            items: desktop
-          }
-        }
-      });
-    };
-    updateData();
   }
-  updateRecently();
+  function setLocalStorage(key, data) {
+    try {
+      window.localStorage.setItem(key, JSON.stringify(data));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  function getScript(selector, defaultValue) {
+    try {
+      return JSON.parse(selector.textContent);
+    } catch (error) {
+      console.log(error);
+      return defaultValue;
+    }
+  }
+  function tnsSplit(text = "", splitCharacter = ";") {
+    const myArray = text.split(splitCharacter);
+    const spacingItem = myArray[1] ?? 0;
+    const screen = myArray[0].split(",");
+    return {
+      spacingItem,
+      screen
+    };
+  }
+  function shopifyReloadSection(callback, isShopifySectionReload = true) {
+    if (callback) {
+      callback();
+      if (isShopifySectionReload) {
+        document.addEventListener("shopify:section:load", () => {
+          callback();
+        });
+      }
+    }
+  }
+
+  // app/scripts/product-recently-service.js
+  function getRecentlyList() {
+    return readLocalStorage(RECENTLY_LIST_KEY, []);
+  }
+
+  // app/scripts/product-recently.js
+  shopifyReloadSection(init);
+  function init() {
+    const jsRecently = document.querySelector(".jsRecently");
+    const data = getScript(document.getElementById("recently"));
+    const { spacingItem, screen: [mobile = 2, tablet = 4, desktop = 5] } = tnsSplit(data);
+    updateRecently();
+    function updateRecently() {
+      function removeItemRecently(listHandle, listHandleInvalid) {
+        const filteredList = listHandle.filter((item) => !listHandleInvalid.includes(item));
+        setLocalStorage(RECENTLY_LIST_KEY, filteredList);
+      }
+      const updateData = async () => {
+        const recently = document.querySelector(".recently");
+        const sectionId = jsRecently.dataset.sectionId;
+        const productCurrent = jsRecently.dataset.productHandel;
+        const listHandle = getRecentlyList();
+        const listHandleInvalid = [];
+        const listPromises = listHandle.filter((item) => item !== productCurrent).map((item) => {
+          return fetch(`/products/${item}?section_id=${sectionId}`);
+        });
+        const promises = await Promise.all(listPromises);
+        const data2 = [];
+        for (const res of promises) {
+          const html = await res.text();
+          data2.push(html);
+        }
+        if (data2.length === 0) {
+          return;
+        }
+        data2.forEach((html) => {
+          const div = document.createElement("div");
+          div.innerHTML = html;
+          const elementHidden = div.querySelector(".jsRecently .hidden .card");
+          const hrefValue = elementHidden?.querySelector("a")?.getAttribute("href") ?? null;
+          if (!hrefValue) {
+            listHandleInvalid.push(html);
+          } else {
+            recently?.appendChild(elementHidden);
+          }
+        });
+        if (listHandleInvalid.length > 0) {
+          removeItemRecently(listHandle, listHandleInvalid);
+        }
+        (0, import_tiny_slider.tns)({
+          container: ".recently",
+          slideBy: "page",
+          autoplay: false,
+          loop: false,
+          mouseDrag: true,
+          nextButton: ".recently ~ .next",
+          prevButton: ".recently ~ .prev",
+          gutter: spacingItem,
+          responsive: {
+            0: {
+              items: mobile
+            },
+            768: {
+              items: tablet
+            },
+            1024: {
+              items: desktop
+            }
+          }
+        });
+      };
+      updateData();
+    }
+  }
 })();

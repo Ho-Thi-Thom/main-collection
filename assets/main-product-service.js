@@ -344,23 +344,23 @@
               }
             }
           },
-          emit: function(eventName, data2) {
-            data2.type = eventName;
+          emit: function(eventName, data) {
+            data.type = eventName;
             if (this.topics[eventName]) {
               this.topics[eventName].forEach(function(fn) {
-                fn(data2, eventName);
+                fn(data, eventName);
               });
             }
           }
         };
       }
-      function jsTransform(element2, attr, prefix, postfix, to, duration, callback) {
-        var tick = Math.min(duration, 10), unit = to.indexOf("%") >= 0 ? "%" : "px", to = to.replace(unit, ""), from = Number(element2.style[attr].replace(prefix, "").replace(postfix, "").replace(unit, "")), positionTick = (to - from) / duration * tick;
+      function jsTransform(element, attr, prefix, postfix, to, duration, callback) {
+        var tick = Math.min(duration, 10), unit = to.indexOf("%") >= 0 ? "%" : "px", to = to.replace(unit, ""), from = Number(element.style[attr].replace(prefix, "").replace(postfix, "").replace(unit, "")), positionTick = (to - from) / duration * tick;
         setTimeout(moveElement, tick);
         function moveElement() {
           duration -= tick;
           from += positionTick;
-          element2.style[attr] = prefix + from + unit + postfix;
+          element.style[attr] = prefix + from + unit + postfix;
           if (duration > 0) {
             setTimeout(moveElement, tick);
           } else {
@@ -2610,39 +2610,144 @@
     }
   });
 
-  // app/scripts/recommendations.js
+  // app/scripts/main-product-service.js
   var import_tiny_slider = __toModule(require_tiny_slider());
-  var element = document.querySelector(".jsRecommendations");
-  var url = element.dataset.url;
-  var data = JSON.parse(document.getElementById("recommendation").textContent);
-  var myArray = data.split(";");
-  var spacingItem = myArray[1];
-  var [mobile, tablet, desktop] = myArray[0].split(",");
-  fetch(url).then((response) => response.text()).then((data2) => {
-    const div = document.createElement("div");
-    div.innerHTML = data2;
-    const recommendationElm = document.querySelector(".jsRecommendations");
-    recommendationElm.parentNode.replaceChild(div.querySelector(".jsRecommendations"), recommendationElm);
-    (0, import_tiny_slider.tns)({
-      container: ".tns-sli",
-      slideBy: "page",
+
+  // app/scripts/utils.js
+  function uppercaseFirstLetter(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  // app/scripts/main-product-service.js
+  function runSlider() {
+    const slider = (0, import_tiny_slider.tns)({
+      container: ".thumbnail-slider",
+      navContainer: ".customize-thumbnails",
+      items: 1,
+      axis: "horizontal",
       autoplay: false,
+      autoplayTimeout: 1e3,
+      speed: 400,
+      mouseDrag: true,
+      loop: false,
+      nextButton: ".thumbnail-slider ~ .next",
+      prevButton: ".thumbnail-slider ~ .prev"
+    });
+    const sliderCustom = (0, import_tiny_slider.tns)({
+      container: ".customize-thumbnails",
+      items: 4,
+      axis: "vertical",
+      autoplay: false,
+      autoplayTimeout: 1e3,
+      speed: 400,
       loop: false,
       mouseDrag: true,
-      nextButton: ".recommendation-slider ~ .next",
-      prevButton: ".recommendation-slider ~ .prev",
-      gutter: spacingItem,
-      responsive: {
-        0: {
-          items: mobile
-        },
-        768: {
-          items: tablet
-        },
-        1024: {
-          items: desktop
-        }
-      }
+      nextButton: ".customize-thumbnails ~ .next",
+      prevButton: ".customize-thumbnails ~ .prev"
     });
-  });
+    slider.events.on("indexChanged", function(info) {
+      sliderCustom.goTo(info.index);
+    });
+    return slider;
+  }
+  function onVariantChange(getUrl) {
+    const url = getUrl();
+    if (url) {
+      fetch(url).then((res) => res.text()).then((data) => {
+        const div = document.createElement("div");
+        div.innerHTML = data;
+        updateElementPrice(div.querySelector(".compare-price"), div.querySelector(".price"));
+        updateElementVariantInventory(div.querySelector(".variant-inventory"));
+        updateElementAddToCart(div.querySelector(".btn-add"));
+        updateElementSKU(div.querySelector(".product-sku"));
+        updateElementInput(div.querySelector(".jsSubmit"));
+      });
+    }
+  }
+  function updateElementPrice(divCompare, divPrice) {
+    const cpPrice = document.querySelector(".compare-price");
+    const price = document.querySelector(".price");
+    cpPrice.parentNode.replaceChild(divCompare, cpPrice);
+    price.parentNode.replaceChild(divPrice, price);
+  }
+  function updateElementVariantInventory(element) {
+    const variantInventory = document.querySelector(".variant-inventory");
+    variantInventory.parentNode.replaceChild(element, variantInventory);
+  }
+  function updateElementSKU(element) {
+    const sku = document.querySelector(".product-sku");
+    sku.parentNode.replaceChild(element, sku);
+  }
+  function updateElementAddToCart(element) {
+    const btnAdd = document.querySelector(".btn-add");
+    btnAdd.parentNode.replaceChild(element, btnAdd);
+  }
+  function updateElementInput(element) {
+    const input = document.querySelector(".jsSubmit");
+    input.value = element.value;
+  }
+  function updateCssOption(titles, productOptions, name) {
+    name = uppercaseFirstLetter(name);
+    const filteredPositions = productOptions.filter((item) => item.name !== name).map((item) => item.position);
+    const element = productOptions.find((item) => item.name === name);
+    const input = element ? element.position : null;
+    ;
+    const uniqueElements = [...new Set(titles)];
+    const result = uniqueElements.reduce((acc, item) => {
+      const parts = item.split(" / ");
+      const filteredParts = parts.filter((_, index) => index !== input - 1);
+      filteredParts.forEach((part, index) => {
+        if (!acc[index]) {
+          acc[index] = [];
+        }
+        if (!acc[index].includes(part)) {
+          acc[index].push(part);
+        }
+      });
+      return acc;
+    }, []);
+    const mergedArray = filteredPositions.map((element2, index) => [element2, result[index]]);
+    const checkPositions = document.querySelectorAll(".check-position");
+    mergedArray.forEach((item) => {
+      checkPositions.forEach((element2) => {
+        if (item[0] == element2.dataset.position) {
+          const inputs = element2.querySelectorAll('input[type="radio"]');
+          const options = element2.querySelectorAll("option");
+          Array.from(inputs).concat(Array.from(options)).forEach((input2) => {
+            const value = input2.value;
+            if (!item[1].includes(value)) {
+              input2.setAttribute("data-disabled", "true");
+            } else {
+              input2.setAttribute("data-disabled", "false");
+            }
+          });
+        }
+      });
+    });
+  }
+  function getValue(selects, radios) {
+    const inputsData = [];
+    if (selects) {
+      selects.forEach((select) => {
+        const options = select.querySelectorAll("option");
+        options.forEach((option) => {
+          const value = option.value;
+          const checked = option.selected;
+          if (checked) {
+            inputsData.push(value);
+          }
+        });
+      });
+    }
+    if (radios) {
+      radios.forEach((input) => {
+        const value = input.value;
+        const checked = input.checked;
+        if (checked) {
+          inputsData.push(value);
+        }
+      });
+    }
+    return inputsData;
+  }
 })();

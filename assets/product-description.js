@@ -1,5 +1,5 @@
 (() => {
-  // app/scripts/main-description.js
+  // app/scripts/product-description.js
   var headerList = document.querySelectorAll(".jsNavTab");
   var bodyList = document.querySelectorAll(".jsBodyTab");
   function createActive(header, bodyList2, index) {

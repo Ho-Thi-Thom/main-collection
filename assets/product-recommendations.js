@@ -2610,41 +2610,71 @@
     }
   });
 
-  // app/scripts/slider.js
+  // app/scripts/product-recommendations.js
   var import_tiny_slider = __toModule(require_tiny_slider());
-  function runSlider() {
-    var slider = (0, import_tiny_slider.tns)({
-      container: ".thumbnail-slider",
-      navContainer: ".customize-thumbnails",
-      items: 1,
-      axis: "horizontal",
-      autoplay: false,
-      autoplayTimeout: 1e3,
-      speed: 400,
-      mouseDrag: true,
-      loop: false,
-      nextButton: ".thumbnail-slider ~ .next",
-      prevButton: ".thumbnail-slider ~ .prev"
-    });
-    var sliderCustom = (0, import_tiny_slider.tns)({
-      container: ".customize-thumbnails",
-      items: 4,
-      axis: "vertical",
-      autoplay: false,
-      autoplayTimeout: 1e3,
-      speed: 400,
-      loop: false,
-      mouseDrag: true,
-      nextButton: ".customize-thumbnails ~ .next",
-      prevButton: ".customize-thumbnails ~ .prev"
-    });
-    slider.events.on("indexChanged", function(info) {
-      sliderCustom.goTo(info.index);
-    });
-    window.mainSlider = slider;
+
+  // app/scripts/utils.js
+  function getScript(selector, defaultValue) {
+    try {
+      return JSON.parse(selector.textContent);
+    } catch (error) {
+      console.log(error);
+      return defaultValue;
+    }
   }
-  runSlider();
-  document.addEventListener("shopify:section:load", () => {
-    runSlider();
-  });
+  function tnsSplit(text = "", splitCharacter = ";") {
+    const myArray = text.split(splitCharacter);
+    const spacingItem = myArray[1] ?? 0;
+    const screen = myArray[0].split(",");
+    return {
+      spacingItem,
+      screen
+    };
+  }
+  function shopifyReloadSection(callback, isShopifySectionReload = true) {
+    if (callback) {
+      callback();
+      if (isShopifySectionReload) {
+        document.addEventListener("shopify:section:load", () => {
+          callback();
+        });
+      }
+    }
+  }
+
+  // app/scripts/product-recommendations.js
+  shopifyReloadSection(init);
+  function init() {
+    const element = document.querySelector(".jsRecommendations");
+    const data = getScript(document.getElementById("recommendation"), "");
+    const { spacingItem, screen: [mobile = 2, tablet = 4, desktop = 5] } = tnsSplit(data);
+    const url = element.dataset.url;
+    fetch(url).then((response) => response.text()).then((data2) => {
+      const div = document.createElement("div");
+      div.innerHTML = data2;
+      const recommendationElm = document.querySelector(".jsRecommendations");
+      recommendationElm.parentNode.replaceChild(div.querySelector(".jsRecommendations"), recommendationElm);
+      (0, import_tiny_slider.tns)({
+        container: ".tns-sli",
+        slideBy: "page",
+        autoplay: false,
+        loop: false,
+        mouseDrag: true,
+        nextButton: ".recommendation-slider ~ .next",
+        prevButton: ".recommendation-slider ~ .prev",
+        gutter: spacingItem,
+        responsive: {
+          0: {
+            items: mobile
+          },
+          768: {
+            items: tablet
+          },
+          1024: {
+            items: desktop
+          }
+        }
+      });
+    });
+  }
 })();

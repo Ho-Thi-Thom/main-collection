@@ -1,6 +1,6 @@
 <link
   rel="stylesheet"
-  href="{{ 'recommendations.css' | asset_url }}"
+  href="{{ 'recently.css' | asset_url }}"
   media="print"
   onload="this.media='all'"
 >
@@ -12,7 +12,7 @@
 {% assign items_per_row-desktop = items_per_row-array[2] | default: items_per_row-array[1] %}
 
 <style>
-  .shopify-section-{{ section.id}}.recommendations-container{
+  .shopify-section-{{ section.id}}.recently-container{
     --margin: {{ section.settings.margin }};
     --item-per-row-mobile:{{ items_per_row-mobile }};
     --item-per-row-tablet:{{ items_per_row-tablet }};
@@ -23,29 +23,38 @@
 
 <div class="container_wrapper">
   <div
-    class="shopify-section-{{ section.id}} recommendations-container jsRecommendations"
-    data-url="{{ routes.product_recommendations_url }}?product_id={{product.id}}&limit={{ section.settings.limit }}&intent=related&section_id={{ section.id }}"
+    class="shopify-section-{{ section.id}} recently-container jsRecently"
+    data-section-id="{{ section.id }}"
+    data-product-handel="{{ product.handle }}"
   >
-    {%- if recommendations.performed? -%}
-      {%- if recommendations.products_count > 0 -%}
-        <div class="recommendations-header">{{ section.settings.text_title }}</div>
-        {% render 'list-product', productList: recommendations.products, classSilder: 'recommendation-slider' %}
-      {%- endif -%}
-    {%- endif -%}
+    <div class="hidden">
+      {% render 'product-item', product: product %}
+    </div>
+
+    <div class="recently-header">{{ section.settings.text_title }}</div>
+    <div class="wrapper">
+      <div class="recently"></div>
+      <div class="prev">
+        {% render 'expand' %}
+      </div>
+      <div class="next">
+        {% render 'expand' %}
+      </div>
+    </div>
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "Recommendations",
+  "name": "Recently",
   "tag": "section",
-  "class": "shopify-section-recommendation",
+  "class": "shopify-section-recently",
   "settings": [
     {
       "id": "text_title",
       "type": "text",
       "label": "Heding",
-      "default": "Recommendations"
+      "default": "Recently viewed"
     },
     {
       "type": "text",
@@ -75,12 +84,12 @@
   ],
   "presets": [
     {
-      "name": "Recommendation"
+      "name": "Recently"
     }
   ]
 }
 {% endschema %}
-<script id="recommendation" type="application/json">
+<script id="recently" type="application/json">
   {{ items_per_row-mobile| append: ',' | append: items_per_row-tablet | append: ',' |append: items_per_row-desktop |append: ';' |append: section.settings.items_spacing   | json}}
 </script>
-{{ 'recommendations.js' | asset_url | script_tag }}
+{{ 'product-recently.js' | asset_url | script_tag }}

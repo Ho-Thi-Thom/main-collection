@@ -1,346 +1,144 @@
-const selects = document.querySelectorAll('.js-variant-change');
-const radio = document.querySelectorAll('input[type="radio"]');
-const productData = JSON.parse(document.getElementById("product_data").textContent);
-const productOptions = JSON.parse(document.getElementById("product_options").textContent);
-const variants = productData.variants
-const wishList = document.querySelector('.wish-list')
+import { getValue, onVariantChange, runSlider, updateCssOption } from "./main-product-service";
+import { pushRecently } from "./product-recently-service";
+import { createUrl, getScript, shopifyReloadSection, updateUrl } from "./utils";
+import { isWishItem, toggleWishItem } from "./wishlist-service";
 
-const recentlyTrigger = (handle) => {
-    const RECENTLY_LIST_KEY = "recently-list";
 
-    const getRecentlyList = () => {
-        try {
-            const data = window.localStorage.getItem(RECENTLY_LIST_KEY);
-            if (data) {
-                return JSON.parse(data);
-            }
-            return [];
-        } catch (error) {
-            console.log(error);
-            return [];
+shopifyReloadSection(init)
+
+function init() {
+    const wishList = document.querySelector('.wish-list')
+    const formEl = document.querySelector('.jsProductForm');
+    const productData = getScript(document.getElementById("product_data"), []);
+    const productOptions = getScript(document.getElementById("product_options"), []);
+    const productHandle = getScript(document.getElementById("product_handle"), "")
+    const productId = getScript(document.getElementById("product_id"), "")
+    const variants = productData.variants
+
+    const removeBtn = document.querySelector('.remove__qlt');
+    const addBtn = document.querySelector('.add__qlt');
+    const quantityInput = document.querySelector('.quantity__input');
+    const formProduct = document.getElementById('jsFormProduct');
+
+    const slider = runSlider()
+
+    formEl.addEventListener('change', function (event) {
+        const titles = variants.filter(variant => Object.values(variant).includes(event.target.value)).map(product => product.title)
+        onVariantChange(() => getUrl(formEl.dataset.sectionId));
+        updateCssOption(titles, productOptions, event.target.name);
+    })
+    //  change quantity
+    removeBtn.addEventListener('click', function () {
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
         }
-    };
+    });
 
-    const setRecentlyList = () => {
-        const data = getRecentlyList();
-        const index = data.findIndex(item => item === handle);
-        if (index > -1) {
-            data.splice(index, 1);
+    addBtn.addEventListener('click', function () {
+        let currentValue = parseInt(quantityInput.value);
+        quantityInput.value = currentValue + 1;
+    });
+
+    // event enter
+    quantityInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
         }
-        data.unshift(handle);
-        let newData = data.length > 11 ? data.slice(0, 10) : data;
-        window.localStorage.setItem(RECENTLY_LIST_KEY, JSON.stringify(newData));
-    };
+    });
 
 
-    setRecentlyList()
-};
-window.recentlyTrigger = recentlyTrigger
+    /** Khi vào trang product thì push vào local-storage */
+    pushRecently(productHandle)
 
+    /** Kiểm tra lần đầu vào trang có active wish-list-item không */
+    initialWishListItem()
 
-const productTrigger = (id) => {
-    const WISH_LIST_KEY = "wish-list"
+    /** Event click wish-list */
+    toggleWishList()
 
-    const getWishList = () => {
-        try {
+    /** Event add to cart */
+    addToCart()
 
-            const data = window.localStorage.getItem(WISH_LIST_KEY)
-            if (data) {
-                return JSON.parse(data)
-            }
-            return []
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const initialWishList = () => {
-        const _wishList = getWishList()
-        const index = _wishList.findIndex(item => item === id)
-
-        if (index !== -1) {
+    function initialWishListItem() {
+        if (isWishItem(productId)) {
             wishList.classList.add("active")
         }
     }
 
-    const toggleWishList = () => {
-        const newData = getWishList()
-        const index = newData.findIndex(item => item === id)
-        if (index !== -1) {
-            newData.splice(index, 1)
-            wishList.classList.remove("active")
-        } else {
-            newData.push(id)
-            wishList.classList.add("active")
-        }
-        window.localStorage.setItem(WISH_LIST_KEY, JSON.stringify(newData))
-    }
+    function toggleWishList() {
+        wishList?.addEventListener("click", function () {
+            const isExisted = toggleWishItem(productId)
 
-
-    initialWishList()
-    wishList.addEventListener("click", function changeWishList() {
-        toggleWishList()
-    })
-}
-window.productTrigger = productTrigger
-
-
-
-
-function createUrl(callback) {
-    const urlSearchParams = new URLSearchParams()
-    callback(urlSearchParams)
-    return window.location.pathname + "?" + urlSearchParams.toString()
-
-}
-
-function updateUrl(url, sectionId) {
-    url += url.includes('?') ? '&' : '?';
-    return url += `section_id=${sectionId}`;
-}
-
-function updateElementPrice(divCompare, divPrice) {
-    const cpPrice = document.querySelector('.compare-price')
-    const price = document.querySelector(".price")
-    cpPrice.parentNode.replaceChild(divCompare, cpPrice)
-    price.parentNode.replaceChild(divPrice, price)
-}
-
-function updateElementVariantInventory(element) {
-    const variantInventory = document.querySelector(".variant-inventory");
-    variantInventory.parentNode.replaceChild(element, variantInventory)
-
-}
-
-function updateElementSKU(element) {
-    const sku = document.querySelector(".product-sku");
-    sku.parentNode.replaceChild(element, sku)
-}
-
-function updateElementAddToCart(element) {
-    const btnAdd = document.querySelector(".btn-add");
-    btnAdd.parentNode.replaceChild(element, btnAdd)
-}
-
-function updateElementInput(element) {
-    const input = document.querySelector(".jsSubmit")
-    input.value = element.value
-}
-
-function onVariantChange(sectionId, event) {
-    const value = getValue();
-    const result = getVariant(value);
-    if (result != undefined) {
-        mainSlider.goTo(result.featured_image.position - 1);
-        function callback(searchParams) {
-            searchParams.set('variant', result.id);
-        }
-        let url = createUrl(callback)
-        history.pushState(null, null, url);
-        let _url = updateUrl(url, sectionId)
-        fetch(_url)
-            .then(res => res.text())
-            .then(data => {
-                const div = document.createElement("div");
-                div.innerHTML = data;
-                updateElementPrice(div.querySelector('.compare-price'), div.querySelector(".price"));
-                updateElementVariantInventory(div.querySelector(".variant-inventory"))
-                updateElementAddToCart(div.querySelector(".btn-add"))
-                updateElementSKU(div.querySelector(".product-sku"))
-                updateElementInput(div.querySelector(".jsSubmit"))
-            })
-    } else {
-        console.log(value)
-    }
-
-
-}
-
-function updateCssOption(value, name) {
-    name = name.charAt(0).toUpperCase() + name.slice(1);
-    const filteredProducts = variants.filter(variant => Object.values(variant).includes(value));
-    const filteredPositions = productOptions
-        .filter((item) => item.name !== name)
-        .map((item) => item.position);
-    const titles = filteredProducts.map(product => product.title);
-
-    const element = productOptions.find(item => item.name === name);
-    const input = element ? element.position : null;;
-    const uniqueElements = [...new Set(titles)];
-    const result = uniqueElements.reduce((acc, item) => {
-        const parts = item.split(" / ");
-        const filteredParts = parts.filter((_, index) => index !== input - 1);
-        filteredParts.forEach((part, index) => {
-            if (!acc[index]) {
-                acc[index] = [];
+            if (isExisted) {
+                wishList.classList.remove("active")
+            } else {
+                wishList.classList.add("active")
             }
-            if (!acc[index].includes(part)) {
-                acc[index].push(part);
-            }
-        });
-
-        return acc;
-    }, []);
-
-    const mergedArray = filteredPositions.map((element, index) => [element, result[index]]);
-    // console.log("mergedArray", mergedArray)
-    const checkPositions = document.querySelectorAll(".check-position");
-    // console.log("checkPositions", checkPositions)
-    mergedArray.forEach(item => {
-        checkPositions.forEach(element => {
-            if (item[0] == element.dataset.position) {
-                const inputs = element.querySelectorAll('input[type="radio"]');
-                const options = element.querySelectorAll("option")
-
-
-                Array.from(inputs).concat(Array.from(options)).forEach(input => {
-                    const value = input.value;
-                    if (!item[1].includes(value)) {
-                        input.setAttribute("data-disabled", "true")
-                    } else {
-                        input.setAttribute("data-disabled", "false")
-                    }
-                });
-            }
-        });
-    });
-}
-
-
-const formEl = document.querySelector('.jsProductForm');
-formEl.addEventListener('change', event => {
-    onVariantChange(formEl.dataset.sectionId, event);
-    updateCssOption(event.target.value, event.target.name);
-})
-
-function getVariant(data) {
-    return variants.find(variant => {
-        return variant.options.join('/') == data.join('/')
-    })
-}
-
-
-function getValue() {
-    const inputsData = [];
-
-    selects.forEach(select => {
-        const options = select.querySelectorAll('option');
-
-        options.forEach(option => {
-            const value = option.value;
-            const checked = option.selected;
-            if (checked) {
-                inputsData.push(value);
-            }
-        });
-    });
-
-    radio.forEach(input => {
-        const value = input.value;
-        const checked = input.checked;
-        if (checked) {
-            inputsData.push(value);
-        }
-    });
-    return inputsData;
-}
-
-
-
-//  change quantity
-const removeBtn = document.querySelector('.remove__qlt');
-const addBtn = document.querySelector('.add__qlt');
-const quantityInput = document.querySelector('.quantity__input');
-
-removeBtn.addEventListener('click', function () {
-    let currentValue = parseInt(quantityInput.value);
-    if (currentValue > 1) {
-        quantityInput.value = currentValue - 1;
-    }
-});
-
-addBtn.addEventListener('click', function () {
-    let currentValue = parseInt(quantityInput.value);
-    quantityInput.value = currentValue + 1;
-});
-
-// event enter
-quantityInput.addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-    }
-});
-
-
-async function fetchDataCart() {
-    try {
-        const response = await fetch(window.Shopify.routes.root + 'cart.js');
-        const data = await response.json();
-        return data.items;
-    } catch (error) {
-        return error;
-    }
-}
-
-async function getCountByVariant(variantId) {
-    try {
-        const arrCart = await fetchDataCart();
-        let quantity = 0;
-
-        for (let i = 0; i < arrCart.length; i++) {
-            if (arrCart[i].variant_id === variantId) {
-                quantity = arrCart[i].quantity;
-                break;
-            }
-        }
-        return quantity
-    } catch (error) {
-        return error
-    }
-}
-
-
-const formProduct = document.getElementById('jsFormProduct');
-if (formProduct.dataset.type == 'b') {
-    formProduct.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        const productFormData = Object.fromEntries(new FormData(event.target).entries());
-        let formData = {
-            "items": [productFormData]
-        }
-        fetch(window.Shopify.routes.root + 'cart/add.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
         })
-            .then(async data => {
-                switch (data.status) {
-                    case 200:
-                        // console.log("200", productFormData)
-                        const jsCartPopup = document.querySelector(".jsCartPopup")
-                        jsCartPopup.classList.add('active');
-                        break;
-                    case 404:
-                        break;
-                    case 422:
-                        const _data = await data.json();
-                        console.log("422", _data.description)
-                        break;
-                    default:
-                        break;
+    }
+
+    function getUrl(sectionId) {
+        const selects = document.querySelectorAll('.js-variant-change');
+        const radios = document.querySelectorAll('.js-radio');
+
+        const value = getValue(selects, radios)
+        const data = variants.find(variant => {
+            return variant.options.join('/') == value.join('/')
+        })
+
+        if (!data) {
+            return
+        }
+
+        slider.goTo(data.featured_image.position - 1);
+        const url = createUrl(function (searchParams) {
+            searchParams.set('variant', data.id);
+        })
+
+        history.pushState(null, null, url);
+
+        return updateUrl(url, sectionId)
+    }
+
+
+    function addToCart() {
+        if (formProduct && formProduct.dataset.type === 'b') {
+            formProduct.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const productFormData = Object.fromEntries(new FormData(event.target).entries());
+                let formData = {
+                    "items": [productFormData]
                 }
-            })
-            .catch((error) => {
-                console.log('Error:', error);
+                fetch(window.Shopify.routes.root + 'cart/add.js', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                    .then(res => {
+                        switch (res.status) {
+                            case 200:
+                                // console.log("200", productFormData)
+                                const jsCartPopup = document.querySelector(".jsCartPopup")
+                                jsCartPopup.classList.add('active');
+                                break;
+                            case 404:
+                                break;
+                            case 422:
+                                res.json().then((data) => {
+                                    console.log("422", data.description)
+                                })
+                                break;
+                            default:
+                                break;
+                        }
+                    })
+                    .catch((error) => {
+                        console.log('Error:', error);
+                    });
             });
-    });
+        }
+    }
 }
-
-
-
-
-
-
-

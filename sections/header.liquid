@@ -40,7 +40,7 @@
             alt="icon healt"
           >
         </div>
-        <div class="header__icon-healtNr">0</div>
+        <div class="header__icon-badge jsWishList">0</div>
       </div>
     </a>
     <a href="#" class="header__icon-link">
@@ -51,7 +51,7 @@
           class="header__icon-cardImage"
         >
 
-        <div class="header__icon-healtNr">0</div>
+        <div class="header__icon-badge">0</div>
       </div>
     </a>
     <button class="header-bugger">
@@ -77,22 +77,7 @@
   <div id="bg-color"></div>
 </header>
 
-<script>
-  const menuButton = $('.header-bugger');
-  const menu = $('.header-menu');
-  const closeButton = $('.header-close');
-  const body = $('#bg-color');
-
-  menuButton.click(function () {
-    menu.toggleClass('active');
-    body.toggleClass('body-overlay');
-  });
-
-  closeButton.click(function () {
-    menu.removeClass('active');
-    body.removeClass('body-overlay');
-  });
-</script>
+{{ 'header.js' | asset_url | script_tag }}
 
 {% schema %}
 {

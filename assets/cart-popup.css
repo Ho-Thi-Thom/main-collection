@@ -14,8 +14,6 @@
   flex-direction: column;
   padding: 16px;
   overflow-y: auto;
-  opacity: 1;
-  display: block;
 }
 
 .cart-popup.active {

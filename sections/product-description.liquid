@@ -4,7 +4,7 @@
   media="all"
 >
 
-{%- capture content -%}
+{%- capture content -%} 
   {% for block in section.blocks %}
     {%- if block.type == '@app' -%}
       {%- continue -%}{%- endif -%}
@@ -129,4 +129,4 @@
 }
 {% endschema %}
 
-{{ 'main-description.js' | asset_url | script_tag }}
+{{ 'product-description.js' | asset_url | script_tag }}

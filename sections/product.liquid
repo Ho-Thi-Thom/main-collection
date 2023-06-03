@@ -159,9 +159,11 @@
 <script id="product_options" type="application/json">
   {{ product.options_with_values | json}}
 </script>
+<script id="product_handle" type="application/json">
+  {{ product.handle | json}}
+</script>
+<script id="product_id" type="application/json">
+  {{ product.id | json}}
+</script>
 {{ 'main-product.js' | asset_url | script_tag }}
 {{ 'cart-popup.js' | asset_url | script_tag }}
-<script>
-  productTrigger({{product.id}})
-  recentlyTrigger("{{ product.handle}}")
-</script>
