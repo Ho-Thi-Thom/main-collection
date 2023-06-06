@@ -30,7 +30,12 @@
       %}
     </div>
   </div>
-  {% render 'cart-popup' %}
+  {% render 'popup-info' %}
+  {% comment %}
+    <button id="btn-arrow-top" title="Top">
+      {% render 'expand' %}
+    </button>
+  {% endcomment %}
 </div>
 {% schema %}
 {
@@ -166,4 +171,3 @@
   {{ product.id | json}}
 </script>
 {{ 'main-product.js' | asset_url | script_tag }}
-{{ 'cart-popup.js' | asset_url | script_tag }}

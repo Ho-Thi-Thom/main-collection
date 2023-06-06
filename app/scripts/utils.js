@@ -73,3 +73,33 @@ export function shopifyReloadSection(callback, isShopifySectionReload = true) {
         }
     }
 }
+
+
+export function setValuePopupInfo(options) {
+    const popupInfo = document.querySelector("#popup-info")
+    const titleElm = document.querySelector("#popup-info .title")
+    const contentElm = document.querySelector("#popup-info .wrapper-content")
+
+    const { type, title, textContent } = options
+    titleElm.setAttribute('data-type', type)
+    titleElm.innerHTML = title.trim();
+    contentElm.innerHTML = textContent.trim()
+    popupInfo.classList.add('active');
+}
+
+export function closePopup() {
+    const popupInfo = document.querySelector("#popup-info")
+    popupInfo.classList.remove('active')
+}
+
+export function debounce(fn, delay) {
+    var timeoutID = null
+    return function () {
+        clearTimeout(timeoutID)
+        var args = arguments
+        var that = this
+        timeoutID = setTimeout(function () {
+            fn.apply(that, args)
+        }, delay)
+    }
+}

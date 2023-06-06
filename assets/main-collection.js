@@ -77,9 +77,6 @@
         paginateFuc(document.querySelectorAll(".paginate_link[data-url]"));
       }
     }
-    function getApiProduct(url, options) {
-      return fetch(url, options).then((res) => res.text()).then((data) => console.log(data));
-    }
     function _extract(data) {
       const div = document.createElement("div");
       div.innerHTML = data;

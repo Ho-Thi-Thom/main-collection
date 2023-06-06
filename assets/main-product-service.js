@@ -2617,37 +2617,64 @@
   function uppercaseFirstLetter(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
+  function debounce(fn, delay) {
+    var timeoutID = null;
+    return function() {
+      clearTimeout(timeoutID);
+      var args = arguments;
+      var that = this;
+      timeoutID = setTimeout(function() {
+        fn.apply(that, args);
+      }, delay);
+    };
+  }
 
   // app/scripts/main-product-service.js
   function runSlider() {
-    const slider = (0, import_tiny_slider.tns)({
-      container: ".thumbnail-slider",
-      navContainer: ".customize-thumbnails",
-      items: 1,
-      axis: "horizontal",
-      autoplay: false,
-      autoplayTimeout: 1e3,
-      speed: 400,
-      mouseDrag: true,
-      loop: false,
-      nextButton: ".thumbnail-slider ~ .next",
-      prevButton: ".thumbnail-slider ~ .prev"
-    });
-    const sliderCustom = (0, import_tiny_slider.tns)({
-      container: ".customize-thumbnails",
-      items: 4,
-      axis: "vertical",
-      autoplay: false,
-      autoplayTimeout: 1e3,
-      speed: 400,
-      loop: false,
-      mouseDrag: true,
-      nextButton: ".customize-thumbnails ~ .next",
-      prevButton: ".customize-thumbnails ~ .prev"
-    });
-    slider.events.on("indexChanged", function(info) {
-      sliderCustom.goTo(info.index);
-    });
+    let slider = null;
+    let sliderCustom = null;
+    const initializeSlider = () => {
+      const isTablet = window.matchMedia("(max-width: 1023px)").matches;
+      const axisValue = isTablet ? "horizontal" : "vertical";
+      if (slider) {
+        slider.destroy();
+      }
+      if (sliderCustom) {
+        sliderCustom.destroy();
+      }
+      slider = (0, import_tiny_slider.tns)({
+        container: ".thumbnail-slider",
+        navContainer: ".customize-thumbnails",
+        items: 1,
+        axis: "horizontal",
+        autoplay: false,
+        autoplayTimeout: 1e3,
+        speed: 400,
+        mouseDrag: true,
+        loop: false,
+        nextButton: ".thumbnail-slider ~ .next",
+        prevButton: ".thumbnail-slider ~ .prev"
+      });
+      sliderCustom = (0, import_tiny_slider.tns)({
+        container: ".customize-thumbnails",
+        items: 4,
+        axis: axisValue,
+        autoplay: false,
+        autoplayTimeout: 1e3,
+        speed: 400,
+        loop: false,
+        mouseDrag: true,
+        nav: false,
+        nextButton: ".customize-thumbnails ~ .next",
+        prevButton: ".customize-thumbnails ~ .prev"
+      });
+      slider.events.on("indexChanged", function(info) {
+        sliderCustom.goTo(info.index);
+      });
+    };
+    initializeSlider();
+    const debouncedInitializeSlider = debounce(initializeSlider, 500);
+    window.addEventListener("resize", debouncedInitializeSlider);
     return slider;
   }
   function onVariantChange(getUrl) {
@@ -2749,5 +2776,16 @@
       });
     }
     return inputsData;
+  }
+  function checkPolicy() {
+    const checkbox = document.getElementById("cart-condition");
+    const cartCondition = document.querySelector(".cart__condition");
+    checkbox.addEventListener("click", function(event) {
+      if (this.checked) {
+        cartCondition.classList.add("checked");
+      } else {
+        cartCondition.classList.remove("checked");
+      }
+    });
   }
 })();

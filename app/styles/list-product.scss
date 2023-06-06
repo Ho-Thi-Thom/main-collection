@@ -1,5 +1,6 @@
 .wrapper {
     position: relative;
+    user-select: none;
 
     .card {
         .card__inner {
@@ -59,12 +60,14 @@
                     }
 
                     &:hover {
-                        border: none;
-                        outline: none;
-                        background-color: #05933c;
+                        button {
+                            background-color: #05a845;
+                            border: none;
+                            outline: none;
+                        }
 
                         svg path {
-                            stroke: #f0f0f0;
+                            stroke: #ffffff;
                         }
                     }
                 }
@@ -159,6 +162,10 @@
         svg {
             transform: rotate(-90deg);
         }
+
+        &[aria-disabled="true"] {
+            display: none;
+        }
     }
 
     .next {
@@ -183,6 +190,10 @@
         svg {
             transform: rotate(90deg);
         }
+
+        &[aria-disabled="true"] {
+            display: none;
+        }
     }
 
     &:hover {
@@ -195,4 +206,14 @@
         }
     }
 
+}
+
+@media (max-width :700px) {
+    .wrapper {
+
+        .prev,
+        .next {
+            display: none;
+        }
+    }
 }

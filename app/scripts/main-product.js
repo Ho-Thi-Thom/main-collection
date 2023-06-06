@@ -1,6 +1,6 @@
-import { getValue, onVariantChange, runSlider, updateCssOption } from "./main-product-service";
+import { checkPolicy, getValue, onVariantChange, runSlider, updateCssOption } from "./main-product-service";
 import { pushRecently } from "./product-recently-service";
-import { createUrl, getScript, shopifyReloadSection, updateUrl } from "./utils";
+import { createUrl, getScript, setValuePopupInfo, shopifyReloadSection, updateUrl } from "./utils";
 import { isWishItem, toggleWishItem } from "./wishlist-service";
 
 
@@ -23,9 +23,11 @@ function init() {
     const slider = runSlider()
 
     formEl.addEventListener('change', function (event) {
-        const titles = variants.filter(variant => Object.values(variant).includes(event.target.value)).map(product => product.title)
-        onVariantChange(() => getUrl(formEl.dataset.sectionId));
-        updateCssOption(titles, productOptions, event.target.name);
+        if (event.target.id !== 'cart-condition') {
+            const titles = variants.filter(variant => Object.values(variant).includes(event.target.value)).map(product => product.title)
+            onVariantChange(() => getUrl(formEl.dataset.sectionId));
+            updateCssOption(titles, productOptions, event.target.name);
+        }
     })
     //  change quantity
     removeBtn.addEventListener('click', function () {
@@ -59,6 +61,7 @@ function init() {
 
     /** Event add to cart */
     addToCart()
+    checkPolicy();
 
     function initialWishListItem() {
         if (isWishItem(productId)) {
@@ -103,6 +106,7 @@ function init() {
 
 
     function addToCart() {
+        // type =  b thì hiện thông báo, bằng a =
         if (formProduct && formProduct.dataset.type === 'b') {
             formProduct.addEventListener('submit', function (event) {
                 event.preventDefault();
@@ -120,15 +124,27 @@ function init() {
                     .then(res => {
                         switch (res.status) {
                             case 200:
-                                // console.log("200", productFormData)
-                                const jsCartPopup = document.querySelector(".jsCartPopup")
-                                jsCartPopup.classList.add('active');
+                                res.json().then((data) => {
+                                    const options = {
+                                        type: "success",
+                                        title: "Add to Cart",
+                                        textContent: `Add success "${data.items[0].product_title}"`
+                                    };
+
+                                    setValuePopupInfo(options);
+                                })
                                 break;
                             case 404:
                                 break;
                             case 422:
                                 res.json().then((data) => {
-                                    console.log("422", data.description)
+                                    const options = {
+                                        type: "error",
+                                        title: "422",
+                                        textContent: data.description
+                                    };
+
+                                    setValuePopupInfo(options);
                                 })
                                 break;
                             default:
@@ -141,4 +157,25 @@ function init() {
             });
         }
     }
+
+
+    // window.onscroll = function () { scrollFunction() };
+    // function scrollFunction() {
+
+    //     if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+    //         document.getElementById("btn-arrow-top").style.display = "block";
+    //     } else {
+    //         document.getElementById("btn-arrow-top").style.display = "none";
+    //     }
+    // }
+
+    // document.getElementById('btn-arrow-top').addEventListener("click", function () {
+    //     document.body.scrollTop = 0;
+    //     document.documentElement.scrollTop = 0;
+    // });
+
+
+
+
+
 }

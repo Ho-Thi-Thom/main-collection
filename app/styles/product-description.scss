@@ -3,7 +3,7 @@
     margin-top: 20px;
 
     .product-description {
-        margin-inline: 20px;
+        padding-inline: 20px;
 
         .tab__panel-wrapper {
             .tab__panel-header {
@@ -52,6 +52,19 @@
                         overflow-y: auto;
                     }
                 }
+            }
+        }
+    }
+}
+
+
+@media (max-width :700px) {
+    .section_container {
+        .product-description {
+            padding-inline: 10px;
+
+            .tab__panel-header {
+                flex-wrap: wrap;
             }
         }
     }

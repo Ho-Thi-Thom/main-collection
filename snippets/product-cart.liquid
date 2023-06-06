@@ -18,9 +18,9 @@
   >
     {% render 'card' %}
     {% if selectedQuantity > 0 %}
-      <span>Add to cart</span>
+      <span>{{ 'general.product.product_cart.add_to_cart' | t }}</span>
     {% else %}
-      <span class="sold-out">Sold out</span>
+      <span class="sold-out">{{ 'general.product.product_cart.sold_out' | t }}</span>
     {% endif %}
   </button>
 </div>

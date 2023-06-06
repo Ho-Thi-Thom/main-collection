@@ -1,1 +1,1 @@
-.recommendations-container{margin:var(--margin)}.recommendations-container .recommendations-header{display:flex;justify-content:center;align-items:center;font-size:24px;font-weight:600}.recommendations-container .list-product{margin-top:20px}
+.recommendations-container{margin:var(--margin)}.recommendations-container .recommendations-header{display:flex;justify-content:center;align-items:center;font-size:24px;font-weight:600}.recommendations-container .list-product{margin-top:20px}@media (max-width: 700px){.recommendations-container{margin:20px 10px}}

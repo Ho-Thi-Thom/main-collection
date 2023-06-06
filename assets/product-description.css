@@ -3,7 +3,7 @@
 }
 
 .section_container .product-description {
-  margin-inline: 20px;
+  padding-inline: 20px;
 }
 
 .section_container .product-description .tab__panel-wrapper .tab__panel-header {
@@ -49,4 +49,13 @@
   font-size: small;
   font-weight: 400;
   line-height: 1.3rem;
+}
+
+@media (max-width: 700px) {
+  .section_container .product-description {
+    padding-inline: 10px;
+  }
+  .section_container .product-description .tab__panel-header {
+    flex-wrap: wrap;
+  }
 }

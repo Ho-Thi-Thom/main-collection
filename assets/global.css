@@ -19,7 +19,7 @@
 .tns-nav-active {
 
   border-radius: 10px !important;
-  width: 100% !important;
+  /* width: 100% !important; */
 }
 
 .tns-nav-active img {

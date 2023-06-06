@@ -3,6 +3,26 @@
     "404": {
       "title": "Not found",
       "subtext_html": "The page you were looking for does not exist"
+    },
+    "product":{
+       "info":{
+        "text_total_quantity" : "Total Quantity",
+        "add_to_wishlist":"Add to Wishlist",
+        "variant_inventory":"Only {{ selectedQuantity }} left in stock!",
+        "sold_out":"Sold out",
+        "text_tags":"Tags",
+        "text_sku":"SKU"
+       },
+       "product-item":{
+        "sold_out":"Sold out",
+        "text_sale":"Sale"
+       },
+       "product_cart":{
+        "add_to_cart":"Add to cart",
+        "sold_out":"Sold out"
+
+       }
     }
+    
   }
 }

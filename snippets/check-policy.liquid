@@ -1,0 +1,39 @@
+<link
+  rel="stylesheet"
+  href="{{ 'check-policy.css' | asset_url }}"
+  media="all"
+>
+
+<div class="cart__condition">
+  <input type="checkbox" class="input-hidden" id="cart-condition" required>
+  <label for="cart-condition" class="flex c-pointer checkbox">
+    <span class="input-state-default">
+      <svg
+        class="icon icon-checkbox border-radius"
+        focusable="false"
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect x="0.5" y="0.5" width="19" height="19" fill="#FFFFFF" stroke="#E6E6E6"></rect>
+      </svg>
+    </span>
+    <span class="input-state-active">
+      <svg
+        class="icon icon-checkbox-checked border-radius"
+        focusable="false"
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="20" height="20" fill="#000000"></rect>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M15 7.39288L8.556 14L5 10.3412L6.36086 8.95079L8.55837 11.2118L13.6415 6L15 7.39288Z" fill="#FFFFFF"></path>
+      </svg>
+    </span>
+    <span class="text-label">I agree with the terms and conditions</span>
+  </label>
+</div>

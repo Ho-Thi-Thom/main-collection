@@ -60,6 +60,7 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
 
             .quantity-select {
                 display: flex;
@@ -109,6 +110,7 @@
                 min-width: 200px;
 
                 .btn-add {
+                    padding-block: 15px;
                     gap: 10px;
                     width: 100%;
                     height: 100%;
@@ -191,4 +193,14 @@
         }
     }
 
+}
+
+@media (max-width :700px) {
+    .product-infor-wrapper {
+        margin-top: 20px;
+
+        .product-infor {
+            padding: 0;
+        }
+    }
 }

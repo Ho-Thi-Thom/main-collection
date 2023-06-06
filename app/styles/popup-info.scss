@@ -1,0 +1,49 @@
+#popup-info {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+
+    place-items: center;
+
+    &.active {
+        display: grid;
+    }
+
+    .info-box {
+        min-width: 375px;
+        max-width: 50vw;
+        min-height: 200px;
+        padding: 8px 16px;
+        background-color: white;
+        border-radius: 7px;
+
+        .wrapper-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-block: 10px;
+
+            .title {
+                font-size: 24px;
+                font-weight: 400;
+            }
+
+        }
+
+        .title[data-type="success"] {
+            color: green;
+        }
+
+        .title[data-type="error"] {
+            color: red;
+        }
+
+        .wrapper-content {
+            font-size: medium;
+            font-weight: 400;
+            line-height: 1.4rem;
+        }
+    }
+}

@@ -9,4 +9,37 @@
             gap: 20px;
         }
     }
+
+    #btn-arrow-top {
+        display: none;
+        position: fixed;
+        bottom: 60px;
+        right: 10px;
+        z-index: 99;
+        border: none;
+        outline: none;
+        background-color: #05a845;
+        cursor: pointer;
+        opacity: 0.7;
+        fill: #ffffff;
+        transition: opacity 0.3s, transform 0.3s;
+    }
+
+    #btn-arrow-top:hover {
+        opacity: 0.5;
+        transform: translateY(-5px);
+    }
+}
+
+@media (max-width :700px) {
+    .product-section-wrapper {
+        .product-layout {
+            padding-inline: 10px;
+
+            .product-container {
+                flex-direction: column;
+                gap: 0px;
+            }
+        }
+    }
 }

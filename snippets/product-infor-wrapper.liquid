@@ -6,10 +6,10 @@
 
 {%- assign productSelect = productSelect | default: product.selected_or_first_available_variant -%}
 {% assign selectedQuantity = 0 %}
-{% assign variantIdSelect = '' %}
+{% assign variantSelect = '' %}
 {% for variant in product.variants %}
   {% if variant.id == productSelect.id %}
-    {% assign variantIdSelect = variant.id %}
+    {% assign variantSelect = variant %}
     {% assign selectedQuantity = variant.inventory_quantity %}
   {% endif %}
 {% endfor %}
@@ -36,15 +36,6 @@
             <div class="product-rating">
               {% render block %}
             </div>
-            {% comment %}
-              <div class="product-total-review">
-                <div class="rating"></div>
-                <div class="seperate"></div>
-                <div>
-                  <a href="#">3<span>total review</span></a>
-                </div>
-              </div>
-            {% endcomment %}
           {% when 'price' %}
             {% comment %} PRICE {% endcomment %}
             <div class="product-price">
@@ -73,21 +64,26 @@
           {% when 'add_to_cart' %}
             {% comment %} ADD TO CART {% endcomment %}
             <p class="product-quantity">
-              <span>Total Quantity</span>
+              <span>{{ 'general.product.info.text_total_quantity' | t }}</span>
               <span
                 class="variant-inventory"
               >
-                {% if selectedQuantity > 0 %}
-                  {% if selectedQuantity < 10 %}
-                    Only {{ selectedQuantity }} left in stock!
+                {% if variantSelect.inventory_management == 'shopify' %}
+                  {% if selectedQuantity > 0 %}
+                    {% if selectedQuantity < 10 %}
+                      {{ 'general.product.info.variant_inventory' | t: selectedQuantity: selectedQuantity }}
+                    {% endif %}
+                  {% else %}
+                    {{ 'general.product.info.sold_out' | t }}
                   {% endif %}
-                {% else %}
-                  Sold out
                 {% endif %}
               </span>
             </p>
             <div class="product-cart">
               {% render 'product-cart', selectedQuantity: selectedQuantity %}
+            </div>
+            <div class="check-policy">
+              {% render 'check-policy' %}
             </div>
             {{ form | payment_button }}
             <input
@@ -101,7 +97,7 @@
             <div class="list-link">
               <div class="wish-list">
                 {% render 'heart' %}
-                Add to Wishlist
+                {{ 'general.product.info.add_to_wishlist' | t }}
               </div>
             </div>
           {% when 'social_sharing' %}
@@ -132,7 +128,7 @@
             {% assign tag_count = product.tags.size %}
             {% unless tag_count < 1 %}
               <div class="product-tags">
-                <span>Tags: </span>
+                <span> {{ 'general.product.info.text_tags' | t }}: </span>
                 <ul>
                   {% for tag in product.tags %}
                     <li>
@@ -149,7 +145,7 @@
             <div class="product-sku">
               {% assign sku = productSelect.sku %}
               {% if sku != blank %}
-                <span>SKU: </span> {{ sku }}
+                <span>{{ 'general.product.info.text_sku' | t }}: </span> {{ sku }}
               {% endif %}
             </div>
         {% endcase %}

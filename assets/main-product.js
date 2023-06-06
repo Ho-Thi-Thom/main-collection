@@ -2665,37 +2665,74 @@
       }
     }
   }
+  function setValuePopupInfo(options) {
+    const popupInfo = document.querySelector("#popup-info");
+    const titleElm = document.querySelector("#popup-info .title");
+    const contentElm = document.querySelector("#popup-info .wrapper-content");
+    const { type, title, textContent } = options;
+    titleElm.setAttribute("data-type", type);
+    titleElm.innerHTML = title.trim();
+    contentElm.innerHTML = textContent.trim();
+    popupInfo.classList.add("active");
+  }
+  function debounce(fn, delay) {
+    var timeoutID = null;
+    return function() {
+      clearTimeout(timeoutID);
+      var args = arguments;
+      var that = this;
+      timeoutID = setTimeout(function() {
+        fn.apply(that, args);
+      }, delay);
+    };
+  }
 
   // app/scripts/main-product-service.js
   function runSlider() {
-    const slider = (0, import_tiny_slider.tns)({
-      container: ".thumbnail-slider",
-      navContainer: ".customize-thumbnails",
-      items: 1,
-      axis: "horizontal",
-      autoplay: false,
-      autoplayTimeout: 1e3,
-      speed: 400,
-      mouseDrag: true,
-      loop: false,
-      nextButton: ".thumbnail-slider ~ .next",
-      prevButton: ".thumbnail-slider ~ .prev"
-    });
-    const sliderCustom = (0, import_tiny_slider.tns)({
-      container: ".customize-thumbnails",
-      items: 4,
-      axis: "vertical",
-      autoplay: false,
-      autoplayTimeout: 1e3,
-      speed: 400,
-      loop: false,
-      mouseDrag: true,
-      nextButton: ".customize-thumbnails ~ .next",
-      prevButton: ".customize-thumbnails ~ .prev"
-    });
-    slider.events.on("indexChanged", function(info) {
-      sliderCustom.goTo(info.index);
-    });
+    let slider = null;
+    let sliderCustom = null;
+    const initializeSlider = () => {
+      const isTablet = window.matchMedia("(max-width: 1023px)").matches;
+      const axisValue = isTablet ? "horizontal" : "vertical";
+      if (slider) {
+        slider.destroy();
+      }
+      if (sliderCustom) {
+        sliderCustom.destroy();
+      }
+      slider = (0, import_tiny_slider.tns)({
+        container: ".thumbnail-slider",
+        navContainer: ".customize-thumbnails",
+        items: 1,
+        axis: "horizontal",
+        autoplay: false,
+        autoplayTimeout: 1e3,
+        speed: 400,
+        mouseDrag: true,
+        loop: false,
+        nextButton: ".thumbnail-slider ~ .next",
+        prevButton: ".thumbnail-slider ~ .prev"
+      });
+      sliderCustom = (0, import_tiny_slider.tns)({
+        container: ".customize-thumbnails",
+        items: 4,
+        axis: axisValue,
+        autoplay: false,
+        autoplayTimeout: 1e3,
+        speed: 400,
+        loop: false,
+        mouseDrag: true,
+        nav: false,
+        nextButton: ".customize-thumbnails ~ .next",
+        prevButton: ".customize-thumbnails ~ .prev"
+      });
+      slider.events.on("indexChanged", function(info) {
+        sliderCustom.goTo(info.index);
+      });
+    };
+    initializeSlider();
+    const debouncedInitializeSlider = debounce(initializeSlider, 500);
+    window.addEventListener("resize", debouncedInitializeSlider);
     return slider;
   }
   function onVariantChange(getUrl) {
@@ -2798,6 +2835,17 @@
     }
     return inputsData;
   }
+  function checkPolicy() {
+    const checkbox = document.getElementById("cart-condition");
+    const cartCondition = document.querySelector(".cart__condition");
+    checkbox.addEventListener("click", function(event) {
+      if (this.checked) {
+        cartCondition.classList.add("checked");
+      } else {
+        cartCondition.classList.remove("checked");
+      }
+    });
+  }
 
   // app/scripts/constants.js
   var WISH_LIST_KEY = "wish-list";
@@ -2871,9 +2919,11 @@
     const formProduct = document.getElementById("jsFormProduct");
     const slider = runSlider();
     formEl.addEventListener("change", function(event) {
-      const titles = variants.filter((variant) => Object.values(variant).includes(event.target.value)).map((product) => product.title);
-      onVariantChange(() => getUrl(formEl.dataset.sectionId));
-      updateCssOption(titles, productOptions, event.target.name);
+      if (event.target.id !== "cart-condition") {
+        const titles = variants.filter((variant) => Object.values(variant).includes(event.target.value)).map((product) => product.title);
+        onVariantChange(() => getUrl(formEl.dataset.sectionId));
+        updateCssOption(titles, productOptions, event.target.name);
+      }
     });
     removeBtn.addEventListener("click", function() {
       let currentValue = parseInt(quantityInput.value);
@@ -2894,6 +2944,7 @@
     initialWishListItem();
     toggleWishList();
     addToCart();
+    checkPolicy();
     function initialWishListItem() {
       if (isWishItem(productId)) {
         wishList.classList.add("active");
@@ -2943,14 +2994,25 @@
           }).then((res) => {
             switch (res.status) {
               case 200:
-                const jsCartPopup = document.querySelector(".jsCartPopup");
-                jsCartPopup.classList.add("active");
+                res.json().then((data) => {
+                  const options = {
+                    type: "success",
+                    title: "Add to Cart",
+                    textContent: `Add success "${data.items[0].product_title}"`
+                  };
+                  setValuePopupInfo(options);
+                });
                 break;
               case 404:
                 break;
               case 422:
                 res.json().then((data) => {
-                  console.log("422", data.description);
+                  const options = {
+                    type: "error",
+                    title: "422",
+                    textContent: data.description
+                  };
+                  setValuePopupInfo(options);
                 });
                 break;
               default:

@@ -12,7 +12,7 @@
         </button>
       </div>
       {% if product.compare_at_price_max != blank and product.compare_at_price_max > 0 %}
-        <div class="tag">Sale</div>
+        <div class="tag">{{ 'general.product.product-item.text_sale' | t }}</div>
       {% endif %}
     </div>
     <div class="card__content">
@@ -36,7 +36,7 @@
         </div>
 
       {% else %}
-        <div class="sold_out">Sold out</div>
+        <div class="sold_out">{{ 'general.product.product-item.sold_out' | t }}</div>
       {% endif %}
     </div>
   </div>

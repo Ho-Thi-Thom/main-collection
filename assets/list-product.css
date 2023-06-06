@@ -1,5 +1,8 @@
 .wrapper {
   position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 .wrapper .card .card__inner {
@@ -61,14 +64,14 @@
   stroke: #05a845;
 }
 
-.wrapper .card .card__inner .card__image-wrapper .card__group:hover {
+.wrapper .card .card__inner .card__image-wrapper .card__group:hover button {
+  background-color: #05a845;
   border: none;
   outline: none;
-  background-color: #05933c;
 }
 
 .wrapper .card .card__inner .card__image-wrapper .card__group:hover svg path {
-  stroke: #f0f0f0;
+  stroke: #fff;
 }
 
 .wrapper .card .card__inner .card__image-wrapper .tag {
@@ -156,6 +159,10 @@
   transform: rotate(-90deg);
 }
 
+.wrapper .prev[aria-disabled=true] {
+  display: none;
+}
+
 .wrapper .next {
   top: 50%;
   right: 0;
@@ -179,6 +186,16 @@
   transform: rotate(90deg);
 }
 
+.wrapper .next[aria-disabled=true] {
+  display: none;
+}
+
 .wrapper:hover .next, .wrapper:hover .prev {
   opacity: .7;
+}
+
+@media (max-width: 700px) {
+  .wrapper .next, .wrapper .prev {
+    display: none;
+  }
 }

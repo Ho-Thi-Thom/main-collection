@@ -1,0 +1,47 @@
+#popup-info {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  place-items: center;
+}
+
+#popup-info.active {
+  display: grid;
+}
+
+#popup-info .info-box {
+  min-width: 375px;
+  max-width: 50vw;
+  min-height: 200px;
+  padding: 8px 16px;
+  background-color: #fff;
+  border-radius: 7px;
+}
+
+#popup-info .info-box .wrapper-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 10px;
+}
+
+#popup-info .info-box .wrapper-title .title {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+#popup-info .info-box .title[data-type=success] {
+  color: green;
+}
+
+#popup-info .info-box .title[data-type=error] {
+  color: red;
+}
+
+#popup-info .info-box .wrapper-content {
+  font-size: medium;
+  font-weight: 400;
+  line-height: 1.4rem;
+}

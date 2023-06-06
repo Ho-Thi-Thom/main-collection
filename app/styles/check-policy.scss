@@ -1,0 +1,56 @@
+.cart__condition {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+
+    .input-hidden {
+        position: absolute;
+        opacity: 0;
+        height: 100%;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+
+    label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        flex-wrap: wrap;
+
+        .input-state-default {
+            display: flex;
+
+            svg {
+                width: 20px;
+                height: 20px;
+                border-radius: 4px;
+                stroke: #f0f0f0;
+            }
+        }
+
+        .input-state-active {
+            display: none;
+
+            svg {
+                fill: #000000;
+            }
+        }
+
+        .text-label {
+            margin-left: 10px;
+            font-size: 13px;
+        }
+    }
+
+    &.checked {
+        .input-state-default {
+            display: none;
+        }
+
+        .input-state-active {
+            display: flex;
+        }
+    }
+}
