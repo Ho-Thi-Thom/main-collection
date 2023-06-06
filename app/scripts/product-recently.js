@@ -46,8 +46,8 @@ function init() {
             data.forEach((html) => {
                 const div = document.createElement("div")
                 div.innerHTML = html
-                const elementHidden = div.querySelector('.jsRecently .hidden .card')
-                const hrefValue = elementHidden.parentElement.getAttribute("href") ?? null;
+                const elementHidden = div.querySelector('.jsRecently .hidden a')
+                const hrefValue = elementHidden.getAttribute("href") ?? null;
 
                 if (!hrefValue) {
                     listHandleInvalid.push(html)

@@ -5,17 +5,24 @@
         <div class="image__style">
           <img src="{{ product.featured_image | image_url }}" alt="{{product.featured_image.alt}}">
         </div>
-        <div class="card__group">
-          {% if product.has_only_default_variant %}
-            <button>
-              {% render 'card' %}
-            </button>
-          {% else %}
-            <button class="jsViewCart pointer-events" data-variant-id="{{ product.variants.first.id }}">
-              {% render 'paypal' %}
-            </button>
+        {% if product.available %}
+          {% if product.variants.first.inventory_management == 'shopify' %}
+            <div class="card__group">
+              {% if product.has_only_default_variant %}
+                <button
+                  class="jsViewCart pointer-events"
+                  data-first-variant="{{ product.variants.first.id }}"
+                >
+                  {% render 'paypal' %}
+                </button>
+              {% else %}
+                <button>
+                  {% render 'card' %}
+                </button>
+              {% endif %}
+            </div>
           {% endif %}
-        </div>
+        {% endif %}
         {% if product.compare_at_price_max != blank and product.compare_at_price_max > 0 %}
           <div class="tag">{{ 'general.product.info.text_sale' | t }}</div>
         {% endif %}

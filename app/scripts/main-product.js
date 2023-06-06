@@ -1,6 +1,6 @@
 import { checkPolicy, getValue, onVariantChange, runSlider, updateCssOption } from "./main-product-service";
 import { pushRecently } from "./product-recently-service";
-import { createUrl, getScript, setValuePopupInfo, shopifyReloadSection, updateUrl } from "./utils";
+import { addToCart as addToCartByForm, createUrl, getScript, shopifyReloadSection, updateUrl } from "./utils";
 import { isWishItem, toggleWishItem } from "./wishlist-service";
 
 
@@ -114,46 +114,7 @@ function init() {
                 let formData = {
                     "items": [productFormData]
                 }
-                fetch(window.Shopify.routes.root + 'cart/add.js', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                })
-                    .then(res => {
-                        switch (res.status) {
-                            case 200:
-                                res.json().then((data) => {
-                                    const options = {
-                                        type: "success",
-                                        title: "Add to Cart",
-                                        textContent: `Add success "${data.items[0].product_title}"`
-                                    };
-
-                                    setValuePopupInfo(options);
-                                })
-                                break;
-                            case 404:
-                                break;
-                            case 422:
-                                res.json().then((data) => {
-                                    const options = {
-                                        type: "error",
-                                        title: "422",
-                                        textContent: data.description
-                                    };
-
-                                    setValuePopupInfo(options);
-                                })
-                                break;
-                            default:
-                                break;
-                        }
-                    })
-                    .catch((error) => {
-                        console.log('Error:', error);
-                    });
+                addToCartByForm(formData)
             });
         }
     }

@@ -2686,6 +2686,44 @@
       }, delay);
     };
   }
+  function addToCart(data) {
+    fetch(window.Shopify.routes.root + "cart/add.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    }).then((res) => {
+      switch (res.status) {
+        case 200:
+          res.json().then((data2) => {
+            const options = {
+              type: "success",
+              title: "Add to Cart",
+              textContent: `Add success "${data2.items[0].product_title}"`
+            };
+            setValuePopupInfo(options);
+          });
+          break;
+        case 404:
+          break;
+        case 422:
+          res.json().then((data2) => {
+            const options = {
+              type: "error",
+              title: "422",
+              textContent: data2.description
+            };
+            setValuePopupInfo(options);
+          });
+          break;
+        default:
+          break;
+      }
+    }).catch((error) => {
+      console.log("Error:", error);
+    });
+  }
 
   // app/scripts/main-product-service.js
   function runSlider() {
@@ -2943,7 +2981,7 @@
     pushRecently(productHandle);
     initialWishListItem();
     toggleWishList();
-    addToCart();
+    addToCart2();
     checkPolicy();
     function initialWishListItem() {
       if (isWishItem(productId)) {
@@ -2977,7 +3015,7 @@
       history.pushState(null, null, url);
       return updateUrl(url, sectionId);
     }
-    function addToCart() {
+    function addToCart2() {
       if (formProduct && formProduct.dataset.type === "b") {
         formProduct.addEventListener("submit", function(event) {
           event.preventDefault();
@@ -2985,42 +3023,7 @@
           let formData = {
             "items": [productFormData]
           };
-          fetch(window.Shopify.routes.root + "cart/add.js", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-          }).then((res) => {
-            switch (res.status) {
-              case 200:
-                res.json().then((data) => {
-                  const options = {
-                    type: "success",
-                    title: "Add to Cart",
-                    textContent: `Add success "${data.items[0].product_title}"`
-                  };
-                  setValuePopupInfo(options);
-                });
-                break;
-              case 404:
-                break;
-              case 422:
-                res.json().then((data) => {
-                  const options = {
-                    type: "error",
-                    title: "422",
-                    textContent: data.description
-                  };
-                  setValuePopupInfo(options);
-                });
-                break;
-              default:
-                break;
-            }
-          }).catch((error) => {
-            console.log("Error:", error);
-          });
+          addToCart(formData);
         });
       }
     }
