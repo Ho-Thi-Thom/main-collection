@@ -6,7 +6,6 @@
   function readLocalStorage(key, defaultValue = []) {
     try {
       const data = window.localStorage.getItem(key);
-      console.log(key, data);
       if (data) {
         return JSON.parse(data);
       }

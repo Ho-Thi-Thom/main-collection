@@ -30,7 +30,9 @@
   }
   function updateWishListHeader() {
     const jsWishList2 = document.querySelector(".jsWishList");
-    jsWishList2.innerHTML = getWishListCount();
+    if (jsWishList2) {
+      jsWishList2.innerHTML = getWishListCount();
+    }
   }
 
   // app/scripts/header.js

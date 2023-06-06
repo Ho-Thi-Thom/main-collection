@@ -15,5 +15,6 @@ window.countUp = () => {
 };
 
 document.addEventListener("shopify:section:load", () => {
-  countUp();
+  window.countUp()
 });
+

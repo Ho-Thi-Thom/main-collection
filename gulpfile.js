@@ -15,23 +15,23 @@ const themeConfig = fs.readFileSync("./config.yml").toString().replace(/(\r\n|\n
 const storeData = themeConfig.split('store:')[1].split('.myshopify.com')[0].trim();
 
 let themeID = themeConfig.split('theme_id:')[1].trim();
-if(themeID.includes('"') || themeID.includes("'")){
+if (themeID.includes('"') || themeID.includes("'")) {
   themeID = themeID.split('"')[1];
   themeID = themeID.split("'")[1];
 }
 const config = {
- configCSSFile: process.env.CONFIGCSSFILE || 'default',
- configCSSMinFile: process.env.CONFIGCSSMINFILE || 'default',
- configScriptFile: process.env.CONFIGSCRIPTFILE || 'default',
- configScriptMinFile: process.env.CONFIGSCRIPTMINFILE || 'default',
- livePreload: JSON.parse(process.env.LIVERELOAD || 'false'),
- directory: (process.env.DIR || 'BLANK')
+  configCSSFile: process.env.CONFIGCSSFILE || 'default',
+  configCSSMinFile: process.env.CONFIGCSSMINFILE || 'default',
+  configScriptFile: process.env.CONFIGSCRIPTFILE || 'default',
+  configScriptMinFile: process.env.CONFIGSCRIPTMINFILE || 'default',
+  livePreload: JSON.parse(process.env.LIVERELOAD || 'false'),
+  directory: (process.env.DIR || 'BLANK')
 }
 
 const shopifyHost = `https://${storeData}.myshopify.com`;
 const proxy = `${shopifyHost}`;
 const port = argv.port || 9005;
-const assetsFolder = config.directory == 'BLANK' ? 'assets' : (config.directory.toLowerCase()+'/assets');
+const assetsFolder = config.directory == 'BLANK' ? 'assets' : (config.directory.toLowerCase() + '/assets');
 
 // CSS Func
 function buildCss(filePath) {
@@ -44,37 +44,37 @@ function buildCss(filePath) {
 
   processTask.push(new Promise((resolve, reject) => {
     src(filePath)
-    .pipe(plugins.sourcemaps.init())
-    .pipe(sass.sync().on("error", sass.logError))
-    .pipe(
-      plugins.postcss([
-        cssnano({ safe: true, autoprefixer: true }),
-        autoprefixer({overrideBrowserslist: ["safari >= 10", "last 2 version", "ios >= 10", "not ie >0", "not dead"]})
-      ]),
-    )
-    .pipe(sass({ outputStyle: config.configCSSFile == 'minify' ? 'compressed' : 'expanded' }))
-    .on("error", function (err) {console.log(err.toString());})
-    .pipe(plugins.rename(path.basename(filePath, ".scss") + ".css"))
-    .pipe(dest(assetsFolder))
-    .on("end", function () {
-      console.log(path.basename(filePath) + ": Finish");
-    });
-  }))
-
-  if(config.configCSSMinFile == 'default'){
-    processTask.push(new Promise((resolve, reject) => {
-      src(filePath)
       .pipe(plugins.sourcemaps.init())
       .pipe(sass.sync().on("error", sass.logError))
       .pipe(
         plugins.postcss([
           cssnano({ safe: true, autoprefixer: true }),
-          autoprefixer({overrideBrowserslist: ["safari >= 10", "last 2 version", "ios >= 10", "not ie >0", "not dead"]})
-        ])
+          autoprefixer({ overrideBrowserslist: ["safari >= 10", "last 2 version", "ios >= 10", "not ie >0", "not dead"] })
+        ]),
       )
-      .pipe(sass({ outputStyle: "compressed" }))
-      .pipe(plugins.rename(path.basename(filePath, ".scss") + ".min.css"))
+      .pipe(sass({ outputStyle: config.configCSSFile == 'minify' ? 'compressed' : 'expanded' }))
+      .on("error", function (err) { console.log(err.toString()); })
+      .pipe(plugins.rename(path.basename(filePath, ".scss") + ".css"))
       .pipe(dest(assetsFolder))
+      .on("end", function () {
+        console.log(path.basename(filePath) + ": Finish");
+      });
+  }))
+
+  if (config.configCSSMinFile == 'default') {
+    processTask.push(new Promise((resolve, reject) => {
+      src(filePath)
+        .pipe(plugins.sourcemaps.init())
+        .pipe(sass.sync().on("error", sass.logError))
+        .pipe(
+          plugins.postcss([
+            cssnano({ safe: true, autoprefixer: true }),
+            autoprefixer({ overrideBrowserslist: ["safari >= 10", "last 2 version", "ios >= 10", "not ie >0", "not dead"] })
+          ])
+        )
+        .pipe(sass({ outputStyle: "compressed" }))
+        .pipe(plugins.rename(path.basename(filePath, ".scss") + ".min.css"))
+        .pipe(dest(assetsFolder))
     }));
   }
 
@@ -86,20 +86,20 @@ function cssTask(filePath) {
   let sourceTree = JSON.parse(fs.readFileSync("./app.css.config.json"));
 
   Object.keys(sourceTree)
-  .filter((item) => sourceTree[item].indexOf(fileName) != -1)
-  .map((item) => {
-    let filePath = "app/styles/" + item + ".scss";
-    buildCss(filePath);
-  });
+    .filter((item) => sourceTree[item].indexOf(fileName) != -1)
+    .map((item) => {
+      let filePath = "app/styles/" + item + ".scss";
+      buildCss(filePath);
+    });
 }
 
 async function removeCss(filePath) {
   const directionLink = path.basename(filePath, ".scss") + ".css";
 
-  fs.unlinkSync(assetsFolder+"/" + directionLink);
+  fs.unlinkSync(assetsFolder + "/" + directionLink);
 
-  if(config.configCSSMinFile == 'default'){
-    fs.unlinkSync(assetsFolder+"/" + directionLink.replace(".css", ".min.css"));
+  if (config.configCSSMinFile == 'default') {
+    fs.unlinkSync(assetsFolder + "/" + directionLink.replace(".css", ".min.css"));
   }
 
   console.log("Deleted " + path.basename(filePath));
@@ -108,7 +108,7 @@ async function removeCss(filePath) {
 
 // JS Func
 async function buildScripts(entryPoints) {
-  if(!entryPoints.length) return;
+  if (!entryPoints.length) return;
 
   let entryOnlyMinify = [];
 
@@ -134,13 +134,13 @@ async function buildScripts(entryPoints) {
     console.error(result.error[0]);
     return;
   }
-  
-  entryPoints.forEach(entry=>{
+
+  entryPoints.forEach(entry => {
     console.log(path.basename(entry) + ": Finish");
   })
 
   // Minify
-  if(config.configScriptMinFile != 'default')
+  if (config.configScriptMinFile != 'default')
     return;
 
   entryPoints = entryPoints.reduce((accu, value) => {
@@ -185,27 +185,49 @@ function scriptTask(filePath) {
   let sourceTree = JSON.parse(fs.readFileSync("./app.js.config.json"));
 
   const result = Object.keys(sourceTree)
-  .filter((item) => {
-    return sourceTree[item].indexOf(fileName) != -1;
-  })
-  .map((item) => {
-    return "./app/scripts/" + item + ".js";
-  });
+    .filter((item) => {
+      return sourceTree[item].indexOf(fileName) != -1;
+    })
+    .map((item) => {
+      return "./app/scripts/" + item + ".js";
+    });
 
   result.length && buildScripts(result);
 }
 
-async function removeScript(filePath) {
-  fs.unlinkSync(assetsFolder+"/" + path.basename(filePath));
+const directoryPath = "./app/scripts/";
+let filePaths = [];
+// 
+fs.readdir(directoryPath, (err, files) => {
+  if (err) {
+    console.error("Error reading directory:", err);
+    return;
+  }
 
-  if(config.configScriptMinFile != 'default')
-    fs.unlinkSync(assetsFolder+"/" + path.basename(filePath).replace(".js", ".min.js"));
+  // Filter for JavaScript files
+  const jsFiles = files.filter((file) => path.extname(file) === ".js");
+
+  // Get the full file paths
+  filePaths = jsFiles.map((file) => path.join(directoryPath, file));
+
+});
+
+function reloadScriptTask(filePaths) {
+  buildScripts(filePaths);
+}
+
+// 
+async function removeScript(filePath) {
+  fs.unlinkSync(assetsFolder + "/" + path.basename(filePath));
+
+  if (config.configScriptMinFile != 'default')
+    fs.unlinkSync(assetsFolder + "/" + path.basename(filePath).replace(".js", ".min.js"));
 
   console.log("Deleted " + path.basename(filePath));
 }
 
 
-exports.serve = async ()=>{
+exports.serve = async () => {
 
   config.livePreload && browserSync.init({
     proxy,
@@ -221,6 +243,9 @@ exports.serve = async ()=>{
   });
 
   watch("./app/scripts/**/**/*.js").on("change", scriptTask);
+  watch("./app/scripts/*.js").on("change", () => {
+    reloadScriptTask(filePaths);
+  });
   watch("./app/scripts/*.js").on("change", buildScripts);
   watch("./app/scripts/*.js").on("unlink", removeScript);
   watch("./app/scripts/*.js").on("add", buildScripts);
@@ -231,28 +256,28 @@ exports.serve = async ()=>{
   watch("./app/styles/*.scss").on("unlink", removeCss);
   watch("./app/styles/*.scss").on("add", buildCss);
 
-  const wait = {run: null};
+  const wait = { run: null };
 
-  watch(".tmp/theme.update").on("change", ()=>{
-    if(wait.run !== null)
+  watch(".tmp/theme.update").on("change", () => {
+    if (wait.run !== null)
       clearTimeout(wait.run);
 
-    wait.run = setTimeout(()=>{
+    wait.run = setTimeout(() => {
       browserSync.reload("*.css");
       browserSync.reload("*.js");
       wait.run = null;
     }, 1200);
   });
 }
-exports.buildCSS = async ()=>{
+exports.buildCSS = async () => {
   fs
-  .readdirSync("app/styles/", { withFileTypes: true })
-  .filter((item) => !item.isDirectory())
-  .map((item) => {
-    buildCss("app/styles/" + item.name)
-  });
+    .readdirSync("app/styles/", { withFileTypes: true })
+    .filter((item) => !item.isDirectory())
+    .map((item) => {
+      buildCss("app/styles/" + item.name)
+    });
 }
-exports.buildScript = async ()=>{
+exports.buildScript = async () => {
   buildScripts(
     fs
       .readdirSync("./app/scripts/", { withFileTypes: true })

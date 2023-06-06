@@ -112,3 +112,8 @@ button {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #666;
 }
+
+
+.pointer-events>* {
+  pointer-events: none;
+}

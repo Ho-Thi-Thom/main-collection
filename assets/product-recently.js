@@ -2703,7 +2703,7 @@
           const div = document.createElement("div");
           div.innerHTML = html;
           const elementHidden = div.querySelector(".jsRecently .hidden .card");
-          const hrefValue = elementHidden?.querySelector("a")?.getAttribute("href") ?? null;
+          const hrefValue = elementHidden.parentElement.getAttribute("href") ?? null;
           if (!hrefValue) {
             listHandleInvalid.push(html);
           } else {

@@ -174,8 +174,4 @@ function init() {
     //     document.documentElement.scrollTop = 0;
     // });
 
-
-
-
-
 }

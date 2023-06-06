@@ -7,6 +7,7 @@ import { setLocalStorage } from "./utils";
 
 shopifyReloadSection(init)
 
+
 function init() {
     const jsRecently = document.querySelector('.jsRecently')
     const data = getScript(document.getElementById("recently"));
@@ -46,7 +47,7 @@ function init() {
                 const div = document.createElement("div")
                 div.innerHTML = html
                 const elementHidden = div.querySelector('.jsRecently .hidden .card')
-                const hrefValue = elementHidden?.querySelector('a')?.getAttribute('href') ?? null;
+                const hrefValue = elementHidden.parentElement.getAttribute("href") ?? null;
 
                 if (!hrefValue) {
                     listHandleInvalid.push(html)
@@ -84,4 +85,5 @@ function init() {
         }
         updateData()
     }
+
 }
