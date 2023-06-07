@@ -65,6 +65,10 @@
   outline: none;
 }
 
+.wrapper .card .card__inner .card__image-wrapper .card__group:hover .jsViewCart svg path {
+  fill: #fff;
+}
+
 .wrapper .card .card__inner .card__image-wrapper .card__group:hover svg path {
   stroke: #fff;
 }

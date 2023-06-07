@@ -69,6 +69,7 @@
 
 .card .card__inner .card__image-wrapper .card__group button:hover svg path {
   stroke: #f0f0f0;
+  fill: #fff;
 }
 
 .card .card__inner .card__image-wrapper .tag {

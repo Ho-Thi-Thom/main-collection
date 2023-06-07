@@ -63,9 +63,17 @@
                             outline: none;
                         }
 
+                        .jsViewCart {
+                            svg path {
+                                fill: #ffffff;
+                            }
+                        }
+
                         svg path {
                             stroke: #ffffff;
                         }
+
+
                     }
                 }
 

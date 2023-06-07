@@ -7,6 +7,7 @@ import { isWishItem, toggleWishItem } from "./wishlist-service";
 shopifyReloadSection(init)
 
 function init() {
+
     const wishList = document.querySelector('.wish-list')
     const formEl = document.querySelector('.jsProductForm');
     const productData = getScript(document.getElementById("product_data"), []);
@@ -61,6 +62,7 @@ function init() {
 
     /** Event add to cart */
     addToCart()
+    /** Check input policy */
     checkPolicy();
 
     function initialWishListItem() {

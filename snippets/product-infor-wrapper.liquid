@@ -13,7 +13,6 @@
     {% assign selectedQuantity = variant.inventory_quantity %}
   {% endif %}
 {% endfor %}
-
 <div class="product-infor-wrapper">
   {% form 'product',
     product,
@@ -85,12 +84,14 @@
             <div class="check-policy">
               {% render 'check-policy' %}
             </div>
-            {{ form | payment_button }}
+            <div class="js-btn-payment">
+              {{ form | payment_button }}
+            </div>
             <input
-              name="id"
               value="{{ product.selected_or_first_available_variant.id}}"
               style="display: none;"
               class="jsSubmit"
+              name="id"
             >
           {% when 'list_link' %}
             {% comment %} LIST {% endcomment %}

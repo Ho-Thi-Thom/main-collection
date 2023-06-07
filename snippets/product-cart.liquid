@@ -12,15 +12,14 @@
     type="submit"
     name="add"
     class="btn-add"
-    {% if selectedQuantity == 0 %}
-      disabled
-    {% endif %}
+    disabled
+    data-selected-quantity="{{ selectedQuantity }}"
   >
     {% render 'card' %}
     {% if selectedQuantity > 0 %}
       <span>{{ 'general.product.info.add_to_cart' | t }}</span>
     {% else %}
-      <span class="sold-out">{{ 'general.product.info.sold_out' | t }}</span>
+      <span>{{ 'general.product.info.sold_out' | t }}</span>
     {% endif %}
   </button>
 </div>

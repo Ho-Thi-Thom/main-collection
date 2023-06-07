@@ -131,8 +131,12 @@
   stroke: #fff;
 }
 
-.product-infor-wrapper .product-infor .product-cart .add-to-cart .btn-add:has(> span.sold-out) {
-  opacity: .4;
+.product-infor-wrapper .product-infor .product-cart .add-to-cart:has(> button:disabled) {
+  opacity: .5;
+}
+
+.product-infor-wrapper .product-infor .product-cart .add-to-cart:has(> button:disabled) button {
+  cursor: not-allowed;
 }
 
 .product-infor-wrapper .product-infor .list-link {

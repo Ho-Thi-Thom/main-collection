@@ -97,7 +97,26 @@ function updateElementSKU(element) {
 
 function updateElementAddToCart(element) {
     const btnAdd = document.querySelector(".btn-add");
-    btnAdd.parentNode.replaceChild(element, btnAdd)
+    if (btnAdd && element) {
+        const btnAddSpan = btnAdd.querySelector("span");
+        const elementSpan = element.querySelector("span");
+        if (btnAddSpan && elementSpan) {
+            btnAddSpan.parentNode.replaceChild(elementSpan, btnAddSpan);
+        }
+        const selectedQuantity = element.getAttribute("data-selected-quantity");
+        if (selectedQuantity) {
+            btnAdd.setAttribute("data-selected-quantity", selectedQuantity);
+        }
+        if (parseInt(selectedQuantity) === 0) {
+            btnAdd.setAttribute("disabled", "true")
+        } else {
+            const checkbox = document.querySelector('.cart__condition');
+            if (checkbox.classList.contains("checked")) {
+                btnAdd.removeAttribute("disabled")
+            }
+        }
+
+    }
 }
 
 function updateElementInput(element) {
@@ -213,14 +232,21 @@ async function getCountByVariant(variantId) {
 
 export function checkPolicy() {
     const checkbox = document.getElementById('cart-condition');
-    const cartCondition = document.querySelector('.cart__condition');
 
     checkbox.addEventListener('click', function (event) {
-        // event.stopPropagation();
+        const cartCondition = document.querySelector('.cart__condition');
+        const addButton = document.querySelector("button[name='add']");
+
         if (this.checked) {
             cartCondition.classList.add('checked');
+            const selectedQuantity = addButton.getAttribute("data-selected-quantity");
+            if (parseInt(selectedQuantity) !== 0) {
+                addButton.removeAttribute('disabled');
+            }
         } else {
             cartCondition.classList.remove('checked');
+            addButton.setAttribute('disabled', '');
         }
     });
 }
+

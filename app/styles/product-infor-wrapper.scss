@@ -129,10 +129,14 @@
                     }
                 }
 
-                .btn-add:has(>span.sold-out) {
-                    opacity: 0.4;
-                }
+            }
 
+            .add-to-cart:has(>button:disabled) {
+                opacity: 0.5;
+
+                button {
+                    cursor: not-allowed;
+                }
             }
         }
 
