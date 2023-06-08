@@ -6,7 +6,6 @@
   removeBtns.forEach(function(removeBtn) {
     removeBtn.addEventListener("click", function() {
       const lineIndex = this.closest(".cart__item.jsLineItem").dataset.lineIndex;
-      console.log(lineIndex);
       const quantityInput = document.querySelector(`.cart__item.jsLineItem[data-line-index="${lineIndex}"] .quantity__input`);
       let currentValue = parseInt(quantityInput.value);
       if (currentValue > 1) {
@@ -18,7 +17,6 @@
     addBtn.addEventListener("click", function() {
       const lineIndex = this.closest(".cart__item.jsLineItem").dataset.lineIndex;
       const quantityInput = document.querySelector(`.cart__item.jsLineItem[data-line-index="${lineIndex}"] .quantity__input`);
-      console.log(lineIndex);
       let currentValue = parseInt(quantityInput.value);
       quantityInput.value = currentValue + 1;
     });

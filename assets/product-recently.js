@@ -2653,12 +2653,14 @@
       screen
     };
   }
-  function shopifyReloadSection(callback, isShopifySectionReload = true) {
+  function shopifyReloadSection(callback, sectionId2, isShopifySectionReload = true) {
     if (callback) {
       callback();
       if (isShopifySectionReload) {
-        document.addEventListener("shopify:section:load", () => {
-          callback();
+        document.addEventListener("shopify:section:load", (event) => {
+          if (event.detail.sectionId === sectionId2) {
+            callback();
+          }
         });
       }
     }
@@ -2670,7 +2672,8 @@
   }
 
   // app/scripts/product-recently.js
-  shopifyReloadSection(init);
+  var sectionId = document.querySelector(".recently-container").dataset.sectionId;
+  shopifyReloadSection(init, sectionId);
   function init() {
     const jsRecently = document.querySelector(".jsRecently");
     const data = getScript(document.getElementById("recently"));
@@ -2683,12 +2686,12 @@
       }
       const updateData = async () => {
         const recently = document.querySelector(".recently");
-        const sectionId = jsRecently.dataset.sectionId;
+        const sectionId2 = jsRecently.dataset.sectionId;
         const productCurrent = jsRecently.dataset.productHandel;
         const listHandle = getRecentlyList();
         const listHandleInvalid = [];
         const listPromises = listHandle.filter((item) => item !== productCurrent).map((item) => {
-          return fetch(`/products/${item}?section_id=${sectionId}`);
+          return fetch(`/products/${item}?section_id=${sectionId2}`);
         });
         const promises = await Promise.all(listPromises);
         const data2 = [];

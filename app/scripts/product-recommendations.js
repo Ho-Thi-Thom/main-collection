@@ -1,7 +1,8 @@
 import { tns } from "tiny-slider";
 import { getScript, shopifyReloadSection, tnsSplit } from "./utils";
 
-shopifyReloadSection(init)
+const sectionId = document.querySelector('.recommendations-container').dataset.sectionId
+shopifyReloadSection(init, sectionId)
 
 function init() {
     const element = document.querySelector(".jsRecommendations")

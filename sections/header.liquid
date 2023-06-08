@@ -9,11 +9,6 @@
       alt="logo"
       class="header__logo-image"
     >
-    {% comment %}
-      <div class="header_logo_image">
-
-      </div>
-    {% endcomment %}
   </div>
 
   <div class="header__navlink header__navlink__{{ section.settings.select_position }} {{section.settings.text_color}}">
@@ -32,17 +27,20 @@
         class="header__icon-user"
       >
     </a>
-    <a href="#" class="header__icon-link">
-      <div class="header__icon-healt">
-        <div class="header__icon-healtImage">
-          <img
-            src="https://cdn.shopify.com/s/files/1/0742/4648/8339/files/heart_healt.svg?v=1680668907"
-            alt="icon healt"
-          >
+    {% comment %}
+      <a href="#" class="header__icon-link">
+        <div class="header__icon-healt">
+          <div class="header__icon-healtImage">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0742/4648/8339/files/heart_healt.svg?v=1680668907"
+              alt="icon healt"
+            >
+          </div>
+          <div class="header__icon-badge jsWishList">0</div>
         </div>
-        <div class="header__icon-badge jsWishList">0</div>
-      </div>
-    </a>
+      </a>
+    {% endcomment %}
+    {% render 'arn_wl_cp_buttons', type: 'wl_show_btn', product_handle: product.handle %}
     <a href="#" class="header__icon-link">
       <div class="header__icon-cart">
         <img

@@ -25,6 +25,7 @@
   <div
     class="shopify-section-{{ section.id}} recommendations-container jsRecommendations"
     data-url="{{ routes.product_recommendations_url }}?product_id={{product.id}}&limit={{ section.settings.limit }}&intent=related&section_id={{ section.id }}"
+    data-section-id="{{ section.id }}"
   >
     {%- if recommendations.performed? -%}
       {%- if recommendations.products_count > 0 -%}

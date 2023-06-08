@@ -82,7 +82,14 @@
     {{ 'theme-editor.js' | asset_url | script_tag }}
     {{ 'countup.js' | asset_url | script_tag }}
     {{ 'product-card.js' | asset_url | script_tag }}
-  </head>
+  {% include 'arn_wl_cp_settings' %}
+{% include 'arn_wl_cp_styles' %}
+{% include 'arn_icons_define' %}
+{% if shop.metafields.arena.wl_cp_settings.general_settings.app_script == false %}
+            <script defer crossorigin="anonymous" src="{{ 'arn-wishlist-compare.js' | asset_url }}"></script>
+          {% endif %}{% if shop.metafields.arena.wl_cp_settings.value.general_settings.app_script == false %}
+            <script defer crossorigin="anonymous" src="{{ 'arn-wishlist-compare.js' | asset_url }}"></script>
+          {% endif %}</head>
   <body>
     <div id="bg-color" class=""></div>
     {% section 'header' %}

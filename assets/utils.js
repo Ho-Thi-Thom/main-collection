@@ -50,12 +50,14 @@
       screen
     };
   }
-  function shopifyReloadSection(callback, isShopifySectionReload = true) {
+  function shopifyReloadSection(callback, sectionId, isShopifySectionReload = true) {
     if (callback) {
       callback();
       if (isShopifySectionReload) {
-        document.addEventListener("shopify:section:load", () => {
-          callback();
+        document.addEventListener("shopify:section:load", (event) => {
+          if (event.detail.sectionId === sectionId) {
+            callback();
+          }
         });
       }
     }

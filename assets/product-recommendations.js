@@ -2631,19 +2631,22 @@
       screen
     };
   }
-  function shopifyReloadSection(callback, isShopifySectionReload = true) {
+  function shopifyReloadSection(callback, sectionId2, isShopifySectionReload = true) {
     if (callback) {
       callback();
       if (isShopifySectionReload) {
-        document.addEventListener("shopify:section:load", () => {
-          callback();
+        document.addEventListener("shopify:section:load", (event) => {
+          if (event.detail.sectionId === sectionId2) {
+            callback();
+          }
         });
       }
     }
   }
 
   // app/scripts/product-recommendations.js
-  shopifyReloadSection(init);
+  var sectionId = document.querySelector(".recommendations-container").dataset.sectionId;
+  shopifyReloadSection(init, sectionId);
   function init() {
     const element = document.querySelector(".jsRecommendations");
     const data = getScript(document.getElementById("recommendation"), "");

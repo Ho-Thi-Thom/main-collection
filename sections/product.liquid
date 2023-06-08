@@ -18,7 +18,7 @@
   assign sectionID = '#shopify-section-' | append: section.id
   assign productSelect = product.selected_or_first_available_variant
 -%}
-<div class="product-section-wrapper container_wrapper">
+<div class="product-section-wrapper container_wrapper" data-section-id="{{ section.id }}">
   <div class="product-layout">
     <div class="product-container">
       {% render 'product-gallery-wrapper', product: product %}

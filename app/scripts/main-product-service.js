@@ -149,9 +149,7 @@ export function updateCssOption(titles, productOptions, name) {
     }, []);
 
     const mergedArray = filteredPositions.map((element, index) => [element, result[index]]);
-    // console.log("mergedArray", mergedArray)
     const checkPositions = document.querySelectorAll(".check-position");
-    // console.log("checkPositions", checkPositions)
     mergedArray.forEach(item => {
         checkPositions.forEach(element => {
             if (item[0] == element.dataset.position) {

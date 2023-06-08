@@ -3,11 +3,10 @@ import { pushRecently } from "./product-recently-service";
 import { addToCart as addToCartByForm, createUrl, getScript, shopifyReloadSection, updateUrl } from "./utils";
 import { isWishItem, toggleWishItem } from "./wishlist-service";
 
-
-shopifyReloadSection(init)
+const sectionId = document.querySelector('.product-section-wrapper').dataset.sectionId
+shopifyReloadSection(init, sectionId)
 
 function init() {
-
     const wishList = document.querySelector('.wish-list')
     const formEl = document.querySelector('.jsProductForm');
     const productData = getScript(document.getElementById("product_data"), []);

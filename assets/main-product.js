@@ -2648,19 +2648,21 @@
     }
     return window.location.pathname + "?" + urlSearchParams.toString();
   }
-  function updateUrl(url, sectionId) {
+  function updateUrl(url, sectionId2) {
     url += url.includes("?") ? "&" : "?";
-    return url += `section_id=${sectionId}`;
+    return url += `section_id=${sectionId2}`;
   }
   function uppercaseFirstLetter(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
-  function shopifyReloadSection(callback, isShopifySectionReload = true) {
+  function shopifyReloadSection(callback, sectionId2, isShopifySectionReload = true) {
     if (callback) {
       callback();
       if (isShopifySectionReload) {
-        document.addEventListener("shopify:section:load", () => {
-          callback();
+        document.addEventListener("shopify:section:load", (event) => {
+          if (event.detail.sectionId === sectionId2) {
+            callback();
+          }
         });
       }
     }
@@ -2966,7 +2968,8 @@
   }
 
   // app/scripts/main-product.js
-  shopifyReloadSection(init);
+  var sectionId = document.querySelector(".product-section-wrapper").dataset.sectionId;
+  shopifyReloadSection(init, sectionId);
   function init() {
     const wishList = document.querySelector(".wish-list");
     const formEl = document.querySelector(".jsProductForm");
@@ -3022,7 +3025,7 @@
         }
       });
     }
-    function getUrl(sectionId) {
+    function getUrl(sectionId2) {
       const selects = document.querySelectorAll(".js-variant-change");
       const radios = document.querySelectorAll(".js-radio");
       const value = getValue(selects, radios);
@@ -3037,7 +3040,7 @@
         searchParams.set("variant", data.id);
       });
       history.pushState(null, null, url);
-      return updateUrl(url, sectionId);
+      return updateUrl(url, sectionId2);
     }
     function addToCart2() {
       if (formProduct && formProduct.dataset.type === "b") {

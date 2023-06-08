@@ -61,14 +61,15 @@ export function tnsSplit(text = "", splitCharacter = ";") {
 }
 
 
-export function shopifyReloadSection(callback, isShopifySectionReload = true) {
+export function shopifyReloadSection(callback, sectionId, isShopifySectionReload = true) {
     if (callback) {
         callback()
-
         if (isShopifySectionReload) {
             /** shopify:section:load */
-            document.addEventListener("shopify:section:load", () => {
-                callback()
+            document.addEventListener("shopify:section:load", (event) => {
+                if (event.detail.sectionId === sectionId) {
+                    callback()
+                }
             });
         }
     }

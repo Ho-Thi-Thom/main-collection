@@ -97,7 +97,20 @@
             {% comment %} LIST {% endcomment %}
             <div class="list-link">
               <div class="wish-list">
-                {% render 'heart' %}
+                {% comment %}
+                  {% render 'heart' %}
+                  {{ 'general.product.info.add_to_wishlist' | t }}
+                {% endcomment %}
+                {% if shop.metafields.arena.wl_cp_settings.wishlist_settings.launch_add.check_add_variant == true
+                  or shop.metafields.arena.wl_cp_settings.value.wishlist_settings.launch_add.check_add_variant == true
+                %}
+                  {% render 'arn_wl_cp_buttons',
+                    type: 'wl_add_btn',
+                    product_handle: product.selected_or_first_available_variant.id
+                  %}
+                {% else %}
+                  {% render 'arn_wl_cp_buttons', type: 'wl_add_btn', product_handle: product.handle %}
+                {% endif %}
                 {{ 'general.product.info.add_to_wishlist' | t }}
               </div>
             </div>

@@ -5,8 +5,8 @@ import { getScript, shopifyReloadSection, tnsSplit } from "./utils";
 import { RECENTLY_LIST_KEY } from "./constants";
 import { setLocalStorage } from "./utils";
 
-shopifyReloadSection(init)
-
+const sectionId = document.querySelector('.recently-container').dataset.sectionId
+shopifyReloadSection(init, sectionId)
 
 function init() {
     const jsRecently = document.querySelector('.jsRecently')
