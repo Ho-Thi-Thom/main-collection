@@ -41,7 +41,7 @@
       </a>
     {% endcomment %}
     {% render 'arn_wl_cp_buttons', type: 'wl_show_btn', product_handle: product.handle %}
-    <a href="#" class="header__icon-link">
+    <a href="/cart" class="header__icon-link">
       <div class="header__icon-cart">
         <img
           src="https://cdn.shopify.com/s/files/1/0742/4648/8339/files/shopping-cart-cart-shopping-commerce-ecommerce_1.svg?v=1680668903"
@@ -49,7 +49,7 @@
           class="header__icon-cardImage"
         >
 
-        <div class="header__icon-badge">0</div>
+        <div class="header__icon-badge jsCountItemCart">{{ cart.item_count }}</div>
       </div>
     </a>
     <button class="header-bugger">

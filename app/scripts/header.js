@@ -19,3 +19,5 @@ menuAction(closeButton, function () {
 });
 
 updateWishListHeader()
+
+

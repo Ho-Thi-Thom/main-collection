@@ -1,4 +1,17 @@
-<div>cart</div>
+<link
+  rel="stylesheet"
+  href="{{ 'cart.css' | asset_url }}"
+  media="all"
+>
+
+<div class="cart-section-wrapper container_wrapper">
+  {% if cart.item_count > 0 %}
+    {% render 'cart-component' %}
+  {% else %}
+    {% render 'cart-empty' %}
+  {% endif %}
+</div>
+
 {% schema %}
 {
   "name": "cart",

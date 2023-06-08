@@ -1,0 +1,45 @@
+<link
+  rel="stylesheet"
+  href="{{ 'cart-item.css' | asset_url }}"
+  media="all"
+>
+
+<div class="cart__item jsLineItem" data-line-index="{{ index}}">
+  <div class="cart__item-img">
+    <a href="{{ item.url | within: collection.all}}">
+      <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+    </a>
+  </div>
+  <div class="cart__item-info">
+    <div class="cart__item-total-price jsLineUpdate">
+      <div class="price">price</div>
+      <div class="price-compare">price-compare</div>
+    </div>
+    <div class="cart__item-info-detail">
+      <p class="product-title">
+        <a href="{{ item.url}}">{{ item.title }}</a>
+      </p>
+      <div class="cart__item-options">
+        {%- unless item.product.has_only_default_variant %}
+          <div class="options">
+            {% for option in item.options_with_values -%}
+              <p>{{ option.name }}: {{ option.value }}</p>
+            {%- endfor %}
+          </div>
+        {% endunless %}
+      </div>
+      <div class="cart__item-group">
+        <div class="cart-item__quantity-wrapper">
+          <span class="icon remove__qlt">
+            {% render 'icon-remove' %}
+          </span>
+          <input type="number" value="{{ item.quantity }}" min="1" class="quantity__input" name="quantity">
+          <span class="icon add__qlt">
+            {% render 'icon-add' %}
+          </span>
+        </div>
+        <div class="btn-remove-all"><a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a></div>
+      </div>
+    </div>
+  </div>
+</div>

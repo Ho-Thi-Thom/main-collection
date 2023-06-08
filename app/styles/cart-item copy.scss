@@ -1,0 +1,106 @@
+.cart__item {
+    display: flex;
+    gap: 20px;
+    height: 100%;
+    flex-wrap: wrap;
+}
+
+.cart__item-img {
+    flex: 0 0 33.333%;
+}
+
+.cart__item-info {
+    height: 100%;
+    flex: 1;
+    position: relative;
+
+    .cart__item-total-price {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 18px;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-end;
+        gap: 10px;
+
+        .price {
+            font-size: 18px;
+        }
+
+        .price-compare {
+            font-size: 14px;
+        }
+    }
+
+    .cart__item-info-detail {
+        .product-title {
+            text-transform: uppercase;
+            padding-top: 30px;
+        }
+
+        .cart__item-options {
+            .options {
+                display: flex;
+                flex-direction: column;
+
+                p {
+                    margin: 7px 0;
+                }
+            }
+        }
+
+        .cart__item-group {
+            margin-top: 30px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            .cart-item__quantity-wrapper {
+                display: flex;
+                flex-wrap: nowrap;
+                color: white;
+
+                .icon {
+                    cursor: pointer;
+                    width: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #F2F2F2;
+                }
+
+                .remove__qlt {
+                    border-radius: 4px 0 0 4px;
+                }
+
+                .quantity__input {
+                    width: 50px;
+                    height: 50px;
+                    text-align: center;
+                    border: none;
+                    outline: none;
+                    background-color: #F2F2F2;
+                }
+
+                .add__qlt {
+                    border-radius: 0 4px 4px 0;
+
+                }
+            }
+
+            .btn-remove-all {
+                min-width: 50px;
+                text-align: center;
+                text-transform: uppercase;
+                color: #808080;
+
+                a {
+                    text-decoration: underline;
+                    text-underline-offset: 2;
+                }
+            }
+        }
+    }
+}

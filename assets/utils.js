@@ -103,6 +103,7 @@
               title: "Add to Cart",
               textContent: `Add success "${data2.items[0].product_title}"`
             };
+            updateCountCart();
             setValuePopupInfo(options);
           });
           break;
@@ -124,5 +125,23 @@
     }).catch((error) => {
       console.log("Error:", error);
     });
+  }
+  async function countItemCart() {
+    try {
+      const response = await fetch(window.Shopify.routes.root + "cart.js");
+      const data = await response.json();
+      return data.item_count;
+    } catch (error) {
+      return error;
+    }
+  }
+  async function updateCountCart() {
+    try {
+      const count = await countItemCart();
+      const elm = document.querySelector(".jsCountItemCart");
+      elm.textContent = count;
+    } catch (error) {
+      console.error(error);
+    }
   }
 })();
