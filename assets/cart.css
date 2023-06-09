@@ -65,6 +65,10 @@
   align-items: center;
 }
 
+.cart-section-wrapper .cart-wrapper form .cart__form-header .item-product {
+  max-width: 200px;
+}
+
 .cart-section-wrapper .cart-wrapper form .cart__form-header .item-details {
   display: flex;
   justify-content: space-between;

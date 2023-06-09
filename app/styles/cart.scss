@@ -64,7 +64,9 @@
                     align-items: center;
                 }
 
-                .item-product {}
+                .item-product {
+                    max-width: 200px;
+                }
 
                 .item-details {
                     display: flex;

@@ -4,7 +4,7 @@
   media="all"
 >
 
-<div class="cart-section-wrapper container_wrapper">
+<div class="cart-section-wrapper container_wrapper" data-section-id="{{ section.id }}">
   {% if cart.item_count > 0 %}
     {% render 'cart-component' %}
   {% else %}

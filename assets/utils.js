@@ -144,4 +144,20 @@
       console.error(error);
     }
   }
+  async function fetchAPIUpdateItemCart(options) {
+    const { variantId, newQuantity, sectionId } = options;
+    const data = await fetch("/cart/change.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: variantId,
+        quantity: newQuantity,
+        sections: sectionId
+      })
+    });
+    const res = await data.json();
+    return res;
+  }
 })();

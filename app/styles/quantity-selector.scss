@@ -1,0 +1,41 @@
+.quantity-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    color: white;
+
+    .icon {
+        cursor: pointer;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #F2F2F2;
+    }
+
+    .remove__qlt {
+        border-radius: 4px 0 0 4px;
+    }
+
+    .add__qlt {
+        border-radius: 0 4px 4px 0;
+    }
+
+    .quantity__input {
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border: none;
+        outline: none;
+        background-color: #F2F2F2;
+    }
+
+    .quantity__input::-webkit-inner-spin-button,
+    .quantity__input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .quantity__input[type="number"] {
+        -moz-appearance: textfield;
+    }
+}

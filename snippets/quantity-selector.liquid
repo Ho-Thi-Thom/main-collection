@@ -1,0 +1,32 @@
+<link
+  rel="stylesheet"
+  href="{{ 'quantity-selector.css' | asset_url }}"
+  media="all"
+>
+
+<div class="quantity-wrapper ">
+  <span
+    class="icon remove__qlt pointer-events"
+    {% comment %} data-href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ item.quantity | minus: 1  }}&section_id={{ section.id }}" {% endcomment %}
+  >
+    {% render 'icon-remove' %}
+  </span>
+  <input
+    type="number"
+    value="{{ item.quantity}}"
+    min="1"
+    max="{{ max }}"
+    class="quantity__input jsLineUpdate"
+    name="updates[]"
+    id="Quantity-{{ item.index | plus: 1 }}"
+    data-key="{{ item.key }}"
+    data-sections_url="{{ item.url}}"
+    data-sections="{{ section.id}}"
+  >
+  <span
+    class="icon add__qlt pointer-events"
+    {% comment %} data-href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ item.quantity | plus: 1  }}&section_id={{ section.id }}" {% endcomment %}
+  >
+    {% render 'icon-add' %}
+  </span>
+</div>

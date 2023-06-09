@@ -1,13 +1,14 @@
-<ul class="cart__item jsLineItem" data-line-index="{{ index}}">
+<ul class="cart__item jsLineItem" data-line-index="{{ item.index | plus: 1 }}">
   <li class="cart__item-img flex-basis-1/3">
     <a href="{{ item.url | within: collection.all}}">
       <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
     </a>
   </li>
-  <li class="cart__item-info flex-1">
+  <li class="cart__item-content flex-1">
     <div class="cart__item-info-general">
+      <p class="product-vendor">{{ item.vendor }}</p>
       <p class="product-title">
-        <a href="{{ item.url}}">{{ item.title }}</a>
+        {{ item.title }}
       </p>
       <div class="cart__item-options">
         {%- unless item.product.has_only_default_variant %}
@@ -19,26 +20,28 @@
         {% endunless %}
       </div>
     </div>
-    <div class="cart__item-info price">
-      <p class="price">price</p>
-      <p class="price-compare">price-compare</p>
+    <div class="cart__item-info flex-1 price">
+      <p class="price">
+        {{ item.final_price | money }}
+      </p>
     </div>
-    <div class="cart__item-info qty">
-      <div class="cart-item__quantity-wrapper">
-        <span class="icon remove__qlt">
-          {% render 'icon-remove' %}
-        </span>
-        <input type="number" value="{{ item.quantity }}" min="1" class="quantity__input" name="quantity">
-        <span class="icon add__qlt">
-          {% render 'icon-add' %}
-        </span>
+    <div class="cart__item-info flex-1 qty">
+      {%- assign max_allowed_quantity = item.variant.inventory_quantity -%}
+      {% render 'quantity-selector', item: item, max: max_allowed_quantity %}
+    </div>
+    <div class="cart__item-info flex-1 sub jsLineUpdate">
+      <p>
+        {% if item.original_line_price != item.line_price %}{{ item.original_line_price | money }}{% endif %}
+        {{ item.line_price | money }}
+        {% for discount in item.discounts -%}
+          {{- discount.title -}}
+        {%- endfor %}
+      </p>
+    </div>
+    <div class="cart__item-info flex-1 remove">
+      <div class="btn-remove-all">
+        <a href="/cart/change?line={{  item.index | plus: 1 }}&amp;quantity=0">remove</a>
       </div>
-    </div>
-    <div class="cart__item-info sub">
-      <span>price*qty</span>
-    </div>
-    <div class="cart__item-info remove">
-      <div class="btn-remove-all"><a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a></div>
     </div>
   </li>
 </ul>
