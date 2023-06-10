@@ -3,7 +3,6 @@ export function updateInfoCartPage(data, lineIndex) {
     div.innerHTML = data;
     const liElement = document.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
     const liElementNew = div.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
-    const inputElementNew = liElementNew.querySelector('.quantity__input');
     const jsLineUpdatesOld = liElement.querySelectorAll(".jsLineUpdate");
     const jsLineUpdatesNew = liElementNew.querySelectorAll(".jsLineUpdate");
 
@@ -11,27 +10,4 @@ export function updateInfoCartPage(data, lineIndex) {
         item.parentNode.replaceChild(jsLineUpdatesNew[index], item);
     });
 
-    return inputElementNew;
-}
-
-
-export function checkMaxCartPage() {
-    const listItemCart = document.querySelectorAll(".jsLineItem");
-    listItemCart.forEach(line => {
-        const input = line.querySelector('.quantity__input')
-        const add__qlt = line.querySelector('.add__qlt')
-        checkMaxLine(input, add__qlt);
-    })
-}
-
-export function checkMaxLine(elmInput, elmAdd) {
-    const currentValue = parseInt(elmInput.getAttribute('value'))
-    const maxValue = parseInt(elmInput.getAttribute('max'))
-    if (currentValue >= maxValue) {
-        elmAdd.setAttribute('disabled', '')
-    } else {
-        if (elmAdd.hasAttribute('disabled')) {
-            elmAdd.removeAttribute('disabled')
-        }
-    }
 }
