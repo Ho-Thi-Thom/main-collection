@@ -4,13 +4,13 @@
   media="all"
 >
 
-<div class="quantity-wrapper ">
-  <span
+<div class="quantity-wrapper">
+  <button
+    type="button"
     class="icon remove__qlt pointer-events"
-    {% comment %} data-href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ item.quantity | minus: 1  }}&section_id={{ section.id }}" {% endcomment %}
   >
     {% render 'icon-remove' %}
-  </span>
+  </button>
   <input
     type="number"
     value="{{ item.quantity}}"
@@ -23,10 +23,10 @@
     data-sections_url="{{ item.url}}"
     data-sections="{{ section.id}}"
   >
-  <span
+  <button
+    type="button"
     class="icon add__qlt pointer-events"
-    {% comment %} data-href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ item.quantity | plus: 1  }}&section_id={{ section.id }}" {% endcomment %}
   >
     {% render 'icon-add' %}
-  </span>
+  </button>
 </div>

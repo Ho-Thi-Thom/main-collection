@@ -1,10 +1,10 @@
-<ul class="cart__item jsLineItem" data-line-index="{{ item.index | plus: 1 }}">
-  <li class="cart__item-img flex-basis-1/3">
+<li class="cart__item jsLineItem" data-line-index="{{ item.index | plus: 1 }}">
+  <div class="cart__item-img flex-basis-1/3">
     <a href="{{ item.url | within: collection.all}}">
       <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
     </a>
-  </li>
-  <li class="cart__item-content flex-1">
+  </div>
+  <div class="cart__item-content flex-1">
     <div class="cart__item-info-general">
       <p class="product-vendor">{{ item.vendor }}</p>
       <p class="product-title">
@@ -43,5 +43,5 @@
         <a href="/cart/change?line={{  item.index | plus: 1 }}&amp;quantity=0">remove</a>
       </div>
     </div>
-  </li>
-</ul>
+  </div>
+</li>

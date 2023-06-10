@@ -122,16 +122,16 @@
                 {% when 'child_icon-social' %}
                   {% assign item = block.settings %}
                   {% capture blockIcon %}
-                 {{ blockIcon }}
-                  <a href="{{ item.social-icon-url }}">
-                    <div class="social__item-icon">
-                    <img
-                      src="{{ item.social-icon | image_url }}"
-                      alt="icon"
-                      class="social__item-icon-img">
-                  </div>
-                  </a>
-               {% endcapture %}
+                   {{ blockIcon }}
+                    <a href="{{ item.social-icon-url }}">
+                      <div class="social__item-icon">
+                      <img
+                        src="{{ item.social-icon | image_url }}"
+                        alt="icon"
+                        class="social__item-icon-img">
+                    </div>
+                    </a>
+                 {% endcapture %}
               {% endcase %}
             {% endfor %}
             <div class="product-social-sharing">

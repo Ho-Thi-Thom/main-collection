@@ -8,7 +8,7 @@
     <div class="progress__bar"></div>
     <div class="progress__bar-msg">YOU ARE $177.32 AWAY FROM FREE SHIPPING</div>
   </div>
-  {% form 'cart', cart, class: 'jsCartForm' %}
+  {% form 'cart', cart, class: 'jsCartForm', action: routes.cart_url %}
     <div class="cart__form-header">
       <div class="item-product flex-basis-1/3">
         <p class="cart__form-header-label">Product</p>
@@ -21,10 +21,13 @@
         <p class="cart__form-header-label flex-1"></p>
       </div>
     </div>
-    <div class="cart__form-items gird-column">
+    <ul class="cart__form-items gird-column">
       {% for item in cart.items %}
         {% render 'cart-item', item: item %}
       {% endfor %}
+    </ul>
+    <div class="js-btn-payment">
+      <input type="submit" name="checkout" value="Checkout">
     </div>
   {% endform %}
 </div>
