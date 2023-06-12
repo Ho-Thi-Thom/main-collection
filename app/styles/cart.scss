@@ -59,7 +59,8 @@
                 flex-wrap: wrap;
 
                 .cart__form-header-label {
-                    font-weight: bold;
+                    font-weight: 500;
+
                     display: flex;
                     align-items: center;
                 }
@@ -80,17 +81,166 @@
             }
 
         }
+    }
 
+    .section-footer {
+        display: flex;
+        gap: 30px;
+        justify-content: space-between;
 
+        .cart-summary {
+            flex: 1;
 
+            .cart__summary-inner {
+                padding: 35px 40px 40px;
+                border: 1px solid #000;
+                border-radius: 4px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
 
+                .cart__summary-line {
+                    font-size: 13px;
+                    align-items: center;
+                    flex-wrap: nowrap;
+                    padding: 7px 0;
+                }
 
+                .cart__summary-line--heading {
+                    flex: 0 0 35%;
+                }
 
+                .cart__summary-line--content {}
 
+                .cart__summary-line--total,
+                .cart__summary-line--discount {
+                    border-bottom: 1px solid #e2dbdb;
+                }
 
+                .cart__summary-line--tax {
+                    bottom: none;
+                    font-size: 12px;
+                    color: #666666;
+                }
 
+                .accordion-initialized {
+                    span {
+                        font-size: 12px;
+                        color: #13ad4f;
+                        border-bottom: 1px solid #13ad4f;
+                        padding-bottom: 2px;
+                        cursor: pointer;
+                    }
 
+                    .cart__form-note {
+                        margin-top: 20px;
+                        max-height: 0;
+                        overflow: hidden;
+                        transition: max-height 0.3s ease;
 
+                        textarea {
+                            height: 120px;
+                            background-color: #f2f2f2;
+                            width: 100%;
+                            border-radius: 4px;
+                        }
+                    }
 
+                    .cart__form-note.active {
+                        max-height: 1000px;
+                    }
+                }
+
+                .cart__summary-checkout {
+                    .btn-cart-checkout {
+                        width: 100%;
+                        padding: 10px 15px;
+                        font-size: 14px;
+                        font-weight: 500;
+
+                        color: #ffffff;
+                        background-color: #13ad4f;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+
+                        &:hover {
+                            background-color: #0b8c3d;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 
+        .shipping-rates {
+            flex: 2;
+            border-radius: 4px;
+            border: 1px solid #000;
+            padding: 35px 40px 40px;
+
+            .shipping-content {
+                .shipping-title {
+                    font-size: 14px;
+                    font-weight: 500;
+                    margin-bottom: 10px;
+                }
+
+                .shipping-form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    .form-field {
+                        .label-field {
+                            font-weight: 500;
+                            font-size: 14px;
+                            margin-bottom: 10px;
+                        }
+
+                        .select-field {
+                            width: 100%;
+                            padding: 8px;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                        }
+
+                        .input-field {
+                            width: 100%;
+                            padding: 8px;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                        }
+                    }
+
+                    .form-button-group {
+                        .btn {
+                            display: inline-block;
+                            padding: 10px 20px;
+                            background-color: #333;
+                            color: #fff;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+
+                            .state-loading {
+                                display: none;
+                            }
+                        }
+
+                        .btn.loading {
+                            .state-default {
+                                display: none;
+                            }
+
+                            .state-loading {
+                                display: inline-block;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

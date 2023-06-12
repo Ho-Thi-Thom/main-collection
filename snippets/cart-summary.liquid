@@ -1,0 +1,43 @@
+<div class="cart-summary">
+  <div class="cart__summary-inner">
+    <div class="cart__summary-line cart__summary-line--total flex justify-content-between">
+      <div class="cart__summary-line--heading">{{- 'general.cart.summary.text_total' | t -}}</div>
+      <p class="cart__summary-line--content js-cart-update jsCartTotal">
+        <span class="money">
+          {{ cart.total_price | money }}
+        </span>
+      </p>
+    </div>
+
+    <div class="cart__summary-line cart__summary-line--discount flex justify-content-between">
+      <p class="cart__summary-line--heading">{{- 'general.cart.summary.text_discount' | t -}}</p>
+      <p class="cart__summary-line--content js-cart-update jsCartDiscount">
+        <span class="money">{{ cart.total_discount | money }}</span>
+      </p>
+    </div>
+
+    <div class="cart__summary-line cart__summary-line--tax">
+      <p class="cart__summary-line--heading">{{- 'general.cart.summary.tax' | t -}}</p>
+    </div>
+
+    <div class="accordion-initialized">
+      <span class="accordion-trigger">{{- 'general.cart.summary.note' | t -}}</span>
+      <div class="cart__form-note">
+        <textarea name="note" id="cart-note">{{ cart.note }}</textarea>
+      </div>
+    </div>
+
+    <div class="cart__summary-line flex justify-content-between cart__summary-checkout">
+      <button
+        type="submit"
+        id="checkout"
+        class="btn-cart-checkout"
+        name="checkout"
+        form="cart_form"
+        value="Checkout"
+      >
+        {{- 'general.cart.summary.btn_checkout' | t -}}
+      </button>
+    </div>
+  </div>
+</div>

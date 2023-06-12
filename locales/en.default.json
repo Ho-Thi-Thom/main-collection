@@ -16,6 +16,23 @@
         "add_to_cart":"Add to cart",
         "text_police": "I agree with the terms and conditions"
        }
+    },
+    "cart":{
+      "shipping":{
+        "title":"Calculate Shipping:",
+        "country":"Country",
+        "province":"aaaa",
+        "zip":"Zip / Postal Code",
+        "button_submit":"Calculate shipping",
+        "button_submited":"Calculating..."
+      },
+      "summary":{
+        "text_total":"Total",
+        "text_discount":"Discount",
+        "tax":"Tax included at checkout",
+        "note":"Add note to your order",
+        "btn_checkout":" Proceed to checkout"
+      }
     }
     
   }

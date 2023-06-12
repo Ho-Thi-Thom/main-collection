@@ -11,4 +11,29 @@
       item.parentNode.replaceChild(jsLineUpdatesNew[index], item);
     });
   }
+  function updateDataCart(note) {
+    fetch("/cart/update.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ note })
+    });
+  }
+  async function fetchAPIUpdateItemCart(options) {
+    const { variantId, newQuantity, sectionId } = options;
+    const data = await fetch("/cart/change.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: variantId,
+        quantity: newQuantity,
+        sections: sectionId
+      })
+    });
+    const res = await data.json();
+    return res;
+  }
 })();

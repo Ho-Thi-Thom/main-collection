@@ -38,7 +38,11 @@
             {% render 'icon-add' %}
           </span>
         </div>
-        <div class="btn-remove-all"><a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a></div>
+        <div class="btn-remove-all">
+          <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+            {% render 'deleted' %}
+          </a>
+        </div>
       </div>
     </div>
   </div>

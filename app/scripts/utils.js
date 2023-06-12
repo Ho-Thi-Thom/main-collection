@@ -30,6 +30,14 @@ export function getScript(selector, defaultValue) {
     }
 }
 
+export function createUrlCustom(intURl = '', initParam = {}, callback) {
+    const urlSearchParams = new URLSearchParams(initParam);
+    if (callback && typeof callback === "function") {
+        callback(urlSearchParams);
+    }
+    return intURl ? intURl + "?" + urlSearchParams.toString() : window.location.pathname + "?" + urlSearchParams.toString();
+}
+
 export function createUrl(callback, initParam) {
     const urlSearchParams = new URLSearchParams(initParam)
     if (callback && typeof callback === "function") {
@@ -168,20 +176,3 @@ async function updateCountCart() {
     }
 }
 
-export async function fetchAPIUpdateItemCart(options) {
-    const { variantId, newQuantity, sectionId } = options;
-
-    const data = await fetch('/cart/change.js', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id: variantId,
-            quantity: newQuantity,
-            sections: sectionId
-        })
-    })
-    const res = await data.json();
-    return res
-}

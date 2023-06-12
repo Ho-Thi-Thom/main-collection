@@ -4,12 +4,18 @@
   media="all"
 >
 
-<div class="cart-section-wrapper container_wrapper" data-section-id="{{ section.id }}">
-  {% if cart.item_count > 0 %}
-    {% render 'cart-component' %}
-  {% else %}
-    {% render 'cart-empty' %}
-  {% endif %}
+<div class="cart-section-wrapper contacart.shippinginer_wrapper" data-section-id="{{ section.id }}">
+  <div class="section-content">
+    {% if cart.item_count > 0 %}
+      {% render 'cart-component' %}
+    {% else %}
+      {% render 'cart-empty' %}
+    {% endif %}
+  </div>
+  <div class="section-footer">
+    {% render 'shipping-rates' %}
+    {% render 'cart-summary' %}
+  </div>
 </div>
 
 {% schema %}
@@ -20,3 +26,4 @@
   "blocks": []
 }
 {% endschema %}
+{{ 'cart.js' | asset_url | script_tag }}

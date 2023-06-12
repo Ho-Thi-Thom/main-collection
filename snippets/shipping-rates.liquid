@@ -1,0 +1,66 @@
+<div class="shipping-rates jsShippingRates" data-url="{{ routes.cart_url | append: '/shipping_rates.json'  }}">
+  <div class="shipping-content">
+    <p class="shipping-title">{{ 'general.cart.shipping.title' | t }}</p>
+
+    <form action="{{ routes.cart_url}}" class="shipping-form">
+      <div class="form-field">
+        <label class="label-field" for="addressCountry{{ object.id}}">
+          {{- 'general.cart.shipping.country' | t -}}
+        </label>
+        <select
+          class="select-field"
+          id="addressCountry{{ object.id}}"
+          name="shipping_address[country]"
+          data-default="{% if shop.customer_accounts_enabled and customer %}{{ customer.default_address.country }}{% endif %}"
+          required
+        >
+          {{ country_option_tags }}
+        </select>
+      </div>
+
+      <div class="form-field" style="display:none;">
+        <label class="label-field" for="addressProvince{{object.id}}" id="address_province_label">
+          {{- 'general.cart.shipping.province' | t -}}
+        </label>
+        <select
+          class="select-field"
+          id="addressProvince{{object.id}}"
+          name="shipping_address[province]"
+          data-default="{% if shop.customer_accounts_enabled and customer and customer.default_address.province != '' %}{{ customer.default_address.province }}{% endif %}"
+        ></select>
+      </div>
+
+      <div class="form-field">
+        <label class="label-field" for="addressZip{{ object.id}}">{{- 'general.cart.shipping.zip' | t -}}</label>
+        <input
+          class="input-field"
+          type="text"
+          id="addressZip{{object.id}}"
+          name="shipping_address[zip]"
+          {% if shop.customer_accounts_enabled and customer %}
+            value="{{ customer.default_address.zip }}"
+          {% endif %}
+          required
+        >
+      </div>
+
+      <div class="form-field form-button-group">
+        <button class="btn btn-primary" type="submit">
+          <span class="state-default">{{ 'general.cart.shipping.button_submit' | t }}</span>
+          <span class="state-loading">{{ 'general.cart.shipping.button_submited' | t }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="wapper-response">
+    <p class="response-title js-response-title"></p>
+    <ul class="shipping-list js-shipping-result"></ul>
+  </div>
+
+  <template>
+    <li class="shipping-item">
+      <span class="shipping-name"></span>&nbsp;&ndash;&nbsp;<span class="shipping-cost"> </span>
+    </li>
+  </template>
+</div>

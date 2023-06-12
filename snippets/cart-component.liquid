@@ -18,7 +18,7 @@
         <p class="cart__form-header-label flex-1">Price</p>
         <p class="cart__form-header-label flex-1">Quantity</p>
         <p class="cart__form-header-label flex-1">Subtotal</p>
-        <p class="cart__form-header-label flex-1"></p>
+        <p class="cart__form-header-label flex-1">Delete</p>
       </div>
     </div>
     <ul class="cart__form-items gird-column">
@@ -26,10 +26,10 @@
         {% render 'cart-item', item: item %}
       {% endfor %}
     </ul>
-    <div class="js-btn-payment">
-      <input type="submit" name="checkout" value="Checkout">
-    </div>
+    {% comment %}
+      <div class="js-btn-payment">
+        <input type="submit" name="checkout" value="Checkout">
+      </div>
+    {% endcomment %}
   {% endform %}
 </div>
-
-{{ 'cart.js' | asset_url | script_tag }}

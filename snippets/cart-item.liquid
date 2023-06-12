@@ -40,7 +40,7 @@
     </div>
     <div class="cart__item-info flex-1 remove">
       <div class="btn-remove-all">
-        <a href="/cart/change?line={{  item.index | plus: 1 }}&amp;quantity=0">remove</a>
+        <a href="/cart/change?line={{  item.index | plus: 1 }}&amp;quantity=0"> {% render 'deleted' %} </a>
       </div>
     </div>
   </div>
