@@ -17,8 +17,8 @@
           {{ country_option_tags }}
         </select>
       </div>
-
-      <div class="form-field" style="display:none;">
+      {% comment %} style="display: none;" {% endcomment %}
+      <div class="form-field jsProvince" style="display: none;">
         <label class="label-field" for="addressProvince{{object.id}}" id="address_province_label">
           {{- 'general.cart.shipping.province' | t -}}
         </label>
@@ -45,7 +45,7 @@
       </div>
 
       <div class="form-field form-button-group">
-        <button class="btn btn-primary" type="submit">
+        <button class="btn btn-primary jsButtonShipping" type="submit">
           <span class="state-default">{{ 'general.cart.shipping.button_submit' | t }}</span>
           <span class="state-loading">{{ 'general.cart.shipping.button_submited' | t }}</span>
         </button>
@@ -64,3 +64,13 @@
     </li>
   </template>
 </div>
+
+<script>
+  window.theme = {
+    strings: {
+      notFoundShippingRate: {{ 'general.cart.shipping.not_found_shipping_rate' | t | json }},
+      oneShippingRate: {{ 'general.cart.shipping.one_shipping_rate' | t | json }},
+      manyShippingRate: {{ 'general.cart.shipping.many_shipping_rate' | t | json }},
+    },
+  };
+</script>

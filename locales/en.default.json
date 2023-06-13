@@ -21,10 +21,13 @@
       "shipping":{
         "title":"Calculate Shipping:",
         "country":"Country",
-        "province":"aaaa",
+        "province":"Province",
         "zip":"Zip / Postal Code",
         "button_submit":"Calculate shipping",
-        "button_submited":"Calculating..."
+        "button_submited":"Calculating...",
+        "not_found_shipping_rate":"Not found shipping rate",
+        "one_shipping_rate": "There is one shipping rate available for your address.",
+        "many_shipping_rate": "There are {{ number }} shipping rates available for your address."
       },
       "summary":{
         "text_total":"Total",
@@ -37,3 +40,4 @@
     
   }
 }
+

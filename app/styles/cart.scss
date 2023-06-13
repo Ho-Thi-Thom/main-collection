@@ -110,7 +110,15 @@
                     flex: 0 0 35%;
                 }
 
-                .cart__summary-line--content {}
+                .cart__summary-line--content {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 7px;
+
+                    span {
+                        text-align: end;
+                    }
+                }
 
                 .cart__summary-line--total,
                 .cart__summary-line--discount {
@@ -239,6 +247,19 @@
                             }
                         }
                     }
+                }
+            }
+
+            .wapper-response {
+                .response-title {
+                    margin-top: 10px;
+                    font-size: 14px;
+                }
+
+                .shipping-list {
+                    margin-top: 10px;
+                    font-size: 13px;
+
                 }
             }
         }

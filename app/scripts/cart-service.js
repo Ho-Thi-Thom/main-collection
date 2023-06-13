@@ -5,9 +5,13 @@ export function updateInfoCartPage(data, lineIndex) {
     const liElementNew = div.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
     const jsLineUpdatesOld = liElement.querySelectorAll(".jsLineUpdate");
     const jsLineUpdatesNew = liElementNew.querySelectorAll(".jsLineUpdate");
-
+    const jsCartUpdateOld = document.querySelectorAll('.js-cart-update')
+    const jsCartUpdateNew = div.querySelectorAll('.js-cart-update')
     jsLineUpdatesOld.forEach((item, index) => {
         item.parentNode.replaceChild(jsLineUpdatesNew[index], item);
+    });
+    jsCartUpdateOld.forEach((item, index) => {
+        item.parentNode.replaceChild(jsCartUpdateNew[index], item);
     });
 
 }
@@ -38,4 +42,36 @@ export async function fetchAPIUpdateItemCart(options) {
     })
     const res = await data.json();
     return res
+}
+
+
+export function checkMax(input, type, lineIndex) {
+    const btnAdd = document.querySelector(`.cart__item.jsLineItem[data-line-index="${lineIndex}"] .add__qlt`);
+    switch (type) {
+        case 'add':
+            if (+input.value === +input.max) {
+                btnAdd.disabled = true;
+            }
+            break;
+        case 'remove':
+            btnAdd.disabled = false;
+            break;
+        default:
+            break;
+    }
+}
+
+export function checkListCart() {
+    const liElements = document.querySelectorAll('.jsLineItem');
+    liElements.forEach((liElement) => {
+        const inputElement = liElement.querySelector('.quantity__input');
+        const maxValue = parseInt(inputElement.getAttribute('max'));
+        const addButton = liElement.querySelector('.add__qlt');
+
+        if (inputElement.value === maxValue.toString()) {
+            addButton.disabled = true;
+        } else {
+            addButton.disabled = false;
+        }
+    });
 }

@@ -12,7 +12,12 @@
     <div class="cart__summary-line cart__summary-line--discount flex justify-content-between">
       <p class="cart__summary-line--heading">{{- 'general.cart.summary.text_discount' | t -}}</p>
       <p class="cart__summary-line--content js-cart-update jsCartDiscount">
-        <span class="money">{{ cart.total_discount | money }}</span>
+        {% for discount_application in cart.discount_applications %}
+          <span class="money">
+            <span>{{- discount_application.title }}</span> &nbsp;:&nbsp;
+            <span>{{- discount_application.total_allocated_amount | money -}}</span>
+          </span>
+        {% endfor %}
       </p>
     </div>
 

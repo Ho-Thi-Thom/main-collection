@@ -7,8 +7,13 @@
     const liElementNew = div.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
     const jsLineUpdatesOld = liElement.querySelectorAll(".jsLineUpdate");
     const jsLineUpdatesNew = liElementNew.querySelectorAll(".jsLineUpdate");
+    const jsCartUpdateOld = document.querySelectorAll(".js-cart-update");
+    const jsCartUpdateNew = div.querySelectorAll(".js-cart-update");
     jsLineUpdatesOld.forEach((item, index) => {
       item.parentNode.replaceChild(jsLineUpdatesNew[index], item);
+    });
+    jsCartUpdateOld.forEach((item, index) => {
+      item.parentNode.replaceChild(jsCartUpdateNew[index], item);
     });
   }
   function updateDataCart(note) {
@@ -35,6 +40,34 @@
     });
     const res = await data.json();
     return res;
+  }
+  function checkMax(input, type, lineIndex) {
+    const btnAdd = document.querySelector(`.cart__item.jsLineItem[data-line-index="${lineIndex}"] .add__qlt`);
+    switch (type) {
+      case "add":
+        if (+input.value === +input.max) {
+          btnAdd.disabled = true;
+        }
+        break;
+      case "remove":
+        btnAdd.disabled = false;
+        break;
+      default:
+        break;
+    }
+  }
+  function checkListCart() {
+    const liElements = document.querySelectorAll(".jsLineItem");
+    liElements.forEach((liElement) => {
+      const inputElement = liElement.querySelector(".quantity__input");
+      const maxValue = parseInt(inputElement.getAttribute("max"));
+      const addButton = liElement.querySelector(".add__qlt");
+      if (inputElement.value === maxValue.toString()) {
+        addButton.disabled = true;
+      } else {
+        addButton.disabled = false;
+      }
+    });
   }
 
   // app/scripts/utils.js
@@ -68,28 +101,51 @@
       }, delay);
     };
   }
+  async function countItemCart() {
+    try {
+      const response = await fetch(window.Shopify.routes.root + "cart.js");
+      const data = await response.json();
+      return data.item_count;
+    } catch (error) {
+      return error;
+    }
+  }
+  async function updateCountCart() {
+    try {
+      const count = await countItemCart();
+      const elm = document.querySelector(".jsCountItemCart");
+      elm.textContent = count;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   // app/scripts/cart.js
   var sectionId = document.querySelector(".cart-section-wrapper").dataset.sectionId;
   shopifyReloadSection(init, sectionId);
   function init() {
-    let removeBtns = document.querySelectorAll(".cart__item .remove__qlt");
-    let addBtns = document.querySelectorAll(".cart__item .add__qlt");
-    function validateValue(value, max, min) {
-      value = parseInt(value);
-      max = parseInt(max);
-      min = parseInt(min);
-      return Math.max(Math.min(value, max), min);
-    }
-    function trigger(elements = [], getNewValue) {
-      if (!elements || elements.length === 0 || !getNewValue || typeof getNewValue !== "function") {
+    checkListCart();
+    const removeBtns = document.querySelectorAll(".cart__item .remove__qlt");
+    const addBtns = document.querySelectorAll(".cart__item .add__qlt");
+    trigger([...addBtns, ...removeBtns]);
+    function trigger(elements = []) {
+      if (!elements || elements.length === 0) {
         return;
       }
       elements.forEach((element) => {
         let timeout = null;
         element.addEventListener("click", (event) => {
-          const lineIndex = event.target.closest(".cart__item.jsLineItem").dataset.lineIndex;
+          const elm = event.target;
+          const lineIndex = elm.closest(".cart__item.jsLineItem").dataset.lineIndex;
           const quantityInput = document.querySelector(`.cart__item.jsLineItem[data-line-index="${lineIndex}"] .quantity__input`);
+          if (elm.classList.contains("add__qlt")) {
+            quantityInput.stepUp();
+            checkMax(quantityInput, "add", lineIndex);
+          }
+          if (elm.classList.contains("remove__qlt")) {
+            quantityInput.stepDown();
+            checkMax(quantityInput, "remove", lineIndex);
+          }
           if (timeout) {
             clearTimeout(timeout);
           }
@@ -106,14 +162,14 @@
               const data = await fetchAPIUpdateItemCart(options);
               const result = data.sections[sectionId2];
               updateInfoCartPage(result, lineIndex);
+              updateCountCart();
             } catch (err) {
+              console.log(err);
             }
           }, 1e3);
         });
       });
     }
-    trigger([...addBtns, ...removeBtns], (value) => value + 1);
-    trigger(removeBtns, (value) => value - 1);
     let inputs = document.querySelectorAll(".cart__item .quantity__input");
     inputs.forEach(function(input) {
       input.addEventListener("keydown", function(event) {
@@ -124,12 +180,10 @@
       input.addEventListener("input", debounce(async (event) => {
         const lineIndex = event.target.closest(".cart__item.jsLineItem").dataset.lineIndex;
         const quantityInput = event.target;
-        const newQuantity = validateValue(quantityInput.value, quantityInput.getAttribute("max"), quantityInput.getAttribute("min"));
-        quantityInput.value = newQuantity;
         const variantId = quantityInput.getAttribute("data-key");
         const options = {
           variantId,
-          newQuantity,
+          newQuantity: quantityInput.value,
           sectionId
         };
         try {
@@ -151,15 +205,55 @@
     const textarea = document.getElementById("cart-note");
     const debouncedFetch = debounce(() => updateDataCart(textarea.value), 2e3);
     textarea.addEventListener("input", debouncedFetch);
+    const selectField = document.getElementsByName("shipping_address[country]")[0];
+    selectField.addEventListener("change", function(event) {
+      const selectedOption = selectField.options[selectField.selectedIndex];
+      const province = selectedOption.getAttribute("data-provinces");
+      const formField = document.querySelector(".jsProvince");
+      const selectProvince = formField.querySelector("[name='shipping_address[province]']");
+      if (JSON.parse(province).length) {
+        JSON.parse(province).forEach(([value, label]) => {
+          const option = document.createElement("option");
+          option.value = value;
+          option.text = label;
+          selectProvince.appendChild(option);
+        });
+        formField.style.display = "block";
+      } else {
+        formField.style.display = "none";
+      }
+    });
     const elmShippingRates = document.querySelector(".jsShippingRates");
     const url = elmShippingRates.dataset.url;
     const formShipping = document.querySelector(".shipping-form");
     formShipping.addEventListener("submit", (event) => {
       event.preventDefault();
       const productFormData = Object.fromEntries(new FormData(event.target).entries());
+      const btnState = document.querySelector(".jsButtonShipping");
+      btnState.classList.add("loading");
       const newUrl = createUrlCustom(url, productFormData);
-      fetch(newUrl).then((res) => {
-        console.log("check", res);
+      let n = document.querySelector(".js-shipping-result");
+      let i = document.querySelector("template").content.firstElementChild;
+      let s = document.createElement("div");
+      n.innerHTML = "";
+      fetch(newUrl).then((res) => res.json()).then((data) => {
+        const _data = data.shipping_rates;
+        let t = theme.strings.notFoundShippingRate;
+        if (_data && _data.length > 1) {
+          t = theme.strings.manyShippingRate.replace("{{ number }}", _data.length);
+        } else if (_data && _data.length === 1) {
+          t = theme.strings.oneShippingRate;
+        }
+        document.querySelector(".js-response-title").innerHTML = t;
+        if (_data) {
+          _data.forEach((item) => {
+            s.innerHTML = i.outerHTML;
+            s.querySelector(".shipping-name").innerHTML = item.name;
+            s.querySelector(".shipping-cost").textContent = item.price;
+            n.insertAdjacentHTML("beforeend", s.innerHTML);
+          });
+        }
+        btnState.classList.remove("loading");
       });
     });
   }

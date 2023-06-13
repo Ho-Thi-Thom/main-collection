@@ -106,6 +106,16 @@
   flex: 0 0 35%;
 }
 
+.cart-section-wrapper .section-footer .cart-summary .cart__summary-inner .cart__summary-line--content {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.cart-section-wrapper .section-footer .cart-summary .cart__summary-inner .cart__summary-line--content span {
+  text-align: end;
+}
+
 .cart-section-wrapper .section-footer .cart-summary .cart__summary-inner .cart__summary-line--discount, .cart-section-wrapper .section-footer .cart-summary .cart__summary-inner .cart__summary-line--total {
   border-bottom: 1px solid #e2dbdb;
 }
@@ -207,4 +217,14 @@
 
 .cart-section-wrapper .section-footer .shipping-rates .shipping-content .shipping-form .form-button-group .btn.loading .state-loading {
   display: inline-block;
+}
+
+.cart-section-wrapper .section-footer .shipping-rates .wapper-response .response-title {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.cart-section-wrapper .section-footer .shipping-rates .wapper-response .shipping-list {
+  margin-top: 10px;
+  font-size: 13px;
 }

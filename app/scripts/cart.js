@@ -1,40 +1,42 @@
-import { updateDataCart, updateInfoCartPage, fetchAPIUpdateItemCart } from "./cart-service";
-import { createUrlCustom, debounce, shopifyReloadSection } from "./utils";
+import { updateDataCart, updateInfoCartPage, fetchAPIUpdateItemCart, checkMax, checkListCart } from "./cart-service";
+import { createUrlCustom, debounce, shopifyReloadSection, updateCountCart } from "./utils";
 const sectionId = document.querySelector('.cart-section-wrapper').dataset.sectionId
 shopifyReloadSection(init, sectionId)
+
 function init() {
-    let removeBtns = document.querySelectorAll('.cart__item .remove__qlt');
-    let addBtns = document.querySelectorAll('.cart__item .add__qlt');
+    // check list cart
+    checkListCart()
 
-    function validateValue(value, max, min) {
-        value = parseInt(value)
-        max = parseInt(max)
-        min = parseInt(min)
+    const removeBtns = document.querySelectorAll('.cart__item .remove__qlt');
+    const addBtns = document.querySelectorAll('.cart__item .add__qlt');
 
-        return Math.max(Math.min(value, max), min)
-    }
-
-
-    function trigger(elements = [], getNewValue) {
-        if (!elements || elements.length === 0 || !getNewValue || typeof getNewValue !== "function") {
+    trigger([...addBtns, ...removeBtns])
+    function trigger(elements = []) {
+        if (!elements || elements.length === 0) {
             return
         }
-
         elements.forEach((element) => {
             let timeout = null
-            element.addEventListener("click", event => {
-                const lineIndex = event.target.closest('.cart__item.jsLineItem').dataset.lineIndex;
+            element.addEventListener("click", (event) => {
+                const elm = event.target;
+                const lineIndex = elm.closest('.cart__item.jsLineItem').dataset.lineIndex;
                 const quantityInput = document.querySelector(`.cart__item.jsLineItem[data-line-index="${lineIndex}"] .quantity__input`);
 
-                // check class la + hay - => stepUp() stepDown()
-                // quantityInput.value = getNewValue(parseInt(quantityInput.value));
+                if (elm.classList.contains("add__qlt")) {
+                    quantityInput.stepUp();
+                    checkMax(quantityInput, 'add', lineIndex)
+                }
+
+                if (elm.classList.contains("remove__qlt")) {
+                    quantityInput.stepDown();
+                    checkMax(quantityInput, 'remove', lineIndex)
+                }
 
                 if (timeout) {
-                    clearTimeout(timeout)
+                    clearTimeout(timeout);
                 }
+
                 timeout = setTimeout(async () => {
-                    // const newQuantity = validateValue(quantityInput.value, quantityInput.getAttribute("max"), quantityInput.getAttribute("min"))
-                    // quantityInput.value = newQuantity
                     const newQuantity = quantityInput.value;
                     const sectionId = quantityInput.getAttribute('data-sections');
                     const variantId = quantityInput.getAttribute('data-key');
@@ -43,19 +45,22 @@ function init() {
                         newQuantity: newQuantity,
                         sectionId: sectionId
                     };
+
                     try {
-                        const data = await fetchAPIUpdateItemCart(options)
-                        const result = data.sections[sectionId]
+                        const data = await fetchAPIUpdateItemCart(options);
+                        const result = data.sections[sectionId];
                         updateInfoCartPage(result, lineIndex);
-                    } catch (err) { }
-                }, 1000)
-            })
+                        updateCountCart();
+                    } catch (err) {
+                        console.log(err);
+                    }
+                }, 1000);
+            });
 
         })
     }
 
-    trigger([...addBtns, ...removeBtns], (value) => value + 1)
-    trigger(removeBtns, (value) => value - 1)
+
 
     let inputs = document.querySelectorAll('.cart__item .quantity__input');
     inputs.forEach(function (input) {
@@ -67,12 +72,11 @@ function init() {
         input.addEventListener('input', debounce(async (event) => {
             const lineIndex = event.target.closest('.cart__item.jsLineItem').dataset.lineIndex;
             const quantityInput = event.target
-            const newQuantity = validateValue(quantityInput.value, quantityInput.getAttribute("max"), quantityInput.getAttribute("min"))
-            quantityInput.value = newQuantity
+
             const variantId = quantityInput.getAttribute('data-key');
             const options = {
                 variantId: variantId,
-                newQuantity: newQuantity,
+                newQuantity: quantityInput.value,
                 sectionId: sectionId
             };
             try {
@@ -99,25 +103,68 @@ function init() {
 
 
     const textarea = document.getElementById('cart-note');
-    const debouncedFetch = debounce(() => updateDataCart(textarea.value), 2000); // Hàm debounce cho cuộc gọi API
+    const debouncedFetch = debounce(() => updateDataCart(textarea.value), 2000);
     textarea.addEventListener('input', debouncedFetch);
 
     // jsShippingRates
+    const selectField = document.getElementsByName("shipping_address[country]")[0];
+
+    selectField.addEventListener("change", function (event) {
+        const selectedOption = selectField.options[selectField.selectedIndex];
+        const province = selectedOption.getAttribute("data-provinces");
+        const formField = document.querySelector('.jsProvince')
+        const selectProvince = formField.querySelector("[name='shipping_address[province]']");
+
+        if (JSON.parse(province).length) {
+            JSON.parse(province).forEach(([value, label]) => {
+                const option = document.createElement("option");
+                option.value = value;
+                option.text = label;
+                selectProvince.appendChild(option);
+            });
+
+            formField.style.display = "block";
+        } else {
+            formField.style.display = "none";
+        }
+    });
+
+
     const elmShippingRates = document.querySelector('.jsShippingRates');
     const url = elmShippingRates.dataset.url;
     const formShipping = document.querySelector(".shipping-form");
     formShipping.addEventListener("submit", (event) => {
         event.preventDefault();
         const productFormData = Object.fromEntries(new FormData(event.target).entries());
+        const btnState = document.querySelector(".jsButtonShipping");
+        btnState.classList.add('loading')
         const newUrl = createUrlCustom(url, productFormData);
+        let n = document.querySelector(".js-shipping-result");
+        let i = document.querySelector("template").content.firstElementChild;
+        let s = document.createElement("div");
+        n.innerHTML = "";
 
         fetch(newUrl)
-            .then(res => {
-                console.log("check", res)
-            })
+            .then(res => res.json())
+            .then(data => {
+                const _data = data.shipping_rates;
+                let t = theme.strings.notFoundShippingRate;
+                if (_data && _data.length > 1) {
+                    t = theme.strings.manyShippingRate.replace("{{ number }}", _data.length);
+                } else if (_data && _data.length === 1) {
+                    t = theme.strings.oneShippingRate;
+                }
+                document.querySelector(".js-response-title").innerHTML = t;
+                if (_data) {
+                    _data.forEach(item => {
+                        s.innerHTML = i.outerHTML;
+                        s.querySelector(".shipping-name").innerHTML = item.name;
+                        s.querySelector(".shipping-cost").textContent = item.price;
+                        n.insertAdjacentHTML("beforeend", s.innerHTML);
+                    });
+                }
+                btnState.classList.remove('loading')
+            });
+
     });
-
-
-
-
 }

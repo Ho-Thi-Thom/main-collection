@@ -63,8 +63,17 @@
             font-size: 14px;
         }
 
+
+        .compare-price {
+            text-decoration: line-through;
+            color: #15ca15;
+        }
+
         .price p {
             font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
         }
 
         .qty {
@@ -75,6 +84,9 @@
         .sub p {
             font-size: 16px;
             margin-bottom: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
         }
 
         .remove {

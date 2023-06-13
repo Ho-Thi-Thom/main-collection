@@ -166,7 +166,7 @@ async function countItemCart() {
     }
 }
 
-async function updateCountCart() {
+export async function updateCountCart() {
     try {
         const count = await countItemCart();
         const elm = document.querySelector('.jsCountItemCart');
@@ -174,5 +174,14 @@ async function updateCountCart() {
     } catch (error) {
         console.error(error);
     }
+}
+
+
+function validateValue(value, max, min) {
+    value = parseInt(value)
+    max = parseInt(max)
+    min = parseInt(min)
+
+    return Math.max(Math.min(value, max), min)
 }
 

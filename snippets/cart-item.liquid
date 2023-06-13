@@ -21,8 +21,11 @@
       </div>
     </div>
     <div class="cart__item-info flex-1 price">
-      <p class="price">
-        {{ item.final_price | money }}
+      <p>
+        <span class="price"> {{ item.final_price | money }}</span>
+        {%- if item.final_price != item.original_price -%}
+          <span class="compare-price"> {{ item.original_price | money }}</span>
+        {%- endif -%}
       </p>
     </div>
     <div class="cart__item-info flex-1 qty">
@@ -31,11 +34,10 @@
     </div>
     <div class="cart__item-info flex-1 sub jsLineUpdate">
       <p>
-        {% if item.original_line_price != item.line_price %}{{ item.original_line_price | money }}{% endif %}
-        {{ item.line_price | money }}
-        {% for discount in item.discounts -%}
-          {{- discount.title -}}
-        {%- endfor %}
+        <span class="price"> {{ item.final_line_price | money }}</span>
+        {% if item.final_line_price != item.original_line_price %}
+          <span class="compare-price">{{ item.original_line_price | money }}</span>
+        {% endif %}
       </p>
     </div>
     <div class="cart__item-info flex-1 remove">
