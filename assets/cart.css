@@ -36,13 +36,31 @@
 }
 
 .cart-section-wrapper .cart-wrapper .progress__bar-wrapper .progress__bar {
-  height: 4px;
-  background-color: #13ad4f;
+  height: 7px;
   width: 100%;
+  border-radius: 4px;
+  border: 1px solid #91f51f;
+  position: relative;
+}
+
+.cart-section-wrapper .cart-wrapper .progress__bar-wrapper .progress__bar .progress__bar-precent {
+  border-radius: 4px;
+  inset: 0;
+  position: absolute;
+  width: var(--width);
+  height: 100%;
+  transition: width 1s ease-in-out;
+  background-color: #13ad4f;
 }
 
 .cart-section-wrapper .cart-wrapper .progress__bar-wrapper .progress__bar-msg {
   text-align: center;
+  text-transform: uppercase;
+}
+
+.cart-section-wrapper .cart-wrapper .progress__bar-wrapper .progress__bar-msg span {
+  font-weight: 500;
+  color: #13ad4f;
 }
 
 .cart-section-wrapper .cart-wrapper form {

@@ -4,7 +4,10 @@
   media="all"
 >
 
-<div class="cart-section-wrapper contacart.shippinginer_wrapper" data-section-id="{{ section.id }}">
+<div
+  class="cart-section-wrapper"
+  data-section-id="{{ section.id }}"
+>
   <div class="section-content">
     {% if cart.item_count > 0 %}
       {% render 'cart-component' %}
@@ -22,7 +25,20 @@
 {
   "name": "cart",
   "tag": "section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "number",
+      "id": "free_shipping_conditions",
+      "label": "Free shipping conditions",
+      "default": 200
+    },
+    {
+      "type": "text",
+      "label": "Currency",
+      "id": "currency",
+      "default": "USD"
+    }
+  ],
   "blocks": []
 }
 {% endschema %}

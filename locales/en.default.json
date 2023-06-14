@@ -4,40 +4,47 @@
       "title": "Not found",
       "subtext_html": "The page you were looking for does not exist"
     },
-    "product":{
-       "info":{
-        "text_total_quantity" : "Total Quantity",
-        "add_to_wishlist":"Add to Wishlist",
-        "variant_inventory":"Only {{ selectedQuantity }} left in stock!",
-        "sold_out":"Sold out",
-        "text_tags":"Tags",
-        "text_sku":"SKU",
-        "text_sale":"Sale",
-        "add_to_cart":"Add to cart",
+    "product": {
+      "info": {
+        "text_total_quantity": "Total Quantity",
+        "add_to_wishlist": "Add to Wishlist",
+        "variant_inventory": "Only {{ selectedQuantity }} left in stock!",
+        "sold_out": "Sold out",
+        "text_tags": "Tags",
+        "text_sku": "SKU",
+        "text_sale": "Sale",
+        "add_to_cart": "Add to cart",
         "text_police": "I agree with the terms and conditions"
-       }
+      }
     },
-    "cart":{
-      "shipping":{
-        "title":"Calculate Shipping:",
-        "country":"Country",
-        "province":"Province",
-        "zip":"Zip / Postal Code",
-        "button_submit":"Calculate shipping",
-        "button_submited":"Calculating...",
-        "not_found_shipping_rate":"Not found shipping rate",
-        "one_shipping_rate": "There is one shipping rate available for your address.",
-        "many_shipping_rate": "There are {{ number }} shipping rates available for your address."
+    "cart": {
+      "header": {
+        "text_price": "Price",
+        "text_quantity": "Quantity",
+        "text_subtotal": "Subtotal",
+        "text_delete": "Delete",
+        "text_product":"Product"
       },
-      "summary":{
-        "text_total":"Total",
-        "text_discount":"Discount",
-        "tax":"Tax included at checkout",
-        "note":"Add note to your order",
-        "btn_checkout":" Proceed to checkout"
+      "shipping": {
+        "title": "Calculate Shipping:",
+        "country": "Country",
+        "province": "Province",
+        "zip": "Zip / Postal Code",
+        "button_submit": "Calculate shipping",
+        "button_submited": "Calculating...",
+        "not_found_shipping_rate": "Not found shipping rate",
+        "one_shipping_rate": "There is one shipping rate available for your address.",
+        "many_shipping_rate": "There are {{ number }} shipping rates available for your address.",
+        "message_html": "You are <span>{{content}}</span> away from <span>free shipping<\/span>",
+        "successfull_html": "Congrats! You're qualified for <span>free shipping!<\/span>"
+      },
+      "summary": {
+        "text_total": "Total",
+        "text_discount": "Discount",
+        "tax": "Tax included at checkout",
+        "note": "Add note to your order",
+        "btn_checkout": " Proceed to checkout"
       }
     }
-    
   }
 }
-

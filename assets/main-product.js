@@ -3005,7 +3005,7 @@
     formEl.addEventListener("change", function(event) {
       if (event.target.id !== "cart-condition") {
         const titles = variants.filter((variant) => Object.values(variant).includes(event.target.value)).map((product) => product.title);
-        onVariantChange(() => getUrl(formEl.dataset.sectionId));
+        onVariantChange(() => getUrl(formEl.dataset.sectionId, slider));
         updateCssOption(titles, productOptions, event.target.name);
       }
     });
@@ -3044,7 +3044,7 @@
         }
       });
     }
-    function getUrl(sectionId2) {
+    function getUrl(sectionId2, slider2) {
       const selects = document.querySelectorAll(".js-variant-change");
       const radios = document.querySelectorAll(".js-radio");
       const value = getValue(selects, radios);
@@ -3054,7 +3054,7 @@
       if (!data) {
         return;
       }
-      slider.goTo(data.featured_image.position - 1);
+      slider2.goTo(data.featured_image.position - 1);
       const url = createUrl(function(searchParams) {
         searchParams.set("variant", data.id);
       });

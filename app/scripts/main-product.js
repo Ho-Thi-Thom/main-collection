@@ -25,7 +25,7 @@ function init() {
     formEl.addEventListener('change', function (event) {
         if (event.target.id !== 'cart-condition') {
             const titles = variants.filter(variant => Object.values(variant).includes(event.target.value)).map(product => product.title)
-            onVariantChange(() => getUrl(formEl.dataset.sectionId));
+            onVariantChange(() => getUrl(formEl.dataset.sectionId, slider));
             updateCssOption(titles, productOptions, event.target.name);
         }
     })
@@ -82,7 +82,7 @@ function init() {
         })
     }
 
-    function getUrl(sectionId) {
+    function getUrl(sectionId, slider) {
         const selects = document.querySelectorAll('.js-variant-change');
         const radios = document.querySelectorAll('.js-radio');
 

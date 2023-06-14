@@ -35,13 +35,31 @@
             flex-direction: column;
 
             .progress__bar {
-                height: 4px;
-                background-color: #13AD4F;
+                height: 7px;
                 width: 100%;
+                border-radius: 4px;
+                border: 1px solid rgb(145, 245, 31);
+                position: relative;
+
+                .progress__bar-precent {
+                    border-radius: 4px;
+                    inset: 0;
+                    position: absolute;
+                    width: var(--width);
+                    height: 100%;
+                    transition: width 1s ease-in-out;
+                    background-color: #13AD4F;
+                }
             }
 
             .progress__bar-msg {
                 text-align: center;
+                text-transform: uppercase;
+
+                span {
+                    font-weight: 500;
+                    color: #13AD4F;
+                }
             }
 
         }
