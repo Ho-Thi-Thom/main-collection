@@ -20,30 +20,36 @@
         {% endunless %}
       </div>
     </div>
-    <div class="cart__item-info flex-1 price">
-      <p>
-        <span class="price"> {{ item.final_price | money }}</span>
-        {%- if item.final_price != item.original_price -%}
-          <span class="compare-price"> {{ item.original_price | money }}</span>
-        {%- endif -%}
-      </p>
-    </div>
-    <div class="cart__item-info flex-1 qty">
-      {% if item.variant.inventory_management == 'shopify' %}
-        {%- assign max_allowed_quantity = item.variant.inventory_quantity -%}
-      {% else %}
-        {%- assign max_allowed_quantity = -1 -%}
-      {% endif %}
-      {% render 'quantity-selector', item: item, max: max_allowed_quantity %}
-    </div>
-    <div class="cart__item-info flex-1 sub jsLineUpdate">
-      <p>
-        <span class="price"> {{ item.final_line_price | money }}</span>
-        {% if item.final_line_price != item.original_line_price %}
-          <span class="compare-price">{{ item.original_line_price | money }}</span>
+
+    <div class="wrapper-pqs flex flex-3">
+      <div class="cart__item-info flex-1 price">
+        <p>
+          <span class="price"> {{ item.final_price | money }}</span>
+          {%- if item.final_price != item.original_price -%}
+            <span class="compare-price"> {{ item.original_price | money }}</span>
+          {%- endif -%}
+        </p>
+      </div>
+
+      <div class="cart__item-info flex-1 qty">
+        {% if item.variant.inventory_management == 'shopify' %}
+          {%- assign max_allowed_quantity = item.variant.inventory_quantity -%}
+        {% else %}
+          {%- assign max_allowed_quantity = -1 -%}
         {% endif %}
-      </p>
+        {% render 'quantity-selector', item: item, max: max_allowed_quantity %}
+      </div>
+
+      <div class="cart__item-info flex-1 sub jsLineUpdate">
+        <p>
+          <span class="price"> {{ item.final_line_price | money }}</span>
+          {% if item.final_line_price != item.original_line_price %}
+            <span class="compare-price">{{ item.original_line_price | money }}</span>
+          {% endif %}
+        </p>
+      </div>
     </div>
+
     <div class="cart__item-info flex-1 remove">
       <div class="btn-remove-all">
         <a href="/cart/change?line={{  item.index | plus: 1 }}&amp;quantity=0"> {% render 'deleted' %} </a>

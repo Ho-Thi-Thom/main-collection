@@ -21,3 +21,7 @@ if (headerList) {
     })
 
 }
+
+import { tns } from "tiny-slider";
+
+

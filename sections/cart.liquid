@@ -15,7 +15,7 @@
       {% render 'cart-empty' %}
     {% endif %}
   </div>
-  <div class="section-footer  {% if cart.item_count <= 0 %}section-disable{% endif %}">
+  <div class="section-footer{% if cart.item_count <= 0 %} section-disable{% endif %}">
     {% render 'shipping-rates' %}
     {% render 'cart-summary' %}
   </div>
