@@ -9,6 +9,22 @@
     titleElm.innerHTML = title.trim();
     contentElm.innerHTML = textContent.trim();
     popupInfo.classList.add("active");
+    debounce(closePopup, 1e3)();
+  }
+  function closePopup() {
+    const popupInfo = document.querySelector("#popup-info");
+    popupInfo.classList.remove("active");
+  }
+  function debounce(fn, delay) {
+    var timeoutID = null;
+    return function() {
+      clearTimeout(timeoutID);
+      var args = arguments;
+      var that = this;
+      timeoutID = setTimeout(function() {
+        fn.apply(that, args);
+      }, delay);
+    };
   }
   function addToCart(data) {
     fetch(window.Shopify.routes.root + "cart/add.js", {

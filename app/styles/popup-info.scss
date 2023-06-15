@@ -40,6 +40,14 @@
             color: red;
         }
 
+        .title[data-type="info"] {
+            color: rgb(44, 57, 233);
+        }
+
+        .title[data-type="warring"] {
+            color: rgb(233, 233, 20);
+        }
+
         .wrapper-content {
             font-size: medium;
             font-weight: 400;

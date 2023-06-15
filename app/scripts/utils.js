@@ -94,6 +94,7 @@ export function setValuePopupInfo(options) {
     titleElm.innerHTML = title.trim();
     contentElm.innerHTML = textContent.trim()
     popupInfo.classList.add('active');
+    debounce(closePopup, 1000)();
 }
 
 export function closePopup() {

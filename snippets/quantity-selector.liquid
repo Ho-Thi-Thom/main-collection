@@ -15,7 +15,9 @@
     type="number"
     value="{{ item.quantity}}"
     min="1"
-    max="{{ max }}"
+    {% if max > 0 %}
+      max="{{ max }}"
+    {% endif %}
     class="quantity__input"
     name="updates[]"
     id="Quantity-{{ item.index | plus: 1 }}"

@@ -2,7 +2,13 @@
   <span class="icon remove__qlt">
     {% render 'icon-remove' %}
   </span>
-  <input type="number" value="1" min="1" class="quantity__input" name="quantity">
+  <input
+    type="number"
+    value="1"
+    min="1"
+    class="quantity__input"
+    name="quantity"
+  >
   <span class="icon add__qlt">
     {% render 'icon-add' %}
   </span>
@@ -13,10 +19,10 @@
     name="add"
     class="btn-add"
     disabled
-    data-selected-quantity="{{ selectedQuantity }}"
+    data-selected-quantity="{% if selectedQuantity > 0 or checkDisable %}1{% else %}0{% endif %}"
   >
     {% render 'card' %}
-    {% if selectedQuantity > 0 %}
+    {% if selectedQuantity > 0 or checkDisable %}
       <span>{{ 'general.product.info.add_to_cart' | t }}</span>
     {% else %}
       <span>{{ 'general.product.info.sold_out' | t }}</span>

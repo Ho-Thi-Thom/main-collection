@@ -13,6 +13,7 @@
     {% assign selectedQuantity = variant.inventory_quantity %}
   {% endif %}
 {% endfor %}
+{% assign isDisable = true %}
 <div class="product-infor-wrapper">
   {% form 'product',
     product,
@@ -73,13 +74,14 @@
                       {{ 'general.product.info.variant_inventory' | t: selectedQuantity: selectedQuantity }}
                     {% endif %}
                   {% else %}
+                    {% assign isDisable = false %}
                     {{ 'general.product.info.sold_out' | t }}
                   {% endif %}
                 {% endif %}
               </span>
             </p>
             <div class="product-cart">
-              {% render 'product-cart', selectedQuantity: selectedQuantity %}
+              {% render 'product-cart', checkDisable: isDisable, selectedQuantity: selectedQuantity %}
             </div>
             <div class="check-policy">
               {% render 'check-policy' %}

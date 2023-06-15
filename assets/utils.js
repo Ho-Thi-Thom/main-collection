@@ -78,6 +78,7 @@
     titleElm.innerHTML = title.trim();
     contentElm.innerHTML = textContent.trim();
     popupInfo.classList.add("active");
+    debounce(closePopup, 1e3)();
   }
   function closePopup() {
     const popupInfo = document.querySelector("#popup-info");

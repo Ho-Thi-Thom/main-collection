@@ -246,3 +246,7 @@
   margin-top: 10px;
   font-size: 13px;
 }
+
+.cart-section-wrapper .section-disable {
+  display: none;
+}

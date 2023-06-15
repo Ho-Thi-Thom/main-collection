@@ -29,7 +29,11 @@
       </p>
     </div>
     <div class="cart__item-info flex-1 qty">
-      {%- assign max_allowed_quantity = item.variant.inventory_quantity -%}
+      {% if item.variant.inventory_management == 'shopify' %}
+        {%- assign max_allowed_quantity = item.variant.inventory_quantity -%}
+      {% else %}
+        {%- assign max_allowed_quantity = -1 -%}
+      {% endif %}
       {% render 'quantity-selector', item: item, max: max_allowed_quantity %}
     </div>
     <div class="cart__item-info flex-1 sub jsLineUpdate">

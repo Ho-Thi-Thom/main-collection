@@ -2676,6 +2676,11 @@
     titleElm.innerHTML = title.trim();
     contentElm.innerHTML = textContent.trim();
     popupInfo.classList.add("active");
+    debounce(closePopup, 1e3)();
+  }
+  function closePopup() {
+    const popupInfo = document.querySelector("#popup-info");
+    popupInfo.classList.remove("active");
   }
   function debounce(fn, delay) {
     var timeoutID = null;
@@ -2806,24 +2811,48 @@
         updateElementSKU(div.querySelector(".product-sku"));
         updateElementInput(div.querySelector(".jsSubmit"));
       });
+    } else {
+      updateElementAddToCart(null, true);
+      const options = {
+        type: "warring",
+        title: "Not found",
+        textContent: "Variant does not exist"
+      };
+      setValuePopupInfo(options);
     }
   }
-  function updateElementPrice(divCompare, divPrice) {
+  function updateElementPrice(divCompare, divPrice, checkEmpty = false) {
+    if (checkEmpty) {
+      return;
+    }
     const cpPrice = document.querySelector(".compare-price");
     const price = document.querySelector(".price");
     cpPrice.parentNode.replaceChild(divCompare, cpPrice);
     price.parentNode.replaceChild(divPrice, price);
   }
-  function updateElementVariantInventory(element) {
+  function updateElementVariantInventory(element, checkEmpty = false) {
+    if (checkEmpty) {
+      return;
+    }
     const variantInventory = document.querySelector(".variant-inventory");
     variantInventory.parentNode.replaceChild(element, variantInventory);
   }
-  function updateElementSKU(element) {
+  function updateElementSKU(element, checkEmpty = false) {
+    if (checkEmpty) {
+      return;
+    }
     const sku = document.querySelector(".product-sku");
     sku.parentNode.replaceChild(element, sku);
   }
-  function updateElementAddToCart(element) {
+  function updateElementAddToCart(element, checkEmpty = false) {
     const btnAdd = document.querySelector(".btn-add");
+    if (checkEmpty) {
+      btnAdd.setAttribute("disabled", "");
+      const btnAddSpan = btnAdd.querySelector("span");
+      btnAdd.setAttribute("data-selected-quantity", 0);
+      btnAddSpan.textContent = "Not Available";
+      return;
+    }
     if (btnAdd && element) {
       const btnAddSpan = btnAdd.querySelector("span");
       const elementSpan = element.querySelector("span");
@@ -2844,7 +2873,10 @@
       }
     }
   }
-  function updateElementInput(element) {
+  function updateElementInput(element, checkEmpty = false) {
+    if (checkEmpty) {
+      return;
+    }
     const input = document.querySelector(".jsSubmit");
     input.value = element.value;
   }
@@ -2853,7 +2885,6 @@
     const filteredPositions = productOptions.filter((item) => item.name !== name).map((item) => item.position);
     const element = productOptions.find((item) => item.name === name);
     const input = element ? element.position : null;
-    ;
     const uniqueElements = [...new Set(titles)];
     const result = uniqueElements.reduce((acc, item) => {
       const parts = item.split(" / ");
@@ -2868,7 +2899,10 @@
       });
       return acc;
     }, []);
-    const mergedArray = filteredPositions.map((element2, index) => [element2, result[index]]);
+    const mergedArray = filteredPositions.map((element2, index) => [
+      element2,
+      result[index]
+    ]);
     const checkPositions = document.querySelectorAll(".check-position");
     mergedArray.forEach((item) => {
       checkPositions.forEach((element2) => {
@@ -3054,7 +3088,9 @@
       if (!data) {
         return;
       }
-      slider2.goTo(data.featured_image.position - 1);
+      if (data.featured_image !== null) {
+        slider2.goTo(data.featured_image.position - 1);
+      }
       const url = createUrl(function(searchParams) {
         searchParams.set("variant", data.id);
       });

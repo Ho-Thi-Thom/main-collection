@@ -90,12 +90,12 @@ function init() {
         const data = variants.find(variant => {
             return variant.options.join('/') == value.join('/')
         })
-
         if (!data) {
             return
         }
-
-        slider.goTo(data.featured_image.position - 1);
+        if (data.featured_image !== null) {
+            slider.goTo(data.featured_image.position - 1);
+        }
         const url = createUrl(function (searchParams) {
             searchParams.set('variant', data.id);
         })

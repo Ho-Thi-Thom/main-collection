@@ -40,6 +40,14 @@
   color: red;
 }
 
+#popup-info .info-box .title[data-type=info] {
+  color: #2c39e9;
+}
+
+#popup-info .info-box .title[data-type=warring] {
+  color: #e9e914;
+}
+
 #popup-info .info-box .wrapper-content {
   font-size: medium;
   font-weight: 400;
