@@ -6,7 +6,7 @@
 
 <link
   rel="stylesheet"
-  href="{{ 'collection-product.css' | asset_url }}"
+  href="{{ 'product-item.css' | asset_url }}"
   media="all"
 >
 
@@ -126,7 +126,7 @@
         {% if collection.products.size != 0 %}
           <div class="collection__products" id="collection__products">
             {% for product in collection.products %}
-              {% render 'collection-product', product: product %}
+              {% render 'product-item', product: product %}
             {% endfor %}
           </div>
         {% else %}
