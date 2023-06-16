@@ -23,7 +23,9 @@
         "text_quantity": "Quantity",
         "text_subtotal": "Subtotal",
         "text_delete": "Delete",
-        "text_product":"Product"
+        "text_product":"Product",
+        "text_info":"Information",
+        "text_price_and_quantity":"Quantity & Price"
       },
       "shipping": {
         "title": "Calculate Shipping:",

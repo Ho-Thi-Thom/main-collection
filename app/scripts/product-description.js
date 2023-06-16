@@ -39,7 +39,9 @@ if (headerList.length > 0) {
 
 
 if (headerList1.length > 0) {
-    console.log('1')
+    const idFirstHeader = headerList1[0].dataset.id;
+    createActive1(idFirstHeader);
+
     headerList1.forEach((header) => {
         header.addEventListener("click", () => {
             const id = header.dataset.id;
