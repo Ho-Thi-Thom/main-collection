@@ -1,17 +1,22 @@
 (() => {
   // app/scripts/cart-service.js
-  function updateInfoCartPage(data, lineIndex) {
+  function updateInfoCartPage(data, lineIndex, checkRemove2) {
     const div = document.createElement("div");
     div.innerHTML = data;
     const liElement = document.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
-    const liElementNew = div.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
-    const jsLineUpdatesOld = liElement.querySelectorAll(".jsLineUpdate");
-    const jsLineUpdatesNew = liElementNew.querySelectorAll(".jsLineUpdate");
+    if (!checkRemove2) {
+      const liElementNew = div.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
+      const jsLineUpdatesOld = liElement.querySelectorAll(".jsLineUpdate");
+      const jsLineUpdatesNew = liElementNew.querySelectorAll(".jsLineUpdate");
+      jsLineUpdatesOld.forEach((item, index) => {
+        item.parentNode.replaceChild(jsLineUpdatesNew[index], item);
+      });
+    } else {
+      liElement.remove();
+      console.log("check");
+    }
     const jsCartUpdateOld = document.querySelectorAll(".js-cart-update");
     const jsCartUpdateNew = div.querySelectorAll(".js-cart-update");
-    jsLineUpdatesOld.forEach((item, index) => {
-      item.parentNode.replaceChild(jsLineUpdatesNew[index], item);
-    });
     jsCartUpdateOld.forEach((item, index) => {
       item.parentNode.replaceChild(jsCartUpdateNew[index], item);
     });
@@ -127,8 +132,11 @@
     checkListCart();
     const removeBtns = document.querySelectorAll(".cart__item .remove__qlt");
     const addBtns = document.querySelectorAll(".cart__item .add__qlt");
+    const btnRemoves = document.querySelectorAll(".btn-remove");
+    trigger(btnRemoves);
     trigger([...addBtns, ...removeBtns]);
     function trigger(elements = []) {
+      console.log(elements);
       if (!elements || elements.length === 0) {
         return;
       }
@@ -136,6 +144,7 @@
         let timeout = null;
         element.addEventListener("click", (event) => {
           const elm = event.target;
+          console.log(elm);
           const lineIndex = elm.closest(".cart__item.jsLineItem").dataset.lineIndex;
           const quantityInput = document.querySelector(`.cart__item.jsLineItem[data-line-index="${lineIndex}"] .quantity__input`);
           if (elm.classList.contains("add__qlt")) {
@@ -146,11 +155,16 @@
             quantityInput.stepDown();
             checkMax(quantityInput, "remove", lineIndex);
           }
+          let newQuantity = quantityInput.value;
+          const checkRemoveItem = elm.classList.contains("btn-remove");
+          if (checkRemoveItem) {
+            newQuantity = 0;
+          }
           if (timeout) {
             clearTimeout(timeout);
           }
           timeout = setTimeout(async () => {
-            const newQuantity = quantityInput.value;
+            quantityInput.value;
             const sectionId2 = quantityInput.getAttribute("data-sections");
             const variantId = quantityInput.getAttribute("data-key");
             const options = {
@@ -161,7 +175,7 @@
             try {
               const data = await fetchAPIUpdateItemCart(options);
               const result = data.sections[sectionId2];
-              updateInfoCartPage(result, lineIndex);
+              updateInfoCartPage(result, lineIndex, checkRemove = checkRemoveItem);
               updateCountCart();
             } catch (err) {
               console.log(err);

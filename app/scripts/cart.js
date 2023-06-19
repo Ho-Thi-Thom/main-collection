@@ -9,9 +9,11 @@ function init() {
 
     const removeBtns = document.querySelectorAll('.cart__item .remove__qlt');
     const addBtns = document.querySelectorAll('.cart__item .add__qlt');
-
+    const btnRemoves = document.querySelectorAll('.btn-remove')
+    trigger(btnRemoves)
     trigger([...addBtns, ...removeBtns])
     function trigger(elements = []) {
+        console.log(elements)
         if (!elements || elements.length === 0) {
             return
         }
@@ -19,6 +21,7 @@ function init() {
             let timeout = null
             element.addEventListener("click", (event) => {
                 const elm = event.target;
+                console.log(elm)
                 const lineIndex = elm.closest('.cart__item.jsLineItem').dataset.lineIndex;
                 const quantityInput = document.querySelector(`.cart__item.jsLineItem[data-line-index="${lineIndex}"] .quantity__input`);
 
@@ -31,13 +34,18 @@ function init() {
                     quantityInput.stepDown();
                     checkMax(quantityInput, 'remove', lineIndex)
                 }
+                let newQuantity = quantityInput.value;
+                const checkRemoveItem = elm.classList.contains("btn-remove")
+                if (checkRemoveItem) {
+                    newQuantity = 0;
+                }
 
                 if (timeout) {
                     clearTimeout(timeout);
                 }
 
                 timeout = setTimeout(async () => {
-                    const newQuantity = quantityInput.value;
+                    quantityInput.value;
                     const sectionId = quantityInput.getAttribute('data-sections');
                     const variantId = quantityInput.getAttribute('data-key');
                     const options = {
@@ -49,7 +57,7 @@ function init() {
                     try {
                         const data = await fetchAPIUpdateItemCart(options);
                         const result = data.sections[sectionId];
-                        updateInfoCartPage(result, lineIndex);
+                        updateInfoCartPage(result, lineIndex, checkRemove = checkRemoveItem);
                         updateCountCart();
                     } catch (err) {
                         console.log(err);
@@ -59,7 +67,6 @@ function init() {
 
         })
     }
-
 
 
     let inputs = document.querySelectorAll('.cart__item .quantity__input');

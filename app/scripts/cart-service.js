@@ -1,18 +1,25 @@
-export function updateInfoCartPage(data, lineIndex) {
+export function updateInfoCartPage(data, lineIndex, checkRemove) {
     const div = document.createElement("div");
     div.innerHTML = data;
     const liElement = document.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
-    const liElementNew = div.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
-    const jsLineUpdatesOld = liElement.querySelectorAll(".jsLineUpdate");
-    const jsLineUpdatesNew = liElementNew.querySelectorAll(".jsLineUpdate");
+    if (!checkRemove) {
+        const liElementNew = div.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
+        const jsLineUpdatesOld = liElement.querySelectorAll(".jsLineUpdate");
+        const jsLineUpdatesNew = liElementNew.querySelectorAll(".jsLineUpdate");
+        jsLineUpdatesOld.forEach((item, index) => {
+            item.parentNode.replaceChild(jsLineUpdatesNew[index], item);
+        });
+    } else {
+        liElement.remove()
+        console.log('check')
+    }
     const jsCartUpdateOld = document.querySelectorAll('.js-cart-update')
     const jsCartUpdateNew = div.querySelectorAll('.js-cart-update')
-    jsLineUpdatesOld.forEach((item, index) => {
-        item.parentNode.replaceChild(jsLineUpdatesNew[index], item);
-    });
+
     jsCartUpdateOld.forEach((item, index) => {
         item.parentNode.replaceChild(jsCartUpdateNew[index], item);
     });
+
 
 }
 
