@@ -203,7 +203,7 @@
       });
     });
     const textarea = document.getElementById("cart-note");
-    const debouncedFetch = debounce(() => updateDataCart(textarea.value), 2e3);
+    const debouncedFetch = debounce(() => updateDataCart(textarea.value), 500);
     textarea.addEventListener("input", debouncedFetch);
     const selectField = document.getElementsByName("shipping_address[country]")[0];
     selectField.addEventListener("change", function(event) {

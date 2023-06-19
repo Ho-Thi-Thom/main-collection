@@ -103,7 +103,7 @@ function init() {
 
 
     const textarea = document.getElementById('cart-note');
-    const debouncedFetch = debounce(() => updateDataCart(textarea.value), 2000);
+    const debouncedFetch = debounce(() => updateDataCart(textarea.value), 500);
     textarea.addEventListener('input', debouncedFetch);
 
     // jsShippingRates
