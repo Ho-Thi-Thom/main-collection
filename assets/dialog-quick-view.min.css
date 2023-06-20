@@ -1,0 +1,1 @@
+.dialog__quick-view{width:100%}.dialog__quick-view .popup-container{display:flex;gap:10px}.dialog__quick-view .popup-container .popup__product-info,.dialog__quick-view .popup-container .popup__product-main{flex:1}@media (max-width: 768px){.popup-container{flex-direction:column}}.item-image img{width:100%;height:auto}

@@ -1,0 +1,11 @@
+{
+    "sections": {
+      "main": {
+        "type": "dialog-quick-view",
+        "settings": {}
+      }
+    },
+    "order": [
+      "main"
+    ]
+  }  

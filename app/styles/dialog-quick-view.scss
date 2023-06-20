@@ -1,0 +1,32 @@
+.dialog__quick-view {
+    width: 100%;
+
+    .popup-container {
+        display: flex;
+        gap: 10px;
+
+        .popup__product-main {
+            flex: 1;
+        }
+
+        .popup__product-info {
+            flex: 1;
+        }
+    }
+}
+
+
+
+
+@media (max-width: 768px) {
+    .popup-container {
+        flex-direction: column;
+    }
+
+    .popup__product-main {}
+}
+
+.item-image img {
+    width: 100%;
+    height: auto;
+}

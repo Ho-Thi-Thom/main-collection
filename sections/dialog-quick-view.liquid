@@ -1,16 +1,6 @@
 <link
   rel="stylesheet"
-  href="{{ 'product.css' | asset_url }}"
-  media="all"
->
-<link
-  rel="stylesheet"
-  href="{{ 'product-gallery-wrapper.css' | asset_url }}"
-  media="all"
->
-<link
-  rel="stylesheet"
-  href="{{ 'product-infor-wrapper.css' | asset_url }}"
+  href="{{ 'dialog-quick-view.css' | asset_url }}"
   media="all"
 >
 
@@ -18,23 +8,27 @@
   assign sectionID = '#shopify-section-' | append: section.id
   assign productSelect = product.selected_or_first_available_variant
 -%}
-<div class="product-section-wrapper container_wrapper" data-section-id="{{ section.id }}">
-  <div class="product-layout">
-    <div class="product-container">
-      {% render 'product-gallery-wrapper', product: product %}
+<div class="dialog__quick-view" data-section-id="{{ section.id }}">
+  <div class="popup-container">
+    <div class="popup__product-main">
+      <div class="popup__thumbnail-gallery">
+        {% for item in product.media %}
+          <div class="item-image">
+            <img src="{{ item.src | image_url }}" alt="">
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="popup__product-info">
       {%
         render 'product-infor-wrapper',
         productSelect: productSelect,
-        sectionID:sectionID ,
+        sectionID: sectionID,
       %}
     </div>
   </div>
-  {% comment %}
-    <button id="btn-arrow-top" title="Top">
-      {% render 'expand' %}
-    </button>
-  {% endcomment %}
 </div>
+
 {% schema %}
 {
   "name": "product",
@@ -153,19 +147,27 @@
       "type": "tag_and_sku",
       "name": "Tag & SKU"
     }
+  ],
+  "presets": [
+    {
+      "name": "Popup-Product"
+    }
   ]
 }
 {% endschema %}
-<script id="product_data" type="application/json">
+<script id="popup-variants" type="application/json">
   {{product | json}}
 </script>
-<script id="product_options" type="application/json">
-  {{ product.options_with_values | json}}
-</script>
-<script id="product_handle" type="application/json">
-  {{ product.handle | json}}
-</script>
-<script id="product_id" type="application/json">
-  {{ product.id | json}}
-</script>
-{{ 'main-product.js' | asset_url | script_tag }}
+{% comment %}
+  <script id="product_options" type="application/json">
+    {{ product.options_with_values | json}}
+  </script>
+  <script id="product_handle" type="application/json">
+    {{ product.handle | json}}
+  </script>
+  <script id="product_id" type="application/json">
+    {{ product.id | json}}
+  </script>
+{% endcomment %}
+{% comment %} https://arena-commerce-pineapple.myshopify.com/products/wooden-white?view=popup-product {% endcomment %}
+{{ 'dialog-quick-view.js' | asset_url | script_tag }}

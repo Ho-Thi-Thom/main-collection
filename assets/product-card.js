@@ -88,7 +88,7 @@
   window.addEventListener("DOMContentLoaded", function() {
     const body = document.querySelector("body");
     body.addEventListener("click", (event) => {
-      if (event.target.classList.contains("jsViewCart")) {
+      if (event.target.classList.contains("jsAddToCart")) {
         event.preventDefault();
         const variantId = event.target.dataset.firstVariant;
         let data = {
@@ -100,6 +100,9 @@
           ]
         };
         addToCart(data);
+      }
+      if (event.target.classList.contains("jsQuickView")) {
+        event.preventDefault();
       }
     });
   });

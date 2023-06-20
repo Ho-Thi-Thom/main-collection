@@ -17,10 +17,12 @@
     {% endfor %}
   </div>
 
-  <div class="prev">
-    {% render 'expand' %}
-  </div>
-  <div class="next">
-    {% render 'expand' %}
-  </div>
+  {% if isPresent %}
+    <div class="prev">
+      {% render 'expand' %}
+    </div>
+    <div class="next">
+      {% render 'expand' %}
+    </div>
+  {% endif %}
 </div>
