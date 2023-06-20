@@ -1,26 +1,8 @@
-import { tns } from "tiny-slider";
-import { getScript } from "./utils";
-const productData = getScript(document.getElementById("popup-variants"), []);
-const variants = productData.variants
+import { runSlider } from "./dialog-quick-view-service";
+// import { getScript } from "./utils";
 
-slider = tns({
-    container: ".popup__thumbnail-gallery",
-    items: 1,
-    autoplay: false,
-    speed: 400,
-    mouseDrag: true,
-    loop: false,
-    nav: false,
-    controls: false,
-});
-
-const sectionId = document.querySelector('.dialog__quick-view').dataset.sectionId
-
-
-const formEl = document.querySelector('.jsProductForm');
-formEl.addEventListener('change', function (event) {
-    if (event.target.id !== 'cart-condition') {
-        const titles = variants.filter(variant => Object.values(variant).includes(event.target.value)).map(product => product.title)
-        console.log(titles)
-    }
-})
+// const formEl = document.querySelector('.jsProductForm');
+// const productOptions = getScript(document.getElementById("popup_product_options"), []);
+// const productData = getScript(document.getElementById("popup-variants"), []);
+// const variants = productData.variants
+runSlider()

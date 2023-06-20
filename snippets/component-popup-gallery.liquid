@@ -1,0 +1,19 @@
+<div class="{{class-wrapper}}">
+  <div id="{{id-slider}}">
+    {% for item in product.media %}
+      <div
+        class="item-image"
+      >
+        <img src="{{ item.src | image_url }}" alt="">
+      </div>
+    {% endfor %}
+  </div>
+  <div id="{{id-controls}}" class="controls">
+    <div class="prev">
+      {% render 'expand' %}
+    </div>
+    <div class="next">
+      {% render 'expand' %}
+    </div>
+  </div>
+</div>

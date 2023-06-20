@@ -1,5 +1,8 @@
 {
     "main-collection": [
         "test"
+    ],
+    "cart": [
+        "utils"
     ]
 }

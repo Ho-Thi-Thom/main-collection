@@ -8,16 +8,22 @@
   assign sectionID = '#shopify-section-' | append: section.id
   assign productSelect = product.selected_or_first_available_variant
 -%}
+
 <div class="dialog__quick-view" data-section-id="{{ section.id }}">
   <div class="popup-container">
-    <div class="popup__product-main">
-      <div class="popup__thumbnail-gallery">
-        {% for item in product.media %}
-          <div class="item-image">
-            <img src="{{ item.src | image_url }}" alt="">
-          </div>
-        {% endfor %}
-      </div>
+    <div class="popup__product-gallery">
+      {% render 'component-popup-gallery',
+        product: product,
+        class-wrapper: 'customize',
+        id-slider: 'customize',
+        id-controls: 'controls'
+      %}
+      {% render 'component-popup-gallery',
+        product: product,
+        class-wrapper: 'customize-tools',
+        id-slider: 'customize-thumbnails',
+        id-controls: 'customize-controls'
+      %}
     </div>
     <div class="popup__product-info">
       {%
@@ -158,16 +164,8 @@
 <script id="popup-variants" type="application/json">
   {{product | json}}
 </script>
-{% comment %}
-  <script id="product_options" type="application/json">
-    {{ product.options_with_values | json}}
-  </script>
-  <script id="product_handle" type="application/json">
-    {{ product.handle | json}}
-  </script>
-  <script id="product_id" type="application/json">
-    {{ product.id | json}}
-  </script>
-{% endcomment %}
+<script id="popup_product_options" type="application/json">
+  {{ product.options_with_values | json}}
+</script>
 {% comment %} https://arena-commerce-pineapple.myshopify.com/products/wooden-white?view=popup-product {% endcomment %}
 {{ 'dialog-quick-view.js' | asset_url | script_tag }}
