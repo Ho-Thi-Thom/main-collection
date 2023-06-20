@@ -3,6 +3,8 @@ import { debounce } from "./utils";
 export function runSlider() {
     let slider = null;
     let thumbnailSlider = null;
+    let resizeObserver = null;
+    let isTablet = null;
 
     const initializeSlider = () => {
         if (slider) {
@@ -12,18 +14,17 @@ export function runSlider() {
         if (thumbnailSlider) {
             thumbnailSlider.destroy();
         }
-        const isTablet = window.matchMedia("(max-width: 1023px)").matches;
+
         const axisValue = isTablet ? "horizontal" : "vertical";
         const sliderContainer = document.querySelector("#customize");
         const thumbnailContainer = document.querySelector("#customize-thumbnails");
-
 
         slider = tns({
             container: sliderContainer,
             navContainer: thumbnailContainer || undefined,
             controlsContainer: "#controls",
             items: 1,
-            axis: 'horizontal',
+            axis: "horizontal",
             autoplay: false,
             autoplayTimeout: 1000,
             speed: 400,
@@ -45,7 +46,7 @@ export function runSlider() {
                 loop: false,
                 controls: true,
                 controlsContainer: "#customize-controls",
-                nav: true,
+                nav: false,
             });
 
             slider.events.on("indexChanged", function (info) {
@@ -56,10 +57,43 @@ export function runSlider() {
         return slider;
     };
 
-    initializeSlider();
+    const handleResize = debounce(() => {
+        const newIsTablet = window.matchMedia("(max-width: 1023px)").matches;
 
-    const debouncedInitializeSliderPopup = debounce(initializeSlider, 500);
-    window.addEventListener("resize", debouncedInitializeSliderPopup);
+        if (isTablet !== null && isTablet !== newIsTablet) {
+            isTablet = newIsTablet;
+            initializeSlider();
+        }
+    }, 500);
 
-    return slider;
+    const setupResizeObserver = () => {
+        if (resizeObserver) {
+            resizeObserver.disconnect();
+        }
+
+        const sliderContainer = document.querySelector("#customize");
+        resizeObserver = new ResizeObserver(handleResize);
+        resizeObserver.observe(sliderContainer);
+    };
+
+    const cleanup = () => {
+        if (resizeObserver) {
+            resizeObserver.disconnect();
+            resizeObserver = null;
+        }
+    };
+
+    const init = () => {
+        isTablet = window.matchMedia("(max-width: 1023px)").matches;
+        initializeSlider();
+        setupResizeObserver();
+        window.addEventListener("resize", handleResize);
+    };
+
+    init();
+
+    return {
+        slider: slider,
+        cleanup: cleanup,
+    };
 }

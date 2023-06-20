@@ -9,6 +9,7 @@
             flex: 1;
             display: flex;
             gap: 10px;
+            height: fit-content;
 
             img {
                 border-radius: 4px;
@@ -86,7 +87,7 @@
                     text-align: center;
 
                     .prev {
-                        top: 0;
+                        top: -25px;
                         left: 50%;
                         transform: translateX(-50%);
 
@@ -117,7 +118,6 @@
         .popup-container {
             .popup__product-gallery {
                 flex-direction: column;
-                gap: 0;
 
                 .customize {
                     order: 1;
@@ -125,6 +125,30 @@
 
                 .customize-tools {
                     order: 2;
+
+                    .controls {
+
+                        .prev {
+                            left: 0;
+                            top: 50%;
+                            transform: translateY(-50%);
+
+                            svg {
+                                transform: rotate(-90deg);
+                            }
+                        }
+
+                        .next {
+                            right: 0;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            left: auto;
+
+                            svg {
+                                transform: rotate(90deg);
+                            }
+                        }
+                    }
                 }
             }
 

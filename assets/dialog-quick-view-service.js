@@ -16,17 +16,17 @@
   function runSlider() {
     let slider = null;
     let thumbnailSlider = null;
+    let resizeObserver = null;
+    let isTablet = null;
     const initializeSlider = () => {
-      console.log(slider);
       if (slider) {
         slider.destroy();
       }
       if (thumbnailSlider) {
         thumbnailSlider.destroy();
       }
-      const isTablet = window.matchMedia("(max-width: 1023px)").matches;
       const axisValue = isTablet ? "horizontal" : "vertical";
-      let sliderContainer = document.querySelector("#customize");
+      const sliderContainer = document.querySelector("#customize");
       const thumbnailContainer = document.querySelector("#customize-thumbnails");
       slider = tns({
         container: sliderContainer,
@@ -54,7 +54,7 @@
           loop: false,
           controls: true,
           controlsContainer: "#customize-controls",
-          nav: true
+          nav: false
         });
         slider.events.on("indexChanged", function(info) {
           thumbnailSlider.goTo(info.index);
@@ -62,9 +62,37 @@
       }
       return slider;
     };
-    initializeSlider();
-    const debouncedInitializeSliderPopup = debounce(initializeSlider, 500);
-    window.addEventListener("resize", debouncedInitializeSliderPopup);
-    return slider;
+    const handleResize = debounce(() => {
+      const newIsTablet = window.matchMedia("(max-width: 1023px)").matches;
+      if (isTablet !== null && isTablet !== newIsTablet) {
+        isTablet = newIsTablet;
+        initializeSlider();
+      }
+    }, 500);
+    const setupResizeObserver = () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+      const sliderContainer = document.querySelector("#customize");
+      resizeObserver = new ResizeObserver(handleResize);
+      resizeObserver.observe(sliderContainer);
+    };
+    const cleanup = () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
+    };
+    const init = () => {
+      isTablet = window.matchMedia("(max-width: 1023px)").matches;
+      initializeSlider();
+      setupResizeObserver();
+      window.addEventListener("resize", handleResize);
+    };
+    init();
+    return {
+      slider,
+      cleanup
+    };
   }
 })();

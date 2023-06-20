@@ -11,6 +11,9 @@
   flex: 1;
   display: flex;
   gap: 10px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 .dialog__quick-view .popup-container .popup__product-gallery img {
@@ -87,7 +90,7 @@
 }
 
 .dialog__quick-view .popup-container .popup__product-gallery .customize-tools .controls .prev {
-  top: 0;
+  top: -25px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -109,12 +112,28 @@
 @media (max-width: 1023px) {
   .dialog__quick-view .popup-container .popup__product-gallery {
     flex-direction: column;
-    gap: 0;
   }
   .dialog__quick-view .popup-container .popup__product-gallery .customize {
     order: 1;
   }
   .dialog__quick-view .popup-container .popup__product-gallery .customize-tools {
     order: 2;
+  }
+  .dialog__quick-view .popup-container .popup__product-gallery .customize-tools .controls .prev {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .dialog__quick-view .popup-container .popup__product-gallery .customize-tools .controls .prev svg {
+    transform: rotate(-90deg);
+  }
+  .dialog__quick-view .popup-container .popup__product-gallery .customize-tools .controls .next {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    left: auto;
+  }
+  .dialog__quick-view .popup-container .popup__product-gallery .customize-tools .controls .next svg {
+    transform: rotate(90deg);
   }
 }
