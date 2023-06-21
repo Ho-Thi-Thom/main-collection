@@ -69,7 +69,11 @@
                         stroke: #ffffff;
                     }
 
-                    .jsQuickView {}
+                    .jsAddToCart {
+                        svg path {
+                            fill: #ffffff;
+                        }
+                    }
                 }
             }
 

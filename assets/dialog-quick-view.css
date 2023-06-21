@@ -1,5 +1,6 @@
 .dialog__quick-view {
   width: 100%;
+  height: 100%;
 }
 
 .dialog__quick-view .popup-container {
@@ -14,6 +15,7 @@
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+  padding: 0 15px;
 }
 
 .dialog__quick-view .popup-container .popup__product-gallery img {
@@ -36,6 +38,11 @@
   justify-content: center;
   align-items: center;
   opacity: 0;
+}
+
+.dialog__quick-view .popup-container .popup__product-gallery .next svg, .dialog__quick-view .popup-container .popup__product-gallery .prev svg {
+  width: 100%;
+  height: 100%;
 }
 
 .dialog__quick-view .popup-container .popup__product-gallery .customize-tools:hover .next, .dialog__quick-view .popup-container .popup__product-gallery .customize-tools:hover .prev, .dialog__quick-view .popup-container .popup__product-gallery .customize:hover .next, .dialog__quick-view .popup-container .popup__product-gallery .customize:hover .prev {
@@ -113,6 +120,10 @@
   .dialog__quick-view .popup-container .popup__product-gallery {
     flex-direction: column;
   }
+  .dialog__quick-view .popup-container .popup__product-gallery .next, .dialog__quick-view .popup-container .popup__product-gallery .prev {
+    width: 30px;
+    height: 30px;
+  }
   .dialog__quick-view .popup-container .popup__product-gallery .customize {
     order: 1;
   }
@@ -128,6 +139,7 @@
     transform: rotate(-90deg);
   }
   .dialog__quick-view .popup-container .popup__product-gallery .customize-tools .controls .next {
+    bottom: inherit;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
@@ -135,5 +147,20 @@
   }
   .dialog__quick-view .popup-container .popup__product-gallery .customize-tools .controls .next svg {
     transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .dialog__quick-view .popup-container .popup__product-gallery {
+    padding: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .dialog__quick-view .popup-container {
+    flex-direction: column;
+  }
+  .dialog__quick-view .popup-container .popup__product-gallery {
+    padding: 0;
   }
 }

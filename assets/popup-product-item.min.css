@@ -1,0 +1,1 @@
+.popup-wapper{position:fixed;z-index:1000000;margin:auto;display:none;top:50%;right:50%;transform:translate(50%, -50%)}.popup-wapper.active{display:flex}.popup-wapper .content{min-width:70vw;min-height:70vh;flex:1;background-color:#fff;border-radius:7px}.popup-wapper .close-popup{flex-shrink:1;cursor:pointer}

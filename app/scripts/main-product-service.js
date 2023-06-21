@@ -76,11 +76,7 @@ export function onVariantChange(getUrl) {
                 updateElementInput(div.querySelector(".jsSubmit"));
             });
     } else {
-        // updateElementPrice(null, null, true);
-        // updateElementVariantInventory(null, true);
         updateElementAddToCart(null, true);
-        // updateElementSKU(null, true);
-        // updateElementInput(null, true);
         const options = {
             type: "warring",
             title: "Not found",

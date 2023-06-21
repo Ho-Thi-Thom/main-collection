@@ -18,6 +18,12 @@
             margin-bottom: 12px;
         }
 
+        .product-rating {
+            display: inline-flex;
+            align-items: flex-start;
+        }
+
+
         .product-price {
             display: flex;
             gap: 10px;

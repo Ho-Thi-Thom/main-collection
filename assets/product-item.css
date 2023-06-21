@@ -66,6 +66,10 @@
   stroke: #fff;
 }
 
+.card .card__inner .card__image-wrapper .card__group:hover .jsAddToCart svg path {
+  fill: #fff;
+}
+
 .card .card__inner .card__image-wrapper .tag {
   position: absolute;
   top: 0;

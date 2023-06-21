@@ -20,6 +20,11 @@
   margin-bottom: 12px;
 }
 
+.product-infor-wrapper .product-infor .product-rating {
+  display: inline-flex;
+  align-items: flex-start;
+}
+
 .product-infor-wrapper .product-infor .product-price {
   display: flex;
   gap: 10px;

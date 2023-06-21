@@ -13,7 +13,10 @@
                 {% render 'plus' %}
               </button>
             {% else %}
-              <button class="jsQuickView">
+              <button
+                class="jsQuickView pointer-events"
+                data-url-product-popup="/products/{{ product.handle}}?view=popup-product"
+              >
                 {% render 'card' %}
               </button>
             {% endif %}

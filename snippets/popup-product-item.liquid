@@ -1,0 +1,18 @@
+<link
+  rel="stylesheet"
+  href="{{ 'popup-product-item.css' | asset_url }}"
+  media="all"
+>
+<link
+  rel="stylesheet"
+  href="{{ 'dialog-quick-view.css' | asset_url }}"
+  media="all"
+>
+<div class="popup-wapper" id="popup-product-item">
+  <div class="content"></div>
+  <div class="close-popup">
+    {% render 'icon-close' %}
+  </div>
+</div>
+{{ 'popup-product-item.js' | asset_url | script_tag }}
+{% comment %} {{ 'dialog-quick-view.js' | asset_url | script_tag }} {% endcomment %}
