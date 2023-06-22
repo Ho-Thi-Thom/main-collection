@@ -9,10 +9,11 @@
   media="all"
 >
 <div class="popup-wapper" id="popup-product-item">
-  <div class="content"></div>
-  <div class="close-popup">
-    {% render 'icon-close' %}
+  <div class="popup-content">
+    <div class="content"></div>
+    <div class="close-popup">
+      {% render 'icon-close' %}
+    </div>
   </div>
 </div>
 {{ 'popup-product-item.js' | asset_url | script_tag }}
-{% comment %} {{ 'dialog-quick-view.js' | asset_url | script_tag }} {% endcomment %}

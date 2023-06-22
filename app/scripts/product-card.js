@@ -1,3 +1,4 @@
+import { initQuickView } from "./dialog-quick-view";
 import { openPopup } from "./popup-product-item";
 import { addToCart } from "./utils";
 
@@ -32,9 +33,11 @@ async function fetchDataPopup(url) {
     const data = await result.text();
     const div = document.createElement("div");
     div.innerHTML = data;
-    const popup = document.querySelector('#popup-product-item');
+    const popup = document.querySelector('#popup-product-item .popup-content .content');
     const quickView = div.querySelector('.dialog__quick-view');
-
-    popup.querySelector('.content').appendChild(quickView);
+    popup.innerHTML = '';
+    popup.appendChild(quickView);
+    const newUrl = url.split('?')[0]
+    initQuickView(newUrl);
     openPopup()
 }

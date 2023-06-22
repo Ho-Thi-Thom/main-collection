@@ -33,6 +33,12 @@
       %}
     </div>
   </div>
+  <script id="popup-variants" type="application/json">
+    {{product | json}}
+  </script>
+  <script id="popup_product_options" type="application/json">
+    {{ product.options_with_values | json}}
+  </script>
 </div>
 
 {% schema %}
@@ -161,11 +167,5 @@
   ]
 }
 {% endschema %}
-<script id="popup-variants" type="application/json">
-  {{product | json}}
-</script>
-<script id="popup_product_options" type="application/json">
-  {{ product.options_with_values | json}}
-</script>
 {% comment %} https://arena-commerce-pineapple.myshopify.com/products/wooden-white?view=popup-product {% endcomment %}
 {{ 'dialog-quick-view.js' | asset_url | script_tag }}

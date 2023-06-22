@@ -8,6 +8,13 @@
       return defaultValue;
     }
   }
+  function createUrlCustom(intURl = "", initParam = {}, callback) {
+    const urlSearchParams = new URLSearchParams(initParam);
+    if (callback && typeof callback === "function") {
+      callback(urlSearchParams);
+    }
+    return intURl ? intURl + "?" + urlSearchParams.toString() : window.location.pathname + "?" + urlSearchParams.toString();
+  }
   function createUrl(callback, initParam) {
     const urlSearchParams = new URLSearchParams(initParam);
     if (callback && typeof callback === "function") {
@@ -108,13 +115,13 @@
 
   // app/scripts/dialog-quick-view-service.js
   function runSlider() {
-    let slider2 = null;
+    let slider = null;
     let thumbnailSlider = null;
     let resizeObserver = null;
     let isTablet = null;
     const initializeSlider = () => {
-      if (slider2) {
-        slider2.destroy();
+      if (slider) {
+        slider.destroy();
       }
       if (thumbnailSlider) {
         thumbnailSlider.destroy();
@@ -122,7 +129,7 @@
       const axisValue = isTablet ? "horizontal" : "vertical";
       const sliderContainer = document.querySelector("#customize");
       const thumbnailContainer = document.querySelector("#customize-thumbnails");
-      slider2 = tns({
+      slider = tns({
         container: sliderContainer,
         navContainer: thumbnailContainer || void 0,
         controlsContainer: "#controls",
@@ -150,11 +157,11 @@
           controlsContainer: "#customize-controls",
           nav: false
         });
-        slider2.events.on("indexChanged", function(info) {
+        slider.events.on("indexChanged", function(info) {
           thumbnailSlider.goTo(info.index);
         });
       }
-      return slider2;
+      return slider;
     };
     const handleResize = debounce(() => {
       const newIsTablet = window.matchMedia("(max-width: 1023px)").matches;
@@ -171,7 +178,7 @@
       resizeObserver = new ResizeObserver(handleResize);
       resizeObserver.observe(sliderContainer);
     };
-    const cleanup2 = () => {
+    const cleanup = () => {
       if (resizeObserver) {
         resizeObserver.disconnect();
         resizeObserver = null;
@@ -185,8 +192,8 @@
     };
     init();
     return {
-      slider: slider2,
-      cleanup: cleanup2
+      slider,
+      cleanup
     };
   }
   function updateElementPrice(divCompare, divPrice, checkEmpty = false) {
@@ -248,12 +255,14 @@
     const input = document.querySelector(".jsSubmit");
     input.value = element.value;
   }
-  function onVariantChange(getUrl2) {
-    const url = getUrl2();
+  function onVariantChange(getUrl) {
+    const url = getUrl();
+    console.log(url);
     if (url) {
       fetch(url).then((res) => res.text()).then((data) => {
         const div = document.createElement("div");
         div.innerHTML = data;
+        console.log(div);
         updateElementPrice(div.querySelector(".compare-price"), div.querySelector(".price"));
         updateElementVariantInventory(div.querySelector(".variant-inventory"));
         updateElementAddToCart(div.querySelector(".btn-add"));
@@ -270,10 +279,10 @@
       setValuePopupInfo(options);
     }
   }
-  function updateCssOption(titles, productOptions2, name) {
+  function updateCssOption(titles, productOptions, name) {
     name = uppercaseFirstLetter(name);
-    const filteredPositions = productOptions2.filter((item) => item.name !== name).map((item) => item.position);
-    const element = productOptions2.find((item) => item.name === name);
+    const filteredPositions = productOptions.filter((item) => item.name !== name).map((item) => item.position);
+    const element = productOptions.find((item) => item.name === name);
     const input = element ? element.position : null;
     const uniqueElements = [...new Set(titles)];
     const result = uniqueElements.reduce((acc, item) => {
@@ -355,68 +364,77 @@
   }
 
   // app/scripts/dialog-quick-view.js
-  var formEl = document.querySelector(".jsProductForm");
-  var productOptions = getScript(document.getElementById("popup_product_options"), []);
-  var productData = getScript(document.getElementById("popup-variants"), []);
-  var variants = productData.variants;
-  var { slider, cleanup } = runSlider();
-  var removeBtn = document.querySelector(".remove__qlt");
-  var addBtn = document.querySelector(".add__qlt");
-  var quantityInput = document.querySelector(".quantity__input");
-  var formProduct = document.getElementById("jsFormProduct");
-  formEl.addEventListener("change", function(event) {
-    if (event.target.id !== "cart-condition") {
-      const titles = variants.filter((variant) => Object.values(variant).includes(event.target.value)).map((product) => product.title);
-      onVariantChange(() => getUrl(formEl.dataset.sectionId, slider));
-      updateCssOption(titles, productOptions, event.target.name);
-    }
-  });
-  function getUrl(sectionId, slider2) {
-    const selects = document.querySelectorAll(".js-variant-change");
-    const radios = document.querySelectorAll(".js-radio");
-    const value = getValue(selects, radios);
-    const data = variants.find((variant) => {
-      return variant.options.join("/") == value.join("/");
+  function initQuickView(newUrl = null) {
+    const formEl = document.querySelector(".jsProductForm");
+    const productOptions = getScript(document.getElementById("popup_product_options"), []);
+    const productData = getScript(document.getElementById("popup-variants"), []);
+    const variants = productData.variants;
+    const { slider, cleanup } = runSlider();
+    const removeBtn = document.querySelector(".remove__qlt");
+    const addBtn = document.querySelector(".add__qlt");
+    const quantityInput = document.querySelector(".quantity__input");
+    const formProduct = document.getElementById("jsFormProduct");
+    formEl.addEventListener("change", function(event) {
+      if (event.target.id !== "cart-condition") {
+        const titles = variants.filter((variant) => Object.values(variant).includes(event.target.value)).map((product) => product.title);
+        onVariantChange(() => getUrl(formEl.dataset.sectionId, slider));
+        updateCssOption(titles, productOptions, event.target.name);
+      }
     });
-    if (!data) {
-      return;
-    }
-    if (data.featured_image !== null) {
-      slider2.goTo(data.featured_image.position - 1);
-    }
-    const url = createUrl(function(searchParams) {
-      searchParams.set("variant", data.id);
-    });
-    history.pushState(null, null, url);
-    return updateUrl(url, sectionId);
-  }
-  removeBtn.addEventListener("click", function() {
-    let currentValue = parseInt(quantityInput.value);
-    if (currentValue > 1) {
-      quantityInput.value = currentValue - 1;
-    }
-  });
-  addBtn.addEventListener("click", function() {
-    let currentValue = parseInt(quantityInput.value);
-    quantityInput.value = currentValue + 1;
-  });
-  quantityInput.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-    }
-  });
-  addToCart2();
-  checkPolicy();
-  function addToCart2() {
-    if (formProduct && formProduct.dataset.type === "b") {
-      formProduct.addEventListener("submit", function(event) {
-        event.preventDefault();
-        const productFormData = Object.fromEntries(new FormData(event.target).entries());
-        let formData = {
-          "items": [productFormData]
-        };
-        addToCart(formData);
+    function getUrl(sectionId, slider2) {
+      const selects = document.querySelectorAll(".js-variant-change");
+      const radios = document.querySelectorAll(".js-radio");
+      const value = getValue(selects, radios);
+      const data = variants.find((variant) => {
+        return variant.options.join("/") == value.join("/");
       });
+      if (!data) {
+        return;
+      }
+      if (data.featured_image !== null) {
+        slider2.goTo(data.featured_image.position - 1);
+      }
+      let url = "";
+      if (newUrl) {
+        url = createUrlCustom(newUrl, void 0, function(searchParams) {
+          searchParams.set("variant", data.id);
+        });
+      } else {
+        url = createUrl(function(searchParams) {
+          searchParams.set("variant", data.id);
+        });
+        history.pushState(null, null, url);
+      }
+      return updateUrl(url, sectionId);
+    }
+    removeBtn.addEventListener("click", function() {
+      let currentValue = parseInt(quantityInput.value);
+      if (currentValue > 1) {
+        quantityInput.value = currentValue - 1;
+      }
+    });
+    addBtn.addEventListener("click", function() {
+      let currentValue = parseInt(quantityInput.value);
+      quantityInput.value = currentValue + 1;
+    });
+    quantityInput.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+      }
+    });
+    addToCart2();
+    checkPolicy();
+    function addToCart2() {
+      if (formProduct && formProduct.dataset.type === "b") {
+        formProduct.addEventListener("submit", function(event) {
+          event.preventDefault();
+          const productFormData = Object.fromEntries(new FormData(event.target).entries());
+          let formData = {
+            "items": [productFormData]
+          };
+          addToCart(formData);
+        });
+      }
     }
   }
 })();

@@ -6,6 +6,7 @@
 .dialog__quick-view .popup-container {
   display: flex;
   gap: 10px;
+  padding: 16px;
 }
 
 .dialog__quick-view .popup-container .popup__product-gallery {

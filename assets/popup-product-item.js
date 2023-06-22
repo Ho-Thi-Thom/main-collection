@@ -8,7 +8,7 @@
     const popupProduct = document.querySelector("#popup-product-item");
     popupProduct.classList.add("active");
   }
-  var btnClose = document.querySelector("#popup-product-item .close-popup");
+  var btnClose = document.querySelector("#popup-product-item .close-popup div");
   if (btnClose) {
     btnClose.addEventListener("click", () => {
       closePopup();

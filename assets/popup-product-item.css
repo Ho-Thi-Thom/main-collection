@@ -1,26 +1,33 @@
 .popup-wapper {
   position: fixed;
-  z-index: 1000000;
-  margin: auto;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
   display: none;
-  top: 50%;
-  right: 50%;
-  transform: translate(50%, -50%);
+  pointer-events: none;
 }
 
 .popup-wapper.active {
   display: flex;
+  pointer-events: auto;
 }
 
-.popup-wapper .content {
-  min-width: 70vw;
-  min-height: 70vh;
-  flex: 1;
+.popup-content {
+  position: relative;
+  margin: auto;
+  width: 80%;
+  min-width: 375px;
+  max-width: 80vw;
   background-color: #fff;
   border-radius: 7px;
 }
 
-.popup-wapper .close-popup {
-  flex-shrink: 1;
+.close-popup {
+  position: absolute;
+  top: 0;
+  right: 0;
   cursor: pointer;
+  width: 30px;
+  height: 30px;
+  padding: 4px;
 }
