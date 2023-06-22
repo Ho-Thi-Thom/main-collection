@@ -169,14 +169,12 @@ function updateElementInput(element, checkEmpty = false) {
 
 export function onVariantChange(getUrl) {
     const url = getUrl();
-    console.log(url)
     if (url) {
         fetch(url)
             .then((res) => res.text())
             .then((data) => {
                 const div = document.createElement("div");
                 div.innerHTML = data;
-                console.log(div)
                 updateElementPrice(
                     div.querySelector(".compare-price"),
                     div.querySelector(".price")

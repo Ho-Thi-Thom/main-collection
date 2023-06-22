@@ -1,17 +1,17 @@
 import { checkPolicy, getValue, onVariantChange, runSlider, updateCssOption } from "./dialog-quick-view-service";
 import { addToCart as addToCartByForm, createUrl, createUrlCustom, getScript, updateUrl } from "./utils";
 
-export function initQuickView(newUrl = null) {
-    const formEl = document.querySelector('.jsProductForm');
-    const productOptions = getScript(document.getElementById("popup_product_options"), []);
-    const productData = getScript(document.getElementById("popup-variants"), []);
+export function initQuickView(newUrl = null, container = document) {
+    const formEl = container.querySelector('.jsProductForm');
+    const productOptions = getScript(container.querySelector("#popup_product_options"), []);
+    const productData = getScript(container.querySelector("#popup-variants"), []);
 
     const variants = productData.variants
     const { slider, cleanup } = runSlider()
-    const removeBtn = document.querySelector('.remove__qlt');
-    const addBtn = document.querySelector('.add__qlt');
-    const quantityInput = document.querySelector('.quantity__input');
-    const formProduct = document.getElementById('jsFormProduct');
+    const removeBtn = container.querySelector('.remove__qlt');
+    const addBtn = container.querySelector('.add__qlt');
+    const quantityInput = container.querySelector('.quantity__input');
+    const formProduct = container.querySelector('#jsFormProduct');
 
     formEl.addEventListener('change', function (event) {
         if (event.target.id !== 'cart-condition') {
@@ -22,8 +22,8 @@ export function initQuickView(newUrl = null) {
     })
 
     function getUrl(sectionId, slider) {
-        const selects = document.querySelectorAll('.js-variant-change');
-        const radios = document.querySelectorAll('.js-radio');
+        const selects = container.querySelectorAll('.js-variant-change');
+        const radios = container.querySelectorAll('.js-radio');
 
         const value = getValue(selects, radios)
         const data = variants.find(variant => {

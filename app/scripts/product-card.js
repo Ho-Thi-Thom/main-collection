@@ -38,6 +38,6 @@ async function fetchDataPopup(url) {
     popup.innerHTML = '';
     popup.appendChild(quickView);
     const newUrl = url.split('?')[0]
-    initQuickView(newUrl);
+    initQuickView(newUrl, popup);
     openPopup()
 }

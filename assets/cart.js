@@ -13,7 +13,6 @@
       });
     } else {
       liElement.remove();
-      console.log("check");
     }
     const jsCartUpdateOld = document.querySelectorAll(".js-cart-update");
     const jsCartUpdateNew = div.querySelectorAll(".js-cart-update");
@@ -136,7 +135,6 @@
     trigger(btnRemoves);
     trigger([...addBtns, ...removeBtns]);
     function trigger(elements = []) {
-      console.log(elements);
       if (!elements || elements.length === 0) {
         return;
       }
@@ -144,7 +142,6 @@
         let timeout = null;
         element.addEventListener("click", (event) => {
           const elm = event.target;
-          console.log(elm);
           const lineIndex = elm.closest(".cart__item.jsLineItem").dataset.lineIndex;
           const quantityInput = document.querySelector(`.cart__item.jsLineItem[data-line-index="${lineIndex}"] .quantity__input`);
           if (elm.classList.contains("add__qlt")) {

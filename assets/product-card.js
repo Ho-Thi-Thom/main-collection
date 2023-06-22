@@ -257,12 +257,10 @@
   }
   function onVariantChange(getUrl) {
     const url = getUrl();
-    console.log(url);
     if (url) {
       fetch(url).then((res) => res.text()).then((data) => {
         const div = document.createElement("div");
         div.innerHTML = data;
-        console.log(div);
         updateElementPrice(div.querySelector(".compare-price"), div.querySelector(".price"));
         updateElementVariantInventory(div.querySelector(".variant-inventory"));
         updateElementAddToCart(div.querySelector(".btn-add"));
@@ -364,16 +362,16 @@
   }
 
   // app/scripts/dialog-quick-view.js
-  function initQuickView(newUrl = null) {
-    const formEl = document.querySelector(".jsProductForm");
-    const productOptions = getScript(document.getElementById("popup_product_options"), []);
-    const productData = getScript(document.getElementById("popup-variants"), []);
+  function initQuickView(newUrl = null, container = document) {
+    const formEl = container.querySelector(".jsProductForm");
+    const productOptions = getScript(container.querySelector("#popup_product_options"), []);
+    const productData = getScript(container.querySelector("#popup-variants"), []);
     const variants = productData.variants;
     const { slider, cleanup } = runSlider();
-    const removeBtn = document.querySelector(".remove__qlt");
-    const addBtn = document.querySelector(".add__qlt");
-    const quantityInput = document.querySelector(".quantity__input");
-    const formProduct = document.getElementById("jsFormProduct");
+    const removeBtn = container.querySelector(".remove__qlt");
+    const addBtn = container.querySelector(".add__qlt");
+    const quantityInput = container.querySelector(".quantity__input");
+    const formProduct = container.querySelector("#jsFormProduct");
     formEl.addEventListener("change", function(event) {
       if (event.target.id !== "cart-condition") {
         const titles = variants.filter((variant) => Object.values(variant).includes(event.target.value)).map((product) => product.title);
@@ -382,8 +380,8 @@
       }
     });
     function getUrl(sectionId, slider2) {
-      const selects = document.querySelectorAll(".js-variant-change");
-      const radios = document.querySelectorAll(".js-radio");
+      const selects = container.querySelectorAll(".js-variant-change");
+      const radios = container.querySelectorAll(".js-radio");
       const value = getValue(selects, radios);
       const data = variants.find((variant) => {
         return variant.options.join("/") == value.join("/");
@@ -442,6 +440,8 @@
   function closePopup2() {
     const popupProduct = document.querySelector("#popup-product-item");
     popupProduct.classList.remove("active");
+    const popupContent = popupProduct.querySelector("#popup-product-item .content");
+    popupContent.innerHTML = "";
   }
   function openPopup() {
     const popupProduct = document.querySelector("#popup-product-item");
@@ -488,7 +488,7 @@
     popup.innerHTML = "";
     popup.appendChild(quickView);
     const newUrl = url.split("?")[0];
-    initQuickView(newUrl);
+    initQuickView(newUrl, popup);
     openPopup();
   }
 })();

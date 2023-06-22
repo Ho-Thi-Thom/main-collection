@@ -85,7 +85,6 @@ function init() {
     function getUrl(sectionId, slider) {
         const selects = document.querySelectorAll('.js-variant-change');
         const radios = document.querySelectorAll('.js-radio');
-
         const value = getValue(selects, radios)
         const data = variants.find(variant => {
             return variant.options.join('/') == value.join('/')

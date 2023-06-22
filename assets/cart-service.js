@@ -13,7 +13,6 @@
       });
     } else {
       liElement.remove();
-      console.log("check");
     }
     const jsCartUpdateOld = document.querySelectorAll(".js-cart-update");
     const jsCartUpdateNew = div.querySelectorAll(".js-cart-update");

@@ -3,6 +3,8 @@
   function closePopup() {
     const popupProduct = document.querySelector("#popup-product-item");
     popupProduct.classList.remove("active");
+    const popupContent = popupProduct.querySelector("#popup-product-item .content");
+    popupContent.innerHTML = "";
   }
   function openPopup() {
     const popupProduct = document.querySelector("#popup-product-item");

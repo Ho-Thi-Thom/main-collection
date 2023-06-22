@@ -14,12 +14,7 @@
   background-color: transparent;
 }
 
-.paginate_link.active {
+.paginate_link.active, .paginate_link:hover {
   background-color: #05a845;
   color: #fff;
-}
-
-.paginate_link:hover {
-  border: 1px solid #05a845;
-  color: #000;
 }
