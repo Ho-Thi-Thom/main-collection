@@ -195,26 +195,26 @@ function scriptTask(filePath) {
   result.length && buildScripts(result);
 }
 
-const directoryPath = "./app/scripts/";
-let filePaths = [];
-// 
-fs.readdir(directoryPath, (err, files) => {
-  if (err) {
-    console.error("Error reading directory:", err);
-    return;
-  }
+// const directoryPath = "./app/scripts/";
+// let filePaths = [];
+// // 
+// fs.readdir(directoryPath, (err, files) => {
+//   if (err) {
+//     console.error("Error reading directory:", err);
+//     return;
+//   }
 
-  // Filter for JavaScript files
-  const jsFiles = files.filter((file) => path.extname(file) === ".js");
+//   // Filter for JavaScript files
+//   const jsFiles = files.filter((file) => path.extname(file) === ".js");
 
-  // Get the full file paths
-  filePaths = jsFiles.map((file) => path.join(directoryPath, file));
+//   // Get the full file paths
+//   filePaths = jsFiles.map((file) => path.join(directoryPath, file));
 
-});
+// });
 
-function reloadScriptTask(filePaths) {
-  buildScripts(filePaths);
-}
+// function reloadScriptTask(filePaths) {
+//   buildScripts(filePaths);
+// }
 
 // 
 async function removeScript(filePath) {
@@ -243,9 +243,9 @@ exports.serve = async () => {
   });
 
   watch("./app/scripts/**/**/*.js").on("change", scriptTask);
-  watch("./app/scripts/*.js").on("change", () => {
-    reloadScriptTask(filePaths);
-  });
+  // watch("./app/scripts/*.js").on("change", () => {
+  //   reloadScriptTask(filePaths);
+  // });
   watch("./app/scripts/*.js").on("change", buildScripts);
   watch("./app/scripts/*.js").on("unlink", removeScript);
   watch("./app/scripts/*.js").on("add", buildScripts);

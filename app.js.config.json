@@ -4,5 +4,8 @@
     ],
     "cart": [
         "utils"
+    ],
+    "dialog-quick-view":[
+        "dialog-quick-view-service"
     ]
 }

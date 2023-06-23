@@ -1,4 +1,4 @@
-import { initQuickView } from "./dialog-quick-view";
+import { jsDialogQuickView } from "./dialog-quick-view";
 import { openPopup } from "./popup-product-item";
 import { addToCart } from "./utils";
 
@@ -38,6 +38,6 @@ async function fetchDataPopup(url) {
     popup.innerHTML = '';
     popup.appendChild(quickView);
     const newUrl = url.split('?')[0]
-    initQuickView(newUrl, popup);
+    jsDialogQuickView(newUrl, popup);
     openPopup()
 }

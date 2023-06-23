@@ -1,4 +1,4 @@
-import { addToCart, debounce, setValuePopupInfo, uppercaseFirstLetter } from "./utils";
+import { debounce, setValuePopupInfo, uppercaseFirstLetter } from "../utils";
 
 export function runSlider() {
     let slider = null;
@@ -98,7 +98,6 @@ export function runSlider() {
     };
 }
 
-
 function updateElementPrice(divCompare, divPrice, checkEmpty = false) {
     if (checkEmpty) {
         return;
@@ -116,7 +115,6 @@ function updateElementVariantInventory(element, checkEmpty = false) {
     const variantInventory = document.querySelector(".variant-inventory");
     variantInventory.parentNode.replaceChild(element, variantInventory);
 }
-
 
 function updateElementAddToCart(element, checkEmpty = false) {
     const btnAdd = document.querySelector(".btn-add");
@@ -149,7 +147,6 @@ function updateElementAddToCart(element, checkEmpty = false) {
         }
     }
 }
-
 
 function updateElementSKU(element, checkEmpty = false) {
     if (checkEmpty) {
@@ -195,7 +192,6 @@ export function onVariantChange(getUrl) {
         setValuePopupInfo(options);
     }
 }
-
 
 export function updateCssOption(titles, productOptions, name) {
     name = uppercaseFirstLetter(name);
@@ -247,7 +243,6 @@ export function updateCssOption(titles, productOptions, name) {
     });
 }
 
-
 export function getValue(selects, radios) {
     const inputsData = [];
 
@@ -277,7 +272,6 @@ export function getValue(selects, radios) {
 
     return inputsData;
 }
-
 
 export function checkPolicy() {
     const checkbox = document.getElementById("cart-condition");

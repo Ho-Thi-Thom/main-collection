@@ -1,11 +1,10 @@
-import { checkPolicy, getValue, onVariantChange, runSlider, updateCssOption } from "./dialog-quick-view-service";
+import { checkPolicy, getValue, onVariantChange, runSlider, updateCssOption } from "./common/dialog-quick-view-service";
 import { addToCart as addToCartByForm, createUrl, createUrlCustom, getScript, updateUrl } from "./utils";
 
-export function initQuickView(newUrl = null, container = document) {
+export function initQuickView(newUrl = null, container = document, runSlider) {
     const formEl = container.querySelector('.jsProductForm');
     const productOptions = getScript(container.querySelector("#popup_product_options"), []);
     const productData = getScript(container.querySelector("#popup-variants"), []);
-
     const variants = productData.variants
     const { slider, cleanup } = runSlider()
     const removeBtn = container.querySelector('.remove__qlt');
@@ -14,6 +13,7 @@ export function initQuickView(newUrl = null, container = document) {
     const formProduct = container.querySelector('#jsFormProduct');
 
     formEl.addEventListener('change', function (event) {
+        console.log('ấdsds')
         if (event.target.id !== 'cart-condition') {
             const titles = variants.filter(variant => Object.values(variant).includes(event.target.value)).map(product => product.title)
             onVariantChange(() => getUrl(formEl.dataset.sectionId, slider));
@@ -35,6 +35,7 @@ export function initQuickView(newUrl = null, container = document) {
         if (data.featured_image !== null) {
             slider.goTo(data.featured_image.position - 1);
         }
+
         let url = '';
         if (newUrl) {
             url = createUrlCustom(newUrl, undefined, function (searchParams) {
@@ -71,7 +72,10 @@ export function initQuickView(newUrl = null, container = document) {
         }
     });
 
+    /** Event add to cart */
     addToCart()
+
+    /** Check input policy */
     checkPolicy();
 
     function addToCart() {
@@ -90,3 +94,6 @@ export function initQuickView(newUrl = null, container = document) {
 }
 
 // initQuickView()
+export function jsDialogQuickView(newUrl, container) {
+    initQuickView(newUrl, container, runSlider)
+}
