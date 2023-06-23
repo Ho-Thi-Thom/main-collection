@@ -1,11 +1,7 @@
-import { menuAction } from "./header-service";
-import { updateWishListHeader } from "./wishlist-service";
-
 const menuButton = document.querySelector('.header-bugger');
 const menu = document.querySelector('.header-menu');
 const closeButton = document.querySelector('.header-close');
 const body = document.querySelector('#bg-color');
-const jsWishList = document.querySelector('.jsWishList');
 
 
 menuAction(menuButton, function () {
@@ -18,6 +14,8 @@ menuAction(closeButton, function () {
     body.classList.remove('body-overlay');
 });
 
-updateWishListHeader()
+function menuAction(selector, callback) {
+    selector.addEventListener("click", callback)
+}
 
 

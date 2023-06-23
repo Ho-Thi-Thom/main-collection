@@ -1,11 +1,31 @@
 {
     "main-collection": [
-        "test"
+        "collection-function",
+        "service"
     ],
     "cart": [
+        "utils",
+        "cart-service"
+    ],
+    "product-card":[
+        "dialog-quick-view",
+        "utils",
+        "popup-product-item",
+        "cart-service",
+        "dialog-quick-view-service"
+    ],
+    "popup-info":[
         "utils"
     ],
-    "dialog-quick-view":[
-        "dialog-quick-view-service"
+    "product-description":[
+        "product-description-service"
+    ],
+    "product-recently":[
+        "product-recently-service",
+        "utils",
+        "constants"
+    ],
+    "product-recommendations":[
+        "utils"
     ]
 }

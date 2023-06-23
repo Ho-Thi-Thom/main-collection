@@ -1,9 +1,5 @@
 (() => {
-  // app/scripts/product-description.js
-  var headerList = document.querySelectorAll(".jsNavTab");
-  var headerList1 = document.querySelectorAll(".jsNavTab1");
-  var bodyList = document.querySelectorAll(".jsBodyTab");
-  var bodyList1 = document.querySelectorAll(".jsBodyTab1");
+  // app/scripts/common/product/product-description-service.js
   function createActive(id) {
     const targetElement = document.querySelector(`.jsBodyTab[data-id="${id}"]`);
     const targetHeader = document.querySelector(`.jsNavTab[data-id="${id}"]`);
@@ -23,6 +19,12 @@
       targetElement.classList.add("active");
     }
   }
+
+  // app/scripts/product-description.js
+  var headerList = document.querySelectorAll(".jsNavTab");
+  var headerList1 = document.querySelectorAll(".jsNavTab1");
+  var bodyList = document.querySelectorAll(".jsBodyTab");
+  var bodyList1 = document.querySelectorAll(".jsBodyTab1");
   if (headerList.length > 0) {
     const idFirstHeader = headerList[0].dataset.id;
     createActive(idFirstHeader);

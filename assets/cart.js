@@ -74,7 +74,7 @@
     });
   }
 
-  // app/scripts/utils.js
+  // app/scripts/common/utils/utils.js
   function createUrlCustom(intURl = "", initParam = {}, callback) {
     const urlSearchParams = new URLSearchParams(initParam);
     if (callback && typeof callback === "function") {

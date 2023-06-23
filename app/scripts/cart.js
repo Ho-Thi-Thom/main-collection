@@ -1,15 +1,16 @@
-import { updateDataCart, updateInfoCartPage, fetchAPIUpdateItemCart, checkMax, checkListCart } from "./cart-service";
-import { createUrlCustom, debounce, shopifyReloadSection, updateCountCart } from "./utils";
+import { updateDataCart, updateInfoCartPage, fetchAPIUpdateItemCart, checkMax, checkListCart } from "./common/cart/cart-service";
+import { createUrlCustom, debounce, shopifyReloadSection, updateCountCart } from "./common/utils/utils";
+
 const sectionId = document.querySelector('.cart-section-wrapper').dataset.sectionId
 shopifyReloadSection(init, sectionId)
 
 function init() {
     // check list cart
-    checkListCart()
-
     const removeBtns = document.querySelectorAll('.cart__item .remove__qlt');
     const addBtns = document.querySelectorAll('.cart__item .add__qlt');
     const btnRemoves = document.querySelectorAll('.btn-remove')
+
+    checkListCart()
     trigger(btnRemoves)
     trigger([...addBtns, ...removeBtns])
     function trigger(elements = []) {
@@ -66,7 +67,6 @@ function init() {
         })
     }
 
-
     let inputs = document.querySelectorAll('.cart__item .quantity__input');
     inputs.forEach(function (input) {
         input.addEventListener('keydown', function (event) {
@@ -92,8 +92,6 @@ function init() {
         }, 2000))
     })
 
-
-
     // cart-summary
     const accordionItems = document.querySelectorAll('.accordion-initialized');
 
@@ -106,14 +104,12 @@ function init() {
         });
     });
 
-
     const textarea = document.getElementById('cart-note');
     const debouncedFetch = debounce(() => updateDataCart(textarea.value), 500);
     textarea.addEventListener('input', debouncedFetch);
 
     // jsShippingRates
     const selectField = document.getElementsByName("shipping_address[country]")[0];
-
     selectField.addEventListener("change", function (event) {
         const selectedOption = selectField.options[selectField.selectedIndex];
         const province = selectedOption.getAttribute("data-provinces");
@@ -133,7 +129,6 @@ function init() {
             formField.style.display = "none";
         }
     });
-
 
     const elmShippingRates = document.querySelector('.jsShippingRates');
     const url = elmShippingRates.dataset.url;

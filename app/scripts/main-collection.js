@@ -1,5 +1,5 @@
 
-import * as collection from "./collection-function"
+import * as collection from "./common/collection/collection-function"
 
 init()
 
@@ -19,4 +19,5 @@ function init() {
     collection.filterPrice(filterPrice)
     collection.paginate(paginateLinks)
     collection.show(show)
+    collection.addEventButtonFilter()
 }

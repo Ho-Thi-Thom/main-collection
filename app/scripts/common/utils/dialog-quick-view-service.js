@@ -1,4 +1,4 @@
-import { debounce, setValuePopupInfo, uppercaseFirstLetter } from "../utils";
+import { debounce, setValuePopupInfo, uppercaseFirstLetter } from "./utils";
 
 export function runSlider() {
     let slider = null;
@@ -99,6 +99,7 @@ export function runSlider() {
 }
 
 function updateElementPrice(divCompare, divPrice, checkEmpty = false) {
+    console.log("123123");
     if (checkEmpty) {
         return;
     }

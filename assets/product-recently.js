@@ -2613,10 +2613,7 @@
   // app/scripts/product-recently.js
   var import_tiny_slider = __toModule(require_tiny_slider());
 
-  // app/scripts/constants.js
-  var RECENTLY_LIST_KEY = "recently-list";
-
-  // app/scripts/utils.js
+  // app/scripts/common/utils/utils.js
   function readLocalStorage(key, defaultValue = []) {
     try {
       const data = window.localStorage.getItem(key);
@@ -2666,7 +2663,10 @@
     }
   }
 
-  // app/scripts/product-recently-service.js
+  // app/scripts/common/utils/constants.js
+  var RECENTLY_LIST_KEY = "recently-list";
+
+  // app/scripts/common/product/product-recently-service.js
   function getRecentlyList() {
     return readLocalStorage(RECENTLY_LIST_KEY, []);
   }

@@ -1,5 +1,5 @@
 (() => {
-  // app/scripts/utils.js
+  // app/scripts/common/utils/utils.js
   function shopifyReloadSection(callback, sectionId, isShopifySectionReload = true) {
     if (callback) {
       callback();
@@ -12,16 +12,15 @@
       }
     }
   }
-  function closePopup() {
-    const popupInfo = document.querySelector("#popup-info");
-    popupInfo.classList.remove("active");
-  }
 
   // app/scripts/popup-info.js
   function closePopupInfo() {
     const btnClose = document.querySelector(".jsClosePopup");
     if (btnClose) {
-      btnClose.addEventListener("click", closePopup);
+      btnClose.addEventListener("click", () => {
+        const popupInfo = document.querySelector("#popup-info");
+        popupInfo.classList.remove("active");
+      });
     }
   }
   shopifyReloadSection(closePopupInfo);

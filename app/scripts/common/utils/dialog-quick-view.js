@@ -1,4 +1,4 @@
-import { checkPolicy, getValue, onVariantChange, runSlider, updateCssOption } from "./common/dialog-quick-view-service";
+import { checkPolicy, getValue, onVariantChange, runSlider, updateCssOption } from "./dialog-quick-view-service";
 import { addToCart as addToCartByForm, createUrl, createUrlCustom, getScript, updateUrl } from "./utils";
 
 export function initQuickView(newUrl = null, container = document, runSlider) {
@@ -13,7 +13,6 @@ export function initQuickView(newUrl = null, container = document, runSlider) {
     const formProduct = container.querySelector('#jsFormProduct');
 
     formEl.addEventListener('change', function (event) {
-        console.log('ấdsds')
         if (event.target.id !== 'cart-condition') {
             const titles = variants.filter(variant => Object.values(variant).includes(event.target.value)).map(product => product.title)
             onVariantChange(() => getUrl(formEl.dataset.sectionId, slider));

@@ -20,7 +20,6 @@ export function setLocalStorage(key, data) {
     }
 }
 
-
 export function getScript(selector, defaultValue) {
     try {
         return JSON.parse(selector.textContent)
@@ -68,7 +67,6 @@ export function tnsSplit(text = "", splitCharacter = ";") {
     }
 }
 
-
 export function shopifyReloadSection(callback, sectionId, isShopifySectionReload = true) {
     if (callback) {
         callback()
@@ -83,7 +81,6 @@ export function shopifyReloadSection(callback, sectionId, isShopifySectionReload
     }
 }
 
-
 export function setValuePopupInfo(options) {
     const popupInfo = document.querySelector("#popup-info")
     const titleElm = document.querySelector("#popup-info .title")
@@ -97,10 +94,7 @@ export function setValuePopupInfo(options) {
     debounce(closePopup, 1000)();
 }
 
-export function closePopup() {
-    const popupInfo = document.querySelector("#popup-info")
-    popupInfo.classList.remove('active')
-}
+
 
 export function debounce(fn, delay) {
     var timeoutID = null
@@ -113,70 +107,6 @@ export function debounce(fn, delay) {
         }, delay)
     }
 }
-
-export function addToCart(data) {
-    fetch(window.Shopify.routes.root + 'cart/add.js', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(res => {
-        switch (res.status) {
-            case 200:
-                res.json().then((data) => {
-                    const options = {
-                        type: "success",
-                        title: "Add to Cart",
-                        textContent: `Add success "${data.items[0].product_title}"`
-                    };
-
-                    updateCountCart();
-                    setValuePopupInfo(options);
-                })
-                break;
-            case 404:
-                break;
-            case 422:
-                res.json().then((data) => {
-                    const options = {
-                        type: "error",
-                        title: "422",
-                        textContent: data.description
-                    };
-
-                    setValuePopupInfo(options);
-                })
-                break;
-            default:
-                break;
-        }
-    })
-        .catch((error) => {
-            console.log('Error:', error);
-        });
-}
-
-async function countItemCart() {
-    try {
-        const response = await fetch(window.Shopify.routes.root + 'cart.js');
-        const data = await response.json();
-        return data.item_count;
-    } catch (error) {
-        return error;
-    }
-}
-
-export async function updateCountCart() {
-    try {
-        const count = await countItemCart();
-        const elm = document.querySelector('.jsCountItemCart');
-        elm.textContent = count;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
 
 function validateValue(value, max, min) {
     value = parseInt(value)

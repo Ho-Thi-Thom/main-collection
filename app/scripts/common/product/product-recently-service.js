@@ -1,5 +1,5 @@
-import { RECENTLY_LIST_KEY } from "./constants";
-import { readLocalStorage, setLocalStorage } from "./utils";
+import { readLocalStorage, setLocalStorage } from "../utils/utils";
+import { RECENTLY_LIST_KEY, WISH_LIST_KEY } from "../utils/constants"
 
 export function getRecentlyList() {
     return readLocalStorage(RECENTLY_LIST_KEY, [])

@@ -1,9 +1,8 @@
 
 import { tns } from "tiny-slider";
-import { getRecentlyList } from "./product-recently-service";
-import { getScript, shopifyReloadSection, tnsSplit } from "./utils";
-import { RECENTLY_LIST_KEY } from "./constants";
-import { setLocalStorage } from "./utils";
+import { getRecentlyList } from "./common/product/product-recently-service";
+import { getScript, shopifyReloadSection, tnsSplit, setLocalStorage } from "./common/utils/utils";
+import { RECENTLY_LIST_KEY } from "./common/utils/constants";
 
 const sectionId = document.querySelector('.recently-container').dataset.sectionId
 shopifyReloadSection(init, sectionId)
@@ -59,7 +58,6 @@ function init() {
             if (listHandleInvalid.length > 0) {
                 removeItemRecently(listHandle, listHandleInvalid)
             }
-
 
             tns({
                 container: '.recently',

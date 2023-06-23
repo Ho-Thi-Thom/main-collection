@@ -1,5 +1,5 @@
 import { tns } from "tiny-slider";
-import { getScript, shopifyReloadSection, tnsSplit } from "./utils";
+import { getScript, shopifyReloadSection, tnsSplit } from "./common/utils/utils";
 
 const sectionId = document.querySelector('.recommendations-container').dataset.sectionId
 shopifyReloadSection(init, sectionId)
@@ -9,7 +9,6 @@ function init() {
     const data = getScript(document.getElementById("recommendation"), "");
     const { spacingItem, screen: [mobile = 2, tablet = 4, desktop = 5] } = tnsSplit(data)
     const url = element.dataset.url;
-
 
     fetch(url)
         .then(response => response.text())

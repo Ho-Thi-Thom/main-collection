@@ -2613,7 +2613,7 @@
   // app/scripts/product-recommendations.js
   var import_tiny_slider = __toModule(require_tiny_slider());
 
-  // app/scripts/utils.js
+  // app/scripts/common/utils/utils.js
   function getScript(selector, defaultValue) {
     try {
       return JSON.parse(selector.textContent);

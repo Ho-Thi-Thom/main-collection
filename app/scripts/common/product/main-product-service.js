@@ -1,5 +1,5 @@
 import { tns } from "tiny-slider";
-import { debounce } from "./utils";
+import { debounce } from "../utils/utils";
 
 export function runSlider() {
     let slider = null;

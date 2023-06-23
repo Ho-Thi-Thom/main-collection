@@ -50,7 +50,6 @@ export async function fetchAPIUpdateItemCart(options) {
     return res
 }
 
-
 export function checkMax(input, type, lineIndex) {
     const btnAdd = document.querySelector(`.cart__item.jsLineItem[data-line-index="${lineIndex}"] .add__qlt`);
     switch (type) {
@@ -80,4 +79,67 @@ export function checkListCart() {
             addButton.disabled = false;
         }
     });
+}
+
+async function countItemCart() {
+    try {
+        const response = await fetch(window.Shopify.routes.root + 'cart.js');
+        const data = await response.json();
+        return data.item_count;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function updateCountCart() {
+    try {
+        const count = await countItemCart();
+        const elm = document.querySelector('.jsCountItemCart');
+        elm.textContent = count;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export function addToCart(data) {
+    fetch(window.Shopify.routes.root + 'cart/add.js', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(res => {
+        switch (res.status) {
+            case 200:
+                res.json().then((data) => {
+                    const options = {
+                        type: "success",
+                        title: "Add to Cart",
+                        textContent: `Add success "${data.items[0].product_title}"`
+                    };
+
+                    updateCountCart();
+                    setValuePopupInfo(options);
+                })
+                break;
+            case 404:
+                break;
+            case 422:
+                res.json().then((data) => {
+                    const options = {
+                        type: "error",
+                        title: "422",
+                        textContent: data.description
+                    };
+
+                    setValuePopupInfo(options);
+                })
+                break;
+            default:
+                break;
+        }
+    })
+        .catch((error) => {
+            console.log('Error:', error);
+        });
 }

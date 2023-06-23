@@ -1,5 +1,5 @@
 (() => {
-  // app/scripts/pop-up.js
+  // app/scripts/pop-up-swatch-color.js
   var popUpListener = (e) => {
     document.querySelector(".pop-up")?.classList.toggle("active", e.target.classList.contains("shopify-section-swatch-color"));
   };

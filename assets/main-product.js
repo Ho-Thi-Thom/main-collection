@@ -2864,7 +2864,7 @@
     }
   }
 
-  // app/scripts/dialog-quick-view-service.js
+  // app/scripts/common/dialog-quick-view-service.js
   function updateElementPrice(divCompare, divPrice, checkEmpty = false) {
     if (checkEmpty) {
       return;
@@ -3042,6 +3042,7 @@
     const quantityInput = container.querySelector(".quantity__input");
     const formProduct = container.querySelector("#jsFormProduct");
     formEl.addEventListener("change", function(event) {
+      console.log("\u1EA5dsds");
       if (event.target.id !== "cart-condition") {
         const titles = variants.filter((variant) => Object.values(variant).includes(event.target.value)).map((product) => product.title);
         onVariantChange(() => getUrl(formEl.dataset.sectionId, slider));

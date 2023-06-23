@@ -1,5 +1,5 @@
 (() => {
-  // app/scripts/utils.js
+  // app/scripts/common/utils/utils.js
   function getScript(selector, defaultValue) {
     try {
       return JSON.parse(selector.textContent);
@@ -113,7 +113,7 @@
     }
   }
 
-  // app/scripts/dialog-quick-view-service.js
+  // app/scripts/common/utils/dialog-quick-view-service.js
   function runSlider() {
     let slider = null;
     let thumbnailSlider = null;
@@ -197,6 +197,7 @@
     };
   }
   function updateElementPrice(divCompare, divPrice, checkEmpty = false) {
+    console.log("123123");
     if (checkEmpty) {
       return;
     }
@@ -361,7 +362,7 @@
     });
   }
 
-  // app/scripts/dialog-quick-view.js
+  // app/scripts/common/utils/dialog-quick-view.js
   function initQuickView(newUrl = null, container = document, runSlider2) {
     const formEl = container.querySelector(".jsProductForm");
     const productOptions = getScript(container.querySelector("#popup_product_options"), []);
