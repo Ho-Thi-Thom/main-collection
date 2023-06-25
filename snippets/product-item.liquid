@@ -14,12 +14,19 @@
               </button>
             {% else %}
               <button
-                class="jsQuickView pointer-events"
-                data-url-product-popup="/products/{{ product.handle}}?view=popup-product"
+                class="pointer-events"
               >
                 {% render 'card' %}
               </button>
             {% endif %}
+          </div>
+          <div class="card__handle">
+            <button
+              class="jsQuickView pointer-events card__handle-icon"
+              data-url-product-popup="/products/{{ product.handle}}?view=popup-product"
+            >
+              {% render 'icon-eye' %}
+            </button>
           </div>
         {% endif %}
 

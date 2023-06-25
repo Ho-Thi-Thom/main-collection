@@ -129,7 +129,7 @@
             grid-template-columns: repeat(var(--items_per_row), 1fr);
             overflow: hidden;
             grid-row-gap: 10px;
-            // grid-column-gap: 20px; 
+            grid-column-gap: 10px;
         }
 
 

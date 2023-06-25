@@ -2,11 +2,16 @@
   rel="stylesheet"
   href="{{ 'list-product.css' | asset_url }}"
   media="print"
-  onload="this.media='all'">
-
+  onload="this.media='all'"
+>
+<link
+  rel="stylesheet"
+  href="{{ 'product-item.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
 
 <style>
-
   .list-product__item-button {
     {% case section.settings.list-product__item-button %}
       {% when 'primary' %}
@@ -31,74 +36,82 @@
       <img
         src="{{item.settings.list-product-item-img | image_url }}"
         alt="img-1"
-        class="list-product__item-img">
+        class="list-product__item-img"
+      >
       <div class="list-product__item-button">
-        <a href={{ item.list-product-item-url }} type="button">
-          {{ item.settings.list-product-item-button | capitalize }}</a>
+        <a href="{{ item.list-product-item-url }}" type="button">
+          {{ item.settings['list-product-item-button'] | capitalize -}}
+        </a>
       </div>
     </div>
   {% endfor %}
 </div>
 
-
 {% schema %}
-  {
-    "name": "List Product",
-    "blocks": [
-      {
-        "name": "Product Item",
-        "type": "list",
-        "settings": [
-          {
-            "type": "header",
-            "content": "Product Item"
-          }, {
-            "id": "list-product-item-img",
-            "type": "image_picker",
-            "label": "Image Product"
-          }, {
-            "id": "list-product-item-button",
-            "type": "text",
-            "label": "Category",
-            "default": "T-Shirt"
-          }, {
-            "id": "list-product-item-url",
-            "type": "url",
-            "label": "Url"
-          }
-        ]
-      }
-    ],
-    "settings": [
-      {
-        "type": "header",
-        "content": "Button Style"
-      }, {
-        "label": "Color Button",
-        "type": "select",
-        "id": "list-product__item-button",
-        "options": [
-          {
-            "value": "primary",
-            "label": "Primary"
-          }, {
-            "value": "secondary",
-            "label": "Secondary"
-          }, {
-            "value": "tertiary",
-            "label": "Tertiary"
-          }, {
-            "value": "quaternary",
-            "label": "Quaternary"
-          }
-        ],
-        "default": "primary"
-      }
-    ],
-    "presets": [
-      {
-        "name": "List Product"
-      }
-    ]
-  }
+{
+  "name": "List Product",
+  "blocks": [
+    {
+      "name": "Product Item",
+      "type": "list",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product Item"
+        },
+        {
+          "id": "list-product-item-img",
+          "type": "image_picker",
+          "label": "Image Product"
+        },
+        {
+          "id": "list-product-item-button",
+          "type": "text",
+          "label": "Category",
+          "default": "T-Shirt"
+        },
+        {
+          "id": "list-product-item-url",
+          "type": "url",
+          "label": "Url"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button Style"
+    },
+    {
+      "label": "Color Button",
+      "type": "select",
+      "id": "list-product__item-button",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "tertiary",
+          "label": "Tertiary"
+        },
+        {
+          "value": "quaternary",
+          "label": "Quaternary"
+        }
+      ],
+      "default": "primary"
+    }
+  ],
+  "presets": [
+    {
+      "name": "List Product"
+    }
+  ]
+}
 {% endschema %}

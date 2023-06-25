@@ -22,57 +22,38 @@
         display: block;
     }
 
-    .popup-layer {
-        display: flex;
-        justify-content: space-between;
+    .popup-top {
+        overflow: auto;
 
-        .popup__head {
-            a {
-                text-decoration: none;
-                font-size: 20px;
-                font-weight: 500;
+        .popup-layer {
+            display: flex;
+            justify-content: space-between;
+
+            .popup__head {
+                a {
+                    text-decoration: none;
+                    font-size: 20px;
+                    font-weight: 500;
+                }
+            }
+
+            .header-close {
+                cursor: pointer;
             }
         }
 
-        .header-close {
-            cursor: pointer;
-        }
-    }
+        .popup__content {
+            margin-top: 20px;
 
-    .popup__content {
-        margin-top: 20px;
-
-        .progress__bar-msg {
-            width: 0;
-            height: 4px;
-            background-color: #03A12A;
-            animation: slide 0.5s ease forwards;
-        }
-
-        @keyframes slide {
-            0% {
-                width: 0;
-            }
-
-            100% {
-                width: 70%;
-            }
-        }
-
-        .popup__body {
-            .cart__drawer-items {
-                margin-top: 20px;
-            }
         }
     }
 
     .popup__footer {
         width: 100%;
-        padding: 20px;
-        position: fixed;
+        position: sticky;
         bottom: 0;
-        background-color: #c22525;
         border-top: 1px solid #f0f0f0;
         margin: 0 0 -20px 0;
+        background-color: #fff;
     }
 }

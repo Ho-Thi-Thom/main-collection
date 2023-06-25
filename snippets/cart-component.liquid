@@ -1,9 +1,3 @@
-<link
-  rel="stylesheet"
-  href="{{ 'cart-item.css' | asset_url }}"
-  media="all"
->
-
 {%- liquid
   assign freeShipAmount = section.settings.free_shipping_conditions | times: 100
   assign currentAmount = cart.total_price | times: 1
@@ -25,24 +19,29 @@
       {%- endif -%}
     </div>
   </div>
+
   {% form 'cart', cart, class: 'jsCartForm', action: routes.cart_url %}
-    <div class="cart__form-header">
-      <div class="item-product flex-basis-1/3">
-        <p class="cart__form-header-label">{{- 'general.cart.header.text_product' | t -}}</p>
-      </div>
-      <div class="item-details flex-1">
-        <p class="cart__form-header-info cart__form-header-label flex-2">{{- 'general.cart.header.text_info' | t -}}</p>
-        <div class="wrapper-pqs-init">
-          <p class="cart__form-header-label flex-1">{{- 'general.cart.header.text_price' | t -}}</p>
-          <p class="cart__form-header-label flex-1">{{- 'general.cart.header.text_quantity' | t -}}</p>
-          <p class="cart__form-header-label flex-1">{{- 'general.cart.header.text_subtotal' | t -}}</p>
+    {% if isHeader %}
+      <div class="cart__form-header">
+        <div class="item-product flex-basis-1/3">
+          <p class="cart__form-header-label">{{- 'general.cart.header.text_product' | t -}}</p>
         </div>
-        <div class="wrapper-pqs">
-          <p class="cart__form-header-label flex-1">{{- 'general.cart.header.text_price_and_quantity' | t -}}</p>
+        <div class="item-details flex-1">
+          <p class="cart__form-header-info cart__form-header-label flex-2">
+            {{- 'general.cart.header.text_info' | t -}}
+          </p>
+          <div class="wrapper-pqs-init">
+            <p class="cart__form-header-label flex-1">{{- 'general.cart.header.text_price' | t -}}</p>
+            <p class="cart__form-header-label flex-1">{{- 'general.cart.header.text_quantity' | t -}}</p>
+            <p class="cart__form-header-label flex-1">{{- 'general.cart.header.text_subtotal' | t -}}</p>
+          </div>
+          <div class="wrapper-pqs">
+            <p class="cart__form-header-label flex-1">{{- 'general.cart.header.text_price_and_quantity' | t -}}</p>
+          </div>
+          <p class="cart__form-header-label remove flex-1">{{- 'general.cart.header.text_delete' | t -}}</p>
         </div>
-        <p class="cart__form-header-label remove flex-1">{{- 'general.cart.header.text_delete' | t -}}</p>
       </div>
-    </div>
+    {% endif %}
     <ul class="cart__form-items gird-column">
       {% for item in cart.items %}
         {% render 'cart-item', item: item %}

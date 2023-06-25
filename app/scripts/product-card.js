@@ -1,6 +1,6 @@
-import { jsDialogQuickView } from "./common/utils/dialog-quick-view";
-import { openPopup } from "./popup-product-item";
-import { addToCart } from "./common/cart/cart-service";
+// import { jsDialogQuickView } from "./common/utils/dialog-quick-view";
+// import { openPopup } from "./popup-product-item";
+// import { addToCart } from "./common/cart/cart-service";
 
 window.addEventListener('DOMContentLoaded', function () {
     const body = document.querySelector('body')

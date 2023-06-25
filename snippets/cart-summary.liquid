@@ -31,7 +31,11 @@
         <textarea name="note" id="cart-note">{{ cart.note }}</textarea>
       </div>
     </div>
-
+    {% if isGoToCart %}
+      <div class="cart__summary-line flex justify-content-between cart__summary-go-to-cart">
+        <a href="/cart" class="btn btn-go-cart btn-2">View cart</a>
+      </div>
+    {% endif %}
     <div class="cart__summary-line flex justify-content-between cart__summary-checkout">
       <button
         type="submit"

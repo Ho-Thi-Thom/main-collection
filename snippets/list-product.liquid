@@ -3,6 +3,12 @@
   href="{{ 'list-product.css' | asset_url }}"
   media="all"
 >
+<link
+  rel="stylesheet"
+  href="{{ 'product-item.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
 <div class="wrapper">
   <div class="list-product {{ classSilder}} tns-sli">
     {% for product in productList %}

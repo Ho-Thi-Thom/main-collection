@@ -1,5 +1,37 @@
 (() => {
-  // app/scripts/cart-service.js
+  // app/scripts/common/utils/utils.js
+  function createUrlCustom(intURl = "", initParam = {}, callback) {
+    const urlSearchParams = new URLSearchParams(initParam);
+    if (callback && typeof callback === "function") {
+      callback(urlSearchParams);
+    }
+    return intURl ? intURl + "?" + urlSearchParams.toString() : window.location.pathname + "?" + urlSearchParams.toString();
+  }
+  function shopifyReloadSection(callback, sectionId2, isShopifySectionReload = true) {
+    if (callback) {
+      callback();
+      if (isShopifySectionReload) {
+        document.addEventListener("shopify:section:load", (event) => {
+          if (event.detail.sectionId === sectionId2) {
+            callback();
+          }
+        });
+      }
+    }
+  }
+  function debounce(fn, delay) {
+    var timeoutID = null;
+    return function() {
+      clearTimeout(timeoutID);
+      var args = arguments;
+      var that = this;
+      timeoutID = setTimeout(function() {
+        fn.apply(that, args);
+      }, delay);
+    };
+  }
+
+  // app/scripts/common/cart/cart-service.js
   function updateInfoCartPage(data, lineIndex, checkRemove2) {
     const div = document.createElement("div");
     div.innerHTML = data;
@@ -73,38 +105,6 @@
       }
     });
   }
-
-  // app/scripts/common/utils/utils.js
-  function createUrlCustom(intURl = "", initParam = {}, callback) {
-    const urlSearchParams = new URLSearchParams(initParam);
-    if (callback && typeof callback === "function") {
-      callback(urlSearchParams);
-    }
-    return intURl ? intURl + "?" + urlSearchParams.toString() : window.location.pathname + "?" + urlSearchParams.toString();
-  }
-  function shopifyReloadSection(callback, sectionId2, isShopifySectionReload = true) {
-    if (callback) {
-      callback();
-      if (isShopifySectionReload) {
-        document.addEventListener("shopify:section:load", (event) => {
-          if (event.detail.sectionId === sectionId2) {
-            callback();
-          }
-        });
-      }
-    }
-  }
-  function debounce(fn, delay) {
-    var timeoutID = null;
-    return function() {
-      clearTimeout(timeoutID);
-      var args = arguments;
-      var that = this;
-      timeoutID = setTimeout(function() {
-        fn.apply(that, args);
-      }, delay);
-    };
-  }
   async function countItemCart() {
     try {
       const response = await fetch(window.Shopify.routes.root + "cart.js");
@@ -128,10 +128,10 @@
   var sectionId = document.querySelector(".cart-section-wrapper").dataset.sectionId;
   shopifyReloadSection(init, sectionId);
   function init() {
-    checkListCart();
     const removeBtns = document.querySelectorAll(".cart__item .remove__qlt");
     const addBtns = document.querySelectorAll(".cart__item .add__qlt");
     const btnRemoves = document.querySelectorAll(".btn-remove");
+    checkListCart();
     trigger(btnRemoves);
     trigger([...addBtns, ...removeBtns]);
     function trigger(elements = []) {

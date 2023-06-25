@@ -1,6 +1,6 @@
 import { runSlider } from "./common/product/main-product-service";
 import { pushRecently } from "./common/product/product-recently-service";
-import { addToCart, getScript, shopifyReloadSection } from "./common/utils/utils";
+import { getScript, shopifyReloadSection } from "./common/utils/utils";
 import { addToCart } from "./common/cart/cart-service"
 import { isWishItem, toggleWishItem } from "./common/utils//wishlist-service";
 import { initQuickView } from "./common/utils/dialog-quick-view";

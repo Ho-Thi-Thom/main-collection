@@ -1,5 +1,6 @@
+import { addToCart } from "../cart/cart-service";
 import { checkPolicy, getValue, onVariantChange, runSlider, updateCssOption } from "./dialog-quick-view-service";
-import { addToCart as addToCartByForm, createUrl, createUrlCustom, getScript, updateUrl } from "./utils";
+import { createUrl, createUrlCustom, getScript, updateUrl } from "./utils";
 
 export function initQuickView(newUrl = null, container = document, runSlider) {
     const formEl = container.querySelector('.jsProductForm');
@@ -72,12 +73,12 @@ export function initQuickView(newUrl = null, container = document, runSlider) {
     });
 
     /** Event add to cart */
-    addToCart()
+    addToCartByForm()
 
     /** Check input policy */
     checkPolicy();
 
-    function addToCart() {
+    function addToCartByForm() {
         // type =  b thì hiện thông báo, bằng a =
         if (formProduct && formProduct.dataset.type === 'b') {
             formProduct.addEventListener('submit', function (event) {
@@ -86,7 +87,7 @@ export function initQuickView(newUrl = null, container = document, runSlider) {
                 let formData = {
                     "items": [productFormData]
                 }
-                addToCartByForm(formData)
+                addToCart(formData)
             });
         }
     }

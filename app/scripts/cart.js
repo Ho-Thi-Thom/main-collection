@@ -1,5 +1,5 @@
-import { updateDataCart, updateInfoCartPage, fetchAPIUpdateItemCart, checkMax, checkListCart } from "./common/cart/cart-service";
-import { createUrlCustom, debounce, shopifyReloadSection, updateCountCart } from "./common/utils/utils";
+import { updateDataCart, updateInfoCartPage, fetchAPIUpdateItemCart, checkMax, checkListCart, updateCountCart } from "./common/cart/cart-service";
+import { createUrlCustom, debounce, shopifyReloadSection } from "./common/utils/utils";
 
 const sectionId = document.querySelector('.cart-section-wrapper').dataset.sectionId
 shopifyReloadSection(init, sectionId)

@@ -1,3 +1,5 @@
+import { setValuePopupInfo } from "../utils/utils";
+
 export function updateInfoCartPage(data, lineIndex, checkRemove) {
     const div = document.createElement("div");
     div.innerHTML = data;

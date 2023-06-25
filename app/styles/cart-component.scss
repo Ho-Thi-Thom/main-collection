@@ -1,0 +1,216 @@
+.cart-wrapper {
+    .progress__bar-wrapper {
+        padding: 15px 0px 35px 0;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+
+        .progress__bar {
+            height: 7px;
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid rgb(145, 245, 31);
+            position: relative;
+        }
+
+        .progress__bar-precent {
+            border-radius: 4px;
+            inset: 0;
+            position: absolute;
+            width: var(--width);
+            height: 100%;
+            background: linear-gradient(to right, #00FF00, #e5ff00, #e66611);
+            animation: progressAnimation 1s ease-in-out;
+        }
+
+        @keyframes progressAnimation {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: var(--width);
+            }
+        }
+
+
+
+        .progress__bar-msg {
+            text-align: center;
+            text-transform: uppercase;
+
+            span {
+                font-weight: 500;
+                color: #13AD4F;
+            }
+        }
+
+    }
+
+    form {
+        margin-bottom: 40px;
+
+        .cart__form-header {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+
+            .cart__form-header-label {
+                font-weight: 500;
+
+                display: flex;
+                align-items: center;
+            }
+
+            .item-product {
+                max-width: 200px;
+            }
+
+            .item-details {
+                display: flex;
+                justify-content: space-between;
+                gap: 20px;
+                flex-wrap: wrap;
+
+                .cart__form-header-info {}
+
+                .wrapper-pqs-init {
+                    flex: 3;
+                    display: flex;
+                    flex-direction: row;
+                }
+
+                .wrapper-pqs {
+                    display: none;
+                }
+
+            }
+        }
+
+    }
+}
+
+@media (max-width: 1024px) {
+    .cart-wrapper {
+        .progress__bar-wrapper {
+
+            .progress__bar {
+
+                .progress__bar-precent {}
+            }
+
+            .progress__bar-msg {
+
+                span {}
+            }
+
+        }
+
+        form {
+
+            .cart__form-header {
+                .cart__form-header-label {}
+
+                .item-product {}
+
+                .item-details {
+                    .wrapper-pqs-init {
+                        display: none;
+                    }
+
+                    .wrapper-pqs {
+                        display: block;
+                        flex: 2;
+                    }
+
+                    .cart__form-header-info {
+                        flex: 3;
+                    }
+
+                }
+            }
+
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .cart-wrapper {
+        .progress__bar-wrapper {
+
+            .progress__bar {
+
+                .progress__bar-precent {}
+            }
+
+            .progress__bar-msg {
+
+                span {}
+            }
+
+        }
+
+        form {
+
+            .cart__form-header {
+                display: none;
+
+                .cart__form-header-label {}
+
+                .item-product {}
+
+                .item-details {
+                    .wrapper-pqs-init {}
+
+                    .wrapper-pqs {}
+
+                    .cart__form-header-info {}
+
+                }
+            }
+
+        }
+    }
+}
+
+@media (max-width: 375px) {
+    .cart-wrapper {
+        .progress__bar-wrapper {
+
+            .progress__bar {
+
+                .progress__bar-precent {}
+            }
+
+            .progress__bar-msg {
+
+                span {}
+            }
+
+        }
+
+        form {
+
+            .cart__form-header {
+
+                .cart__form-header-label {}
+
+                .item-product {}
+
+                .item-details {
+                    .wrapper-pqs-init {}
+
+                    .wrapper-pqs {}
+
+                    .cart__form-header-info {}
+
+                }
+            }
+
+        }
+    }
+}

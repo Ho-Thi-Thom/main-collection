@@ -4,40 +4,40 @@
   media="all"
 >
 
+<link
+  rel="stylesheet"
+  href="{{ 'cart-component.css' | asset_url }}"
+  media="all"
+>
+
+<link
+  rel="stylesheet"
+  href="{{ 'cart-item.css' | asset_url }}"
+  media="all"
+>
+
+<link
+  rel="stylesheet"
+  href="{{ 'cart-summary.css' | asset_url }}"
+  media="all"
+>
+
 <div class="cart-popup jsCartPopup">
-  <div class="popup-layer">
-    <div class="popup__head">
-      <a href="/cart">Cart</a>
-    </div>
-    <div class="header-close">{% render 'icon-close' %}</div>
-  </div>
-  <div class="popup__content">
-    <div class="progress__bar-msg"></div>
-    <div class="popup__body">
-      <div class="cart__drawer-items">
-        {% assign index = 0 %}
-        {% for item in cart.items %}
-          {% render 'cart-item', item: item, index: index %}
-          {% assign index = index | plus: 1 %}
-        {% endfor %}
+  <div class="popup-top">
+    <div class="popup-layer">
+      <div class="popup__head">
+        <a href="/cart">Cart</a>
       </div>
+      <div class="header-close">{% render 'icon-close' %}</div>
+    </div>
+    <div class="popup__content">
+      {% render 'cart-component', isHeader: false %}
     </div>
   </div>
   <div class="popup__footer">
     <form action="/cart" id="cartFormcart-section">
-      <div class="cart__drawer-subtotal">
-        <div class="cart__drawer-subtotal--label">Subtotal</div>
-        <div class="cart__drawer-subtotal--price">
-          <span class="price-compare">$157.83</span>
-          <span class="price">$151.57</span>
-        </div>
-      </div>
-      <div class="cart__drawer-taxes">Tax included and shipping calculated at checkout</div>
-      <div class="cart__drawer-button-group">
-        <a href="/cart" class="btn-go-cart">View cart</a>
-        <button class="btn-checkout" type="submit">Check out</button>
-      </div>
+      {% render 'cart-summary', isGoToCart: true %}
     </form>
   </div>
 </div>
-{{ 'cart-item.js' | asset_url | script_tag }}
+{{ 'cart-popup.js' | asset_url | script_tag }}
