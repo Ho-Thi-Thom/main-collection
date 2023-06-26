@@ -1,6 +1,7 @@
 .dialog__quick-view {
     width: 100%;
-    height: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
 
     .popup-container {
         display: flex;
@@ -117,6 +118,10 @@
 
         .popup__product-info {
             flex: 1;
+
+            .js-btn-payment {
+                display: none;
+            }
         }
     }
 }
@@ -174,6 +179,8 @@
 
 @media (max-width :768px) {
     .dialog__quick-view {
+        max-height: 100vh;
+
         .popup-container {
             .popup__product-gallery {
                 padding: 0;

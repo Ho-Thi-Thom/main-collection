@@ -71,7 +71,7 @@
   .section_container .product-description {
     padding-left: 10px;
   }
-  .section_container .product-description .tab__panel-wrapper .tab__panel-body .tab__panel-item.jsBodyTab, .section_container .product-description .tab__panel-wrapper .tab__panel-body .tab__panel-item.jsBodyTab.active, .section_container .product-description .tab__panel-wrapper .tab__panel-header {
+  .section_container .product-description .tab__panel-wrapper .tab__panel-body .tab__panel-item.jsBodyTabDesktop, .section_container .product-description .tab__panel-wrapper .tab__panel-body .tab__panel-item.jsBodyTabDesktop.active, .section_container .product-description .tab__panel-wrapper .tab__panel-header {
     display: none;
   }
   .section_container .product-description .tab__panel-wrapper .tab__panel-body .item__body {

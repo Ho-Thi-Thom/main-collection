@@ -2,7 +2,7 @@ import { addToCart } from "../cart/cart-service";
 import { checkPolicy, getValue, onVariantChange, runSlider, updateCssOption } from "./dialog-quick-view-service";
 import { createUrl, createUrlCustom, getScript, updateUrl } from "./utils";
 
-export function initQuickView(newUrl = null, container = document, runSlider) {
+export function handleChangeFormProduct(newUrl = null, container = document, runSlider) {
     const formEl = container.querySelector('.jsProductForm');
     const productOptions = getScript(container.querySelector("#popup_product_options"), []);
     const productData = getScript(container.querySelector("#popup-variants"), []);
@@ -93,7 +93,7 @@ export function initQuickView(newUrl = null, container = document, runSlider) {
     }
 }
 
-// initQuickView()
+// handleChangeFormProduct()
 export function jsDialogQuickView(newUrl, container) {
-    initQuickView(newUrl, container, runSlider)
+    handleChangeFormProduct(newUrl, container, runSlider)
 }

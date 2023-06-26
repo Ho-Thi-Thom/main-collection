@@ -152,3 +152,18 @@
 .variant-options .select-wrapper .image-list .image-item:hover span {
   display: block;
 }
+
+.card-info {
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 10px;
+  color: #c4c214;
+}
+
+.card-info svg {
+  font-size: 20px;
+}
+
+.card-info svg path {
+  fill: #ff0;
+}

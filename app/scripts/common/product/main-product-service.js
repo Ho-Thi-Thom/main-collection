@@ -57,30 +57,3 @@ export function runSlider() {
 
     return { slider: slider, cleanup: () => { } };
 }
-
-async function fetchDataCart() {
-    try {
-        const response = await fetch(window.Shopify.routes.root + "cart.js");
-        const data = await response.json();
-        return data.items;
-    } catch (error) {
-        return error;
-    }
-}
-
-async function getCountByVariant(variantId) {
-    try {
-        const arrCart = await fetchDataCart();
-        let quantity = 0;
-
-        for (let i = 0; i < arrCart.length; i++) {
-            if (arrCart[i].variant_id === variantId) {
-                quantity = arrCart[i].quantity;
-                break;
-            }
-        }
-        return quantity;
-    } catch (error) {
-        return error;
-    }
-}

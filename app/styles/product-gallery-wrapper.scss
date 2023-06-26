@@ -9,6 +9,10 @@
         order: 1;
     }
 
+    .product-gallery:has(.onlyone-img) {
+        display: none;
+    }
+
     .product-main {
         order: 2;
         flex: 1;

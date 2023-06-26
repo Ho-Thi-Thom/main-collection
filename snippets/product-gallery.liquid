@@ -4,7 +4,10 @@
   axis: 'vertical', 'horizental'
 {% endcomment %}
 
-<div class="thumbnail-gallery" data-thumbnail="{{main | default: 'gallery' }}">
+<div
+  class="thumbnail-gallery{% if product.media.size < 2  %} onlyone-img{% endif %}"
+  data-thumbnail="{{main | default: 'gallery' }}"
+>
   <div
     class="{% if navContainer != blank %}{{navContainer}}{%endif%}"
   >

@@ -149,3 +149,14 @@ button {
 .flex-direction {
   flex-direction: column;
 }
+
+.body-overlay {
+  display: block !important;
+  opacity: 1 !important;
+  inset: 0 !important;
+
+}
+
+.visibility-hidden {
+  visibility: hidden;
+}

@@ -1,15 +1,15 @@
-export function createActive(id) {
-    const targetElement = document.querySelector(`.jsBodyTab[data-id="${id}"]`);
-    const targetHeader = document.querySelector(`.jsNavTab[data-id="${id}"]`);
-    document.querySelector('.jsNavTab.active')?.classList.remove("active");
+export function createActiveBodyDesktop(id) {
+    const targetElement = document.querySelector(`.jsBodyTabDesktop[data-id="${id}"]`);
+    const targetHeader = document.querySelector(`.jsNavTabDesktop[data-id="${id}"]`);
+    document.querySelector('.jsNavTabDesktop.active')?.classList.remove("active");
     targetHeader?.classList.add("active");
-    document.querySelector('.jsBodyTab.active')?.classList.remove("active");
+    document.querySelector('.jsBodyTabDesktop.active')?.classList.remove("active");
     targetElement?.classList.add("active");
 }
 
-export function createActive1(id) {
-    const targetElement = document.querySelector(`.jsBodyTab1[data-id="${id}"]`);
-    const targetHeader = document.querySelector(`.jsNavTab1[data-id="${id}"]`);
+export function createActiveBodyMobile(id) {
+    const targetElement = document.querySelector(`.jsBodyTabMobile[data-id="${id}"]`);
+    const targetHeader = document.querySelector(`.jsNavTabMobile[data-id="${id}"]`);
     if (targetHeader.classList.contains('active')) {
         targetElement.classList.remove("active");
         targetHeader.classList.remove("active");

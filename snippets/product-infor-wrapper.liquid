@@ -51,7 +51,6 @@
             {% comment %} PRODUCT OPTIONS {% endcomment %}
             <div class="product-option">
               {% assign listStyle = block.settings.style_image | split: ',' | downcase %}
-
               {%
                 render 'product-options',
                 styleOption: block.settings.radio,

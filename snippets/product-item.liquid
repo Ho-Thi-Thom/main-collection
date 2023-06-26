@@ -1,63 +1,65 @@
-<a href="{{ product.url}}">
-  <div class="card">
-    <div class="card__inner">
-      <div class="card__image-wrapper">
-        <div class="image__style">
-          <img src="{{ product.featured_image | image_url }}" alt="{{product.featured_image.alt}}">
-        </div>
-        {% if product.available %}
-          {% assign hasOnlyDefaultVariant = product.has_only_default_variant %}
-          <div class="card__group">
-            {% if hasOnlyDefaultVariant %}
-              <button class="jsAddToCart pointer-events" data-first-variant="{{ product.variants.first.id }}">
-                {% render 'plus' %}
-              </button>
-            {% else %}
+<div class="product-card__wrapper">
+  <a href="{{ product.url}}">
+    <div class="card">
+      <div class="card__inner">
+        <div class="card__image-wrapper">
+          <div class="image__style">
+            <img src="{{ product.featured_image | image_url }}" alt="{{product.featured_image.alt}}">
+          </div>
+          {% if product.available %}
+            {% assign hasOnlyDefaultVariant = product.has_only_default_variant %}
+            <div class="card__group">
+              {% if hasOnlyDefaultVariant %}
+                <button class="jsAddToCart pointer-events" data-first-variant="{{ product.variants.first.id }}">
+                  {% render 'plus' %}
+                </button>
+              {% else %}
+                <button
+                  class="pointer-events"
+                >
+                  {% render 'card' %}
+                </button>
+              {% endif %}
+            </div>
+            <div class="card__handle">
               <button
-                class="pointer-events"
+                class="jsQuickView pointer-events card__handle-icon"
+                data-url-product-popup="/products/{{ product.handle}}?view=popup-product"
               >
-                {% render 'card' %}
+                {% render 'icon-eye' %}
               </button>
-            {% endif %}
-          </div>
-          <div class="card__handle">
-            <button
-              class="jsQuickView pointer-events card__handle-icon"
-              data-url-product-popup="/products/{{ product.handle}}?view=popup-product"
-            >
-              {% render 'icon-eye' %}
-            </button>
-          </div>
-        {% endif %}
+            </div>
+          {% endif %}
 
-        {% if product.compare_at_price_max != blank and product.compare_at_price_max > 0 %}
-          <div class="tag">{{ 'general.product.info.text_sale' | t }}</div>
-        {% endif %}
-      </div>
-      <div class="card__content">
-        <h4 class="card-title">
-          {{ product.title }}
-        </h4>
-        {% if product.available %}
-          <div class="money">
-            <span
-              class="
-                price  {% if product.compare_at_price_max != blank and product.compare_at_price_max > 0 %}
-                 price_color
-                {% endif %}
-              "
-            >
-              {{- product.price | money -}}
-            </span>
-            {% if product.compare_at_price_max != blank and product.compare_at_price_max > 0 %}
-              <span class="discount">{{ product.compare_at_price_max | money }}</span>
-            {% endif %}
-          </div>
+          {% if product.compare_at_price_max != blank and product.compare_at_price_max > 0 %}
+            <div class="tag">{{ 'general.product.info.text_sale' | t }}</div>
+          {% endif %}
+        </div>
+        <div class="card__content">
+          <h4 class="card-title">
+            {{ product.title }}
+          </h4>
+          {% if product.available %}
+            <div class="money">
+              <span
+                class="
+                  price  {% if product.compare_at_price_max != blank and product.compare_at_price_max > 0 %}
+                   price_color
+                  {% endif %}
+                "
+              >
+                {{- product.price | money -}}
+              </span>
+              {% if product.compare_at_price_max != blank and product.compare_at_price_max > 0 %}
+                <span class="discount">{{ product.compare_at_price_max | money }}</span>
+              {% endif %}
+            </div>
 
-        {% else %}
-          <div class="sold_out">{{ 'general.product.info.sold_out' | t }}</div>
-        {% endif %}
+          {% else %}
+            <div class="sold_out">{{ 'general.product.info.sold_out' | t }}</div>
+          {% endif %}
+        </div>
       </div>
     </div>
-  </div>
-</a>
+  </a>
+</div>

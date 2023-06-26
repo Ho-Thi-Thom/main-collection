@@ -95,11 +95,13 @@
   <body>
     <div id="bg-color" class=""></div>
     {% render 'popup-info' %}
-    {% render 'cart-popup' %}
     {% render 'popup-product-item' %}
+    {% if request.page_type == 'collection' or request.page_type == 'product' %}
+      {% sections 'colors-swatches' %}
+      {% section 'cart-popup' %}
+    {% endif %}
     {% section 'header' %}
     {{ content_for_layout }}
-    {% sections 'colors-swatches' %}
     {% section 'social' %}
     {% section 'footer1' %}
     {% if request.design_mode %}

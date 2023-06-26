@@ -7,6 +7,14 @@
   padding-inline: 20px;
 }
 
+#bg-color {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  z-index: 1000;
+}
+
 .header-bugger {
   display: none;
   outline: none;
@@ -210,14 +218,6 @@
     z-index: 10000;
     display: flex;
     flex-direction: column;
-  }
-
-  #bg-color {
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    background-color: rgba(0, 0, 0, 0.7);
-    position: fixed;
-    z-index: 1000;
   }
 
   .header-menu.active {

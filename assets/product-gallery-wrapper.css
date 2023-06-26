@@ -10,6 +10,10 @@
   order: 1;
 }
 
+.product-gallery-wrapper .product-gallery:has(.onlyone-img) {
+  display: none;
+}
+
 .product-gallery-wrapper .product-main {
   order: 2;
   flex: 1;

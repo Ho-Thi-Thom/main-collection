@@ -1,3 +1,4 @@
+
 export function readLocalStorage(key, defaultValue = []) {
     try {
         const data = window.localStorage.getItem(key);
@@ -91,7 +92,7 @@ export function setValuePopupInfo(options) {
     titleElm.innerHTML = title.trim();
     contentElm.innerHTML = textContent.trim()
     popupInfo.classList.add('active');
-    debounce(closePopup, 1000)();
+    // debounce(closePopup, 1000);
 }
 
 

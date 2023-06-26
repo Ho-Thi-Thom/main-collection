@@ -18,12 +18,14 @@
         id-slider: 'customize',
         id-controls: 'controls'
       %}
-      {% render 'component-popup-gallery',
-        product: product,
-        class-wrapper: 'customize-tools',
-        id-slider: 'customize-thumbnails',
-        id-controls: 'customize-controls'
-      %}
+      {% comment %}
+        {% render 'component-popup-gallery',
+          product: product,
+          class-wrapper: 'customize-tools',
+          id-slider: 'customize-thumbnails',
+          id-controls: 'customize-controls'
+        %}
+      {% endcomment %}
     </div>
     <div class="popup__product-info">
       {%

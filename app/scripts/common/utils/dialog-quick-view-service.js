@@ -1,4 +1,4 @@
-import { debounce, setValuePopupInfo, uppercaseFirstLetter } from "./utils";
+import { debounce, uppercaseFirstLetter } from "./utils";
 
 export function runSlider() {
     let slider = null;
@@ -99,7 +99,6 @@ export function runSlider() {
 }
 
 function updateElementPrice(divCompare, divPrice, checkEmpty = false) {
-    console.log("123123");
     if (checkEmpty) {
         return;
     }
@@ -182,15 +181,19 @@ export function onVariantChange(getUrl) {
                 updateElementSKU(div.querySelector(".product-sku"));
                 updateElementInput(div.querySelector(".jsSubmit"));
             });
+        setInfoWarning(false)
     } else {
         updateElementAddToCart(null, true);
-        const options = {
-            type: "warring",
-            title: "Not found",
-            textContent: 'Variant does not exist'
-        };
+        setInfoWarning(true)
+    }
+}
 
-        setValuePopupInfo(options);
+function setInfoWarning(options = false) {
+    const elementInfo = document.querySelector('.jsProductForm .card-info')
+    if (options) {
+        elementInfo.classList.remove('visibility-hidden')
+    } else {
+        elementInfo.classList.add('visibility-hidden')
     }
 }
 

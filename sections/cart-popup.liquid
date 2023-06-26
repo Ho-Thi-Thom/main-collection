@@ -22,22 +22,37 @@
   media="all"
 >
 
-<div class="cart-popup jsCartPopup">
+<div class="cart-popup jsCartPopup" data-section-id="{{ section.id }}">
   <div class="popup-top">
     <div class="popup-layer">
       <div class="popup__head">
         <a href="/cart">Cart</a>
       </div>
-      <div class="header-close">{% render 'icon-close' %}</div>
+      <div class="popup__header-close">{% render 'icon-close' %}</div>
     </div>
-    <div class="popup__content">
+    <div class="popup__content jsPopupUpdate">
       {% render 'cart-component', isHeader: false %}
     </div>
   </div>
-  <div class="popup__footer">
+  <div class="popup__footer jsPopupUpdate">
     <form action="/cart" id="cartFormcart-section">
       {% render 'cart-summary', isGoToCart: true %}
     </form>
   </div>
 </div>
 {{ 'cart-popup.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Cart Popup",
+  "tag": "section",
+  "class": "shopify-section-cart-popup",
+  "presets": [
+    {
+      "name": "Cart Popup"
+    }
+  ],
+  "settings": [],
+  "blocks": []
+}
+{% endschema %}

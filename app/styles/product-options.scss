@@ -160,3 +160,18 @@
         }
     }
 }
+
+.card-info {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 10px;
+    color: #c4c214;
+
+    svg {
+        font-size: 20px;
+
+        path {
+            fill: yellow
+        }
+    }
+}

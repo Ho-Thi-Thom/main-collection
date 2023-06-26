@@ -15,7 +15,6 @@
   padding: 16px;
   overflow-y: auto;
   opacity: 1;
-  display: block;
 }
 
 .cart-popup.active {
@@ -38,7 +37,7 @@
   font-weight: 500;
 }
 
-.cart-popup .popup-top .popup-layer .header-close {
+.cart-popup .popup-top .popup-layer .popup__header-close {
   cursor: pointer;
 }
 

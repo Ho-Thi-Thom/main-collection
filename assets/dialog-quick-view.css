@@ -1,6 +1,7 @@
 .dialog__quick-view {
   width: 100%;
-  height: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .dialog__quick-view .popup-container {
@@ -117,6 +118,10 @@
   flex: 1;
 }
 
+.dialog__quick-view .popup-container .popup__product-info .js-btn-payment {
+  display: none;
+}
+
 @media (max-width: 1023px) {
   .dialog__quick-view .popup-container .popup__product-gallery {
     flex-direction: column;
@@ -152,6 +157,9 @@
 }
 
 @media (max-width: 768px) {
+  .dialog__quick-view {
+    max-height: 100vh;
+  }
   .dialog__quick-view .popup-container .popup__product-gallery {
     padding: 0;
   }

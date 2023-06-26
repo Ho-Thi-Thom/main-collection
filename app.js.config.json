@@ -11,7 +11,10 @@
         "dialog-quick-view",
         "popup-product-item",
         "cart-service",
-        "dialog-quick-view-service"
+        "dialog-quick-view-service",
+        "cart",
+        "cart-popup",
+        "utils"
     ],
     "popup-info":[
         "utils"
@@ -26,5 +29,14 @@
     ],
     "product-recommendations":[
         "utils"
+    ],
+    "main-product":[
+        "main-product-service",
+        "product-recently-service",
+        "utils",
+        "cart-service",
+        "wishlist-service",
+        "dialog-quick-view",
+        "dialog-quick-view-service"
     ]
 }

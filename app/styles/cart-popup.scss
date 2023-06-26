@@ -15,7 +15,6 @@
     padding: 16px;
     overflow-y: auto;
     opacity: 1;
-    display: block;
 
     &.active {
         opacity: 1;
@@ -37,7 +36,7 @@
                 }
             }
 
-            .header-close {
+            .popup__header-close {
                 cursor: pointer;
             }
         }

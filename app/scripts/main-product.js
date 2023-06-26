@@ -3,7 +3,7 @@ import { pushRecently } from "./common/product/product-recently-service";
 import { getScript, shopifyReloadSection } from "./common/utils/utils";
 import { addToCart } from "./common/cart/cart-service"
 import { isWishItem, toggleWishItem } from "./common/utils//wishlist-service";
-import { initQuickView } from "./common/utils/dialog-quick-view";
+import { handleChangeFormProduct } from "./common/utils/dialog-quick-view";
 
 const sectionId = document.querySelector('.product-section-wrapper').dataset.sectionId
 shopifyReloadSection(init, sectionId)
@@ -13,7 +13,7 @@ function init() {
     const productHandle = getScript(document.getElementById("product_handle"), "")
     const productId = getScript(document.getElementById("product_id"), "")
 
-    initQuickView(null, document, runSlider)
+    handleChangeFormProduct(null, document, runSlider)
 
     /** Khi vào trang product thì push vào local-storage */
     pushRecently(productHandle)

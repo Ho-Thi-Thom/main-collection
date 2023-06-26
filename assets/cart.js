@@ -125,9 +125,11 @@
   }
 
   // app/scripts/cart.js
-  var sectionId = document.querySelector(".cart-section-wrapper").dataset.sectionId;
-  shopifyReloadSection(init, sectionId);
-  function init() {
+  var sectionId = document.querySelector(".cart-section-wrapper")?.dataset.sectionId;
+  if (sectionId) {
+    shopifyReloadSection(initCartPage, sectionId);
+  }
+  function initCartPage(isSipping = true) {
     const removeBtns = document.querySelectorAll(".cart__item .remove__qlt");
     const addBtns = document.querySelectorAll(".cart__item .add__qlt");
     const btnRemoves = document.querySelectorAll(".btn-remove");
@@ -216,6 +218,11 @@
     const textarea = document.getElementById("cart-note");
     const debouncedFetch = debounce(() => updateDataCart(textarea.value), 500);
     textarea.addEventListener("input", debouncedFetch);
+    if (isSipping) {
+      handleShipping();
+    }
+  }
+  function handleShipping() {
     const selectField = document.getElementsByName("shipping_address[country]")[0];
     selectField.addEventListener("change", function(event) {
       const selectedOption = selectField.options[selectField.selectedIndex];

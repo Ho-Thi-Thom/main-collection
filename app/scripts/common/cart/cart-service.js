@@ -103,45 +103,55 @@ export async function updateCountCart() {
     }
 }
 
-export function addToCart(data) {
-    fetch(window.Shopify.routes.root + 'cart/add.js', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(res => {
-        switch (res.status) {
-            case 200:
-                res.json().then((data) => {
-                    const options = {
-                        type: "success",
-                        title: "Add to Cart",
-                        textContent: `Add success "${data.items[0].product_title}"`
-                    };
+export function addToCart(data, isPopupInfo = true) {
+    return new Promise((resolve, reject) => {
+        fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => {
+                switch (res.status) {
+                    case 200:
+                        res.json().then((data) => {
+                            const options = {
+                                type: "success",
+                                title: "Add to Cart",
+                                textContent: `Add success "${data.items[0].product_title}"`
+                            };
 
-                    updateCountCart();
-                    setValuePopupInfo(options);
-                })
-                break;
-            case 404:
-                break;
-            case 422:
-                res.json().then((data) => {
-                    const options = {
-                        type: "error",
-                        title: "422",
-                        textContent: data.description
-                    };
+                            updateCountCart();
+                            if (isPopupInfo) {
+                                setValuePopupInfo(options);
+                            }
+                            resolve(true); // Resolve with success status
+                        });
+                        break;
+                    case 404:
+                        resolve(false); // Resolve with failure status
+                        break;
+                    case 422:
+                        res.json().then((data) => {
+                            const options = {
+                                type: "error",
+                                title: "422",
+                                textContent: data.description
+                            };
 
-                    setValuePopupInfo(options);
-                })
-                break;
-            default:
-                break;
-        }
-    })
-        .catch((error) => {
-            console.log('Error:', error);
-        });
+                            setValuePopupInfo(options);
+                            resolve(false); // Resolve with failure status
+                        });
+                        break;
+                    default:
+                        resolve(false); // Resolve with failure status
+                        break;
+                }
+            })
+            .catch((error) => {
+                console.log('Error:', error);
+                reject(error); // Reject with the error
+            });
+    });
 }

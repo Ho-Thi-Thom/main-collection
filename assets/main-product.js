@@ -2610,10 +2610,10 @@
     }
   });
 
-  // app/scripts/main-product-service.js
+  // app/scripts/common/product/main-product-service.js
   var import_tiny_slider = __toModule(require_tiny_slider());
 
-  // app/scripts/utils.js
+  // app/scripts/common/utils/utils.js
   function readLocalStorage(key, defaultValue = []) {
     try {
       const data = window.localStorage.getItem(key);
@@ -2683,11 +2683,6 @@
     titleElm.innerHTML = title.trim();
     contentElm.innerHTML = textContent.trim();
     popupInfo.classList.add("active");
-    debounce(closePopup, 1e3)();
-  }
-  function closePopup() {
-    const popupInfo = document.querySelector("#popup-info");
-    popupInfo.classList.remove("active");
   }
   function debounce(fn, delay) {
     var timeoutID = null;
@@ -2700,65 +2695,8 @@
       }, delay);
     };
   }
-  function addToCart(data) {
-    fetch(window.Shopify.routes.root + "cart/add.js", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    }).then((res) => {
-      switch (res.status) {
-        case 200:
-          res.json().then((data2) => {
-            const options = {
-              type: "success",
-              title: "Add to Cart",
-              textContent: `Add success "${data2.items[0].product_title}"`
-            };
-            updateCountCart();
-            setValuePopupInfo(options);
-          });
-          break;
-        case 404:
-          break;
-        case 422:
-          res.json().then((data2) => {
-            const options = {
-              type: "error",
-              title: "422",
-              textContent: data2.description
-            };
-            setValuePopupInfo(options);
-          });
-          break;
-        default:
-          break;
-      }
-    }).catch((error) => {
-      console.log("Error:", error);
-    });
-  }
-  async function countItemCart() {
-    try {
-      const response = await fetch(window.Shopify.routes.root + "cart.js");
-      const data = await response.json();
-      return data.item_count;
-    } catch (error) {
-      return error;
-    }
-  }
-  async function updateCountCart() {
-    try {
-      const count = await countItemCart();
-      const elm = document.querySelector(".jsCountItemCart");
-      elm.textContent = count;
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
-  // app/scripts/main-product-service.js
+  // app/scripts/common/product/main-product-service.js
   function runSlider() {
     let slider = null;
     let sliderCustom = null;
@@ -2808,11 +2746,11 @@
     } };
   }
 
-  // app/scripts/constants.js
+  // app/scripts/common/utils/constants.js
   var WISH_LIST_KEY = "wish-list";
   var RECENTLY_LIST_KEY = "recently-list";
 
-  // app/scripts/product-recently-service.js
+  // app/scripts/common/product/product-recently-service.js
   function getRecentlyList() {
     return readLocalStorage(RECENTLY_LIST_KEY, []);
   }
@@ -2832,7 +2770,75 @@
     }
   }
 
-  // app/scripts/wishlist-service.js
+  // app/scripts/common/cart/cart-service.js
+  async function countItemCart() {
+    try {
+      const response = await fetch(window.Shopify.routes.root + "cart.js");
+      const data = await response.json();
+      return data.item_count;
+    } catch (error) {
+      return error;
+    }
+  }
+  async function updateCountCart() {
+    try {
+      const count = await countItemCart();
+      const elm = document.querySelector(".jsCountItemCart");
+      elm.textContent = count;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  function addToCart(data, isPopupInfo = true) {
+    return new Promise((resolve, reject) => {
+      fetch(window.Shopify.routes.root + "cart/add.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      }).then((res) => {
+        switch (res.status) {
+          case 200:
+            res.json().then((data2) => {
+              const options = {
+                type: "success",
+                title: "Add to Cart",
+                textContent: `Add success "${data2.items[0].product_title}"`
+              };
+              updateCountCart();
+              if (isPopupInfo) {
+                setValuePopupInfo(options);
+              }
+              resolve(true);
+            });
+            break;
+          case 404:
+            resolve(false);
+            break;
+          case 422:
+            res.json().then((data2) => {
+              const options = {
+                type: "error",
+                title: "422",
+                textContent: data2.description
+              };
+              setValuePopupInfo(options);
+              resolve(false);
+            });
+            break;
+          default:
+            resolve(false);
+            break;
+        }
+      }).catch((error) => {
+        console.log("Error:", error);
+        reject(error);
+      });
+    });
+  }
+
+  // app/scripts/common/utils/wishlist-service.js
   function getWishList() {
     return readLocalStorage(WISH_LIST_KEY, []);
   }
@@ -2864,7 +2870,7 @@
     }
   }
 
-  // app/scripts/common/dialog-quick-view-service.js
+  // app/scripts/common/utils/dialog-quick-view-service.js
   function updateElementPrice(divCompare, divPrice, checkEmpty = false) {
     if (checkEmpty) {
       return;
@@ -2936,14 +2942,18 @@
         updateElementSKU(div.querySelector(".product-sku"));
         updateElementInput(div.querySelector(".jsSubmit"));
       });
+      setInfoWarning(false);
     } else {
       updateElementAddToCart(null, true);
-      const options = {
-        type: "warring",
-        title: "Not found",
-        textContent: "Variant does not exist"
-      };
-      setValuePopupInfo(options);
+      setInfoWarning(true);
+    }
+  }
+  function setInfoWarning(options = false) {
+    const elementInfo = document.querySelector(".jsProductForm .card-info");
+    if (options) {
+      elementInfo.classList.remove("visibility-hidden");
+    } else {
+      elementInfo.classList.add("visibility-hidden");
     }
   }
   function updateCssOption(titles, productOptions, name) {
@@ -3030,8 +3040,8 @@
     });
   }
 
-  // app/scripts/dialog-quick-view.js
-  function initQuickView(newUrl = null, container = document, runSlider3) {
+  // app/scripts/common/utils/dialog-quick-view.js
+  function handleChangeFormProduct(newUrl = null, container = document, runSlider3) {
     const formEl = container.querySelector(".jsProductForm");
     const productOptions = getScript(container.querySelector("#popup_product_options"), []);
     const productData = getScript(container.querySelector("#popup-variants"), []);
@@ -3042,7 +3052,6 @@
     const quantityInput = container.querySelector(".quantity__input");
     const formProduct = container.querySelector("#jsFormProduct");
     formEl.addEventListener("change", function(event) {
-      console.log("\u1EA5dsds");
       if (event.target.id !== "cart-condition") {
         const titles = variants.filter((variant) => Object.values(variant).includes(event.target.value)).map((product) => product.title);
         onVariantChange(() => getUrl(formEl.dataset.sectionId, slider));
@@ -3090,9 +3099,9 @@
         event.preventDefault();
       }
     });
-    addToCart2();
+    addToCartByForm();
     checkPolicy();
-    function addToCart2() {
+    function addToCartByForm() {
       if (formProduct && formProduct.dataset.type === "b") {
         formProduct.addEventListener("submit", function(event) {
           event.preventDefault();
@@ -3113,7 +3122,7 @@
     const wishList = document.querySelector(".wish-list");
     const productHandle = getScript(document.getElementById("product_handle"), "");
     const productId = getScript(document.getElementById("product_id"), "");
-    initQuickView(null, document, runSlider);
+    handleChangeFormProduct(null, document, runSlider);
     pushRecently(productHandle);
     initialWishListItem();
     toggleWishList();

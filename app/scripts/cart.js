@@ -1,10 +1,12 @@
 import { updateDataCart, updateInfoCartPage, fetchAPIUpdateItemCart, checkMax, checkListCart, updateCountCart } from "./common/cart/cart-service";
 import { createUrlCustom, debounce, shopifyReloadSection } from "./common/utils/utils";
 
-const sectionId = document.querySelector('.cart-section-wrapper').dataset.sectionId
-shopifyReloadSection(init, sectionId)
+const sectionId = document.querySelector('.cart-section-wrapper')?.dataset.sectionId
+if (sectionId) {
+    shopifyReloadSection(initCartPage, sectionId)
+}
 
-function init() {
+export function initCartPage(isSipping = true) {
     // check list cart
     const removeBtns = document.querySelectorAll('.cart__item .remove__qlt');
     const addBtns = document.querySelectorAll('.cart__item .add__qlt');
@@ -107,7 +109,13 @@ function init() {
     const textarea = document.getElementById('cart-note');
     const debouncedFetch = debounce(() => updateDataCart(textarea.value), 500);
     textarea.addEventListener('input', debouncedFetch);
+    if (isSipping) {
+        handleShipping()
+    }
+}
 
+
+function handleShipping() {
     // jsShippingRates
     const selectField = document.getElementsByName("shipping_address[country]")[0];
     selectField.addEventListener("change", function (event) {
@@ -165,7 +173,5 @@ function init() {
                 }
                 btnState.classList.remove('loading')
             });
-
     });
-
 }
