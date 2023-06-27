@@ -22,7 +22,7 @@
   media="all"
 >
 
-<div class="cart-popup jsCartPopup" data-section-id="{{ section.id }}">
+<div class="cart-popup jsCartPopup" data-section-id="{{ section.id }}" datatest="{{ settings.cart_free_ship_amount }}">
   <div class="popup-top">
     <div class="popup-layer">
       <div class="popup__head">
@@ -31,13 +31,19 @@
       <div class="popup__header-close">{% render 'icon-close' %}</div>
     </div>
     <div class="popup__content jsPopupUpdate">
-      {% render 'cart-component', isHeader: false %}
+      {% if cart.item_count > 0 %}
+        {% render 'cart-component', isHeader: false %}
+      {% else %}
+        {% render 'cart-empty' %}
+      {% endif %}
     </div>
   </div>
   <div class="popup__footer jsPopupUpdate">
-    <form action="/cart" id="cartFormcart-section">
-      {% render 'cart-summary', isGoToCart: true %}
-    </form>
+    {% if cart.item_count > 0 %}
+      <form action="/cart" id="cartFormcart-section">
+        {% render 'cart-summary', isGoToCart: true %}
+      </form>
+    {% endif %}
   </div>
 </div>
 {{ 'cart-popup.js' | asset_url | script_tag }}

@@ -1,3 +1,4 @@
+import { updateCartPopup } from "./cart-popup";
 import { updateDataCart, updateInfoCartPage, fetchAPIUpdateItemCart, checkMax, checkListCart, updateCountCart } from "./common/cart/cart-service";
 import { createUrlCustom, debounce, shopifyReloadSection } from "./common/utils/utils";
 
@@ -6,7 +7,7 @@ if (sectionId) {
     shopifyReloadSection(initCartPage, sectionId)
 }
 
-export function initCartPage(isSipping = true) {
+export function initCartPage(isSipping = true, isPopupCart = false) {
     // check list cart
     const removeBtns = document.querySelectorAll('.cart__item .remove__qlt');
     const addBtns = document.querySelectorAll('.cart__item .add__qlt');
@@ -15,6 +16,7 @@ export function initCartPage(isSipping = true) {
     checkListCart()
     trigger(btnRemoves)
     trigger([...addBtns, ...removeBtns])
+
     function trigger(elements = []) {
         if (!elements || elements.length === 0) {
             return
@@ -58,10 +60,18 @@ export function initCartPage(isSipping = true) {
                     try {
                         const data = await fetchAPIUpdateItemCart(options);
                         const result = data.sections[sectionId];
-                        updateInfoCartPage(result, lineIndex, checkRemove = checkRemoveItem);
-                        updateCountCart();
+                        const cartCount = await updateCountCart();
+                        if (cartCount) {
+                            updateInfoCartPage(result, lineIndex, checkRemove = checkRemoveItem);
+                        } else {
+                            if (isPopupCart) {
+                                updateCartPopup()
+                            } else {
+                                location.reload();
+                            }
+                        }
                     } catch (err) {
-                        console.log(err);
+                        console.log("Error", err)
                     }
                 }, 1000);
             });

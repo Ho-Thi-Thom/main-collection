@@ -1,3 +1,7 @@
+import { initCartPage } from "./cart";
+import { handelActivePopup, updateCartPopup } from "./cart-popup";
+import { debounce } from "./common/utils/utils";
+
 const menuButton = document.querySelector('.header-bugger');
 const menu = document.querySelector('.header-menu');
 const closeButton = document.querySelector('.header-close');
@@ -18,4 +22,11 @@ function menuAction(selector, callback) {
     selector.addEventListener("click", callback)
 }
 
-
+const jsViewPopupCart = document.querySelector('.jsViewPopupCart')
+jsViewPopupCart.addEventListener('click', async () => {
+    const check = await updateCartPopup()
+    if (check) {
+        debounce(handelActivePopup(), 500)
+        initCartPage(false, true);
+    }
+})

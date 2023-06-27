@@ -1,19 +1,19 @@
 import { runSlider } from "./common/product/main-product-service";
 import { pushRecently } from "./common/product/product-recently-service";
 import { getScript, shopifyReloadSection } from "./common/utils/utils";
-import { addToCart } from "./common/cart/cart-service"
 import { isWishItem, toggleWishItem } from "./common/utils//wishlist-service";
 import { handleChangeFormProduct } from "./common/utils/dialog-quick-view";
 
 const sectionId = document.querySelector('.product-section-wrapper').dataset.sectionId
 shopifyReloadSection(init, sectionId)
 
-function init() {
+async function init() {
     const wishList = document.querySelector('.wish-list')
     const productHandle = getScript(document.getElementById("product_handle"), "")
     const productId = getScript(document.getElementById("product_id"), "")
 
-    handleChangeFormProduct(null, document, runSlider)
+    const container = document.querySelector('.section-product')
+    handleChangeFormProduct(null, container, runSlider)
 
     /** Khi vào trang product thì push vào local-storage */
     pushRecently(productHandle)
@@ -23,9 +23,6 @@ function init() {
 
     /** Event click wish-list */
     toggleWishList()
-
-    /** Event add to cart */
-    addToCart()
 
     function initialWishListItem() {
         if (isWishItem(productId)) {

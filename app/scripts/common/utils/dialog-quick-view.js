@@ -87,7 +87,11 @@ export function handleChangeFormProduct(newUrl = null, container = document, run
                 let formData = {
                     "items": [productFormData]
                 }
-                addToCart(formData)
+                try {
+                    addToCart(formData)
+                } catch (error) {
+                    console.log(error)
+                }
             });
         }
     }

@@ -1,6 +1,6 @@
 import { setValuePopupInfo } from "../utils/utils";
 
-export function updateInfoCartPage(data, lineIndex, checkRemove) {
+export function updateInfoCartPage(data, lineIndex, checkRemove, isCheckPopupEmpty = false) {
     const div = document.createElement("div");
     div.innerHTML = data;
     const liElement = document.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
@@ -12,7 +12,11 @@ export function updateInfoCartPage(data, lineIndex, checkRemove) {
             item.parentNode.replaceChild(jsLineUpdatesNew[index], item);
         });
     } else {
-        liElement.remove()
+        if (isCheckPopupEmpty) {
+
+        } else {
+            liElement.remove()
+        }
     }
     const jsCartUpdateOld = document.querySelectorAll('.js-cart-update')
     const jsCartUpdateNew = div.querySelectorAll('.js-cart-update')
@@ -20,8 +24,6 @@ export function updateInfoCartPage(data, lineIndex, checkRemove) {
     jsCartUpdateOld.forEach((item, index) => {
         item.parentNode.replaceChild(jsCartUpdateNew[index], item);
     });
-
-
 }
 
 export function updateDataCart(note) {
@@ -98,6 +100,7 @@ export async function updateCountCart() {
         const count = await countItemCart();
         const elm = document.querySelector('.jsCountItemCart');
         elm.textContent = count;
+        return count
     } catch (error) {
         console.error(error);
     }
@@ -126,11 +129,11 @@ export function addToCart(data, isPopupInfo = true) {
                             if (isPopupInfo) {
                                 setValuePopupInfo(options);
                             }
-                            resolve(true); // Resolve with success status
+                            resolve(true);
                         });
                         break;
                     case 404:
-                        resolve(false); // Resolve with failure status
+                        resolve(false);
                         break;
                     case 422:
                         res.json().then((data) => {
@@ -141,17 +144,17 @@ export function addToCart(data, isPopupInfo = true) {
                             };
 
                             setValuePopupInfo(options);
-                            resolve(false); // Resolve with failure status
+                            resolve(false);
                         });
                         break;
                     default:
-                        resolve(false); // Resolve with failure status
+                        resolve(false);
                         break;
                 }
             })
             .catch((error) => {
                 console.log('Error:', error);
-                reject(error); // Reject with the error
+                reject(error);
             });
     });
 }

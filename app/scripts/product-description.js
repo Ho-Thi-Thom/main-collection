@@ -16,14 +16,19 @@ if (headerList.length > 0) {
 }
 
 if (headerListMobile.length > 0) {
-    // const idFirstHeader = headerListMobile[0].dataset.id;
-    // createActiveBodyMobile(idFirstHeader);
 
     headerListMobile.forEach((header) => {
         header.addEventListener("click", () => {
             const id = header.dataset.id;
             createActiveBodyMobile(id);
         });
+        const mobileTab = header.nextElementSibling;
+        mobileTab.style.setProperty('--height', mobileTab.scrollHeight + 'px');
+        const obsever = new MutationObserver(() => {
+            mobileTab.style.setProperty('--height', mobileTab.scrollHeight + 'px');
+
+        })
+        obsever.observe(mobileTab, { subtree: true, childList: true })
     });
 }
 

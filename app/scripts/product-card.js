@@ -1,7 +1,7 @@
 import { jsDialogQuickView } from "./common/utils/dialog-quick-view";
 import { openPopup } from "./popup-product-item";
-import { addToCart, updateCountCart, updateInfoCartPage } from "./common/cart/cart-service";
-import { fetchDataCart, handelActivePopup } from "./cart-popup";
+import { addToCart } from "./common/cart/cart-service";
+import { handelActivePopup, updateCartPopup } from "./cart-popup";
 import { initCartPage } from "./cart";
 import { debounce } from "./common/utils/utils";
 
@@ -22,8 +22,11 @@ window.addEventListener('DOMContentLoaded', function () {
             try {
                 const checkAddToCart = await addToCart(data, false)
                 if (checkAddToCart) {
-                    updateCartPopup()
-                    debounce(handelActivePopup(), 500)
+                    const check = await updateCartPopup()
+                    if (check) {
+                        debounce(handelActivePopup(), 500)
+                        initCartPage(false, true);
+                    }
                 }
             } catch (error) {
                 console.log('Error:', error)
@@ -38,21 +41,7 @@ window.addEventListener('DOMContentLoaded', function () {
 })
 
 
-async function updateCartPopup() {
-    const elementPopup = document.querySelector('.jsCartPopup');
-    const sectionId = elementPopup.dataset.sectionId;
-    const data = await fetchDataCart(sectionId);
-    const div = document.createElement("div");
-    div.innerHTML = data;
-    const cartPopup = div.querySelector('.jsCartPopup')
-    const elements = cartPopup.querySelectorAll('.jsPopupUpdate');
-    const oldElement = document.querySelectorAll('.jsCartPopup .jsPopupUpdate');
-    oldElement.forEach((item, index) => {
-        item.parentNode.replaceChild(elements[index], item);
-    })
-    initCartPage(false);
-    updateCountCart();
-}
+
 
 async function fetchDataPopup(url) {
     const result = await fetch(url);

@@ -1,5 +1,5 @@
 {%- liquid
-  assign freeShipAmount = section.settings.free_shipping_conditions | times: 100
+  assign freeShipAmount = settings.cart_free_ship_amount | times: 100
   assign currentAmount = cart.total_price | times: 1
   assign amount = freeShipAmount | minus: currentAmount
   assign precent = currentAmount | times: 100 | divided_by: freeShipAmount | at_most: 100

@@ -79,16 +79,13 @@
   outline: none;
 }
 
-.product-card__wrapper .card .card__inner .card__image-wrapper .card__group:hover .jsViewCart svg path {
+.product-card__wrapper .card .card__inner .card__image-wrapper .card__group:hover .jsViewCart svg path, .product-card__wrapper .card .card__inner .card__image-wrapper .card__group:hover svg path {
   fill: #fff;
-}
-
-.product-card__wrapper .card .card__inner .card__image-wrapper .card__group:hover svg path {
-  stroke: #fff;
 }
 
 .product-card__wrapper .card .card__inner .card__image-wrapper .card__group:hover .jsAddToCart svg path {
-  fill: #fff;
+  stroke: #fff;
+  fill: none;
 }
 
 .product-card__wrapper .card .card__inner .card__image-wrapper .tag {

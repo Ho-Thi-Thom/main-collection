@@ -4,10 +4,7 @@
   {% when 'tab_header' %}
     <div class="des_btn jsNavTabDesktop" data-id="{{ tabID }}">{{ heading }}</div>
   {% when 'tab_body' %}
-    <div class="tab__panel-item jsBodyTabDesktop" data-id="{{ tabID }}">
-      <div class="tab__panel-content">{{ body }}</div>
-    </div>
-    <div class="item__body">
+    <div class="tab__panel-content jsBodyTab" data-id="{{ tabID }}">
       <div class="tab_header-body jsNavTabMobile" data-id="{{ tabID }}">
         <span>{{ heading }}</span>
         <span>
@@ -15,7 +12,7 @@
         </span>
       </div>
       <div class="tab__panel-item jsBodyTabMobile" data-id="{{ tabID }}">
-        <div class="tab__panel-content">{{ body }}</div>
+        <div class="tab__content-body">{{ body }}</div>
       </div>
     </div>
 {% endcase %}

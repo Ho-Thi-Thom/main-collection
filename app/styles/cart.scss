@@ -27,8 +27,6 @@
         }
     }
 
-
-
     .section-footer {
         display: flex;
         gap: 30px;
@@ -138,51 +136,11 @@
         .section-footer {
             gap: 20px;
 
-
-
-            // 
             .shipping-rates {
                 flex: 1;
                 padding: 20px 25px;
-
-                .shipping-content {
-                    .shipping-title {}
-
-                    .shipping-form {
-
-                        .form-field {
-                            .label-field {}
-
-                            .select-field {}
-
-                            .input-field {}
-                        }
-
-                        .form-button-group {
-                            .btn {
-
-
-                                .state-loading {}
-                            }
-
-                            .btn.loading {
-                                .state-default {}
-
-                                .state-loading {}
-                            }
-                        }
-                    }
-                }
-
-                .wapper-response {
-                    .response-title {}
-
-                    .shipping-list {}
-                }
             }
         }
-
-        .section-disable {}
     }
 }
 
@@ -212,43 +170,16 @@
                 padding: 10px 15px;
 
                 .shipping-content {
-                    .shipping-title {}
-
                     .shipping-form {
-
-                        .form-field {
-                            .label-field {}
-
-                            .select-field {}
-
-                            .input-field {}
-                        }
-
                         .form-button-group {
                             .btn {
                                 width: 100%;
-
-                                .state-loading {}
-                            }
-
-                            .btn.loading {
-                                .state-default {}
-
-                                .state-loading {}
                             }
                         }
                     }
                 }
-
-                .wapper-response {
-                    .response-title {}
-
-                    .shipping-list {}
-                }
             }
         }
-
-        .section-disable {}
     }
 }
 
@@ -256,91 +187,8 @@
 
 @media (max-width: 375px) {
     .cart-section-wrapper {
-
-        .cart-empty-wrapper {
-            h1 {}
-
-            a {}
-        }
-
         .section-footer {
             flex-direction: column;
-
-            .cart-summary {
-
-                .cart__summary-inner {
-
-                    .cart__summary-line {}
-
-                    .cart__summary-line--heading {}
-
-                    .cart__summary-line--content {
-                        span {}
-                    }
-
-                    .cart__summary-line--total,
-                    .cart__summary-line--discount {}
-
-                    .cart__summary-line--tax {}
-
-                    .accordion-initialized {
-                        span {}
-
-                        .cart__form-note {
-
-                            textarea {}
-                        }
-
-                        .cart__form-note.active {}
-                    }
-
-                    .cart__summary-checkout {
-                        .btn-cart-checkout {
-
-                            &:hover {}
-                        }
-                    }
-                }
-            }
-
-            // 
-            .shipping-rates {
-
-                .shipping-content {
-                    .shipping-title {}
-
-                    .shipping-form {
-
-                        .form-field {
-                            .label-field {}
-
-                            .select-field {}
-
-                            .input-field {}
-                        }
-
-                        .form-button-group {
-                            .btn {
-                                .state-loading {}
-                            }
-
-                            .btn.loading {
-                                .state-default {}
-
-                                .state-loading {}
-                            }
-                        }
-                    }
-                }
-
-                .wapper-response {
-                    .response-title {}
-
-                    .shipping-list {}
-                }
-            }
         }
-
-        .section-disable {}
     }
 }

@@ -41,17 +41,16 @@
       </a>
     {% endcomment %}
     {% render 'arn_wl_cp_buttons', type: 'wl_show_btn', product_handle: product.handle %}
-    <a href="/cart" class="header__icon-link">
+    <div class="header__icon-link jsViewPopupCart">
       <div class="header__icon-cart">
         <img
           src="https://cdn.shopify.com/s/files/1/0742/4648/8339/files/shopping-cart-cart-shopping-commerce-ecommerce_1.svg?v=1680668903"
           alt="icon healt"
           class="header__icon-cardImage"
         >
-
         <div class="header__icon-badge jsCountItemCart">{{ cart.item_count }}</div>
       </div>
-    </a>
+    </div>
     <button class="header-bugger">
       <img
         src="https://cdn.shopify.com/s/files/1/0742/4648/8339/files/home.svg?v=1681019703"

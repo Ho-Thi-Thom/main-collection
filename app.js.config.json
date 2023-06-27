@@ -38,5 +38,11 @@
         "wishlist-service",
         "dialog-quick-view",
         "dialog-quick-view-service"
+    ],
+    "header":[
+        "cart-popup",
+        "cart",
+        "utils",
+        "cart-service"
     ]
 }

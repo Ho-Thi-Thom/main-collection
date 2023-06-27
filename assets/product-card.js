@@ -64,7 +64,7 @@
   }
 
   // app/scripts/common/cart/cart-service.js
-  function updateInfoCartPage(data, lineIndex, checkRemove2) {
+  function updateInfoCartPage(data, lineIndex, checkRemove2, isCheckPopupEmpty = false) {
     const div = document.createElement("div");
     div.innerHTML = data;
     const liElement = document.querySelector(`li.cart__item.jsLineItem[data-line-index="${lineIndex}"]`);
@@ -76,7 +76,10 @@
         item.parentNode.replaceChild(jsLineUpdatesNew[index], item);
       });
     } else {
-      liElement.remove();
+      if (isCheckPopupEmpty) {
+      } else {
+        liElement.remove();
+      }
     }
     const jsCartUpdateOld = document.querySelectorAll(".js-cart-update");
     const jsCartUpdateNew = div.querySelectorAll(".js-cart-update");
@@ -151,6 +154,7 @@
       const count = await countItemCart();
       const elm = document.querySelector(".jsCountItemCart");
       elm.textContent = count;
+      return count;
     } catch (error) {
       console.error(error);
     }
@@ -525,7 +529,11 @@
           let formData = {
             "items": [productFormData]
           };
-          addToCart(formData);
+          try {
+            addToCart(formData);
+          } catch (error) {
+            console.log(error);
+          }
         });
       }
     }
@@ -580,13 +588,27 @@
       return error;
     }
   }
+  async function updateCartPopup() {
+    const elementPopup = document.querySelector(".jsCartPopup");
+    const sectionId2 = elementPopup.dataset.sectionId;
+    const data = await fetchDataCart(sectionId2);
+    const div = document.createElement("div");
+    div.innerHTML = data;
+    const cartPopup = div.querySelector(".jsCartPopup");
+    const elements = cartPopup.querySelectorAll(".jsPopupUpdate");
+    const oldElement = document.querySelectorAll(".jsCartPopup .jsPopupUpdate");
+    oldElement.forEach((item, index) => {
+      item.parentNode.replaceChild(elements[index], item);
+    });
+    return true;
+  }
 
   // app/scripts/cart.js
   var sectionId = document.querySelector(".cart-section-wrapper")?.dataset.sectionId;
   if (sectionId) {
     shopifyReloadSection(initCartPage, sectionId);
   }
-  function initCartPage(isSipping = true) {
+  function initCartPage(isSipping = true, isPopupCart = false) {
     const removeBtns = document.querySelectorAll(".cart__item .remove__qlt");
     const addBtns = document.querySelectorAll(".cart__item .add__qlt");
     const btnRemoves = document.querySelectorAll(".btn-remove");
@@ -631,10 +653,18 @@
             try {
               const data = await fetchAPIUpdateItemCart(options);
               const result = data.sections[sectionId2];
-              updateInfoCartPage(result, lineIndex, checkRemove = checkRemoveItem);
-              updateCountCart();
+              const cartCount = await updateCountCart();
+              if (cartCount) {
+                updateInfoCartPage(result, lineIndex, checkRemove = checkRemoveItem);
+              } else {
+                if (isPopupCart) {
+                  updateCartPopup();
+                } else {
+                  location.reload();
+                }
+              }
             } catch (err) {
-              console.log(err);
+              console.log("Error", err);
             }
           }, 1e3);
         });
@@ -751,8 +781,11 @@
         try {
           const checkAddToCart = await addToCart(data, false);
           if (checkAddToCart) {
-            updateCartPopup();
-            debounce(handelActivePopup(), 500);
+            const check = await updateCartPopup();
+            if (check) {
+              debounce(handelActivePopup(), 500);
+              initCartPage(false, true);
+            }
           }
         } catch (error) {
           console.log("Error:", error);
@@ -765,21 +798,6 @@
       }
     });
   });
-  async function updateCartPopup() {
-    const elementPopup = document.querySelector(".jsCartPopup");
-    const sectionId2 = elementPopup.dataset.sectionId;
-    const data = await fetchDataCart(sectionId2);
-    const div = document.createElement("div");
-    div.innerHTML = data;
-    const cartPopup = div.querySelector(".jsCartPopup");
-    const elements = cartPopup.querySelectorAll(".jsPopupUpdate");
-    const oldElement = document.querySelectorAll(".jsCartPopup .jsPopupUpdate");
-    oldElement.forEach((item, index) => {
-      item.parentNode.replaceChild(elements[index], item);
-    });
-    initCartPage(false);
-    updateCountCart();
-  }
   async function fetchDataPopup(url) {
     const result = await fetch(url);
     const data = await result.text();

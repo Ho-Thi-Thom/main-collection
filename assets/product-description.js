@@ -1,12 +1,12 @@
 (() => {
   // app/scripts/common/product/product-description-service.js
   function createActiveBodyDesktop(id) {
-    const targetElement = document.querySelector(`.jsBodyTabDesktop[data-id="${id}"]`);
+    const targetElement = document.querySelector(`.tab__panel-content.jsBodyTab[data-id="${id}"]`);
+    document.querySelector(".tab__panel-content.jsBodyTab.active")?.classList.remove("active");
+    targetElement?.classList.add("active");
     const targetHeader = document.querySelector(`.jsNavTabDesktop[data-id="${id}"]`);
     document.querySelector(".jsNavTabDesktop.active")?.classList.remove("active");
     targetHeader?.classList.add("active");
-    document.querySelector(".jsBodyTabDesktop.active")?.classList.remove("active");
-    targetElement?.classList.add("active");
   }
   function createActiveBodyMobile(id) {
     const targetElement = document.querySelector(`.jsBodyTabMobile[data-id="${id}"]`);
@@ -39,6 +39,12 @@
         const id = header.dataset.id;
         createActiveBodyMobile(id);
       });
+      const mobileTab = header.nextElementSibling;
+      mobileTab.style.setProperty("--height", mobileTab.scrollHeight + "px");
+      const obsever = new MutationObserver(() => {
+        mobileTab.style.setProperty("--height", mobileTab.scrollHeight + "px");
+      });
+      obsever.observe(mobileTab, { subtree: true, childList: true });
     });
   }
 })();

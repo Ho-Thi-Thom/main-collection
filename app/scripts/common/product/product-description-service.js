@@ -1,10 +1,11 @@
 export function createActiveBodyDesktop(id) {
-    const targetElement = document.querySelector(`.jsBodyTabDesktop[data-id="${id}"]`);
+    const targetElement = document.querySelector(`.tab__panel-content.jsBodyTab[data-id="${id}"]`);
+    document.querySelector('.tab__panel-content.jsBodyTab.active')?.classList.remove("active");
+    targetElement?.classList.add("active");
     const targetHeader = document.querySelector(`.jsNavTabDesktop[data-id="${id}"]`);
     document.querySelector('.jsNavTabDesktop.active')?.classList.remove("active");
     targetHeader?.classList.add("active");
-    document.querySelector('.jsBodyTabDesktop.active')?.classList.remove("active");
-    targetElement?.classList.add("active");
+
 }
 
 export function createActiveBodyMobile(id) {

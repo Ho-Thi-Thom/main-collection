@@ -32,6 +32,10 @@
   font-weight: 400;
 }
 
+#popup-info .info-box .wrapper-title .btn_close-popup-info {
+  cursor: pointer;
+}
+
 #popup-info .info-box .title[data-type=success] {
   color: green;
 }

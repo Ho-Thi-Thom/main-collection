@@ -10,8 +10,6 @@
             .card__image-wrapper {
                 position: relative;
 
-
-
                 .image__style {
                     padding-top: 100%;
                     border-radius: 4px;
@@ -89,12 +87,14 @@
                         }
 
                         svg path {
-                            stroke: #ffffff;
+                            fill: #ffffff;
+
                         }
 
                         .jsAddToCart {
                             svg path {
-                                fill: #ffffff;
+                                stroke: #ffffff;
+                                fill: none;
                             }
                         }
                     }

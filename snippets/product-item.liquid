@@ -11,13 +11,13 @@
             <div class="card__group">
               {% if hasOnlyDefaultVariant %}
                 <button class="jsAddToCart pointer-events" data-first-variant="{{ product.variants.first.id }}">
-                  {% render 'plus' %}
+                  {% render 'card' %}
                 </button>
               {% else %}
                 <button
                   class="pointer-events"
                 >
-                  {% render 'card' %}
+                  {% render 'plus' %}
                 </button>
               {% endif %}
             </div>

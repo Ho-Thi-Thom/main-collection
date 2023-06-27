@@ -27,4 +27,18 @@
       return error;
     }
   }
+  async function updateCartPopup() {
+    const elementPopup = document.querySelector(".jsCartPopup");
+    const sectionId = elementPopup.dataset.sectionId;
+    const data = await fetchDataCart(sectionId);
+    const div = document.createElement("div");
+    div.innerHTML = data;
+    const cartPopup = div.querySelector(".jsCartPopup");
+    const elements = cartPopup.querySelectorAll(".jsPopupUpdate");
+    const oldElement = document.querySelectorAll(".jsCartPopup .jsPopupUpdate");
+    oldElement.forEach((item, index) => {
+      item.parentNode.replaceChild(elements[index], item);
+    });
+    return true;
+  }
 })();
