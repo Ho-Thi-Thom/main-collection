@@ -472,7 +472,7 @@
     const quantityInput = container.querySelector(".quantity__input");
     const formProduct = container.querySelector("#jsFormProduct");
     formEl.addEventListener("change", function(event) {
-      if (event.target.id !== "cart-condition") {
+      if (event.target.id !== "cart-condition" && event.target.className !== "quantity__input") {
         const titles = variants.filter((variant) => Object.values(variant).includes(event.target.value)).map((product) => product.title);
         onVariantChange(() => getUrl(formEl.dataset.sectionId, slider));
         updateCssOption(titles, productOptions, event.target.name);
@@ -553,7 +553,7 @@
     const popupProduct = document.querySelector("#popup-product-item");
     popupProduct.classList.add("active");
   }
-  var btnClose = document.querySelector("#popup-product-item .close-popup div");
+  var btnClose = document.querySelector("#popup-product-item .close-popup");
   if (btnClose) {
     btnClose.addEventListener("click", () => {
       closePopup();
@@ -691,6 +691,12 @@
           const result = data.sections[sectionId];
           updateInfoCartPage(result, lineIndex);
         } catch (err) {
+          const options2 = {
+            type: "error",
+            title: "422",
+            textContent: `Only ${quantityInput.getAttribute("max")} products in stock`
+          };
+          setValuePopupInfo(options2);
         }
       }, 2e3));
     });
@@ -769,17 +775,13 @@
     body.addEventListener("click", async (event) => {
       if (event.target.classList.contains("jsAddToCart")) {
         event.preventDefault();
-        const variantId = event.target.dataset.firstVariant;
-        let data = {
-          items: [
-            {
-              id: variantId,
-              quantity: 1
-            }
-          ]
+        const productForm = event.target.closest(".jsProductItemForm");
+        const productFormData = Object.fromEntries(new FormData(productForm).entries());
+        let formData = {
+          "items": [productFormData]
         };
         try {
-          const checkAddToCart = await addToCart(data, false);
+          const checkAddToCart = await addToCart(formData, false);
           if (checkAddToCart) {
             const check = await updateCartPopup();
             if (check) {

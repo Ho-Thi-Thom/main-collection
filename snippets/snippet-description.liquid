@@ -7,9 +7,14 @@
     <div class="tab__panel-content jsBodyTab" data-id="{{ tabID }}">
       <div class="tab_header-body jsNavTabMobile" data-id="{{ tabID }}">
         <span>{{ heading }}</span>
-        <span>
-          {% render 'plus' %}
-        </span>
+        <div style="padding-right:7px;">
+          <span class="plus">
+            {% render 'plus' %}
+          </span>
+          <span class="minus">
+            {% render 'minus' %}
+          </span>
+        </div>
       </div>
       <div class="tab__panel-item jsBodyTabMobile" data-id="{{ tabID }}">
         <div class="tab__content-body">{{ body }}</div>

@@ -15,10 +15,10 @@ async function init() {
     const container = document.querySelector('.section-product')
     handleChangeFormProduct(null, container, runSlider)
 
-    /** Khi vào trang product thì push vào local-storage */
+    /** Add product to Recently local-storage */
     pushRecently(productHandle)
 
-    /** Kiểm tra lần đầu vào trang có active wish-list-item không */
+    /** Check if the first time you visit the page there is an active wish-list-item */
     initialWishListItem()
 
     /** Event click wish-list */

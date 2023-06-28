@@ -1,6 +1,6 @@
 import { updateCartPopup } from "./cart-popup";
 import { updateDataCart, updateInfoCartPage, fetchAPIUpdateItemCart, checkMax, checkListCart, updateCountCart } from "./common/cart/cart-service";
-import { createUrlCustom, debounce, shopifyReloadSection } from "./common/utils/utils";
+import { createUrlCustom, debounce, setValuePopupInfo, shopifyReloadSection } from "./common/utils/utils";
 
 const sectionId = document.querySelector('.cart-section-wrapper')?.dataset.sectionId
 if (sectionId) {
@@ -100,7 +100,14 @@ export function initCartPage(isSipping = true, isPopupCart = false) {
                 const data = await fetchAPIUpdateItemCart(options)
                 const result = data.sections[sectionId]
                 updateInfoCartPage(result, lineIndex);
-            } catch (err) { }
+            } catch (err) {
+                const options = {
+                    type: "error",
+                    title: "422",
+                    textContent: `Only ${quantityInput.getAttribute('max')} products in stock`
+                };
+                setValuePopupInfo(options);
+            }
         }, 2000))
     })
 

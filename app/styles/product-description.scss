@@ -116,6 +116,24 @@
                                 font-size: 14px;
                                 font-weight: 500;
                             }
+
+                            .minus {
+                                display: none;
+                            }
+
+                            .plus {
+                                display: flex;
+                            }
+
+                            &.active {
+                                .minus {
+                                    display: flex;
+                                }
+
+                                .plus {
+                                    display: none;
+                                }
+                            }
                         }
 
                         .tab__panel-item {
@@ -127,50 +145,6 @@
                                 max-height: var(--height);
                             }
                         }
-
-                        // &.active {
-                        //     .tab__panel-item {
-                        //         // animation: slideUp 1s ease;
-                        //         // animation-fill-mode: both;
-                        //         overflow: hidden;
-                        //     }
-                        // }
-
-                        // .tab__panel-item {
-                        //     animation: slideUp 1s ease;
-                        //     animation-fill-mode: both;
-                        //     // overflow: hidden;
-                        // }
-
-                        // @keyframes slideDown {
-                        //     0 {
-                        //         // opacity: 0;
-                        //         height: 0;
-                        //     }
-
-                        //     100% {
-                        //         // opacity: 1;
-                        //         height: 500px;
-                        //     }
-                        // }
-
-                        // @keyframes slideUp {
-                        //     0 {
-                        //         // opacity: 1;
-                        //         height: 500px;
-                        //     }
-
-                        //     100% {
-                        //         // opacity: 0;
-                        //         height: 0;
-                        //     }
-                        // }
-
-                        // .tab_header-body.active+.tab__panel-item.active {
-                        //     display: block;
-                        //     animation: slideDown 1s ease;
-                        //     animation-fill-mode: both;
-                        // }
                     }
                 }
             }

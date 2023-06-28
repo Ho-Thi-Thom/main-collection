@@ -101,6 +101,11 @@
             align-items: center;
         }
 
+        .remove .btn-remove svg {
+            width: 30px;
+            height: 30px;
+        }
+
         .btn-remove {
             color: rgb(100, 99, 99);
             text-decoration: none;
@@ -130,10 +135,7 @@
                 }
             }
 
-            .remove .btn-remove svg {
-                width: 30px;
-                height: 30px;
-            }
+
 
 
         }

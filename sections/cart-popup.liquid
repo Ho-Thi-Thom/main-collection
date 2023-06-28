@@ -28,7 +28,10 @@
       <div class="popup__head">
         <a href="/cart">Cart</a>
       </div>
-      <div class="popup__header-close">{% render 'icon-close' %}</div>
+      <div class="popup__header-close pointer-events">
+        <div class="leftright"></div>
+        <div class="rightleft"></div>
+      </div>
     </div>
     <div class="popup__content jsPopupUpdate">
       {% if cart.item_count > 0 %}

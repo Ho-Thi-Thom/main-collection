@@ -10,9 +10,12 @@
             {% assign hasOnlyDefaultVariant = product.has_only_default_variant %}
             <div class="card__group">
               {% if hasOnlyDefaultVariant %}
-                <button class="jsAddToCart pointer-events" data-first-variant="{{ product.variants.first.id }}">
-                  {% render 'card' %}
-                </button>
+                {% form 'product', product, class: 'jsProductItemForm' %}
+                  <input type="hidden" name="id" value="{{ product.variants.first.id  }}">
+                  <button class="jsAddToCart pointer-events" data-first-variant="{{ product.variants.first.id }}">
+                    {% render 'card' %}
+                  </button>
+                {%- endform -%}
               {% else %}
                 <button
                   class="pointer-events"

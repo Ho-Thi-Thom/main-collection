@@ -10,7 +10,7 @@
     const popupProduct = document.querySelector("#popup-product-item");
     popupProduct.classList.add("active");
   }
-  var btnClose = document.querySelector("#popup-product-item .close-popup div");
+  var btnClose = document.querySelector("#popup-product-item .close-popup");
   if (btnClose) {
     btnClose.addEventListener("click", () => {
       closePopup();

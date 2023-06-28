@@ -3053,7 +3053,7 @@
     const quantityInput = container.querySelector(".quantity__input");
     const formProduct = container.querySelector("#jsFormProduct");
     formEl.addEventListener("change", function(event) {
-      if (event.target.id !== "cart-condition") {
+      if (event.target.id !== "cart-condition" && event.target.className !== "quantity__input") {
         const titles = variants.filter((variant) => Object.values(variant).includes(event.target.value)).map((product) => product.title);
         onVariantChange(() => getUrl(formEl.dataset.sectionId, slider));
         updateCssOption(titles, productOptions, event.target.name);

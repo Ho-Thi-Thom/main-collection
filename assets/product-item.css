@@ -73,6 +73,10 @@
   stroke: #05a845;
 }
 
+.product-card__wrapper .card .card__inner .card__image-wrapper .card__group .jsAddToCart svg {
+  fill: none;
+}
+
 .product-card__wrapper .card .card__inner .card__image-wrapper .card__group:hover button {
   background-color: #05a845;
   border: none;

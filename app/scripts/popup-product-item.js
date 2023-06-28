@@ -10,7 +10,7 @@ export function openPopup() {
     popupProduct.classList.add('active')
 }
 
-const btnClose = document.querySelector('#popup-product-item .close-popup div')
+const btnClose = document.querySelector('#popup-product-item .close-popup')
 if (btnClose) {
     btnClose.addEventListener('click', () => {
         closePopup()

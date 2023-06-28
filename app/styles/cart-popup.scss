@@ -1,7 +1,11 @@
+$softorange: #30a01a;
+$tomatored: #a143e0;
+$mediumblu: #1E272D;
+
 .cart-popup {
     position: fixed;
     top: 0;
-    right: 0;
+    left: 100%;
     bottom: 0;
     min-width: 375px;
     max-width: 600px;
@@ -9,16 +13,15 @@
     border-left: 1px solid #ccc;
     z-index: 10000;
     opacity: 0;
-    transition: all 0.5s ease-in-out;
-    display: none;
+    transition: all 0.7s ease-in-out;
     flex-direction: column;
-    padding: 16px;
+    padding: 16px 16px 0 16px;
     overflow-y: auto;
-    opacity: 1;
 
     &.active {
         opacity: 1;
-        display: block;
+        right: 0;
+        left: auto;
     }
 
     .popup-top {
@@ -27,6 +30,7 @@
         .popup-layer {
             display: flex;
             justify-content: space-between;
+            position: relative;
 
             .popup__head {
                 a {
@@ -37,7 +41,47 @@
             }
 
             .popup__header-close {
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin: auto;
+                width: 30px;
+                height: 30px;
                 cursor: pointer;
+            }
+
+            .leftright {
+                height: 4px;
+                width: 30px;
+                position: absolute;
+                margin-top: 16px;
+                background-color: $softorange;
+                border-radius: 2px;
+                transform: rotate(45deg);
+                transition: all .3s ease-in;
+            }
+
+            .rightleft {
+                height: 4px;
+                width: 30px;
+                position: absolute;
+                margin-top: 16px;
+                background-color: $softorange;
+                border-radius: 2px;
+                transform: rotate(-45deg);
+                transition: all .3s ease-in;
+            }
+
+            .popup__header-close:hover {
+                .leftright {
+                    transform: rotate(-45deg);
+                    background-color: $tomatored;
+                }
+
+                .rightleft {
+                    transform: rotate(45deg);
+                    background-color: $tomatored;
+                }
             }
         }
 

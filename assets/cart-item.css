@@ -101,6 +101,11 @@
   align-items: center;
 }
 
+.cart__item .cart__item-content .remove .btn-remove svg {
+  width: 30px;
+  height: 30px;
+}
+
 .cart__item .cart__item-content .btn-remove {
   color: #646363;
   text-decoration: none;
@@ -121,10 +126,6 @@
   }
   .cart__item .cart__item-content .wrapper-pqs .cart__item-info p {
     flex-direction: row;
-  }
-  .cart__item .cart__item-content .remove .btn-remove svg {
-    width: 30px;
-    height: 30px;
   }
 }
 

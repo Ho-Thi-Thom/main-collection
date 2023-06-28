@@ -73,6 +73,12 @@
                         }
                     }
 
+                    .jsAddToCart {
+                        svg {
+                            fill: none;
+                        }
+                    }
+
                     &:hover {
                         button {
                             background-color: #05a845;

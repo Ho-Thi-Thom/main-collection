@@ -1,33 +1,87 @@
+$softorange: #30a01a;
+$tomatored: #a143e0;
+$mediumblu: #1E272D;
+
 .popup-wapper {
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 1000;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
     pointer-events: none;
-}
-
-.popup-wapper.active {
     display: flex;
-    pointer-events: auto;
-}
+    align-items: center;
+    justify-content: center;
+    transition: visibility 0s linear 0.3s, opacity 0.3s ease;
 
-.popup-content {
-    position: relative;
-    margin: auto;
-    width: 80%;
-    min-width: 375px;
-    max-width: 80vw;
-    background-color: white;
-    border-radius: 7px;
-}
+    .popup-content {
+        position: relative;
+        width: 80%;
+        min-width: 375px;
+        max-width: 80vw;
+        background-color: white;
+        border-radius: 7px;
+        transform: translateY(-50px);
+        transition: transform 0.3s ease;
+    }
 
-.close-popup {
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    padding: 4px;
+    .close-popup {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: auto;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+
+        .leftright {
+            height: 4px;
+            width: 30px;
+            position: absolute;
+            margin-top: 16px;
+            background-color: $softorange;
+            border-radius: 2px;
+            transform: rotate(45deg);
+            transition: all .3s ease-in;
+        }
+
+        .rightleft {
+            height: 4px;
+            width: 30px;
+            position: absolute;
+            margin-top: 16px;
+            background-color: $softorange;
+            border-radius: 2px;
+            transform: rotate(-45deg);
+            transition: all .3s ease-in;
+        }
+
+
+        &:hover {
+            .leftright {
+                transform: rotate(-45deg);
+                background-color: $tomatored;
+            }
+
+            .rightleft {
+                transform: rotate(45deg);
+                background-color: $tomatored;
+            }
+        }
+    }
+
+    &.active {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        transition-delay: 0s;
+
+
+        .popup-content {
+            transform: translateY(0);
+            transition-delay: 0.1s;
+        }
+    }
 }

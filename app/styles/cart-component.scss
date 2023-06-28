@@ -20,20 +20,8 @@
             width: var(--width);
             height: 100%;
             background: linear-gradient(to right, #00FF00, #e5ff00, #e66611);
-            animation: progressAnimation 1s ease-in-out;
+            animation: all 0.3s ease forwards;
         }
-
-        @keyframes progressAnimation {
-            from {
-                width: 0;
-            }
-
-            to {
-                width: var(--width);
-            }
-        }
-
-
 
         .progress__bar-msg {
             text-align: center;
@@ -103,10 +91,7 @@
                 .progress__bar-precent {}
             }
 
-            .progress__bar-msg {
-
-                span {}
-            }
+            .progress__bar-msg {}
 
         }
 

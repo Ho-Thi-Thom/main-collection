@@ -62,6 +62,16 @@
       }
     }
   }
+  function setValuePopupInfo(options) {
+    const popupInfo = document.querySelector("#popup-info");
+    const titleElm = document.querySelector("#popup-info .title");
+    const contentElm = document.querySelector("#popup-info .wrapper-content");
+    const { type, title, textContent } = options;
+    titleElm.setAttribute("data-type", type);
+    titleElm.innerHTML = title.trim();
+    contentElm.innerHTML = textContent.trim();
+    popupInfo.classList.add("active");
+  }
   function debounce(fn, delay) {
     var timeoutID = null;
     return function() {
@@ -259,6 +269,12 @@
           const result = data.sections[sectionId];
           updateInfoCartPage(result, lineIndex);
         } catch (err) {
+          const options2 = {
+            type: "error",
+            title: "422",
+            textContent: `Only ${quantityInput.getAttribute("max")} products in stock`
+          };
+          setValuePopupInfo(options2);
         }
       }, 2e3));
     });

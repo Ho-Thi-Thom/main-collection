@@ -10,17 +10,13 @@ window.addEventListener('DOMContentLoaded', function () {
     body.addEventListener("click", async (event) => {
         if (event.target.classList.contains('jsAddToCart')) {
             event.preventDefault()
-            const variantId = event.target.dataset.firstVariant
-            let data = {
-                items: [
-                    {
-                        id: variantId,
-                        quantity: 1
-                    }
-                ]
+            const productForm = event.target.closest('.jsProductItemForm');
+            const productFormData = Object.fromEntries(new FormData(productForm).entries());
+            let formData = {
+                "items": [productFormData]
             }
             try {
-                const checkAddToCart = await addToCart(data, false)
+                const checkAddToCart = await addToCart(formData, false)
                 if (checkAddToCart) {
                     const check = await updateCartPopup()
                     if (check) {
@@ -39,8 +35,6 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     })
 })
-
-
 
 
 async function fetchDataPopup(url) {

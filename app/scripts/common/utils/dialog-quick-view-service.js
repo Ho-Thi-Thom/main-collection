@@ -166,6 +166,7 @@ function updateElementInput(element, checkEmpty = false) {
 
 export function onVariantChange(getUrl) {
     const url = getUrl();
+
     if (url) {
         fetch(url)
             .then((res) => res.text())
