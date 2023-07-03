@@ -1,0 +1,35 @@
+<li role="option" class="item-product-search-wrapper">
+  <a href="{{ item.url }}" tabindex="-1">
+    <div class="item-image-preview">
+      {%- if item.featured_image != blank -%}
+        {% comment %} {%- render 'image', image: item.featured_image, limit: 500 -%} {% endcomment %}
+        <div class="image__style">
+          <img
+            src="{{ item.featured_image | image_url }}"
+            alt="{{item.featured_image.alt}}"
+            width="50px"
+            height="50px"
+          >
+        </div>
+      {%- else -%}
+        <div class="image-preview no-image uppercase">
+          <span class="text-overlay">{{- 'general.predictive_search.no_image' | t -}}</span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="item-detail">
+      <h3 class="h5 item-title">
+        <p>{{ item.title | highlight: predictive_search.terms }}</p>
+        <div class="money">
+          <span class="price{% if item.compare_at_price_max != blank and item.compare_at_price_max > 0 %} price_color {% endif %}">
+            {{- item.price | money -}}
+          </span>
+          {% if item.compare_at_price_max != blank and item.compare_at_price_max > 0 %}
+            <span class="discount">{{ item.compare_at_price_max | money }}</span>
+          {% endif %}
+        </div>
+      </h3>
+    </div>
+  </a>
+</li>

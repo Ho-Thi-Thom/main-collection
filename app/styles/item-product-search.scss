@@ -1,0 +1,53 @@
+.item-product-search-wrapper {
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        width: 100%;
+        gap: 10px;
+
+        .item-image-preview {
+            flex-basis: 70px;
+
+            .image__style {
+                img {
+                    border-radius: 4px;
+                }
+            }
+        }
+
+        .item-detail {
+            flex: 1;
+            text-align: initial;
+            line-height: 1.2rem;
+            font-size: 14px;
+            font-weight: 400;
+            color: #000;
+
+
+            .item-title {
+                background-color: white !important;
+
+                p {
+                    .highlight {
+                        color: rgb(180, 180, 8);
+                    }
+                }
+            }
+
+            .money {
+                .price {
+                    color: #191919;
+                }
+
+                .price_color {
+                    color: #05A845;
+                }
+
+                .discount {
+                    color: #999999;
+                    text-decoration: line-through;
+                }
+            }
+        }
+    }
+}

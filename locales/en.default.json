@@ -47,6 +47,16 @@
         "note": "Add note to your order",
         "btn_checkout": " Proceed to checkout"
       }
+    },
+    "predictive_search": {
+      "search_for": "Search for “{{ terms }}”",
+      "suggestion": "Suggestion",
+      "collections": "Collections",
+      "pages": "Pages",
+      "articles": "Articles",
+      "products": "Products",
+      "no_result": "No result found for your search.",
+      "no_image":"No Image Product"
     }
   }
 }

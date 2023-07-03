@@ -1,0 +1,96 @@
+<div id="predictive-search-results" role="listbox">
+  <div class="predictive__search-result empty-hidden">
+    {%- if predictive_search.performed -%}
+      {%- comment -%} SEARCH QUERIES {%- endcomment -%}
+      {%- if predictive_search.resources.queries.size > 0 -%}
+        <div class="predictive__search-group">
+          <h3>
+            {{- 'general.predictive_search.suggestion' | t -}}
+          </h3>
+          <ul role="group" aria-labelledby="predictive-search-queries">
+            {%- for item in predictive_search.resources.queries -%}
+              <li role="option">
+                <a href="{{ item.url }}" tabindex="-1">
+                  <p class="" aria-label="{{ item.text }}">{{ item.styled_text }}</p>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%} PRODUCTS {%- endcomment -%}
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <div class="predictive__search-group">
+        <h3>{{- 'general.predictive_search.products' | t -}}</h3>
+        <ul role="group" aria-labelledby="predictive-search-products">
+          {%- for item in predictive_search.resources.products -%}
+            {% render 'snippet-item-product-search', item: item %}
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} COLLECTIONS {%- endcomment -%}
+    {%- if predictive_search.resources.collections.size > 0 -%}
+      <div class="predictive__search-group">
+        <h3>{{- 'general.predictive_search.collections' | t -}}</h3>
+        <ul role="group" aria-labelledby="predictive-search-collections">
+          {%- for item in predictive_search.resources.collections -%}
+            <li role="option">
+              <a href="{{ item.url }}" tabindex="-1">
+                <p class="">{{ item.title }}</p>
+                <!-- {{item.products | map: 'title' | join: '<br>'}} -->
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ARTICLES {%- endcomment -%}
+    {%- if predictive_search.resources.articles.size > 0 -%}
+      <div class="predictive__search-group">
+        <h3>{{- 'general.predictive_search.articles' | t -}}</h3>
+        <ul role="group" aria-labelledby="predictive-search-articles">
+          {%- for item in predictive_search.resources.articles -%}
+            <li role="option">
+              <a href="{{ item.url }}" tabindex="-1">
+                <p class="">{{ item.title }}</p>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} PAGES {%- endcomment -%}
+    {%- if predictive_search.resources.pages.size > 0 -%}
+      <div class="predictive__search-group">
+        <h3>{{- 'general.predictive_search.pages' | t -}}</h3>
+        <ul role="group" aria-labelledby="predictive-search-pages">
+          {%- for item in predictive_search.resources.pages -%}
+            <li role="option">
+              <a href="{{ item.url }}" tabindex="-1">
+                <p class="">{{ item.title }}</p>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="predictive_search-button">
+    <button class="c-pointer" tabindex="-1" role="option" aria-selected="false">
+      <span>{{ 'general.predictive_search.search_for' | t: terms: predictive_search.terms }}</span>
+      <svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.51634 0.13651L7.84379 2.17044C8.05207 2.35245 8.05207 2.64755 7.84379 2.82956L5.51634 4.86349C5.30806 5.0455 4.97038 5.0455 4.7621 4.86349C4.55382 4.68148 4.55382 4.38638 4.7621 4.20436L6.17909 2.96607H0V2.03393H6.17909L4.7621 0.795637C4.55382 0.613624 4.55382 0.318523 4.7621 0.13651C4.97038 -0.0455033 5.30806 -0.0455033 5.51634 0.13651Z" fill="#808080"/>
+      </svg>
+    </button>
+  </div>
+
+  <p class="predictive__search--no-result">
+    {{- 'general.predictive_search.no_result' | t -}}
+  </p>
+</div>
