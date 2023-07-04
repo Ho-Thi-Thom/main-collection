@@ -1,0 +1,41 @@
+<div class="collection__toolbar">
+  <div class="collection__toolbar-filter">
+    <button
+      class="collection__toolbar-filter-btn {% case filterStyle %} {% when "dropdown" %}dropdown{% when "sidebar" %}sidebar{% endcase %}"
+      aria-controls="primary-mavigation"
+      aria-expanded="false"
+    >
+      {% render 'icon-filter' %}
+      Filter
+    </button>
+
+    <div class="collection__toolbar-filter-showing">
+      {% render 'collection-showing', paginate: paginate, type: section.settings.paginate_style %}
+    </div>
+  </div>
+  <div class="collection__toolbar-sort">
+    <div class="collection__toolbar-sort-by">
+      {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+      {% render 'collection-sort',
+        label: 'Sort by',
+        options: collection.sort_options,
+        _sort: sort_by,
+        _id_select: 'sort_by'
+      %}
+    </div>
+
+    <div class="collection__toolbar-sort-show">
+      {% assign showingList = section.settings.total_viewlist | split: ',' -%}
+      {% assign items_per_page = section.settings.items_per_page -%}
+      {% assign _showingList = items_per_page | concat: showingList -%}
+
+      {% render 'collection-sort',
+        label: 'Show',
+        options: _showingList,
+        _sort: itemsPerPageCustom,
+        _id_select: 'show',
+        _class: 'show_number'
+      %}
+    </div>
+  </div>
+</div>

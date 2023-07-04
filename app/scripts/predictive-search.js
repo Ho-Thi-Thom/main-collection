@@ -34,7 +34,14 @@ class PredictiveSearch extends HTMLElement {
             })
             .then((text) => {
                 const resultsMarkup = new DOMParser().parseFromString(text, 'text/html').querySelector('#shopify-section-predictive-search').innerHTML;
-                this.predictiveSearchResults.innerHTML = resultsMarkup;
+                // console.log("resultsMarkup", resultsMarkup)
+                const div = document.createElement("div");
+                div.innerHTML = resultsMarkup;
+                const predictiveSearchResult = div.querySelector('.predictive__search-result')
+                if (predictiveSearchResult.textContent === '') {
+                    predictiveSearchResult.classList.add('empty-hidden')
+                }
+                this.predictiveSearchResults.innerHTML = div.innerHTML;
                 this.open();
             })
             .catch((error) => {

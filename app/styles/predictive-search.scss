@@ -42,15 +42,8 @@
 
     }
 
-    .predictive__search--no-result {
-        display: none;
-    }
-
-    .predictive__search-result .empty-hidden:empty~.predictive__search--no-result {
-        display: block;
-    }
-
     .predictive_search-button {
+        display: block;
         text-align: end;
         padding-right: 20px;
 
@@ -58,5 +51,17 @@
             background-color: transparent;
             font-weight: 500;
         }
+    }
+
+    .predictive__search--no-result {
+        display: none;
+    }
+
+    .predictive__search-result.empty-hidden~.predictive_search-button {
+        display: none;
+    }
+
+    .predictive__search-result.empty-hidden~.predictive__search--no-result {
+        display: block;
     }
 }

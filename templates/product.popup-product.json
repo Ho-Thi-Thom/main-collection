@@ -1,11 +1,69 @@
 {
-    "sections": {
-      "main": {
-        "type": "dialog-quick-view",
-        "settings": {}
+  "sections": {
+    "main": {
+      "type": "dialog-quick-view",
+      "blocks": {
+        "a36dce15-93a1-487e-b310-14dcc86f7f70": {
+          "type": "title",
+          "settings": {}
+        },
+        "80677c6a-827d-4691-b3d8-c163dd7ed80e": {
+          "type": "shopify:\/\/apps\/product-reviews\/blocks\/star_rating\/bae150af-8da8-48b2-9867-398188115e5f",
+          "settings": {
+            "stars_fill_color": "#000000",
+            "star_size": 15,
+            "text_align": "center",
+            "product": "{{product}}",
+            "stars_text_empty": "No reviews"
+          }
+        },
+        "2e5920d8-3255-4aa5-a60d-ef2c84196ab3": {
+          "type": "price",
+          "settings": {}
+        },
+        "f77c5bf2-99af-4e8b-bea0-7f8807fec2d0": {
+          "type": "product_options",
+          "settings": {
+            "radio": "button",
+            "style_image": "color"
+          }
+        },
+        "29b28c87-8183-4fbb-b7a9-b469bcdc847c": {
+          "type": "add_to_cart",
+          "settings": {}
+        },
+        "f117527a-499b-452e-bd55-c259bbf03d9d": {
+          "type": "list_link",
+          "settings": {}
+        },
+        "650c33d8-62fa-4514-bcfe-99fabf946290": {
+          "type": "hr",
+          "settings": {
+            "height": "1px",
+            "margin": "20px 0px"
+          }
+        },
+        "7e89864f-1ef4-494b-88e7-b0c621a5b38c": {
+          "type": "tag_and_sku",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "a36dce15-93a1-487e-b310-14dcc86f7f70",
+        "80677c6a-827d-4691-b3d8-c163dd7ed80e",
+        "2e5920d8-3255-4aa5-a60d-ef2c84196ab3",
+        "f77c5bf2-99af-4e8b-bea0-7f8807fec2d0",
+        "29b28c87-8183-4fbb-b7a9-b469bcdc847c",
+        "f117527a-499b-452e-bd55-c259bbf03d9d",
+        "650c33d8-62fa-4514-bcfe-99fabf946290",
+        "7e89864f-1ef4-494b-88e7-b0c621a5b38c"
+      ],
+      "settings": {
+        "type__submit": "b"
       }
-    },
-    "order": [
-      "main"
-    ]
-  }  
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

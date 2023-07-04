@@ -1,0 +1,76 @@
+.wrapper-filter .collection__toolbar {
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.wrapper-filter .collection__toolbar, .wrapper-filter .collection__toolbar .collection__toolbar-filter {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.wrapper-filter .collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-btn {
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-weight: 700;
+  font-size: 16px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all .3s ease;
+  position: relative;
+  box-shadow: inset 1px 1px 2px 0 rgba(255, 255, 255, 0.5), 2px 2px 4px 0 rgba(0, 0, 0, 0.1), 2px 2px 4px 0 rgba(0, 0, 0, 0.1);
+  outline: none;
+  --button-color:#000;
+}
+
+.wrapper-filter .collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-btn.dropdown {
+  display: flex;
+}
+
+.wrapper-filter .collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-btn.sidebar {
+  display: none;
+}
+
+.wrapper-filter .collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-btn[aria-expanded=true] .hamburger {
+  rotate: 45deg;
+}
+
+.wrapper-filter .collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-btn .line {
+  transition: 1s;
+  stroke-dasharray: 60 31 60 300;
+}
+
+.wrapper-filter .collection__toolbar .collection__toolbar-filter .collection__toolbar-filter-btn[aria-expanded=true] .line {
+  stroke-dasharray: 60 105 60 300;
+  stroke-dashoffset: -90;
+}
+
+.wrapper-filter .collection__toolbar .collection__toolbar-filter .hamburger {
+  --button-color:#000;
+  transition: translate 1s,rotate 1s;
+  width: 24px;
+  height: 24px;
+}
+
+.wrapper-filter .collection__toolbar .collection__toolbar-sort {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.wrapper-filter .collection__toolbar__filter {
+  max-height: 0;
+  overflow: hidden;
+  transition: all .3s;
+  margin-top: 20px;
+}
+
+.wrapper-filter .collection__toolbar__filter.active {
+  max-height: 50vh;
+  overflow-y: auto;
+  border-radius: 4px;
+  margin-block: 16px;
+  box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.1);
+}

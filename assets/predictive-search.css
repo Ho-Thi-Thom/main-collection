@@ -38,15 +38,8 @@
   color: #000;
 }
 
-#predictive-search-results .predictive__search--no-result {
-  display: none;
-}
-
-#predictive-search-results .predictive__search-result .empty-hidden:empty ~ .predictive__search--no-result {
-  display: block;
-}
-
 #predictive-search-results .predictive_search-button {
+  display: block;
   text-align: end;
   padding-right: 20px;
 }
@@ -54,4 +47,12 @@
 #predictive-search-results .predictive_search-button button {
   background-color: transparent;
   font-weight: 500;
+}
+
+#predictive-search-results .predictive__search--no-result, #predictive-search-results .predictive__search-result.empty-hidden ~ .predictive_search-button {
+  display: none;
+}
+
+#predictive-search-results .predictive__search-result.empty-hidden ~ .predictive__search--no-result {
+  display: block;
 }

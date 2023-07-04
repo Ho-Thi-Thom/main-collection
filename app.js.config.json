@@ -44,5 +44,9 @@
         "cart",
         "utils",
         "cart-service"
+    ],
+    "main-search":[
+        "utils",
+        "main-search-service"
     ]
 }

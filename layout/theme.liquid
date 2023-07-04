@@ -34,6 +34,11 @@
       href="{{ 'item-product-search.css' | asset_url }}"
       media="all"
     >
+    <link
+      rel="stylesheet"
+      href="{{ 'predictive-search.css' | asset_url }}"
+      media="all"
+    >
 
     <link
       rel="stylesheet"
@@ -102,7 +107,7 @@
     <div id="bg-color" class=""></div>
     {% render 'popup-info' %}
     {% render 'popup-product-item' %}
-    {% if request.page_type == 'collection' or request.page_type == 'product' %}
+    {% if request.page_type == 'collection' or request.page_type == 'product' or request.page_type == 'search' %}
       {% sections 'colors-swatches' %}
       {% section 'cart-popup' %}
     {% endif %}

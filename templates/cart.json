@@ -2,7 +2,9 @@
   "sections": {
     "main": {
       "type": "cart",
-      "settings": {}
+      "settings": {
+        "free_shipping_conditions": 100
+      }
     }
   },
   "order": [

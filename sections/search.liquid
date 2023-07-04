@@ -1,0 +1,155 @@
+{% comment %}
+  {% paginate search.results by 10 %}
+    <form action="/search" method="get" role="search">
+      <input type="search" name="q" value="{{ search.terms | escape }}">
+      <button type="submit">search</button>
+    </form>
+
+    {% if search.performed %}
+      {% for item in search.results %}
+        {% if item.featured_image %}
+          <a href="{{ item.url | within: collection }}" title="{{ item.title | escape }}">
+            {{ item.featured_image.src | img_url: 'medium' | img_tag: item.featured_image.alt }}
+          </a>
+        {% endif %}
+        <h5>{{ item.title | link_to: item.url }}</h5>
+        <p>{{ item.content | strip_html | truncatewords: 50 }}</p>
+      {% else %}
+        no results
+      {% endfor %}
+    {% endif %}
+
+    {% if paginate.pages > 1 %}{{ paginate | default_pagination }}{% endif %}
+  {% endpaginate %}
+{% endcomment %}
+<link
+  rel="stylesheet"
+  href="{{ 'product-item.css' | asset_url }}"
+  media="all"
+>
+
+<link
+  rel="stylesheet"
+  href="{{ 'paginate_link.css' | asset_url }}"
+  media="all"
+>
+
+<link
+  rel="stylesheet"
+  href="{{ 'search.css' | asset_url }}"
+  media="all"
+>
+{% liquid
+  assign products = search.results
+  assign itemsPerPage = section.settings.items_per_page | default: 10 | times: 1
+  assign itemPerRow = section.settings.items_per_row
+  assign itemsPerPageCustom = cart.attributes.items_per_page | default: itemsPerPage | times: 1
+%}
+
+{% if request.design_mode %}
+  {% assign itemsPerPageCustom = itemsPerPage %}
+{% endif %}
+
+<style>
+  .container-wrapper-search {
+    --items_per_row: {{itemPerRow}};
+  }
+  #shopify-section-{{ section.id}}{
+    flex: 1;
+  }
+</style>
+
+{% paginate search.results by itemsPerPageCustom %}
+  <div class="section-container container-wrapper-search container-search-page">
+    <div class="search-filter">
+      {% render 'component-filter', collection: search, paginate: paginate %}
+    </div>
+    <div class="search-header">
+      <h3>Products</h3>
+    </div>
+    <div class="search__products">
+      {% if search.performed %}
+        {% for item in search.results %}
+          {% if item.object_type == 'product' %}
+            {% render 'product-item', product: item %}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        No result
+      {% endif %}
+    </div>
+    <div class="search__paginate">
+      {%- render 'pagination', paginate: paginate, type: 'page' -%}
+    </div>
+  </div>
+{% endpaginate %}
+{% schema %}
+{
+  "name": "search",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "number",
+      "label": "Items per page",
+      "default": 20,
+      "id": "items_per_page"
+    },
+    {
+      "type": "range",
+      "label": "Max number of item per row",
+      "id": "items_per_row",
+      "min": 3,
+      "max": 6,
+      "default": 5,
+      "step": 1
+    },
+    {
+      "type": "select",
+      "id": "paginate_style",
+      "label": "Paginate Style",
+      "options": [
+        {
+          "label": "Infinity",
+          "value": "infinity"
+        },
+        {
+          "label": "Page",
+          "value": "page"
+        }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "text",
+      "id": "total_viewlist",
+      "label": "Total view list",
+      "default": "5,10,15,20",
+      "info": "Blank to hide"
+    },
+    {
+      "type": "radio",
+      "id": "filter_style",
+      "label": "Fitler style",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "Dropdown"
+        },
+        {
+          "value": "sidebar",
+          "label": "Sidebar"
+        }
+      ],
+      "default": "dropdown"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Filters",
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}
+{{ 'main-search.js' | asset_url | script_tag }}
